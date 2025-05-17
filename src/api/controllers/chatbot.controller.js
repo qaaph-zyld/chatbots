@@ -4,8 +4,7 @@
  * Handles all chatbot-related operations and API endpoints
  */
 
-// Placeholder for database models
-// Will be implemented as we progress through the roadmap
+const chatbotService = require('../../services/chatbot.service');
 
 /**
  * Get all chatbots
@@ -14,8 +13,8 @@
  */
 exports.getAllChatbots = async (req, res) => {
   try {
-    // Placeholder for database query
-    const chatbots = [];
+    // Get all chatbots from service
+    const chatbots = chatbotService.getAllChatbots();
     
     res.status(200).json({
       success: true,
@@ -38,7 +37,7 @@ exports.getAllChatbots = async (req, res) => {
  */
 exports.createChatbot = async (req, res) => {
   try {
-    const { name, description, engine, configuration } = req.body;
+    const { name, description, engine, engineConfig } = req.body;
     
     // Validate required fields
     if (!name || !engine) {
@@ -49,15 +48,15 @@ exports.createChatbot = async (req, res) => {
       });
     }
     
-    // Placeholder for chatbot creation
-    const chatbot = {
+    // Create chatbot using service
+    const chatbot = await chatbotService.createChatbot({
       id: Date.now().toString(),
       name,
       description,
       engine,
-      configuration,
-      createdAt: new Date().toISOString()
-    };
+      engineConfig,
+      owner: req.user?.id || 'system'
+    });
     
     res.status(201).json({
       success: true,
@@ -82,10 +81,11 @@ exports.getChatbotById = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Placeholder for database query
-    const chatbot = null;
-    
-    if (!chatbot) {
+    // Get chatbot by ID from service
+    let chatbot;
+    try {
+      chatbot = chatbotService.getChatbot(id);
+    } catch (error) {
       return res.status(404).json({
         success: false,
         error: 'Not found',
@@ -151,10 +151,11 @@ exports.deleteChatbot = async (req, res) => {
   try {
     const { id } = req.params;
     
-    // Placeholder for database deletion
-    const deleted = false;
-    
-    if (!deleted) {
+    // Delete chatbot using service
+    let deleted;
+    try {
+      deleted = await chatbotService.deleteChatbot(id);
+    } catch (error) {
       return res.status(404).json({
         success: false,
         error: 'Not found',
@@ -194,12 +195,14 @@ exports.sendMessage = async (req, res) => {
       });
     }
     
-    // Placeholder for chatbot processing
-    const response = {
-      text: `Echo: ${message}`,
-      timestamp: new Date().toISOString(),
-      sessionId: sessionId || Date.now().toString()
-    };
+    // Process message using integration manager's web channel
+    const session = sessionId || Date.now().toString();
+    const result = await chatbotService.processMessage({
+      text: message,
+      sessionId: session,
+      chatbotId: id,
+      user: req.user || { id: 'anonymous' }
+    }, 'web');
     
     res.status(200).json({
       success: true,
@@ -233,7 +236,8 @@ exports.getConversationHistory = async (req, res) => {
       });
     }
     
-    // Placeholder for conversation history
+    // This will be implemented when we add conversation storage
+    // For now, return an empty array
     const history = [];
     
     res.status(200).json({
