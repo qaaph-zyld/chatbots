@@ -18,32 +18,43 @@ logger.setLevel('debug');
 
 /**
  * Test function to verify chatbot engine functionality
+ * @param {string} engineType - Type of engine to test
  */
-async function testChatbotEngine() {
-  logger.info('Starting chatbot engine test');
+async function testChatbotEngine(engineType) {
+  logger.info(`Starting chatbot engine test for ${engineType}`);
   
   try {
-    // Get default engine type from config
-    const engineType = config.chatbot.defaultEngine || 'botpress';
-    logger.info(`Testing engine type: ${engineType}`);
+    // Create engine instance with appropriate configuration based on engine type
+    let engineConfig = {
+      timeout: 5000
+    };
+    
+    // Add engine-specific configuration
+    if (engineType === 'botpress') {
+      engineConfig = {
+        ...engineConfig,
+        botId: 'test-botpress-bot'
+      };
+    } else if (engineType === 'huggingface') {
+      engineConfig = {
+        ...engineConfig,
+        modelName: 'facebook/blenderbot-400M-distill'
+      };
+    }
     
     // Create engine instance
-    const engine = engineFactory.getEngine(engineType, {
-      // Test configuration
-      botId: 'test-bot',
-      timeout: 5000
-    });
+    const engine = engineFactory.getEngine(engineType, engineConfig);
     
     // Initialize engine
-    logger.info('Initializing engine...');
+    logger.info(`Initializing ${engineType} engine...`);
     const initialized = await engine.initialize();
     
     if (!initialized) {
-      logger.error('Failed to initialize engine');
+      logger.error(`Failed to initialize ${engineType} engine`);
       return false;
     }
     
-    logger.info('Engine initialized successfully');
+    logger.info(`${engineType} engine initialized successfully`);
     
     // Test messages
     const testMessages = [
@@ -56,15 +67,16 @@ async function testChatbotEngine() {
     
     // Process each test message
     for (const message of testMessages) {
-      logger.info(`Testing message: "${message}"`);
+      logger.info(`Testing message with ${engineType}: "${message}"`);
       
       const response = await engine.processMessage(message, {
-        sessionId: 'test-session',
-        userId: 'test-user'
+        sessionId: `test-session-${engineType}`,
+        userId: 'test-user',
+        history: [] // Add history for testing context persistence
       });
       
-      logger.info(`Response: "${response.text}"`);
-      logger.debug('Response metadata:', response.metadata);
+      logger.info(`${engineType} response: "${response.text}"`);
+      logger.debug(`${engineType} response metadata:`, response.metadata);
       
       // Add a small delay between messages
       await new Promise(resolve => setTimeout(resolve, 500));
@@ -72,11 +84,11 @@ async function testChatbotEngine() {
     
     // Clean up
     await engine.cleanup();
-    logger.info('Engine cleaned up');
+    logger.info(`${engineType} engine cleaned up`);
     
     return true;
   } catch (error) {
-    logger.error('Error testing chatbot engine:', error.message);
+    logger.error(`Error testing ${engineType} chatbot engine:`, error.message);
     return false;
   }
 }
@@ -87,11 +99,31 @@ async function testChatbotEngine() {
 async function runTests() {
   logger.info('=== CHATBOT FUNCTIONALITY TEST ===');
   
-  // Test chatbot engine
-  const engineTestResult = await testChatbotEngine();
-  logger.info(`Engine test ${engineTestResult ? 'PASSED' : 'FAILED'}`);
+  // Get available engine types
+  const engineTypes = engineFactory.getAvailableEngineTypes();
+  logger.info(`Available engine types: ${engineTypes.join(', ')}`);
   
-  logger.info('=== TEST COMPLETE ===');
+  // Test results tracking
+  const results = {};
+  
+  // Test each engine type
+  for (const engineType of engineTypes) {
+    logger.info(`\n=== TESTING ${engineType.toUpperCase()} ENGINE ===`);
+    results[engineType] = await testChatbotEngine(engineType);
+    logger.info(`${engineType} engine test ${results[engineType] ? 'PASSED' : 'FAILED'}`);
+  }
+  
+  // Summary of results
+  logger.info('\n=== TEST RESULTS SUMMARY ===');
+  for (const [engineType, result] of Object.entries(results)) {
+    logger.info(`${engineType}: ${result ? 'PASSED' : 'FAILED'}`);
+  }
+  
+  // Overall result
+  const overallResult = Object.values(results).every(result => result === true);
+  logger.info(`\nOverall test result: ${overallResult ? 'PASSED' : 'FAILED'}`);
+  
+  logger.info('\n=== TEST COMPLETE ===');
 }
 
 // Run tests
