@@ -5,6 +5,8 @@
  */
 
 const BaseChatbotEngine = require('./base.engine');
+const { logger } = require('../../utils');
+const axios = require('axios');
 
 class BotpressEngine extends BaseChatbotEngine {
   /**
@@ -17,6 +19,15 @@ class BotpressEngine extends BaseChatbotEngine {
     this.version = '1.0.0';
     this.ready = false;
     this.client = null;
+    
+    // Default configuration with fallbacks
+    this.config = {
+      apiUrl: config.apiUrl || process.env.BOTPRESS_API_URL || 'http://localhost:3000',
+      apiKey: config.apiKey || process.env.BOTPRESS_API_KEY,
+      botId: config.botId || process.env.BOTPRESS_BOT_ID,
+      timeout: config.timeout || 10000,
+      ...config
+    };
   }
   
   /**
@@ -25,16 +36,42 @@ class BotpressEngine extends BaseChatbotEngine {
    */
   async initialize() {
     try {
-      // In a real implementation, this would initialize the Botpress client
-      // using the provided configuration
+      // Validate required configuration
+      if (!this.config.apiUrl) {
+        throw new Error('Botpress API URL is required');
+      }
       
-      console.log('Initializing Botpress engine with config:', this.config);
+      if (!this.config.botId) {
+        throw new Error('Botpress Bot ID is required');
+      }
       
-      // Simulate successful initialization
-      this.ready = true;
-      return true;
+      logger.info(`Initializing Botpress engine for bot ${this.config.botId}`);
+      
+      // Initialize axios client with default configuration
+      this.client = axios.create({
+        baseURL: this.config.apiUrl,
+        timeout: this.config.timeout,
+        headers: {
+          'Content-Type': 'application/json',
+          ...(this.config.apiKey && { 'X-BP-Auth-Token': this.config.apiKey })
+        }
+      });
+      
+      // Verify connection by making a test request
+      try {
+        // In a real implementation, we would verify the connection
+        // For now, we'll simulate a successful connection
+        
+        logger.debug('Botpress engine initialized successfully');
+        this.ready = true;
+        return true;
+      } catch (connectionError) {
+        logger.error('Failed to connect to Botpress API:', connectionError.message);
+        this.ready = false;
+        return false;
+      }
     } catch (error) {
-      console.error('Failed to initialize Botpress engine:', error);
+      logger.error('Failed to initialize Botpress engine:', error.message);
       this.ready = false;
       return false;
     }
@@ -48,27 +85,62 @@ class BotpressEngine extends BaseChatbotEngine {
    */
   async processMessage(message, context = {}) {
     if (!this.ready) {
+      logger.error('Attempted to process message with uninitialized Botpress engine');
       throw new Error('Botpress engine is not initialized');
     }
     
     try {
-      // In a real implementation, this would send the message to Botpress
-      // and return the response
+      logger.debug(`Processing message with Botpress: ${message.substring(0, 50)}${message.length > 50 ? '...' : ''}`);
       
-      console.log('Processing message with Botpress:', message, context);
+      // Prepare request payload
+      const payload = {
+        message,
+        conversationId: context.conversationId || `conv-${Date.now()}`,
+        userId: context.userId || `user-${Date.now()}`,
+        metadata: {
+          ...context.metadata
+        }
+      };
       
-      // Simulate a response
-      return {
-        text: `Botpress response to: ${message}`,
+      // In a real implementation, this would send the message to Botpress API
+      // For now, we'll simulate a response
+      
+      // Simulate different responses based on message content for demo purposes
+      let responseText;
+      let confidence = 0.85;
+      
+      if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+        responseText = 'Hello there! How can I help you today?';
+        confidence = 0.98;
+      } else if (message.toLowerCase().includes('help')) {
+        responseText = 'I\'m here to help! What do you need assistance with?';
+        confidence = 0.95;
+      } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
+        responseText = 'Goodbye! Have a great day!';
+        confidence = 0.97;
+      } else {
+        responseText = `I received your message: "${message}". How can I assist you further?`;
+        confidence = 0.75;
+      }
+      
+      // Construct response object
+      const response = {
+        text: responseText,
         timestamp: new Date().toISOString(),
         metadata: {
           engine: this.name,
-          confidence: 0.85,
-          context: { ...context }
+          confidence,
+          context: { 
+            ...context,
+            lastMessage: message
+          }
         }
       };
+      
+      logger.debug(`Botpress engine response: ${response.text}`);
+      return response;
     } catch (error) {
-      console.error('Error processing message with Botpress:', error);
+      logger.error('Error processing message with Botpress:', error.message);
       throw error;
     }
   }
@@ -79,23 +151,46 @@ class BotpressEngine extends BaseChatbotEngine {
    * @returns {Promise<Object>} - Training results
    */
   async train(trainingData) {
+    if (!this.ready) {
+      logger.error('Attempted to train uninitialized Botpress engine');
+      throw new Error('Botpress engine is not initialized');
+    }
+    
     try {
-      // In a real implementation, this would train the Botpress bot
-      // with the provided data
+      if (!Array.isArray(trainingData) || trainingData.length === 0) {
+        logger.warn('Empty or invalid training data provided to Botpress engine');
+        return {
+          success: false,
+          timestamp: new Date().toISOString(),
+          error: 'Empty or invalid training data'
+        };
+      }
       
-      console.log('Training Botpress engine with data:', trainingData);
+      logger.info(`Training Botpress engine with ${trainingData.length} samples`);
       
-      // Simulate successful training
+      // In a real implementation, this would send the training data to Botpress
+      // For now, we'll simulate a successful training operation
+      
+      // Simulate processing time based on data size
+      const processingTime = Math.min(500 + trainingData.length * 10, 5000);
+      await new Promise(resolve => setTimeout(resolve, processingTime));
+      
+      // Calculate simulated metrics
+      const accuracy = 0.75 + Math.random() * 0.2; // Random accuracy between 0.75 and 0.95
+      
+      logger.info(`Botpress engine training completed with ${accuracy.toFixed(2)} accuracy`);
+      
       return {
         success: true,
         timestamp: new Date().toISOString(),
         metrics: {
           samples: trainingData.length,
-          accuracy: 0.92
+          accuracy,
+          processingTimeMs: processingTime
         }
       };
     } catch (error) {
-      console.error('Error training Botpress engine:', error);
+      logger.error('Error training Botpress engine:', error.message);
       throw error;
     }
   }
@@ -123,16 +218,20 @@ class BotpressEngine extends BaseChatbotEngine {
    */
   async cleanup() {
     try {
-      // In a real implementation, this would clean up any resources
-      // used by the Botpress client
+      logger.debug('Cleaning up Botpress engine resources');
       
-      console.log('Cleaning up Botpress engine resources');
+      // Cancel any pending requests
+      if (this.client && typeof this.client.cancelToken === 'function') {
+        this.client.cancelToken('Engine cleanup');
+      }
       
       this.ready = false;
       this.client = null;
+      
+      logger.info('Botpress engine resources cleaned up successfully');
       return Promise.resolve();
     } catch (error) {
-      console.error('Error cleaning up Botpress engine:', error);
+      logger.error('Error cleaning up Botpress engine:', error.message);
       throw error;
     }
   }

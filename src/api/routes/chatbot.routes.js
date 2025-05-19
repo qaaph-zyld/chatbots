@@ -27,4 +27,7 @@ router.delete('/:id', checkRole('admin'), chatbotController.deleteChatbot);
 // Process message
 router.post('/:id/message', chatbotController.processMessage);
 
+// Get conversation history
+router.get('/:id/conversations', chatbotController.getConversationHistory);
+
 module.exports = router;

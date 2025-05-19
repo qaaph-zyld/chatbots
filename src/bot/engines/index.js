@@ -1,11 +1,13 @@
 /**
- * Chatbot Engine Factory
+ * Chatbot Engine Index
  * 
- * Factory for creating and managing chatbot engine instances
+ * Exports all engine-related modules and provides factory functionality
  */
 
+const BaseChatbotEngine = require('./base.engine');
 const BotpressEngine = require('./botpress.engine');
 const HuggingFaceEngine = require('./huggingface.engine');
+const engineFactory = require('./engine.factory');
 
 // Map of engine types to their implementations
 const engineTypes = {
@@ -40,7 +42,9 @@ function getAvailableEngines() {
 module.exports = {
   createEngine,
   getAvailableEngines,
+  engineFactory,
   // Export engine classes for direct use if needed
+  BaseChatbotEngine,
   BotpressEngine,
   HuggingFaceEngine,
 };
