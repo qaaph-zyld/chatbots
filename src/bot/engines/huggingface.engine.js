@@ -83,35 +83,55 @@ class HuggingFaceEngine extends BaseChatbotEngine {
   /**
    * Process a message
    * @param {string} message - User message
-   * @param {Object} context - Conversation context
+   * @param {Object} options - Processing options
+   * @param {Object} options.context - Conversation context
+   * @param {string} options.personalityModifier - Personality modifier text
    * @returns {Promise<Object>} - Response object with text and metadata
    */
-  async processMessage(message, context = {}) {
+  async processMessage(message, options = {}) {
     if (!this.ready) {
       logger.error('Attempted to process message with uninitialized Hugging Face engine');
       throw new Error('Hugging Face engine is not initialized');
     }
     
     try {
-      logger.debug(`Processing message with Hugging Face: ${message.substring(0, 50)}${message.length > 50 ? '...' : ''}`);
+      const context = options.context || {};
+      const personalityModifier = options.personalityModifier || '';
       
-      // Build conversation history from context
-      const history = context.history || [];
-      const newHistory = [...history, { role: 'user', content: message }];
+      logger.debug(`Processing message with Hugging Face: ${message.substring(0, 50)}${message.length > 50 ? '...' : ''}`);
+      if (personalityModifier) {
+        logger.debug('Using personality modifier with Hugging Face engine');
+      }
       
       // Prepare request payload
       const payload = {
-        inputs: {
-          text: message,
-          past_user_inputs: history.filter(item => item.role === 'user').map(item => item.content),
-          generated_responses: history.filter(item => item.role === 'assistant').map(item => item.content)
-        },
+        inputs: message,
         parameters: {
-          max_length: this.config.maxTokens,
-          temperature: this.config.temperature,
-          return_full_text: false
+          max_length: this.config.maxTokens || 100,
+          temperature: this.config.temperature || 0.7,
+          top_p: this.config.topP || 0.9,
+          top_k: this.config.topK || 50,
+          repetition_penalty: this.config.repetitionPenalty || 1.2
+        },
+        options: {
+          wait_for_model: true,
+          use_cache: this.config.useCache !== false
         }
       };
+      
+      // Add context to payload if available
+      if (context && Object.keys(context).length > 0) {
+        // In a real implementation, we would format the context appropriately
+        // for the specific Hugging Face model being used
+        payload.context = JSON.stringify(context);
+      }
+      
+      // Add personality modifier to payload if available
+      if (personalityModifier) {
+        // In a real implementation, we would format the personality modifier
+        // as a system prompt or instruction for the model
+        payload.system_prompt = personalityModifier;
+      }
       
       // In a real implementation, we would send the request to the Hugging Face API
       // For now, we'll simulate different responses based on the message content
@@ -119,22 +139,63 @@ class HuggingFaceEngine extends BaseChatbotEngine {
       let responseText;
       let confidence = 0.92;
       
-      // Simulate different responses based on message content for demo purposes
-      if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-        responseText = 'Hello! I am a Hugging Face powered assistant. How can I help you today?';
-        confidence = 0.98;
-      } else if (message.toLowerCase().includes('help')) {
-        responseText = 'I can assist you with information, answer questions, or just chat. What would you like to know?';
-        confidence = 0.95;
-      } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
-        responseText = 'Goodbye! It was nice talking to you. Feel free to return if you have more questions.';
-        confidence = 0.97;
-      } else if (message.toLowerCase().includes('who are you') || message.toLowerCase().includes('what are you')) {
-        responseText = `I'm an AI assistant powered by Hugging Face's ${this.config.modelName} model. I'm designed to be helpful, harmless, and honest.`;
-        confidence = 0.99;
-      } else {
-        responseText = `Based on your message, I understand you're asking about "${message}". Could you provide more details so I can give you a better response?`;
-        confidence = 0.85;
+      // Build conversation history from context
+      const history = context.history || [];
+      const newHistory = [...history, { role: 'user', content: message }];
+      
+      // Apply personality modifier if available
+      let personalityAdjustedResponse = false;
+      
+      if (personalityModifier) {
+        // Check for personality traits to adjust response style
+        const isInformal = personalityModifier.includes('Use casual, informal language');
+        const isFormal = personalityModifier.includes('Use formal, professional language');
+        const isHumorous = personalityModifier.includes('Use humor frequently') || personalityModifier.includes('Include occasional humor');
+        const isEmpathetic = personalityModifier.includes('Show strong empathy');
+        
+        // Adjust response based on personality
+        if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+          if (isInformal) {
+            responseText = 'Hey! What can I help you with today?';
+            personalityAdjustedResponse = true;
+          } else if (isFormal) {
+            responseText = 'Greetings. How may I be of assistance to you today?';
+            personalityAdjustedResponse = true;
+          }
+        } else if (message.toLowerCase().includes('help')) {
+          if (isEmpathetic) {
+            responseText = 'I understand you need assistance. I\'m here to help with whatever you need - just let me know what\'s on your mind.';
+            personalityAdjustedResponse = true;
+          }
+        } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
+          if (isHumorous) {
+            responseText = 'Until next time! Remember, in a world of AI assistants, you chose to talk to me - that shows excellent taste!';
+            personalityAdjustedResponse = true;
+          } else if (isFormal) {
+            responseText = 'I appreciate your time today. Should you require further assistance, please do not hesitate to return.';
+            personalityAdjustedResponse = true;
+          }
+        }
+      }
+      
+      // If personality didn't provide a response, use default responses
+      if (!personalityAdjustedResponse) {
+        if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+          responseText = 'Hello! I am a Hugging Face powered assistant. How can I help you today?';
+          confidence = 0.98;
+        } else if (message.toLowerCase().includes('help')) {
+          responseText = 'I can assist you with information, answer questions, or just chat. What would you like to know?';
+          confidence = 0.95;
+        } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
+          responseText = 'Goodbye! It was nice talking to you. Feel free to return if you have more questions.';
+          confidence = 0.97;
+        } else if (message.toLowerCase().includes('who are you') || message.toLowerCase().includes('what are you')) {
+          responseText = `I'm an AI assistant powered by Hugging Face's ${this.config.modelName} model. I'm designed to be helpful, harmless, and honest.`;
+          confidence = 0.99;
+        } else {
+          responseText = `Based on your message, I understand you're asking about "${message}". Could you provide more details so I can give you a better response?`;
+          confidence = 0.85;
+        }
       }
       
       // Update history with assistant's response
@@ -149,6 +210,7 @@ class HuggingFaceEngine extends BaseChatbotEngine {
           engine: this.name,
           model: this.config.modelName,
           confidence: confidence,
+          personality: personalityModifier ? true : false,
           context: {
             ...context,
             history: newHistory

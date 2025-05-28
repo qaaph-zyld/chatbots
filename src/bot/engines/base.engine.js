@@ -28,12 +28,15 @@ class BaseChatbotEngine {
   }
   
   /**
-   * Process a message
+   * Process a message and generate a response
    * @param {string} message - User message
-   * @param {Object} context - Conversation context
-   * @returns {Promise<Object>} - Response object with text and metadata
+   * @param {Object} options - Processing options
+   * @param {Object} options.context - Conversation context
+   * @param {string} options.personalityModifier - Personality modifier string
+   * @param {Object} options.knowledgeBase - Knowledge base data if available
+   * @returns {Promise<Object>} - Response data
    */
-  async processMessage(message, context = {}) {
+  async processMessage(message, options = {}) {
     throw new Error('Method processMessage() must be implemented by subclass');
   }
   

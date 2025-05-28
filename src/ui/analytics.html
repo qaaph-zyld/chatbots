@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Analytics Dashboard - Chatbot Platform</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link rel="stylesheet" href="css/styles.css">
+  <link rel="stylesheet" href="css/analytics.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="app-container">
+    <!-- Sidebar Navigation -->
+    <nav class="sidebar">
+      <div class="sidebar-header">
+        <h1>Chatbot Platform</h1>
+      </div>
+      <ul class="sidebar-menu">
+        <li><a href="index.html"><i class="material-icons">dashboard</i> Dashboard</a></li>
+        <li><a href="chatbots.html"><i class="material-icons">chat</i> Chatbots</a></li>
+        <li><a href="templates.html"><i class="material-icons">description</i> Templates</a></li>
+        <li><a href="knowledge-bases.html"><i class="material-icons">book</i> Knowledge Bases</a></li>
+        <li><a href="training.html"><i class="material-icons">school</i> Training</a></li>
+        <li><a href="plugins.html"><i class="material-icons">extension</i> Plugins</a></li>
+        <li class="active"><a href="analytics.html"><i class="material-icons">insights</i> Analytics</a></li>
+        <li><a href="settings.html"><i class="material-icons">settings</i> Settings</a></li>
+      </ul>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+      <header class="content-header">
+        <h1>Analytics Dashboard</h1>
+        <div class="user-menu">
+          <span class="user-name">Admin</span>
+          <i class="material-icons">account_circle</i>
+        </div>
+      </header>
+
+      <!-- Analytics Dashboard -->
+      <div id="analytics-dashboard" class="dashboard-container">
+        <!-- Dashboard Controls -->
+        <div class="dashboard-controls">
+          <div class="control-group">
+            <label for="chatbot-select">Chatbot</label>
+            <select id="chatbot-select" class="form-control">
+              <option value="">Select a chatbot</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="period-select">Period</label>
+            <select id="period-select" class="form-control">
+              <option value="daily">Daily</option>
+              <option value="weekly">Weekly</option>
+              <option value="monthly" selected>Monthly</option>
+              <option value="all">All Time</option>
+            </select>
+          </div>
+          <div class="control-group">
+            <label for="date-range">Date Range</label>
+            <input type="date" id="date-range" class="form-control">
+          </div>
+        </div>
+
+        <!-- Metrics Overview -->
+        <section class="dashboard-section">
+          <h2>Metrics Overview</h2>
+          <div id="metrics-container" class="metrics-grid">
+            <!-- Metrics cards will be inserted here -->
+          </div>
+        </section>
+
+        <!-- Charts -->
+        <section class="dashboard-section">
+          <h2>Conversation Analytics</h2>
+          <div class="charts-grid">
+            <div class="chart-card">
+              <h3>Message Volume</h3>
+              <div class="chart-container">
+                <canvas id="message-volume-chart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>Sentiment Analysis</h3>
+              <div class="chart-container">
+                <canvas id="sentiment-chart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>Input Types</h3>
+              <div class="chart-container">
+                <canvas id="input-types-chart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>Output Types</h3>
+              <div class="chart-container">
+                <canvas id="output-types-chart"></canvas>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Insights -->
+        <section class="dashboard-section">
+          <h2>Insights</h2>
+          <div id="insights-container" class="insights-grid">
+            <!-- Insights cards will be inserted here -->
+          </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="dashboard-section">
+          <h2>Recommendations</h2>
+          <div id="recommendations-container" class="recommendations-grid">
+            <!-- Recommendations cards will be inserted here -->
+          </div>
+        </section>
+
+        <!-- Learning -->
+        <section class="dashboard-section">
+          <h2>Learning</h2>
+          <div id="learning-container" class="learning-container">
+            <!-- Learning content will be inserted here -->
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+
+  <!-- Loading Indicator -->
+  <div id="loading" class="loading-overlay">
+    <div class="loading-spinner"></div>
+  </div>
+
+  <!-- Notifications Container -->
+  <div id="notifications-container" class="notifications-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/app.js"></script>
+  <script src="js/analytics-dashboard.js"></script>
+</body>
+</html>

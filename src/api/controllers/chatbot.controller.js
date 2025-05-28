@@ -197,15 +197,15 @@ exports.deleteChatbot = async (req, res) => {
 };
 
 /**
- * Process message with chatbot
+ * Send message to chatbot
  * @param {Object} req - Express request object
  * @param {Object} res - Express response object
  * @param {Function} next - Express next middleware function
  */
-exports.processMessage = async (req, res, next) => {
+exports.sendMessage = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { message, sessionId, userId, language } = req.body;
+    const { message, sessionId, userId, conversationId, context } = req.body;
     
     logger.debug(`Processing message for chatbot ${id}: ${message?.substring(0, 50)}${message?.length > 50 ? '...' : ''}`);
     
@@ -213,31 +213,30 @@ exports.processMessage = async (req, res, next) => {
       throw new ValidationError('Message is required');
     }
     
-    // Process message using integration manager's web channel
-    const session = sessionId || `session-${Date.now()}`;
-    const result = await chatbotService.processMessage({
-      text: message,
-      sessionId: session,
-      userId: userId || `user-${session}`,
-      language: language || 'en',
+    // Process message with the chatbot
+    const options = {
+      sessionId: sessionId,
+      userId: userId,
+      conversationId: conversationId,
+      context: context || {},
       metadata: {
-        chatbotId: id,
         source: 'api',
         timestamp: new Date().toISOString()
       }
-    }, 'web');
+    };
     
-    logger.info(`Message processed for chatbot ${id}, session ${session}`);
+    const result = await chatbotService.processMessage(id, message, options);
+    
+    logger.info(`Message processed for chatbot ${id}, conversation ${result.conversationId}`);
     
     res.status(200).json({
       success: true,
-      response: result.response.text,
-      metadata: {
-        sessionId: session,
-        timestamp: new Date().toISOString(),
-        confidence: result.engine?.metadata?.confidence || 0,
-        intent: result.nlp?.intent || 'unknown'
-      }
+      conversationId: result.conversationId,
+      sessionId: result.sessionId,
+      message: message,
+      response: result.response,
+      timestamp: result.timestamp,
+      metadata: result.metadata
     });
   } catch (error) {
     logger.error(`Error processing message for chatbot ${req.params.id}:`, error.message);
@@ -263,24 +262,52 @@ exports.processMessage = async (req, res, next) => {
 exports.getConversationHistory = async (req, res, next) => {
   try {
     const { id } = req.params;
-    const { sessionId } = req.query;
+    const { sessionId, conversationId } = req.query;
     
-    logger.debug(`Getting conversation history for chatbot ${id}, session ${sessionId}`);
+    // Get conversation service
+    const conversationService = require('../../services/conversation.service');
     
-    if (!sessionId) {
-      throw new ValidationError('Session ID is required');
+    let conversation;
+    
+    if (conversationId) {
+      logger.debug(`Getting conversation history by ID: ${conversationId}`);
+      conversation = await conversationService.getConversationById(conversationId);
+    } else if (sessionId) {
+      logger.debug(`Getting conversation history by session ID: ${sessionId}`);
+      conversation = await conversationService.getConversationBySessionId(sessionId);
+    } else {
+      throw new ValidationError('Either session ID or conversation ID is required');
     }
     
-    // Placeholder for conversation history
-    // In a real implementation, this would fetch from the database
-    const history = [];
+    if (!conversation) {
+      return res.status(404).json({
+        success: false,
+        error: 'Not Found',
+        message: 'Conversation not found'
+      });
+    }
     
-    logger.info(`Retrieved conversation history for chatbot ${id}, session ${sessionId}: ${history.length} messages`);
+    // Verify that the conversation belongs to the specified chatbot
+    if (conversation.chatbotId.toString() !== id) {
+      return res.status(403).json({
+        success: false,
+        error: 'Forbidden',
+        message: 'Conversation does not belong to the specified chatbot'
+      });
+    }
+    
+    logger.info(`Retrieved conversation history for chatbot ${id}, conversation ${conversation._id}: ${conversation.messages.length} messages`);
     
     res.status(200).json({
       success: true,
-      count: history.length,
-      data: history
+      data: {
+        id: conversation._id,
+        sessionId: conversation.sessionId,
+        messages: conversation.messages,
+        context: conversation.context,
+        startedAt: conversation.startedAt,
+        lastMessageAt: conversation.lastMessageAt
+      }
     });
   } catch (error) {
     logger.error(`Error fetching conversation history for chatbot ${req.params.id}:`, error.message);

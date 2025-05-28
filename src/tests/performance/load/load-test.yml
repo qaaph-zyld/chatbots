@@ -1,0 +1,108 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: "Warm up phase"
+    - duration: 120
+      arrivalRate: 10
+      rampTo: 50
+      name: "Ramp up load"
+    - duration: 300
+      arrivalRate: 50
+      name: "Sustained load"
+  defaults:
+    headers:
+      Content-Type: "application/json"
+      Accept: "application/json"
+
+scenarios:
+  - name: "Chatbot conversation flow"
+    flow:
+      # Step 1: Get API token
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "{{ $processEnvironment.TEST_USER_EMAIL }}"
+            password: "{{ $processEnvironment.TEST_USER_PASSWORD }}"
+          capture:
+            - json: "$.data.token"
+              as: "userToken"
+      
+      # Step 2: Create a chatbot
+      - post:
+          url: "/api/chatbots"
+          headers:
+            Authorization: "Bearer {{ userToken }}"
+          json:
+            name: "Performance Test Bot {{ $randomString(5) }}"
+            description: "A chatbot for performance testing"
+            settings:
+              language: "en"
+              defaultPersonality: "friendly"
+          capture:
+            - json: "$.data._id"
+              as: "chatbotId"
+      
+      # Step 3: Create a web integration
+      - post:
+          url: "/api/integrations"
+          headers:
+            Authorization: "Bearer {{ userToken }}"
+          json:
+            name: "Web Integration {{ $randomString(5) }}"
+            platform: "web"
+            chatbotId: "{{ chatbotId }}"
+            config:
+              webhook: "https://example.com/webhook"
+              apiKey: "test-api-key-{{ $randomString(10) }}"
+          capture:
+            - json: "$.data._id"
+              as: "integrationId"
+      
+      # Step 4: Activate the integration
+      - post:
+          url: "/api/integrations/{{ integrationId }}/activate"
+          headers:
+            Authorization: "Bearer {{ userToken }}"
+      
+      # Step 5: Send messages to the chatbot (simulate conversation)
+      - post:
+          url: "/api/integrations/{{ integrationId }}/message"
+          json:
+            text: "Hello, how are you?"
+            userId: "user-{{ $randomString(8) }}"
+            type: "text"
+          capture:
+            - json: "$.data.conversationId"
+              as: "conversationId"
+      
+      # Step 6: Continue conversation
+      - post:
+          url: "/api/integrations/{{ integrationId }}/message"
+          json:
+            text: "What can you help me with today?"
+            userId: "user-{{ $randomString(8) }}"
+            conversationId: "{{ conversationId }}"
+            type: "text"
+      
+      # Step 7: Ask a specific question
+      - post:
+          url: "/api/integrations/{{ integrationId }}/message"
+          json:
+            text: "Tell me about your features"
+            userId: "user-{{ $randomString(8) }}"
+            conversationId: "{{ conversationId }}"
+            type: "text"
+      
+      # Step 8: Get chatbot details
+      - get:
+          url: "/api/chatbots/{{ chatbotId }}"
+          headers:
+            Authorization: "Bearer {{ userToken }}"
+      
+      # Step 9: Get integration details
+      - get:
+          url: "/api/integrations/{{ integrationId }}"
+          headers:
+            Authorization: "Bearer {{ userToken }}"

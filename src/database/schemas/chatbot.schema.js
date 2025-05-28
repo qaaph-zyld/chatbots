@@ -28,6 +28,10 @@ const ChatbotSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.Mixed,
     default: {}
   },
+  defaultPersonality: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Personality'
+  },
   status: {
     type: String,
     enum: ['active', 'inactive', 'training', 'error'],

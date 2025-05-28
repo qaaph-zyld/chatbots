@@ -80,17 +80,30 @@ class BotpressEngine extends BaseChatbotEngine {
   /**
    * Process a message
    * @param {string} message - User message
-   * @param {Object} context - Conversation context
+   * @param {Object} options - Processing options
+   * @param {Object} options.context - Conversation context
+   * @param {string} options.personalityModifier - Personality modifier text
    * @returns {Promise<Object>} - Response object with text and metadata
    */
-  async processMessage(message, context = {}) {
+  async processMessage(message, options = {}) {
     if (!this.ready) {
       logger.error('Attempted to process message with uninitialized Botpress engine');
       throw new Error('Botpress engine is not initialized');
     }
     
     try {
+      const context = options.context || {};
+      const personalityModifier = options.personalityModifier || '';
+      const knowledgeBase = options.knowledgeBase || null;
+      
       logger.debug(`Processing message with Botpress: ${message.substring(0, 50)}${message.length > 50 ? '...' : ''}`);
+      if (personalityModifier) {
+        logger.debug('Using personality modifier with Botpress engine');
+      }
+      
+      if (knowledgeBase) {
+        logger.debug(`Using knowledge base with ${knowledgeBase.count} relevant items`);
+      }
       
       // Prepare request payload
       const payload = {
@@ -102,25 +115,90 @@ class BotpressEngine extends BaseChatbotEngine {
         }
       };
       
+      // If personality modifier is provided, include it in the payload
+      if (personalityModifier) {
+        payload.personalityModifier = personalityModifier;
+      }
+      
       // In a real implementation, this would send the message to Botpress API
-      // For now, we'll simulate a response
+      // For now, we'll simulate a response that takes personality into account
       
       // Simulate different responses based on message content for demo purposes
       let responseText;
       let confidence = 0.85;
+      let usedKnowledge = false;
       
-      if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
-        responseText = 'Hello there! How can I help you today?';
-        confidence = 0.98;
-      } else if (message.toLowerCase().includes('help')) {
-        responseText = 'I\'m here to help! What do you need assistance with?';
-        confidence = 0.95;
-      } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
-        responseText = 'Goodbye! Have a great day!';
-        confidence = 0.97;
-      } else {
-        responseText = `I received your message: "${message}". How can I assist you further?`;
-        confidence = 0.75;
+      // Check for personality traits to adjust response style
+      const isInformal = personalityModifier.includes('Use casual, informal language');
+      const isFormal = personalityModifier.includes('Use formal, professional language');
+      const isHumorous = personalityModifier.includes('Use humor frequently') || personalityModifier.includes('Include occasional humor');
+      const isEmpathetic = personalityModifier.includes('Show strong empathy');
+      
+      // Check if we have relevant knowledge to use
+      if (knowledgeBase && knowledgeBase.items && knowledgeBase.items.length > 0) {
+        // Find the most relevant knowledge item
+        const mostRelevantItem = knowledgeBase.items[0];
+        
+        // Use the knowledge to generate a response
+        if (isInformal) {
+          responseText = `Based on what I know: ${mostRelevantItem.content.substring(0, 150)}${mostRelevantItem.content.length > 150 ? '...' : ''}`;
+        } else if (isFormal) {
+          responseText = `According to my knowledge base: ${mostRelevantItem.content.substring(0, 150)}${mostRelevantItem.content.length > 150 ? '...' : ''}`;
+        } else {
+          responseText = `Here's what I found: ${mostRelevantItem.content.substring(0, 150)}${mostRelevantItem.content.length > 150 ? '...' : ''}`;
+        }
+        
+        confidence = 0.92; // Higher confidence with knowledge
+        usedKnowledge = true;
+      }
+      
+      // Only generate a standard response if we haven't used knowledge base
+      if (!usedKnowledge) {
+        if (message.toLowerCase().includes('hello') || message.toLowerCase().includes('hi')) {
+          if (isInformal) {
+            responseText = 'Hey there! What can I do for you today?';
+          } else if (isFormal) {
+            responseText = 'Good day. How may I be of assistance to you?';
+          } else {
+            responseText = 'Hello there! How can I help you today?';
+          }
+          confidence = 0.98;
+        } else if (message.toLowerCase().includes('help')) {
+          if (isEmpathetic) {
+            responseText = 'I understand you need assistance. I\'m here for you - tell me what\'s troubling you and I\'ll do my best to help.';
+          } else {
+            responseText = 'I\'m here to help! What do you need assistance with?';
+          }
+          confidence = 0.95;
+        } else if (message.toLowerCase().includes('bye') || message.toLowerCase().includes('goodbye')) {
+          if (isHumorous) {
+            responseText = 'See you later, alligator! Have a fantastic day!';
+          } else if (isFormal) {
+            responseText = 'Farewell. I appreciate your time today.';
+          } else {
+            responseText = 'Goodbye! Have a great day!';
+          }
+          confidence = 0.97;
+        } else {
+          if (isInformal) {
+            responseText = `Got your message: "${message}". What else can I help with?`;
+          } else if (isFormal) {
+            responseText = `I have received your message stating: "${message}". How may I further assist you?`;
+          } else {
+            responseText = `I received your message: "${message}". How can I assist you further?`;
+          }
+          confidence = 0.75;
+        }
+      }
+      
+      // Add humor if personality calls for it and we haven't already added it
+      if (isHumorous && !responseText.includes('alligator') && Math.random() > 0.7) {
+        const humorousAdditions = [
+          " That's what I'm here for - saving the day one message at a time!",
+          " Just don't ask me to do your taxes... I'm terrible with numbers!",
+          " I'm all virtual ears!"
+        ];
+        responseText += humorousAdditions[Math.floor(Math.random() * humorousAdditions.length)];
       }
       
       // Construct response object
@@ -130,6 +208,11 @@ class BotpressEngine extends BaseChatbotEngine {
         metadata: {
           engine: this.name,
           confidence,
+          personality: personalityModifier ? true : false,
+          knowledgeBase: usedKnowledge ? {
+            used: true,
+            source: knowledgeBase.items[0].source
+          } : null,
           context: { 
             ...context,
             lastMessage: message

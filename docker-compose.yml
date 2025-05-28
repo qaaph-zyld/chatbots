@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  # Main application
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: chatbots-platform
+    container_name: chatbots-app
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - MONGODB_URI=mongodb://mongodb:27017/chatbots_dev
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=dev_jwt_secret_key_change_in_production
+      - REFRESH_TOKEN_SECRET=dev_refresh_token_secret_key_change_in_production
+    volumes:
+      - ./logs:/usr/src/app/logs
+      - ./uploads:/usr/src/app/uploads
+    depends_on:
+      - mongodb
+      - redis
+    networks:
+      - chatbots-network
+
+  # MongoDB database
+  mongodb:
+    image: mongo:6.0
+    container_name: chatbots-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+    networks:
+      - chatbots-network
+
+  # Redis for caching and rate limiting
+  redis:
+    image: redis:7.0-alpine
+    container_name: chatbots-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - chatbots-network
+
+  # Nginx for reverse proxy (optional for development)
+  nginx:
+    image: nginx:1.23-alpine
+    container_name: chatbots-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/ssl:/etc/nginx/ssl
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - app
+    networks:
+      - chatbots-network
+
+networks:
+  chatbots-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  redis-data:
