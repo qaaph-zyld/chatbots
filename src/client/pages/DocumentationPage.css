@@ -1,0 +1,155 @@
+.documentation-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.page-header {
+  background-color: var(--background-secondary-color);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.page-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary-color);
+  margin-bottom: 0;
+  max-width: 800px;
+}
+
+.page-content {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 2rem;
+}
+
+.documentation-container {
+  background-color: var(--background-color);
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  height: 700px;
+}
+
+.documentation-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.info-card {
+  background-color: var(--background-secondary-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.info-card p {
+  margin: 0 0 1rem 0;
+  color: var(--text-secondary-color);
+  line-height: 1.5;
+}
+
+.info-link {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.info-link:hover {
+  background-color: var(--primary-dark-color);
+}
+
+.community-links {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.community-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  text-decoration: none;
+  border-radius: 4px;
+  color: white;
+  transition: transform 0.2s;
+}
+
+.community-link:hover {
+  transform: translateX(5px);
+}
+
+.community-link.discord {
+  background-color: #5865F2;
+}
+
+.community-link.github {
+  background-color: #333;
+}
+
+.community-link.stackoverflow {
+  background-color: #F48024;
+}
+
+/* RTL Support */
+[dir="rtl"] .community-link:hover {
+  transform: translateX(-5px);
+}
+
+/* Responsive styles */
+@media (max-width: 1024px) {
+  .page-content {
+    grid-template-columns: 1fr;
+  }
+  
+  .documentation-container {
+    height: 600px;
+  }
+  
+  .documentation-info {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  }
+}
+
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1.5rem;
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .page-description {
+    font-size: 1rem;
+  }
+  
+  .documentation-container {
+    height: 500px;
+  }
+  
+  .documentation-info {
+    grid-template-columns: 1fr;
+  }
+}

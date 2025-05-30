@@ -182,72 +182,35 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 20px;
+  margin-top: 20px;
 }
 
 .insight-card {
-  background-color: #fff;
+  background-color: var(--card-bg);
   border-radius: 8px;
-  padding: 20px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border-left: 4px solid #9aa0a6;
+  padding: 20px;
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
 .insight-card:hover {
-  transform: translateY(-2px);
+  transform: translateY(-5px);
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
 }
 
-.insight-card.excellent {
-  border-left-color: #34a853;
-}
-
-.insight-card.good {
-  border-left-color: #4285f4;
-}
-
-.insight-card.fair {
-  border-left-color: #fbbc05;
-}
-
-.insight-card.poor {
-  border-left-color: #ea4335;
-}
-
-.insight-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+.insight-card h3 {
+  margin-top: 0;
   margin-bottom: 10px;
-}
-
-.insight-header h3 {
-  margin: 0;
-  font-size: 16px;
-  color: #202124;
-  font-weight: 500;
-}
-
-.insight-value {
-  font-weight: 500;
   font-size: 18px;
+  display: flex;
+  align-items: center;
+}
+
+.insight-card h3 i {
+  margin-right: 8px;
 }
 
 .insight-card p {
-  margin: 0 0 16px 0;
-  color: #5f6368;
-  font-size: 14px;
-  line-height: 1.5;
-}
-
-.insight-details {
-  background-color: #f5f7fa;
-  padding: 12px;
-  border-radius: 4px;
-  margin-top: 10px;
-}
-
-.insight-details h4 {
   margin: 0 0 8px 0;
   font-size: 14px;
   color: #5f6368;

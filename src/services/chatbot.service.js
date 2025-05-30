@@ -8,6 +8,7 @@ const { nlpManager } = require('../bot/nlp');
 const { templateManager } = require('../bot/templates');
 const { integrationManager } = require('../integrations');
 const { engineFactory } = require('../bot/engines');
+const { personalityService, personalityMessageProcessor } = require('../personality');
 const { logger } = require('../utils');
 const config = require('../config');
 
@@ -165,15 +166,39 @@ class ChatbotService {
         responseMetadata = { ...responseMetadata, ...templateResponse.metadata };
       }
       
+      // Apply personality modifiers if available
+      let finalResponseText = responseText;
+      
+      if (message.chatbotId) {
+        try {
+          // Get personality ID from message or use default
+          const personalityId = message.personalityId || null;
+          
+          // Apply personality modifiers
+          finalResponseText = await personalityMessageProcessor.processMessage(
+            message.chatbotId,
+            personalityId,
+            responseText,
+            { skipToneStyle: message.skipToneStyle }
+          );
+          
+          logger.debug(`Applied personality modifiers to response: ${finalResponseText.substring(0, 50)}${finalResponseText.length > 50 ? '...' : ''}`);
+        } catch (personalityError) {
+          logger.error(`Error applying personality modifiers: ${personalityError.message}`);
+          // Continue with original response if personality processing fails
+          finalResponseText = responseText;
+        }
+      }
+      
       // Send response back through the same channel
       const response = await integrationManager.sendMessage(
         channelName,
-        { text: responseText },
+        { text: finalResponseText },
         { sessionId },
         { metadata: responseMetadata }
       );
       
-      logger.info(`Response sent to ${channelName}: ${responseText.substring(0, 50)}${responseText.length > 50 ? '...' : ''}`);
+      logger.info(`Response sent to ${channelName}: ${finalResponseText.substring(0, 50)}${finalResponseText.length > 50 ? '...' : ''}`);
       
       return {
         success: true,

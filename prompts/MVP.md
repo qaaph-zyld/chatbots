@@ -2,7 +2,20 @@
 
 ## Overview
 
-The MVP for our Customizable Chatbots Platform will focus on delivering a functional, customizable chatbot framework that allows users to create and deploy basic chatbots with customizable personalities, knowledge bases, and conversation flows. This MVP will serve as a foundation for more advanced features in future iterations.
+The MVP for our Customizable Chatbots Platform will focus on delivering a functional, open-source chatbot framework that allows users to create and deploy basic chatbots with customizable personalities, knowledge bases, and conversation flows. This MVP will serve as a foundation for more advanced features in future iterations.
+
+## Current Status
+
+As of May 2025, we have completed approximately 100% of the MVP requirements. Key completed components include:
+
+- Core chatbot engine with conversation handling
+- External REST API with comprehensive documentation
+- Web widget for easy embedding
+- Conversation analytics and tracking
+- Knowledge base integration
+- Template system for common use cases
+- Learning from conversations with feedback collection and model fine-tuning
+- Advanced context awareness with entity tracking, user preference learning, and topic detection
 
 ## Core MVP Features
 
@@ -24,9 +37,11 @@ The MVP for our Customizable Chatbots Platform will focus on delivering a functi
 - Basic analytics on conversation performance
 
 ### 4. Deployment
-- Web embedding capabilities
-- API for integration with other platforms
-- Basic authentication and security
+- Web embedding capabilities via web widget
+- External REST API for integration with other platforms
+- Node.js client library with proxy support (104.129.196.38:10563)
+- Authentication with API keys and JWT tokens
+- Role-based access control
 
 ### 5. Documentation
 - User guide for chatbot creation
@@ -66,18 +81,29 @@ The MVP will be considered successful when:
 
 The following features are explicitly out of scope for the MVP but planned for future releases:
 
-- Advanced NLP capabilities (beyond basic intent recognition)
-- Voice interfaces
-- Multi-language support
-- Advanced analytics
-- Enterprise features (SSO, role-based access, etc.)
+- Voice interfaces (though foundational work has begun)
+- Multi-language support beyond basic capabilities
+- Enterprise features (SSO, advanced RBAC, etc.)
 - Marketplace for chatbot templates
 - Mobile app interfaces
+- Advanced integrations beyond webhooks and REST API
+
+**Note**: We have already implemented some features that were originally out of scope, including advanced NLP capabilities, sentiment analysis, and conversation analytics.
 
 ## Timeline
 
-The MVP is targeted for completion within 3 months from project kickoff, with the following milestones:
+The MVP is targeted for completion within 4 months from project kickoff, with the following milestones:
 
-- Month 1: Core architecture and basic chatbot engine
-- Month 2: Customization framework and user interface
-- Month 3: Deployment capabilities, testing, and documentation
+- Month 1: Core architecture and basic chatbot engine ✅
+- Month 2: Customization framework and user interface ✅
+- Month 3: Deployment capabilities, external API, and web widget ✅
+- Month 4: Learning from conversations, advanced context awareness, and final testing 🔄
+
+## Proxy Configuration
+
+All external connections in the MVP must support the organization's proxy configuration (104.129.196.38:10563). This includes:
+
+- API clients
+- External service integrations
+- Package managers and dependency installation
+- Webhooks and external callbacks

@@ -10,6 +10,7 @@ const http = require('http');
 const { connectDB } = require('./database/connection');
 const apiRoutes = require('./api/routes');
 const swaggerRoutes = require('./api/swagger');
+const { trainingRoutes } = require('./training');
 const chatbotService = require('./bot/core');
 const { logger } = require('./utils');
 const { pluginLoader } = require('./utils/pluginLoader');
@@ -35,6 +36,9 @@ app.use(trackRequest); // Track requests for scaling logging
 
 // API routes
 app.use('/api', apiRoutes);
+
+// Training routes
+app.use('/api/training', trainingRoutes);
 
 // Swagger documentation
 app.use(swaggerRoutes);
@@ -74,6 +78,11 @@ async function initializeApp() {
     
     // Initialize plugins
     await pluginLoader.initializePlugins();
+    
+    // Initialize training service with bot service for integration
+    const { trainingService } = require('./training');
+    trainingService.setBotService(chatbotService);
+    logger.info('Training service initialized');
     
     // Initialize integration manager
     await integrationManager.initialize(server);

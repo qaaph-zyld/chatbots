@@ -1,0 +1,125 @@
+name: Kubernetes Deployment
+
+on:
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - staging
+          - production
+      version:
+        description: 'Version to deploy'
+        required: true
+        default: 'latest'
+
+jobs:
+  deploy:
+    name: Deploy to Kubernetes
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_TOKEN }}
+          registry: ${{ secrets.DOCKER_REGISTRY }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ${{ secrets.DOCKER_REGISTRY }}/chatbots-platform:${{ github.event.inputs.version }}
+            ${{ secrets.DOCKER_REGISTRY }}/chatbots-platform:${{ github.sha }}
+          build-args: |
+            NODE_ENV=${{ github.event.inputs.environment }}
+          cache-from: type=registry,ref=${{ secrets.DOCKER_REGISTRY }}/chatbots-platform:buildcache
+          cache-to: type=registry,ref=${{ secrets.DOCKER_REGISTRY }}/chatbots-platform:buildcache,mode=max
+      
+      - name: Set up Kubectl
+        uses: azure/setup-kubectl@v3
+        with:
+          version: 'latest'
+      
+      - name: Set up Helm
+        uses: azure/setup-helm@v3
+        with:
+          version: 'latest'
+      
+      - name: Configure Kubernetes context
+        uses: azure/k8s-set-context@v3
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBE_CONFIG_DATA }}
+          context: ${{ secrets.KUBE_CONTEXT }}
+      
+      - name: Add Helm repositories
+        run: |
+          helm repo add bitnami https://charts.bitnami.com/bitnami
+          helm repo update
+      
+      - name: Deploy to Kubernetes
+        run: |
+          # Create namespace if it doesn't exist
+          kubectl create namespace chatbots-${{ github.event.inputs.environment }} --dry-run=client -o yaml | kubectl apply -f -
+          
+          # Set environment-specific values
+          export MONGODB_URI="${{ secrets.MONGODB_URI }}"
+          export JWT_SECRET="${{ secrets.JWT_SECRET }}"
+          export REFRESH_TOKEN_SECRET="${{ secrets.REFRESH_TOKEN_SECRET }}"
+          
+          # Deploy using Helm
+          helm upgrade --install chatbots-platform ./kubernetes/helm-chart \
+            --namespace chatbots-${{ github.event.inputs.environment }} \
+            --set image.repository=${{ secrets.DOCKER_REGISTRY }}/chatbots-platform \
+            --set image.tag=${{ github.event.inputs.version }} \
+            --set config.nodeEnv=${{ github.event.inputs.environment }} \
+            --set config.mongodb.uri=$MONGODB_URI \
+            --set config.jwt.secret=$JWT_SECRET \
+            --set config.refreshToken.secret=$REFRESH_TOKEN_SECRET \
+            --set ingress.hosts[0].host=chatbots-${{ github.event.inputs.environment }}.${{ secrets.BASE_DOMAIN }} \
+            --set ingress.enabled=true \
+            --set ingress.annotations."kubernetes\\.io/ingress\\.class"=nginx \
+            --set ingress.annotations."cert-manager\\.io/cluster-issuer"=letsencrypt-prod \
+            --wait --timeout 10m
+      
+      - name: Verify deployment
+        run: |
+          kubectl rollout status deployment/chatbots-platform -n chatbots-${{ github.event.inputs.environment }}
+          
+          # Get the deployment URL
+          echo "Application deployed to: https://chatbots-${{ github.event.inputs.environment }}.${{ secrets.BASE_DOMAIN }}"
+      
+      - name: Run post-deployment tests
+        if: github.event.inputs.environment == 'staging'
+        run: |
+          # Install test dependencies
+          npm ci
+          
+          # Run integration tests against the deployed environment
+          DEPLOYMENT_URL="https://chatbots-${{ github.event.inputs.environment }}.${{ secrets.BASE_DOMAIN }}" npm run test:integration
+        env:
+          NODE_ENV: test
+          
+      - name: Notify deployment status
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: deployments
+          SLACK_COLOR: ${{ job.status }}
+          SLACK_TITLE: "Kubernetes Deployment to ${{ github.event.inputs.environment }}"
+          SLACK_MESSAGE: "Deployment of version ${{ github.event.inputs.version }} to ${{ github.event.inputs.environment }} ${{ job.status == 'success' && 'succeeded' || 'failed' }}!"
+          SLACK_FOOTER: "Chatbots Platform CI/CD"

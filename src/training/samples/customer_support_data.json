@@ -1,0 +1,469 @@
+{
+  "domain": "customer_support",
+  "language": "en",
+  "intents": [
+    {
+      "name": "greeting",
+      "examples": [
+        "Hello",
+        "Hi there",
+        "Good morning",
+        "Hey",
+        "Hi, how are you?",
+        "Good afternoon",
+        "Good evening",
+        "Greetings",
+        "Hello there",
+        "Hi, I need some help"
+      ]
+    },
+    {
+      "name": "goodbye",
+      "examples": [
+        "Goodbye",
+        "Bye",
+        "See you later",
+        "Thanks, bye",
+        "Have a nice day",
+        "Bye bye",
+        "Take care",
+        "That's all for now",
+        "I'm done, thanks",
+        "Until next time"
+      ]
+    },
+    {
+      "name": "thank_you",
+      "examples": [
+        "Thank you",
+        "Thanks",
+        "Thanks a lot",
+        "I appreciate your help",
+        "Thank you so much",
+        "That was helpful, thanks",
+        "Great, thank you",
+        "Thanks for your assistance",
+        "Much appreciated",
+        "Thank you for your time"
+      ]
+    },
+    {
+      "name": "order_status",
+      "examples": [
+        "Where is my order?",
+        "I want to track my order",
+        "Can you check my order status?",
+        "Has my order been shipped?",
+        "When will my order arrive?",
+        "Is my order on the way?",
+        "I haven't received my order yet",
+        "Order tracking",
+        "Check delivery status",
+        "My order is late",
+        "What's happening with my order?",
+        "Order number 12345, where is it?",
+        "I ordered something last week and haven't received it",
+        "Delivery status",
+        "I need to know where my package is"
+      ]
+    },
+    {
+      "name": "return_request",
+      "examples": [
+        "I want to return an item",
+        "How do I return this?",
+        "Return policy",
+        "Can I get a refund?",
+        "I received a damaged product",
+        "Wrong item delivered",
+        "Return process",
+        "I need to send this back",
+        "The product is defective",
+        "Exchange item",
+        "Return authorization",
+        "How long do I have to return?",
+        "Is return shipping free?",
+        "I don't like the product I received",
+        "Return label request"
+      ]
+    },
+    {
+      "name": "product_inquiry",
+      "examples": [
+        "Do you have this in blue?",
+        "What sizes are available?",
+        "Is this product in stock?",
+        "Product specifications",
+        "Does this come with a warranty?",
+        "What's the difference between model X and Y?",
+        "Is this compatible with my device?",
+        "How long is the cable?",
+        "What material is this made of?",
+        "Does this require batteries?",
+        "When will you restock this item?",
+        "Can I use this outdoors?",
+        "Is this waterproof?",
+        "How much does it weigh?",
+        "What are the dimensions?"
+      ]
+    },
+    {
+      "name": "shipping_inquiry",
+      "examples": [
+        "How long does shipping take?",
+        "Do you ship internationally?",
+        "Shipping options",
+        "Do you offer free shipping?",
+        "How much is express shipping?",
+        "Do you ship to PO boxes?",
+        "Shipping to Canada",
+        "Fastest shipping method",
+        "Can I change my shipping address?",
+        "When will my order ship?",
+        "Do you offer same-day delivery?",
+        "Shipping costs",
+        "Do you ship on weekends?",
+        "Shipping restrictions",
+        "Is there a tracking number?"
+      ]
+    },
+    {
+      "name": "payment_issue",
+      "examples": [
+        "My payment was declined",
+        "Problem with payment",
+        "Can I change my payment method?",
+        "Do you accept PayPal?",
+        "Payment options",
+        "My credit card was charged twice",
+        "How do I update my billing information?",
+        "Can I pay on delivery?",
+        "Do you offer installment payments?",
+        "My discount code isn't working",
+        "Can I use multiple payment methods?",
+        "Is it safe to enter my credit card?",
+        "When will I be charged?",
+        "My bank is showing a pending charge",
+        "Can I get an invoice?"
+      ]
+    },
+    {
+      "name": "account_help",
+      "examples": [
+        "I forgot my password",
+        "How do I reset my password?",
+        "Can't log in to my account",
+        "How do I create an account?",
+        "Update my email address",
+        "Change my username",
+        "Delete my account",
+        "Where is my order history?",
+        "How do I update my profile?",
+        "Add a new address",
+        "My account is locked",
+        "Security settings",
+        "Two-factor authentication",
+        "Privacy settings",
+        "Manage subscriptions"
+      ]
+    },
+    {
+      "name": "speak_to_agent",
+      "examples": [
+        "I want to speak to a human",
+        "Connect me with an agent",
+        "Real person please",
+        "Talk to representative",
+        "Can I speak to customer service?",
+        "I need to talk to someone",
+        "This bot isn't helping",
+        "Transfer to agent",
+        "Human support",
+        "Live chat",
+        "Is there a phone number I can call?",
+        "I need to speak with a manager",
+        "Agent please",
+        "This is frustrating, I need a person",
+        "Can I talk to someone who can help me?"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "name": "order_number",
+      "values": [
+        "12345",
+        "ORD-9876",
+        "A12B34C",
+        "ORDER-567890",
+        "#54321"
+      ],
+      "patterns": [
+        "\\b[A-Z0-9]{5,10}\\b",
+        "\\bORD-[0-9]{4,6}\\b",
+        "\\b#[0-9]{5}\\b",
+        "\\bORDER-[0-9]{6}\\b"
+      ]
+    },
+    {
+      "name": "product_name",
+      "values": [
+        "smartphone",
+        "laptop",
+        "headphones",
+        "camera",
+        "tablet",
+        "smartwatch",
+        "speaker",
+        "TV",
+        "monitor",
+        "keyboard",
+        "mouse",
+        "printer",
+        "router",
+        "hard drive",
+        "USB drive"
+      ]
+    },
+    {
+      "name": "color",
+      "values": [
+        "red",
+        "blue",
+        "green",
+        "black",
+        "white",
+        "silver",
+        "gold",
+        "purple",
+        "pink",
+        "yellow",
+        "orange",
+        "gray",
+        "brown",
+        "navy",
+        "teal"
+      ]
+    },
+    {
+      "name": "size",
+      "values": [
+        "small",
+        "medium",
+        "large",
+        "extra large",
+        "XS",
+        "S",
+        "M",
+        "L",
+        "XL",
+        "XXL",
+        "one size",
+        "32",
+        "34",
+        "36",
+        "38"
+      ]
+    },
+    {
+      "name": "payment_method",
+      "values": [
+        "credit card",
+        "debit card",
+        "PayPal",
+        "Apple Pay",
+        "Google Pay",
+        "bank transfer",
+        "gift card",
+        "store credit",
+        "check",
+        "money order",
+        "cryptocurrency",
+        "Venmo",
+        "cash on delivery",
+        "Klarna",
+        "Afterpay"
+      ]
+    },
+    {
+      "name": "shipping_method",
+      "values": [
+        "standard",
+        "express",
+        "overnight",
+        "two-day",
+        "same-day",
+        "international",
+        "priority",
+        "economy",
+        "ground",
+        "air",
+        "freight",
+        "pickup",
+        "local delivery",
+        "free shipping",
+        "flat rate"
+      ]
+    }
+  ],
+  "responses": {
+    "greeting": [
+      "Hello! Welcome to our customer support. How can I help you today?",
+      "Hi there! How may I assist you?",
+      "Good day! What can I help you with?",
+      "Hello and welcome! How can I be of service today?",
+      "Hi! Thanks for reaching out. What do you need help with?"
+    ],
+    "goodbye": [
+      "Thank you for contacting us. Have a great day!",
+      "It was a pleasure assisting you. Goodbye!",
+      "If you need anything else, don't hesitate to reach out. Goodbye!",
+      "Thanks for chatting with us. Have a wonderful day!",
+      "Goodbye! Feel free to contact us again if you need further assistance."
+    ],
+    "thank_you": [
+      "You're welcome! Is there anything else I can help you with?",
+      "Happy to help! Let me know if you need anything else.",
+      "My pleasure! Is there anything else you'd like to know?",
+      "You're very welcome. Don't hesitate to reach out if you have more questions.",
+      "Glad I could assist. Anything else you need help with today?"
+    ],
+    "order_status": [
+      "I'd be happy to check on your order status. Could you please provide your order number?",
+      "Let me look up your order for you. What's your order number?",
+      "I can help track your order. Please share your order number so I can check its status.",
+      "To check your order status, I'll need your order number. Could you provide that for me?",
+      "I'll check where your order is right away. What's the order number?"
+    ],
+    "return_request": [
+      "I'm sorry to hear you want to return your purchase. Our return policy allows returns within 30 days of delivery. Would you like me to help you start the return process?",
+      "I can help you with your return. Could you tell me what item you want to return and why?",
+      "Our return process is simple. First, could you provide your order number and tell me which item you're returning?",
+      "I'd be happy to assist with your return. Please let me know your order number and the reason for the return.",
+      "To process your return, I'll need some information. Could you share your order number and which item you're returning?"
+    ],
+    "product_inquiry": [
+      "I'd be happy to provide information about that product. What specific details would you like to know?",
+      "Let me check that product information for you. What exactly would you like to know about it?",
+      "I can help with your product questions. What specific information are you looking for?",
+      "I'd be glad to tell you more about that product. What details are you interested in?",
+      "Let me get you the product information you need. What specifically would you like to know?"
+    ],
+    "shipping_inquiry": [
+      "Our standard shipping takes 3-5 business days within the continental US. Express shipping is available for 1-2 business days. Would you like more information about our shipping options?",
+      "I'd be happy to provide shipping information. Are you asking about a specific region or shipping method?",
+      "We offer several shipping options, including standard (3-5 days) and express (1-2 days). International shipping varies by location. What specific shipping information do you need?",
+      "For shipping information, it depends on your location. Could you tell me where you're located so I can provide accurate shipping details?",
+      "Our shipping options include standard, express, and international shipping. What specific shipping details would you like to know?"
+    ],
+    "payment_issue": [
+      "I'm sorry to hear you're having payment issues. Could you provide more details about the problem you're experiencing?",
+      "Let's resolve your payment issue. Could you tell me more about what's happening?",
+      "I apologize for the payment difficulties. To help you better, could you explain what specific payment problem you're facing?",
+      "Payment issues can be frustrating. Could you share more details about the problem so I can assist you properly?",
+      "I'd be happy to help with your payment concern. Could you describe the issue in more detail?"
+    ],
+    "account_help": [
+      "I can help with your account. What specific account issue are you having?",
+      "Let's get your account sorted out. Could you tell me more about what you need help with?",
+      "I'd be happy to assist with your account. What exactly are you trying to do?",
+      "Account issues can be resolved quickly. Could you provide more details about what you need help with?",
+      "I can help you with your account settings. What specific account assistance do you need?"
+    ],
+    "speak_to_agent": [
+      "I understand you'd like to speak with a human agent. I'll transfer you to the next available representative. Please hold for a moment.",
+      "I'd be happy to connect you with a customer service representative. Please hold while I transfer you.",
+      "I'll connect you with a human agent right away. Thank you for your patience.",
+      "I'm transferring you to a customer service agent now. They'll be with you shortly.",
+      "I understand you want to speak with a representative. I'm connecting you with an agent now."
+    ],
+    "fallback": [
+      "I'm sorry, I didn't quite understand that. Could you please rephrase or provide more details?",
+      "I apologize, but I'm not sure what you're asking. Could you try explaining it differently?",
+      "I didn't catch that. Could you please rephrase your question?",
+      "I'm having trouble understanding your request. Could you provide more information?",
+      "I'm sorry, but I'm not sure how to help with that. Could you try asking in a different way?"
+    ]
+  },
+  "training_examples": [
+    {
+      "input": "Hi there, I need some help",
+      "expected_intent": "greeting",
+      "expected_entities": []
+    },
+    {
+      "input": "Where is my order #54321?",
+      "expected_intent": "order_status",
+      "expected_entities": [
+        {
+          "entity": "order_number",
+          "value": "#54321"
+        }
+      ]
+    },
+    {
+      "input": "I want to return my headphones",
+      "expected_intent": "return_request",
+      "expected_entities": [
+        {
+          "entity": "product_name",
+          "value": "headphones"
+        }
+      ]
+    },
+    {
+      "input": "Do you have this laptop in silver?",
+      "expected_intent": "product_inquiry",
+      "expected_entities": [
+        {
+          "entity": "product_name",
+          "value": "laptop"
+        },
+        {
+          "entity": "color",
+          "value": "silver"
+        }
+      ]
+    },
+    {
+      "input": "How long does express shipping take?",
+      "expected_intent": "shipping_inquiry",
+      "expected_entities": [
+        {
+          "entity": "shipping_method",
+          "value": "express"
+        }
+      ]
+    },
+    {
+      "input": "My PayPal payment was declined",
+      "expected_intent": "payment_issue",
+      "expected_entities": [
+        {
+          "entity": "payment_method",
+          "value": "PayPal"
+        }
+      ]
+    },
+    {
+      "input": "I need to reset my password",
+      "expected_intent": "account_help",
+      "expected_entities": []
+    },
+    {
+      "input": "Can I speak to a real person please?",
+      "expected_intent": "speak_to_agent",
+      "expected_entities": []
+    },
+    {
+      "input": "Thanks for your help",
+      "expected_intent": "thank_you",
+      "expected_entities": []
+    },
+    {
+      "input": "Goodbye, have a nice day",
+      "expected_intent": "goodbye",
+      "expected_entities": []
+    }
+  ]
+}

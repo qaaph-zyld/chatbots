@@ -1,0 +1,337 @@
+{
+  "dataset_reader": {
+    "class_name": "basic_classification_reader",
+    "x": "text",
+    "y": "intent",
+    "data_path": "ecommerce_dataset.csv"
+  },
+  "dataset_iterator": {
+    "class_name": "basic_classification_iterator",
+    "seed": 42
+  },
+  "chainer": {
+    "in": ["x"],
+    "in_y": ["y"],
+    "pipe": [
+      {
+        "class_name": "bert_preprocessor",
+        "vocab_file": "{BERT_PATH}/vocab.txt",
+        "do_lower_case": true,
+        "max_seq_length": 128
+      },
+      {
+        "class_name": "bert_classifier",
+        "bert_config_file": "{BERT_PATH}/bert_config.json",
+        "pretrained_bert": "{BERT_PATH}/bert_model.ckpt",
+        "save_path": "{MODEL_PATH}/model",
+        "load_path": "{MODEL_PATH}/model",
+        "keep_prob": 0.5,
+        "n_classes": 10
+      }
+    ],
+    "out": ["y_pred"]
+  },
+  "train": {
+    "epochs": 5,
+    "batch_size": 16,
+    "metrics": ["accuracy", "f1_macro"],
+    "validation_patience": 3,
+    "val_every_n_epochs": 1,
+    "log_every_n_batches": 10,
+    "class_name": "nn_trainer"
+  },
+  "metadata": {
+    "variables": {
+      "BERT_PATH": "{DEEPPAVLOV_PATH}/downloads/bert_models/bert-base-uncased",
+      "MODEL_PATH": "{DEEPPAVLOV_PATH}/models/ecommerce_intent_classifier",
+      "DEEPPAVLOV_PATH": "."
+    },
+    "download": [
+      {
+        "url": "http://files.deeppavlov.ai/deeppavlov_data/bert/bert-base-uncased.tar.gz",
+        "subdir": "{DEEPPAVLOV_PATH}/downloads/bert_models"
+      }
+    ]
+  },
+  "intents": [
+    {
+      "intent": "product_search",
+      "examples": [
+        "I'm looking for a new laptop",
+        "Show me red dresses",
+        "Do you have wireless headphones?",
+        "I need a phone case for iPhone 13",
+        "Where can I find kitchen appliances?",
+        "Show me men's shoes",
+        "I want to see gaming keyboards",
+        "Find me a blue shirt in size L",
+        "Show me bestselling products",
+        "I'm interested in smart home devices"
+      ]
+    },
+    {
+      "intent": "price_query",
+      "examples": [
+        "How much is this?",
+        "What's the price of this laptop?",
+        "Is there a discount on this item?",
+        "Do you have any sales going on?",
+        "Price check on Samsung TV",
+        "What's your cheapest option?",
+        "Is this the final price?",
+        "Are there any coupon codes available?",
+        "Do you price match?",
+        "How much would it cost with shipping?"
+      ]
+    },
+    {
+      "intent": "product_comparison",
+      "examples": [
+        "What's the difference between these two models?",
+        "Compare iPhone 13 and iPhone 12",
+        "Which one is better?",
+        "How does this compare to the other brand?",
+        "What are the pros and cons of each?",
+        "Which has better features?",
+        "Is the premium version worth it?",
+        "What's the main difference between these laptops?",
+        "Which would you recommend?",
+        "How do these products differ?"
+      ]
+    },
+    {
+      "intent": "availability_check",
+      "examples": [
+        "Is this item in stock?",
+        "When will you restock this product?",
+        "Do you have this in blue?",
+        "Is this available for pickup?",
+        "Do you have this in size medium?",
+        "Check availability in my local store",
+        "Is this product still available?",
+        "When will this be back in stock?",
+        "Do you have more in the warehouse?",
+        "Can I get notified when this is available?"
+      ]
+    },
+    {
+      "intent": "shopping_cart",
+      "examples": [
+        "Add this to my cart",
+        "Remove this item from my cart",
+        "What's in my shopping cart?",
+        "Update quantity to 2",
+        "Empty my cart",
+        "Save this item for later",
+        "Move to wishlist",
+        "How do I edit my cart?",
+        "Can I save my cart for later?",
+        "I can't add this to my cart"
+      ]
+    },
+    {
+      "intent": "checkout_help",
+      "examples": [
+        "How do I checkout?",
+        "I'm having trouble completing my purchase",
+        "Where do I enter my promo code?",
+        "Can I change my shipping address?",
+        "How do I change my payment method?",
+        "My payment was declined",
+        "Can I place an order without creating an account?",
+        "Is the checkout secure?",
+        "I can't complete my order",
+        "How long does checkout take?"
+      ]
+    },
+    {
+      "intent": "shipping_info",
+      "examples": [
+        "How much is shipping?",
+        "Do you offer free shipping?",
+        "How long will delivery take?",
+        "Do you ship internationally?",
+        "What shipping options do you have?",
+        "Can I track my package?",
+        "Do you ship to PO boxes?",
+        "What's the fastest shipping method?",
+        "Is there same-day delivery?",
+        "How do I change my shipping address?"
+      ]
+    },
+    {
+      "intent": "return_policy",
+      "examples": [
+        "What's your return policy?",
+        "How do I return an item?",
+        "Can I exchange this for a different size?",
+        "Do I need the original packaging to return?",
+        "How long do I have to return?",
+        "Is return shipping free?",
+        "Where's my refund?",
+        "Can I return a gift?",
+        "Do you offer store credit?",
+        "What items can't be returned?"
+      ]
+    },
+    {
+      "intent": "account_help",
+      "examples": [
+        "How do I create an account?",
+        "I forgot my password",
+        "How do I update my profile?",
+        "Where can I see my order history?",
+        "How do I change my email address?",
+        "Can I delete my account?",
+        "How do I subscribe to newsletters?",
+        "Where are my saved payment methods?",
+        "How do I add a new address?",
+        "I can't log in to my account"
+      ]
+    },
+    {
+      "intent": "contact_support",
+      "examples": [
+        "I want to speak to customer service",
+        "How do I contact you?",
+        "Is there a phone number I can call?",
+        "Do you have live chat?",
+        "I need to speak with a representative",
+        "What are your customer service hours?",
+        "Can I email your support team?",
+        "I need help with my order",
+        "Connect me with an agent",
+        "I have a complaint I'd like to discuss"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "entity": "product_type",
+      "values": [
+        "laptop",
+        "phone",
+        "headphones",
+        "TV",
+        "dress",
+        "shirt",
+        "shoes",
+        "keyboard",
+        "appliance",
+        "smart device"
+      ]
+    },
+    {
+      "entity": "color",
+      "values": [
+        "red",
+        "blue",
+        "black",
+        "white",
+        "green",
+        "yellow",
+        "purple",
+        "pink",
+        "gray",
+        "brown"
+      ]
+    },
+    {
+      "entity": "size",
+      "values": [
+        "small",
+        "medium",
+        "large",
+        "XL",
+        "XXL",
+        "S",
+        "M",
+        "L",
+        "XS",
+        "one size"
+      ]
+    },
+    {
+      "entity": "brand",
+      "values": [
+        "Apple",
+        "Samsung",
+        "Sony",
+        "Nike",
+        "Adidas",
+        "Dell",
+        "HP",
+        "Lenovo",
+        "LG",
+        "Microsoft"
+      ]
+    },
+    {
+      "entity": "price_range",
+      "values": [
+        "under $50",
+        "$50-$100",
+        "$100-$500",
+        "$500-$1000",
+        "over $1000",
+        "budget",
+        "mid-range",
+        "premium",
+        "luxury",
+        "affordable"
+      ]
+    }
+  ],
+  "responses": {
+    "product_search": [
+      "I'll help you find the perfect {product_type}. Could you tell me more about what features you're looking for?",
+      "Let me search for {product_type} in our catalog. Do you have any specific requirements?",
+      "I can help you find {product_type}. Would you like to filter by brand, price, or features?"
+    ],
+    "price_query": [
+      "The price for this {product_type} is {price}. Would you like to know about any current promotions?",
+      "This item costs {price}. We do have a sale going on that might apply!",
+      "The {product_type} is priced at {price}. Would you like me to check if there are any applicable discounts?"
+    ],
+    "product_comparison": [
+      "Let me compare those options for you. The main differences are {differences}.",
+      "When comparing these products, you should consider {comparison_points}.",
+      "Here's how these products compare: {comparison_details}."
+    ],
+    "availability_check": [
+      "Let me check if the {product_type} is available. {availability_status}",
+      "The {product_type} in {color} is currently {availability_status}.",
+      "I've checked our inventory, and the {product_type} is {availability_status}."
+    ],
+    "shopping_cart": [
+      "I've updated your shopping cart. You now have {item_count} items with a total of {total_price}.",
+      "Your cart has been updated. Would you like to proceed to checkout?",
+      "I've made the changes to your cart. Is there anything else you'd like to add?"
+    ],
+    "checkout_help": [
+      "I can help you complete your purchase. What specific issue are you having with checkout?",
+      "Let me guide you through the checkout process. First, {checkout_step_1}",
+      "I'm sorry you're having trouble with checkout. Let's troubleshoot the issue together."
+    ],
+    "shipping_info": [
+      "For shipping to your location, we offer {shipping_options}. The estimated delivery time is {delivery_time}.",
+      "Shipping costs {shipping_cost} and will take approximately {delivery_time}.",
+      "We offer {shipping_options} for delivery to your area. Would you like more details on any specific option?"
+    ],
+    "return_policy": [
+      "Our return policy allows returns within {return_period} days of purchase. {return_conditions}",
+      "You can return items within {return_period} days. Would you like me to help you start a return?",
+      "For returns, you'll need {return_requirements}. The process is {return_process}."
+    ],
+    "account_help": [
+      "I can help you with your account. What specific issue are you experiencing?",
+      "Let me assist you with your account. Could you provide more details about what you need help with?",
+      "I'd be happy to help with your account. What would you like to do?"
+    ],
+    "contact_support": [
+      "You can reach our customer support team at {support_phone} or via email at {support_email}. Our hours are {support_hours}.",
+      "I'll connect you with a customer service representative right away.",
+      "Our support team is available {support_hours}. Would you like me to transfer you to a live agent now?"
+    ]
+  }
+}

@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open-Source Voice Interface Demo</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Open-Source Voice Interface Demo</h1>
+            <p>A demonstration of the open-source voice capabilities for the chatbot platform</p>
+        </header>
+
+        <div class="demo-container">
+            <div class="voice-controls">
+                <div class="control-panel">
+                    <h2>Voice Controls</h2>
+                    <div class="control-buttons">
+                        <button id="recordBtn" class="btn primary">
+                            <span class="material-icons">mic</span>
+                            Record
+                        </button>
+                        <button id="stopBtn" class="btn danger" disabled>
+                            <span class="material-icons">stop</span>
+                            Stop
+                        </button>
+                        <button id="playBtn" class="btn secondary" disabled>
+                            <span class="material-icons">play_arrow</span>
+                            Play
+                        </button>
+                    </div>
+                </div>
+
+                <div class="processing-options">
+                    <h3>Audio Processing Options</h3>
+                    <div class="checkbox-group">
+                        <label>
+                            <input type="checkbox" id="normalizeAudio" checked>
+                            Normalize Audio
+                        </label>
+                        <label>
+                            <input type="checkbox" id="removeNoise" checked>
+                            Remove Noise
+                        </label>
+                        <label>
+                            <input type="checkbox" id="removeSilence">
+                            Remove Silence
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="voice-features">
+                <div class="feature-tabs">
+                    <button class="tab-btn active" data-tab="recognition">Speaker Recognition</button>
+                    <button class="tab-btn" data-tab="language">Language Detection</button>
+                    <button class="tab-btn" data-tab="models">Voice Models</button>
+                </div>
+
+                <div class="feature-content">
+                    <div id="recognition" class="tab-content active">
+                        <h3>Speaker Recognition</h3>
+                        <div class="speaker-profiles">
+                            <h4>Speaker Profiles</h4>
+                            <div class="profile-list" id="profileList">
+                                <p>No speaker profiles available</p>
+                            </div>
+                            <div class="profile-actions">
+                                <input type="text" id="speakerName" placeholder="Speaker Name">
+                                <button id="createProfileBtn" class="btn small">Create Profile</button>
+                            </div>
+                        </div>
+                        <div class="recognition-actions">
+                            <button id="enrollBtn" class="btn secondary small" disabled>Enroll Speaker</button>
+                            <button id="verifyBtn" class="btn secondary small" disabled>Verify Speaker</button>
+                            <button id="identifyBtn" class="btn secondary small" disabled>Identify Speaker</button>
+                        </div>
+                        <div class="recognition-results" id="recognitionResults">
+                            <p>Recognition results will appear here</p>
+                        </div>
+                    </div>
+
+                    <div id="language" class="tab-content">
+                        <h3>Language Detection</h3>
+                        <div class="language-input">
+                            <textarea id="languageText" placeholder="Enter text for language detection..."></textarea>
+                            <button id="detectLanguageBtn" class="btn secondary">Detect Language</button>
+                        </div>
+                        <div class="language-results" id="languageResults">
+                            <p>Language detection results will appear here</p>
+                        </div>
+                        <div class="supported-languages">
+                            <h4>Supported Languages</h4>
+                            <div id="supportedLanguages" class="language-list">
+                                <p>Loading supported languages...</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div id="models" class="tab-content">
+                        <h3>Voice Models</h3>
+                        <div class="model-status">
+                            <h4>Model Status</h4>
+                            <div id="modelStatus" class="status-container">
+                                <p>Loading model status...</p>
+                            </div>
+                        </div>
+                        <div class="model-actions">
+                            <h4>Available Models</h4>
+                            <div id="availableModels" class="model-list">
+                                <p>Loading available models...</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="audio-visualizer">
+            <h3>Audio Visualizer</h3>
+            <canvas id="visualizer"></canvas>
+            <div class="audio-info" id="audioInfo">
+                <p>No audio recorded</p>
+            </div>
+        </div>
+
+        <div class="status-bar">
+            <div id="statusMessage">Ready</div>
+            <div class="audio-timer" id="audioTimer">00:00</div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

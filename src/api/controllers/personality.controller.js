@@ -4,7 +4,7 @@
  * Handles all personality-related operations and API endpoints
  */
 
-const personalityService = require('../../services/personality.service');
+const { personalityService } = require('../../personality');
 const { logger } = require('../../utils');
 const { ValidationError } = require('../../utils/errors');
 

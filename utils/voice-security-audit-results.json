@@ -1,0 +1,78 @@
+{
+  "auditDate": "2025-05-23T11:58:00+02:00",
+  "version": "1.0.0",
+  "summary": {
+    "totalFiles": 8,
+    "filesWithIssues": 4,
+    "totalIssues": 7,
+    "criticalIssues": 2,
+    "highIssues": 3,
+    "mediumIssues": 2,
+    "lowIssues": 0
+  },
+  "issues": [
+    {
+      "id": "SEC-001",
+      "type": "command-injection",
+      "severity": "critical",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\utils\\audio-processor.js",
+      "line": 125,
+      "description": "Potential command injection vulnerability in audio processing command",
+      "code": "exec(`ffmpeg -i ${inputFile} ${options.join(' ')} ${outputFile}`)"
+    },
+    {
+      "id": "SEC-002",
+      "type": "path-traversal",
+      "severity": "high",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\utils\\model-manager.js",
+      "line": 87,
+      "description": "Path traversal vulnerability in model download path",
+      "code": "const downloadPath = path.join(modelDir, modelFileName);"
+    },
+    {
+      "id": "SEC-003",
+      "type": "hardcoded-secrets",
+      "severity": "high",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\services\\voice-recognition.service.js",
+      "line": 42,
+      "description": "Hardcoded API key in voice recognition service",
+      "code": "const apiKey = 'abcd1234efgh5678ijkl9012';"
+    },
+    {
+      "id": "SEC-004",
+      "type": "insecure-random",
+      "severity": "medium",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\utils\\audio-processor.js",
+      "line": 203,
+      "description": "Use of insecure random number generation",
+      "code": "const randomId = Math.random().toString(36).substring(2, 15);"
+    },
+    {
+      "id": "SEC-005",
+      "type": "unsafe-file-operations",
+      "severity": "medium",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\utils\\model-manager.js",
+      "line": 142,
+      "description": "Unsafe file operations without proper error handling",
+      "code": "fs.writeFileSync(modelInfoPath, JSON.stringify(modelInfo, null, 2));"
+    },
+    {
+      "id": "SEC-006",
+      "type": "privacy-issue",
+      "severity": "high",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\controllers\\voice-recognition.controller.js",
+      "line": 78,
+      "description": "Logging sensitive user voice data",
+      "code": "console.log('Processing voice data for user:', userId, audioData);"
+    },
+    {
+      "id": "SEC-007",
+      "type": "model-validation",
+      "severity": "critical",
+      "file": "c:\\Users\\ajelacn\\Documents\\chatbots\\src\\utils\\model-manager.js",
+      "line": 215,
+      "description": "Missing model validation before loading",
+      "code": "return loadModel(modelPath);"
+    }
+  ]
+}

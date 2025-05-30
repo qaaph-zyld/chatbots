@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chatbots Platform Web Widget Demo</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #f9fafb;
+      color: #111827;
+    }
+    
+    .container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+    
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 1rem;
+      color: #2563eb;
+    }
+    
+    h2 {
+      font-size: 1.5rem;
+      margin-top: 2rem;
+      margin-bottom: 1rem;
+    }
+    
+    p {
+      line-height: 1.6;
+      margin-bottom: 1rem;
+    }
+    
+    .demo-section {
+      background-color: white;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    
+    .code-block {
+      background-color: #f3f4f6;
+      padding: 15px;
+      border-radius: 6px;
+      overflow-x: auto;
+      font-family: 'Courier New', Courier, monospace;
+      margin-bottom: 1rem;
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: #2563eb;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 500;
+      margin-right: 10px;
+      margin-bottom: 10px;
+      cursor: pointer;
+      border: none;
+      transition: background-color 0.2s;
+    }
+    
+    .button:hover {
+      background-color: #1d4ed8;
+    }
+    
+    .button-secondary {
+      background-color: #9ca3af;
+    }
+    
+    .button-secondary:hover {
+      background-color: #6b7280;
+    }
+    
+    .config-form {
+      margin-top: 20px;
+    }
+    
+    .form-group {
+      margin-bottom: 15px;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 500;
+    }
+    
+    input, select {
+      width: 100%;
+      padding: 8px 12px;
+      border: 1px solid #d1d5db;
+      border-radius: 4px;
+      font-size: 14px;
+    }
+    
+    .color-input {
+      display: flex;
+      align-items: center;
+    }
+    
+    .color-input input[type="color"] {
+      width: 50px;
+      margin-right: 10px;
+    }
+    
+    .color-input input[type="text"] {
+      flex: 1;
+    }
+    
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      color: #6b7280;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Chatbots Platform Web Widget</h1>
+    <p>This is a demo of the embeddable web widget for the Chatbots Platform. Use the controls below to customize the widget and see how it can be integrated into your website.</p>
+    
+    <div class="demo-section">
+      <h2>Quick Start</h2>
+      <p>Add the following script to your website to integrate the chatbot widget:</p>
+      <div class="code-block">
+        &lt;script src="https://cdn.chatbots-platform.example.com/widget.js" 
+          data-chatbot-widget="true"
+          data-auto-init="true"
+          data-api-key="YOUR_API_KEY"
+          data-chatbot-id="YOUR_CHATBOT_ID"
+          data-position="right"
+          data-theme="light"&gt;&lt;/script&gt;
+      </div>
+      
+      <h2>Widget Configuration</h2>
+      <div class="config-form">
+        <div class="form-group">
+          <label for="apiKey">API Key</label>
+          <input type="text" id="apiKey" value="demo-api-key-123">
+        </div>
+        
+        <div class="form-group">
+          <label for="chatbotId">Chatbot ID</label>
+          <input type="text" id="chatbotId" value="demo-chatbot-123">
+        </div>
+        
+        <div class="form-group">
+          <label for="position">Position</label>
+          <select id="position">
+            <option value="right">Right</option>
+            <option value="left">Left</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="theme">Theme</label>
+          <select id="theme">
+            <option value="light">Light</option>
+            <option value="dark">Dark</option>
+            <option value="auto">Auto (System Preference)</option>
+          </select>
+        </div>
+        
+        <div class="form-group">
+          <label for="title">Title</label>
+          <input type="text" id="title" value="Chatbot Assistant">
+        </div>
+        
+        <div class="form-group">
+          <label for="subtitle">Subtitle</label>
+          <input type="text" id="subtitle" value="How can I help you today?">
+        </div>
+        
+        <div class="form-group">
+          <label for="welcomeMessage">Welcome Message</label>
+          <input type="text" id="welcomeMessage" value="Hello! How can I assist you today?">
+        </div>
+        
+        <div class="form-group">
+          <label for="primaryColor">Primary Color</label>
+          <div class="color-input">
+            <input type="color" id="primaryColorPicker" value="#2563eb">
+            <input type="text" id="primaryColor" value="#2563eb">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="secondaryColor">Secondary Color</label>
+          <div class="color-input">
+            <input type="color" id="secondaryColorPicker" value="#f3f4f6">
+            <input type="text" id="secondaryColor" value="#f3f4f6">
+          </div>
+        </div>
+        
+        <div class="form-group">
+          <label for="textColor">Text Color</label>
+          <div class="color-input">
+            <input type="color" id="textColorPicker" value="#111827">
+            <input type="text" id="textColor" value="#111827">
+          </div>
+        </div>
+        
+        <button id="applyConfig" class="button">Apply Configuration</button>
+        <button id="resetConfig" class="button button-secondary">Reset to Defaults</button>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>JavaScript API</h2>
+      <p>You can also initialize and control the widget programmatically:</p>
+      <div class="code-block">
+const widget = new ChatbotWidget({
+  apiKey: 'YOUR_API_KEY',
+  chatbotId: 'YOUR_CHATBOT_ID',
+  position: 'right',
+  theme: 'light',
+  title: 'Chatbot Assistant',
+  subtitle: 'How can I help you today?',
+  welcomeMessage: 'Hello! How can I assist you today?',
+  primaryColor: '#2563eb',
+  secondaryColor: '#f3f4f6',
+  textColor: '#111827'
+});
+
+widget.init();
+      </div>
+      
+      <h2>API Methods</h2>
+      <button id="openWidget" class="button">Open Widget</button>
+      <button id="closeWidget" class="button">Close Widget</button>
+      <button id="toggleWidget" class="button">Toggle Widget</button>
+      <button id="clearConversation" class="button">Clear Conversation</button>
+      <button id="sendMessage" class="button">Send Test Message</button>
+    </div>
+  </div>
+  
+  <footer>
+    <p>&copy; 2025 Chatbots Platform. All rights reserved.</p>
+  </footer>
+  
+  <script>
+    // This script will be replaced by the actual widget code when built
+    document.addEventListener('DOMContentLoaded', () => {
+      // Color picker sync
+      document.getElementById('primaryColorPicker').addEventListener('input', (e) => {
+        document.getElementById('primaryColor').value = e.target.value;
+      });
+      
+      document.getElementById('secondaryColorPicker').addEventListener('input', (e) => {
+        document.getElementById('secondaryColor').value = e.target.value;
+      });
+      
+      document.getElementById('textColorPicker').addEventListener('input', (e) => {
+        document.getElementById('textColor').value = e.target.value;
+      });
+      
+      // API method buttons will be connected to the widget after it's loaded
+    });
+  </script>
+</body>
+</html>

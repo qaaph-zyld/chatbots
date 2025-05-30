@@ -5,6 +5,9 @@
  */
 
 const { analyticsService, insightsService, learningService } = require('../../analytics');
+const { conversationTrackingService, conversationDashboardService, conversationInsightsService } = require('../../analytics/conversation');
+const feedbackService = require('../../analytics/conversation/feedback.service');
+const { continuousLearning, fineTuning } = require('../../analytics/learning');
 const { logger } = require('../../utils');
 
 /**
@@ -245,6 +248,311 @@ const applyLearning = async (req, res) => {
   }
 };
 
+/**
+ * Get conversation analytics dashboard
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getConversationDashboard = async (req, res) => {
+  try {
+    const { timeRange, botId, userId, useCache, metrics } = req.query;
+    
+    const options = {
+      timeRange: timeRange ? parseInt(timeRange) : undefined,
+      botId,
+      userId,
+      useCache: useCache === 'false' ? false : true,
+      metrics: metrics ? metrics.split(',') : undefined
+    };
+    
+    const dashboard = await conversationDashboardService.generateDashboard(options);
+    
+    res.json(dashboard);
+  } catch (error) {
+    logger.error('Error getting conversation dashboard:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get conversation insights
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getConversationInsights = async (req, res) => {
+  try {
+    const { timeRange, botId, userId, useCache, insightTypes } = req.query;
+    
+    const options = {
+      timeRange: timeRange ? parseInt(timeRange) : undefined,
+      botId,
+      userId,
+      useCache: useCache === 'false' ? false : true,
+      insightTypes: insightTypes ? insightTypes.split(',') : undefined
+    };
+    
+    const insights = await conversationInsightsService.generateInsights(options);
+    
+    res.json(insights);
+  } catch (error) {
+    logger.error('Error getting conversation insights:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Track conversation message
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const trackConversationMessage = async (req, res) => {
+  try {
+    const result = await conversationTrackingService.trackMessage(req.body);
+    
+    res.json(result);
+  } catch (error) {
+    logger.error('Error tracking conversation message:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get conversation history
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getConversationHistory = async (req, res) => {
+  try {
+    const { conversationId } = req.params;
+    
+    const conversation = await conversationTrackingService.getConversation(conversationId);
+    
+    if (!conversation) {
+      return res.status(404).json({ error: 'Conversation not found' });
+    }
+    
+    res.json(conversation);
+  } catch (error) {
+    logger.error('Error getting conversation history:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Submit feedback for a chatbot response
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const submitFeedback = async (req, res) => {
+  try {
+    const {
+      chatbotId,
+      conversationId,
+      messageId,
+      userId,
+      rating,
+      comment,
+      tags,
+      query,
+      response,
+      intent,
+      entities,
+      context,
+      metadata
+    } = req.body;
+    
+    if (!chatbotId || !conversationId || !messageId || !userId || !rating) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    const feedback = await feedbackService.submitFeedback({
+      chatbotId,
+      conversationId,
+      messageId,
+      userId,
+      rating,
+      comment,
+      tags,
+      query,
+      response,
+      intent,
+      entities,
+      context,
+      metadata
+    });
+    
+    res.json(feedback);
+  } catch (error) {
+    logger.error('Error submitting feedback:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get feedback for a chatbot
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getFeedback = async (req, res) => {
+  try {
+    const { chatbotId } = req.params;
+    const filters = req.query;
+    
+    const feedback = await feedbackService.getFeedback(chatbotId, filters);
+    
+    res.json(feedback);
+  } catch (error) {
+    logger.error('Error getting feedback:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get feedback statistics for a chatbot
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getFeedbackStats = async (req, res) => {
+  try {
+    const { chatbotId } = req.params;
+    const filters = req.query;
+    
+    const stats = await feedbackService.getFeedbackStats(chatbotId, filters);
+    
+    res.json(stats);
+  } catch (error) {
+    logger.error('Error getting feedback stats:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Create a continuous learning job
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const createLearningJob = async (req, res) => {
+  try {
+    const { chatbotId, type, config } = req.body;
+    
+    if (!chatbotId || !type) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    const job = await continuousLearning.createLearningJob({
+      chatbotId,
+      type,
+      config
+    });
+    
+    res.json(job);
+  } catch (error) {
+    logger.error('Error creating learning job:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get learning jobs for a chatbot
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getLearningJobs = async (req, res) => {
+  try {
+    const { chatbotId } = req.params;
+    const filters = req.query;
+    
+    const jobs = await continuousLearning.getLearningJobs(chatbotId, filters);
+    
+    res.json(jobs);
+  } catch (error) {
+    logger.error('Error getting learning jobs:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get a learning job by ID
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getLearningJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    
+    const job = await continuousLearning.getLearningJob(jobId);
+    
+    res.json(job);
+  } catch (error) {
+    logger.error('Error getting learning job:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Create a model fine-tuning job
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const createFineTuningJob = async (req, res) => {
+  try {
+    const { chatbotId, modelType, baseModelPath, config } = req.body;
+    
+    if (!chatbotId || !modelType || !baseModelPath) {
+      return res.status(400).json({ error: 'Missing required fields' });
+    }
+    
+    const job = await fineTuning.createFineTuningJob({
+      chatbotId,
+      modelType,
+      baseModelPath,
+      config
+    });
+    
+    res.json(job);
+  } catch (error) {
+    logger.error('Error creating fine-tuning job:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get fine-tuning jobs for a chatbot
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getFineTuningJobs = async (req, res) => {
+  try {
+    const { chatbotId } = req.params;
+    const filters = req.query;
+    
+    const jobs = await fineTuning.getFineTuningJobs(chatbotId, filters);
+    
+    res.json(jobs);
+  } catch (error) {
+    logger.error('Error getting fine-tuning jobs:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+/**
+ * Get a fine-tuning job by ID
+ * @param {Object} req - Request object
+ * @param {Object} res - Response object
+ */
+const getFineTuningJob = async (req, res) => {
+  try {
+    const { jobId } = req.params;
+    
+    const job = await fineTuning.getFineTuningJob(jobId);
+    
+    res.json(job);
+  } catch (error) {
+    logger.error('Error getting fine-tuning job:', error.message);
+    res.status(500).json({ error: error.message });
+  }
+};
+
 module.exports = {
   getAnalytics,
   getAllAnalytics,
@@ -255,5 +563,18 @@ module.exports = {
   addManualLearning,
   updateLearningStatus,
   generateLearning,
-  applyLearning
+  applyLearning,
+  getConversationDashboard,
+  getConversationInsights,
+  trackConversationMessage,
+  getConversationHistory,
+  submitFeedback,
+  getFeedback,
+  getFeedbackStats,
+  createLearningJob,
+  getLearningJobs,
+  getLearningJob,
+  createFineTuningJob,
+  getFineTuningJobs,
+  getFineTuningJob
 };

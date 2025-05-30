@@ -1,0 +1,627 @@
+{
+  "name": "Healthcare Assistant",
+  "description": "A healthcare assistant bot for answering common medical questions and providing guidance",
+  "language": "en",
+  "intents": [
+    {
+      "name": "greeting",
+      "utterances": [
+        "hello",
+        "hi",
+        "hey there",
+        "good morning",
+        "good afternoon",
+        "good evening",
+        "hi there",
+        "greetings",
+        "howdy"
+      ]
+    },
+    {
+      "name": "goodbye",
+      "utterances": [
+        "bye",
+        "goodbye",
+        "see you later",
+        "have a nice day",
+        "farewell",
+        "take care",
+        "until next time",
+        "bye bye",
+        "see ya"
+      ]
+    },
+    {
+      "name": "thanks",
+      "utterances": [
+        "thank you",
+        "thanks",
+        "thanks a lot",
+        "appreciate it",
+        "thank you so much",
+        "thanks for your help",
+        "that was helpful",
+        "great, thanks",
+        "perfect, thank you"
+      ]
+    },
+    {
+      "name": "symptom_inquiry",
+      "utterances": [
+        "I have a [headache](symptom)",
+        "My [stomach hurts](symptom)",
+        "I'm experiencing [fever](symptom)",
+        "I have [joint pain](symptom)",
+        "My [throat is sore](symptom)",
+        "I'm having [chest pain](symptom)",
+        "I have a [cough](symptom)",
+        "I'm feeling [dizzy](symptom)",
+        "I have [back pain](symptom)",
+        "My [skin is itchy](symptom)",
+        "I have [shortness of breath](symptom)",
+        "I'm having [trouble sleeping](symptom)",
+        "I have [nausea](symptom)",
+        "I'm experiencing [fatigue](symptom)",
+        "I have [blurry vision](symptom)"
+      ]
+    },
+    {
+      "name": "medication_inquiry",
+      "utterances": [
+        "Can I take [ibuprofen](medication) with [aspirin](medication)?",
+        "What are the side effects of [lisinopril](medication)?",
+        "How often should I take [amoxicillin](medication)?",
+        "Is [paracetamol](medication) safe during pregnancy?",
+        "Can I drink alcohol while taking [metformin](medication)?",
+        "What is [atorvastatin](medication) used for?",
+        "How long does it take for [sertraline](medication) to work?",
+        "Should I take [levothyroxine](medication) with food?",
+        "Can children take [cetirizine](medication)?",
+        "What's the dosage for [omeprazole](medication)?",
+        "Is [warfarin](medication) a blood thinner?",
+        "Can I stop taking [amlodipine](medication) now?",
+        "What should I do if I miss a dose of [metoprolol](medication)?",
+        "Is [fluoxetine](medication) addictive?",
+        "Can I take [acetaminophen](medication) for a [headache](symptom)?"
+      ]
+    },
+    {
+      "name": "condition_information",
+      "utterances": [
+        "Tell me about [diabetes](condition)",
+        "What are the symptoms of [hypertension](condition)?",
+        "How is [asthma](condition) diagnosed?",
+        "Is [arthritis](condition) hereditary?",
+        "What causes [migraines](condition)?",
+        "How can I manage my [anxiety](condition)?",
+        "What treatments are available for [depression](condition)?",
+        "Is [ADHD](condition) only in children?",
+        "What complications can arise from [hypothyroidism](condition)?",
+        "How serious is [COPD](condition)?",
+        "Can [fibromyalgia](condition) be cured?",
+        "What lifestyle changes help with [IBS](condition)?",
+        "Is [psoriasis](condition) contagious?",
+        "What's the difference between [type 1 and type 2 diabetes](condition)?",
+        "How does [heart disease](condition) develop?"
+      ]
+    },
+    {
+      "name": "appointment_scheduling",
+      "utterances": [
+        "I need to schedule an appointment",
+        "Can I book a doctor's visit?",
+        "How do I make an appointment?",
+        "I'd like to see a doctor",
+        "Schedule a checkup",
+        "Book an appointment with Dr. [Smith](doctor_name)",
+        "I need to see a [cardiologist](specialist)",
+        "Can I get an appointment for tomorrow?",
+        "I need to reschedule my appointment",
+        "Are there any available slots this week?",
+        "How soon can I see a doctor?",
+        "I need an urgent appointment",
+        "Can I book a virtual consultation?",
+        "I'd like to schedule a follow-up visit",
+        "Do you have any appointments available on [Monday](day)?"
+      ]
+    },
+    {
+      "name": "emergency_help",
+      "utterances": [
+        "I think I'm having a heart attack",
+        "I can't breathe",
+        "Severe chest pain",
+        "I'm having a seizure",
+        "Someone is unconscious",
+        "Severe bleeding that won't stop",
+        "Possible stroke symptoms",
+        "Severe allergic reaction",
+        "Poisoning emergency",
+        "Suicide thoughts",
+        "Severe burn",
+        "Choking",
+        "Head injury with confusion",
+        "Broken bone with deformity",
+        "Sudden severe headache"
+      ]
+    },
+    {
+      "name": "preventive_care",
+      "utterances": [
+        "When should I get a flu shot?",
+        "How often should I have a physical exam?",
+        "What screenings do I need at my age?",
+        "When should I start mammograms?",
+        "How often should I check my blood pressure?",
+        "When should men get prostate exams?",
+        "How often should I have my cholesterol checked?",
+        "What vaccines do adults need?",
+        "How can I prevent [heart disease](condition)?",
+        "What's a healthy diet for preventing [diabetes](condition)?",
+        "How can I reduce my risk of [cancer](condition)?",
+        "What exercises are best for heart health?",
+        "How much sleep should I get?",
+        "How can I improve my mental health?",
+        "What preventive measures should I take for [osteoporosis](condition)?"
+      ]
+    },
+    {
+      "name": "insurance_question",
+      "utterances": [
+        "Does my insurance cover this procedure?",
+        "How do I check my insurance benefits?",
+        "Is [Dr. Smith](doctor_name) in my network?",
+        "Do you accept [Blue Cross](insurance_provider)?",
+        "What's my copay for a specialist visit?",
+        "How much will this cost with my insurance?",
+        "Do I need pre-authorization?",
+        "How do I submit a claim?",
+        "Why was my claim denied?",
+        "How do I appeal an insurance decision?",
+        "What's the difference between copay and coinsurance?",
+        "Does my plan cover [physical therapy](treatment)?",
+        "How many [therapy](treatment) sessions does my insurance cover?",
+        "Is [medication name](medication) covered by my plan?",
+        "What's my deductible?"
+      ]
+    },
+    {
+      "name": "test_results",
+      "utterances": [
+        "I need my test results",
+        "How do I access my lab work?",
+        "Can you explain my blood test results?",
+        "What does this test result mean?",
+        "Are my cholesterol levels normal?",
+        "How do I interpret my A1C result?",
+        "When will my test results be ready?",
+        "Can you send me my test results?",
+        "I don't understand my MRI report",
+        "What's a normal range for this test?",
+        "My test shows elevated [white blood cells](test_marker), what does that mean?",
+        "Is my [thyroid](test_marker) level normal?",
+        "What does high [blood pressure](test_marker) indicate?",
+        "My [glucose](test_marker) is [140](test_value), is that concerning?",
+        "What follow-up is needed for these results?"
+      ]
+    }
+  ],
+  "entities": [
+    {
+      "name": "symptom",
+      "type": "pattern",
+      "examples": [
+        "headache",
+        "fever",
+        "cough",
+        "sore throat",
+        "chest pain",
+        "back pain",
+        "joint pain",
+        "nausea",
+        "vomiting",
+        "diarrhea",
+        "constipation",
+        "dizziness",
+        "fatigue",
+        "shortness of breath",
+        "rash",
+        "itching",
+        "swelling",
+        "blurry vision",
+        "hearing loss",
+        "numbness",
+        "tingling",
+        "muscle weakness",
+        "difficulty swallowing",
+        "loss of appetite",
+        "weight loss",
+        "weight gain",
+        "insomnia",
+        "anxiety",
+        "depression"
+      ]
+    },
+    {
+      "name": "medication",
+      "type": "pattern",
+      "examples": [
+        "aspirin",
+        "ibuprofen",
+        "acetaminophen",
+        "paracetamol",
+        "lisinopril",
+        "metformin",
+        "atorvastatin",
+        "levothyroxine",
+        "amlodipine",
+        "metoprolol",
+        "sertraline",
+        "fluoxetine",
+        "omeprazole",
+        "amoxicillin",
+        "cetirizine",
+        "warfarin",
+        "insulin",
+        "prednisone",
+        "albuterol",
+        "losartan"
+      ]
+    },
+    {
+      "name": "condition",
+      "type": "pattern",
+      "examples": [
+        "diabetes",
+        "hypertension",
+        "high blood pressure",
+        "asthma",
+        "arthritis",
+        "migraine",
+        "anxiety",
+        "depression",
+        "ADHD",
+        "hypothyroidism",
+        "COPD",
+        "fibromyalgia",
+        "IBS",
+        "psoriasis",
+        "heart disease",
+        "cancer",
+        "stroke",
+        "Alzheimer's",
+        "Parkinson's",
+        "multiple sclerosis",
+        "epilepsy",
+        "osteoporosis",
+        "gout",
+        "eczema",
+        "allergies"
+      ]
+    },
+    {
+      "name": "specialist",
+      "type": "pattern",
+      "examples": [
+        "cardiologist",
+        "dermatologist",
+        "endocrinologist",
+        "gastroenterologist",
+        "neurologist",
+        "obstetrician",
+        "gynecologist",
+        "oncologist",
+        "ophthalmologist",
+        "orthopedist",
+        "pediatrician",
+        "psychiatrist",
+        "pulmonologist",
+        "rheumatologist",
+        "urologist"
+      ]
+    },
+    {
+      "name": "doctor_name",
+      "type": "pattern",
+      "examples": [
+        "Smith",
+        "Johnson",
+        "Williams",
+        "Jones",
+        "Brown",
+        "Davis",
+        "Miller",
+        "Wilson",
+        "Moore",
+        "Taylor"
+      ]
+    },
+    {
+      "name": "day",
+      "type": "pattern",
+      "examples": [
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+        "Sunday"
+      ]
+    },
+    {
+      "name": "insurance_provider",
+      "type": "pattern",
+      "examples": [
+        "Blue Cross",
+        "Aetna",
+        "Cigna",
+        "UnitedHealthcare",
+        "Humana",
+        "Kaiser",
+        "Medicare",
+        "Medicaid",
+        "Anthem",
+        "Tricare"
+      ]
+    },
+    {
+      "name": "treatment",
+      "type": "pattern",
+      "examples": [
+        "surgery",
+        "physical therapy",
+        "chemotherapy",
+        "radiation",
+        "dialysis",
+        "therapy",
+        "counseling",
+        "acupuncture",
+        "chiropractic",
+        "massage therapy"
+      ]
+    },
+    {
+      "name": "test_marker",
+      "type": "pattern",
+      "examples": [
+        "white blood cells",
+        "red blood cells",
+        "hemoglobin",
+        "platelets",
+        "glucose",
+        "cholesterol",
+        "HDL",
+        "LDL",
+        "triglycerides",
+        "thyroid",
+        "TSH",
+        "A1C",
+        "blood pressure",
+        "heart rate",
+        "oxygen saturation"
+      ]
+    },
+    {
+      "name": "test_value",
+      "type": "pattern",
+      "examples": [
+        "100",
+        "120",
+        "140",
+        "160",
+        "180",
+        "200",
+        "5.0",
+        "6.5",
+        "7.0",
+        "8.0",
+        "9.0",
+        "10.0"
+      ]
+    }
+  ],
+  "flows": [
+    {
+      "name": "greeting_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "Hello! I'm your healthcare assistant. How can I help you today?"
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "symptom_inquiry_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "I see you're experiencing {{symptom}}. How long have you had this symptom?"
+        },
+        {
+          "type": "wait_for_input"
+        },
+        {
+          "type": "message",
+          "content": "Based on your description of {{symptom}}, here are some possible causes and recommendations. However, please note that I'm not a replacement for professional medical advice. Would you like me to help you schedule an appointment with a healthcare provider?"
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "medication_inquiry_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "I can provide general information about {{medication}}, but please always follow your doctor's instructions and read the medication guide. What specific information would you like to know?"
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "condition_information_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "I can provide general information about {{condition}}. Would you like to know about symptoms, causes, treatments, or prevention?"
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "appointment_scheduling_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "I'd be happy to help you schedule an appointment. Do you have a specific doctor or specialist you'd like to see?"
+        },
+        {
+          "type": "wait_for_input"
+        },
+        {
+          "type": "message",
+          "content": "What date and time would work best for you?"
+        },
+        {
+          "type": "wait_for_input"
+        },
+        {
+          "type": "message",
+          "content": "Great! I'll check availability and get back to you shortly with confirmation."
+        }
+      ]
+    },
+    {
+      "name": "emergency_help_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "This sounds like a medical emergency. Please call emergency services (911) immediately or go to the nearest emergency room. Do not wait for a response here."
+        }
+      ]
+    },
+    {
+      "name": "preventive_care_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "Preventive care is an important part of maintaining your health. I can provide recommendations based on general guidelines, but these should be personalized by your healthcare provider."
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "insurance_question_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "For specific information about your insurance coverage, it's best to contact your insurance provider directly. Would you like the contact information for your insurance company?"
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "test_results_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "I can provide general information about test results, but for specific interpretation of your personal results, please consult with your healthcare provider. They can provide context based on your medical history."
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    },
+    {
+      "name": "goodbye_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "Thank you for using our healthcare assistant. Take care and stay healthy! If you have more questions later, feel free to come back."
+        }
+      ]
+    },
+    {
+      "name": "thanks_flow",
+      "type": "standard",
+      "steps": [
+        {
+          "type": "message",
+          "content": "You're welcome! I'm happy I could help. Is there anything else you'd like to know about?"
+        },
+        {
+          "type": "wait_for_input"
+        }
+      ]
+    }
+  ],
+  "triggers": [
+    {
+      "intent": "greeting",
+      "flow": "greeting_flow"
+    },
+    {
+      "intent": "symptom_inquiry",
+      "flow": "symptom_inquiry_flow"
+    },
+    {
+      "intent": "medication_inquiry",
+      "flow": "medication_inquiry_flow"
+    },
+    {
+      "intent": "condition_information",
+      "flow": "condition_information_flow"
+    },
+    {
+      "intent": "appointment_scheduling",
+      "flow": "appointment_scheduling_flow"
+    },
+    {
+      "intent": "emergency_help",
+      "flow": "emergency_help_flow"
+    },
+    {
+      "intent": "preventive_care",
+      "flow": "preventive_care_flow"
+    },
+    {
+      "intent": "insurance_question",
+      "flow": "insurance_question_flow"
+    },
+    {
+      "intent": "test_results",
+      "flow": "test_results_flow"
+    },
+    {
+      "intent": "goodbye",
+      "flow": "goodbye_flow"
+    },
+    {
+      "intent": "thanks",
+      "flow": "thanks_flow"
+    }
+  ]
+}

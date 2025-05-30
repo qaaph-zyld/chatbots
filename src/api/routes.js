@@ -6,11 +6,19 @@
 
 const express = require('express');
 const router = express.Router();
+const voiceRoutes = require('../routes/voice.routes');
+const openVoiceRoutes = require('../routes/open-voice.routes');
+const externalRoutes = require('./external');
+const advancedContextRoutes = require('./routes/advanced-context.routes');
+const advancedTemplateRoutes = require('./routes/advanced-template.routes');
+const themeRoutes = require('./routes/theme.routes');
+const workflowRoutes = require('./routes/workflow.routes');
 
 // Import controllers
 // These will be implemented as we progress through the roadmap
 const chatbotController = require('./controllers/chatbot.controller');
 const templateController = require('./controllers/template.controller');
+const advancedTemplateController = require('./controllers/advanced-template.controller');
 const integrationController = require('./controllers/integration.controller');
 const personalityController = require('./controllers/personality.controller');
 const knowledgeBaseController = require('./controllers/knowledgeBase.controller');
@@ -18,10 +26,12 @@ const pluginController = require('./controllers/plugin.controller');
 const trainingController = require('./controllers/training.controller');
 const analyticsController = require('./controllers/analytics.controller');
 const contextController = require('./controllers/context.controller');
+const advancedContextController = require('./controllers/advanced-context.controller');
 const authController = require('./controllers/auth.controller');
 const healthController = require('./controllers/health.controller');
 const usageController = require('./controllers/usage.controller');
 const scalingController = require('./controllers/scaling.controller');
+const themeController = require('./controllers/theme.controller');
 
 // Import middleware
 const { authenticateToken, authenticateApiKey, hasPermission, hasRole, rateLimit } = require('../auth/auth.middleware');
@@ -68,6 +78,20 @@ router.post('/chatbots/:id/learning/apply', authenticateToken, hasPermission('ch
 router.get('/templates', authenticateToken, hasPermission('template:read'), templateController.getAllTemplates);
 router.post('/templates', authenticateToken, hasPermission('template:write'), templateController.createTemplate);
 router.get('/templates/:id', authenticateToken, hasPermission('template:read'), templateController.getTemplateById);
+router.put('/templates/:id', authenticateToken, hasPermission('template:write'), templateController.updateTemplate);
+router.delete('/templates/:id', authenticateToken, hasPermission('template:delete'), templateController.deleteTemplate);
+
+// Template Gallery routes
+router.get('/templates/gallery/featured', templateController.getFeaturedTemplates);
+router.get('/templates/gallery/popular', templateController.getPopularTemplates);
+router.get('/templates/gallery/category/:category', templateController.getTemplatesByCategory);
+router.get('/templates/gallery/search', templateController.searchTemplates);
+router.get('/templates/user/:userId?', authenticateToken, templateController.getUserTemplates);
+router.post('/templates/chatbot/:chatbotId', authenticateToken, hasPermission('template:write'), templateController.createTemplateFromChatbot);
+router.post('/templates/:id/chatbot', authenticateToken, hasPermission('chatbot:write'), templateController.createChatbotFromTemplate);
+router.post('/templates/:id/review', authenticateToken, templateController.addReview);
+router.get('/templates/:id/export', authenticateToken, hasPermission('template:read'), templateController.exportTemplate);
+router.post('/templates/import', authenticateToken, hasPermission('template:write'), templateController.importTemplate);
 
 // Integration routes
 router.get('/integrations', authenticateToken, hasPermission('integration:read'), integrationController.getAllIntegrations);
@@ -133,18 +157,35 @@ router.delete('/training-datasets/:id/examples/:index', authenticateToken, hasPe
 router.post('/training-datasets/:id/train', authenticateToken, hasPermission('chatbot:write'), trainingController.trainChatbot);
 
 // Analytics routes
-router.get('/chatbots/:chatbotId/analytics', authenticateToken, hasPermission('analytics:read'), analyticsController.getAnalytics);
-router.get('/analytics', authenticateToken, hasPermission('analytics:read'), analyticsController.getAllAnalytics);
-router.post('/chatbots/:chatbotId/response-rating', authenticateToken, analyticsController.trackResponseRating);
-router.get('/chatbots/:chatbotId/insights', authenticateToken, hasPermission('analytics:read'), analyticsController.getInsights);
-router.get('/chatbots/:chatbotId/analytics/compare', authenticateToken, hasPermission('analytics:read'), analyticsController.compareAnalytics);
+router.get('/analytics/chatbots/:chatbotId', authenticateToken, hasPermission('analytics:read'), analyticsController.getAnalytics);
+router.get('/analytics/chatbots', authenticateToken, hasPermission('analytics:read'), analyticsController.getAllAnalytics);
+router.get('/analytics/chatbots/:chatbotId/compare', authenticateToken, hasPermission('analytics:read'), analyticsController.compareAnalytics);
+router.get('/analytics/chatbots/:chatbotId/learning', authenticateToken, hasPermission('analytics:read'), analyticsController.getLearningItems);
+router.post('/analytics/chatbots/:chatbotId/learning', authenticateToken, hasPermission('analytics:write'), analyticsController.addManualLearning);
+router.put('/analytics/chatbots/:chatbotId/learning/:id', authenticateToken, hasPermission('analytics:write'), analyticsController.updateLearningStatus);
+router.post('/analytics/chatbots/:chatbotId/learning/generate', authenticateToken, hasPermission('analytics:write'), analyticsController.generateLearning);
+router.post('/analytics/chatbots/:chatbotId/learning/apply', authenticateToken, hasPermission('analytics:write'), analyticsController.applyLearning);
 
-// Learning routes
-router.get('/chatbots/:chatbotId/learning', authenticateToken, hasPermission('analytics:read'), analyticsController.getLearningItems);
-router.post('/chatbots/:chatbotId/learning', authenticateToken, hasPermission('analytics:write'), analyticsController.addManualLearning);
-router.put('/learning/:learningId/status', authenticateToken, hasPermission('analytics:write'), analyticsController.updateLearningStatus);
-router.post('/chatbots/:chatbotId/learning/generate', authenticateToken, hasPermission('analytics:write'), analyticsController.generateLearning);
-router.post('/chatbots/:chatbotId/learning/apply', authenticateToken, hasPermission('chatbot:write'), analyticsController.applyLearning);
+// Conversation Analytics routes
+router.get('/analytics/conversations/dashboard', authenticateToken, hasPermission('analytics:read'), analyticsController.getConversationDashboard);
+router.get('/analytics/conversations/insights', authenticateToken, hasPermission('analytics:read'), analyticsController.getConversationInsights);
+router.post('/analytics/conversations/track', [authenticateApiKey, authenticateToken], analyticsController.trackConversationMessage);
+router.get('/analytics/conversations/:conversationId', authenticateToken, hasPermission('analytics:read'), analyticsController.getConversationHistory);
+
+// Feedback Collection routes
+router.post('/analytics/feedback', [authenticateApiKey, authenticateToken], analyticsController.submitFeedback);
+router.get('/analytics/chatbots/:chatbotId/feedback', authenticateToken, hasPermission('analytics:read'), analyticsController.getFeedback);
+router.get('/analytics/chatbots/:chatbotId/feedback/stats', authenticateToken, hasPermission('analytics:read'), analyticsController.getFeedbackStats);
+
+// Continuous Learning routes
+router.post('/analytics/chatbots/:chatbotId/learning/jobs', authenticateToken, hasPermission('analytics:write'), analyticsController.createLearningJob);
+router.get('/analytics/chatbots/:chatbotId/learning/jobs', authenticateToken, hasPermission('analytics:read'), analyticsController.getLearningJobs);
+router.get('/analytics/learning/jobs/:jobId', authenticateToken, hasPermission('analytics:read'), analyticsController.getLearningJob);
+
+// Model Fine-tuning routes
+router.post('/analytics/chatbots/:chatbotId/finetune', authenticateToken, hasPermission('analytics:write'), analyticsController.createFineTuningJob);
+router.get('/analytics/chatbots/:chatbotId/finetune', authenticateToken, hasPermission('analytics:read'), analyticsController.getFineTuningJobs);
+router.get('/analytics/finetune/jobs/:jobId', authenticateToken, hasPermission('analytics:read'), analyticsController.getFineTuningJob);
 
 // Context awareness routes
 // Context management
@@ -152,7 +193,29 @@ router.get('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/con
 router.put('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/context', authenticateToken, hasPermission('chatbot:write'), contextController.updateContext);
 router.get('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/summary', authenticateToken, hasPermission('chatbot:read'), contextController.getConversationSummary);
 
-// Topic management
+// Advanced context management
+// Entity tracking across conversations
+router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/track-entity', authenticateToken, hasPermission('chatbot:write'), contextController.trackEntity);
+router.get('/chatbots/:chatbotId/users/:userId/cross-conversation-entities', authenticateToken, hasPermission('chatbot:read'), contextController.getCrossConversationEntities);
+router.get('/chatbots/:chatbotId/users/:userId/cross-conversation-entities/:entityId', authenticateToken, hasPermission('chatbot:read'), contextController.getCrossConversationEntityById);
+router.post('/chatbots/:chatbotId/users/:userId/cross-conversation-entity-relations', authenticateToken, hasPermission('chatbot:write'), contextController.addCrossConversationEntityRelation);
+router.post('/chatbots/:chatbotId/users/:userId/merge-cross-conversation-entities', authenticateToken, hasPermission('chatbot:write'), contextController.mergeCrossConversationEntities);
+router.get('/chatbots/:chatbotId/users/:userId/potential-duplicate-entities', authenticateToken, hasPermission('chatbot:read'), contextController.findPotentialDuplicateCrossConversationEntities);
+
+// User preference learning
+router.post('/chatbots/:chatbotId/users/:userId/preferences', authenticateToken, hasPermission('chatbot:write'), contextController.setUserPreference);
+router.get('/chatbots/:chatbotId/users/:userId/preferences', authenticateToken, hasPermission('chatbot:read'), contextController.getUserPreferences);
+router.delete('/chatbots/:chatbotId/users/:userId/preferences', authenticateToken, hasPermission('chatbot:write'), contextController.deleteUserPreference);
+router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/infer-preferences', authenticateToken, hasPermission('chatbot:write'), contextController.inferPreferencesFromMessage);
+router.post('/chatbots/:chatbotId/users/:userId/apply-preferences', authenticateToken, hasPermission('chatbot:read'), contextController.applyPreferencesToResponse);
+
+// Topic detection and management
+router.post('/chatbots/:chatbotId/topics', authenticateToken, hasPermission('chatbot:write'), contextController.createOrUpdateTopic);
+router.post('/chatbots/:chatbotId/detect-topics', authenticateToken, hasPermission('chatbot:read'), contextController.detectTopics);
+router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/track-topics', authenticateToken, hasPermission('chatbot:write'), contextController.trackTopics);
+router.post('/chatbots/:chatbotId/topics/related', authenticateToken, hasPermission('chatbot:write'), contextController.addRelatedTopic);
+
+// Legacy topic management
 router.post('/topics', authenticateToken, hasPermission('chatbot:write'), contextController.createTopic);
 router.get('/chatbots/:chatbotId/topics', authenticateToken, hasPermission('chatbot:read'), contextController.getAllTopics);
 router.get('/chatbots/:chatbotId/topics/:name', authenticateToken, hasPermission('chatbot:read'), contextController.getTopicByName);
@@ -175,9 +238,38 @@ router.get('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/ent
 router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/resolve-references', authenticateToken, hasPermission('chatbot:read'), contextController.resolveReferences);
 router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/apply-resolved-references', authenticateToken, hasPermission('chatbot:write'), contextController.applyResolvedReferences);
 
-// User preferences
-router.get('/chatbots/:chatbotId/users/:userId/preferences', authenticateToken, hasPermission('chatbot:read'), contextController.getUserPreferences);
-router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/preferences', authenticateToken, hasPermission('chatbot:write'), contextController.addUserPreference);
+// Voice interface routes
+router.use('/voice', voiceRoutes);
+
+// Open-source voice interface routes
+router.use('/open-voice', openVoiceRoutes);
+
+// Advanced template routes
+router.use('/advanced-templates', advancedTemplateRoutes);
+
+// Theme routes
+router.use('/themes', themeRoutes);
+
+// Workflow routes
+router.use('/', workflowRoutes);
+
+// Workflow template routes
+router.use('/workflow-templates', require('./routes/workflow-template.routes'));
+
+// Import advanced context routes
+const advancedContextRoutes = require('./routes/advanced-context.routes');
+
+// Use advanced context routes
+router.use('/', advancedContextRoutes);
 
 // Export router
+// External API routes
+/**
+ * @swagger
+ * tags:
+ *   name: External API
+ *   description: External REST API for third-party integrations
+ */
+router.use('/external', externalRoutes);
+
 module.exports = router;

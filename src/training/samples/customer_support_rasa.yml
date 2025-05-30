@@ -1,0 +1,215 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - hey
+    - hello
+    - hi
+    - hello there
+    - good morning
+    - good evening
+    - hey there
+    - hi there
+    - greetings
+
+- intent: goodbye
+  examples: |
+    - bye
+    - goodbye
+    - see you around
+    - see you later
+    - have a nice day
+    - bye bye
+    - have a good day
+
+- intent: affirm
+  examples: |
+    - yes
+    - y
+    - indeed
+    - of course
+    - that sounds good
+    - correct
+    - sure
+    - ok
+    - okay
+
+- intent: deny
+  examples: |
+    - no
+    - n
+    - never
+    - I don't think so
+    - don't like that
+    - no way
+    - not really
+    - nope
+
+- intent: ask_order_status
+  examples: |
+    - Where is my order?
+    - I want to know where my order is
+    - Can you tell me the status of my order?
+    - What's happening with my order?
+    - Is my order on its way?
+    - Has my order been shipped yet?
+    - When will my order arrive?
+    - Track my order
+    - Order tracking
+    - Check order status
+    - Order [#12345](order_number)
+    - My order number is [#12345](order_number)
+    - I'm waiting for order [#12345](order_number)
+
+- intent: return_item
+  examples: |
+    - I want to return an item
+    - How do I return this product?
+    - Can I get a refund?
+    - I need to send this back
+    - Return policy
+    - How do returns work?
+    - I received a damaged item
+    - The product is defective
+    - Wrong item delivered
+    - Item doesn't match description
+    - Return process for order [#12345](order_number)
+
+- intent: product_question
+  examples: |
+    - Do you have [blue](color) [shirts](product_type)?
+    - Is the [phone case](product_type) compatible with [iPhone 13](product_model)?
+    - What sizes do the [dresses](product_type) come in?
+    - Are [headphones](product_type) wireless?
+    - Does the [laptop](product_type) come with a warranty?
+    - What's the difference between [model X](product_model) and [model Y](product_model)?
+    - Is [product name](product_name) in stock?
+    - When will you restock [product name](product_name)?
+    - Technical specifications for [product name](product_name)
+    - How long is the [cable](product_type)?
+
+- intent: shipping_question
+  examples: |
+    - How long does shipping take?
+    - Do you ship to [Canada](location)?
+    - What are the shipping options?
+    - Is there free shipping?
+    - How much is express shipping?
+    - Do you ship internationally?
+    - Shipping to [New York](location)
+    - Delivery timeframe
+    - Fastest shipping method
+    - Can I change my shipping address?
+
+- intent: payment_question
+  examples: |
+    - What payment methods do you accept?
+    - Can I pay with [PayPal](payment_method)?
+    - Do you accept [credit cards](payment_method)?
+    - Is it safe to use my credit card on your site?
+    - Can I pay on delivery?
+    - Do you offer installment payments?
+    - Problems with payment
+    - My payment was declined
+    - How to update billing information
+    - Can I get an invoice?
+
+- intent: speak_to_human
+  examples: |
+    - I want to speak to a real person
+    - Can I talk to a human?
+    - Connect me with an agent
+    - I need to speak with customer service
+    - Talk to representative
+    - Human support please
+    - Agent
+    - Real person
+    - Not a bot
+    - This bot isn't helping me
+
+entities:
+  - order_number
+  - product_type
+  - product_name
+  - product_model
+  - color
+  - location
+  - payment_method
+
+responses:
+  utter_greet:
+  - text: "Hello! I'm your customer support assistant. How can I help you today?"
+
+  utter_goodbye:
+  - text: "Thank you for contacting us. Have a great day!"
+
+  utter_ask_order_number:
+  - text: "I'd be happy to help you with your order. Could you please provide your order number?"
+
+  utter_order_status:
+  - text: "I've checked your order {order_number}. It's currently {status} and expected to arrive by {delivery_date}."
+
+  utter_return_policy:
+  - text: "Our return policy allows returns within 30 days of purchase. Would you like me to help you start the return process?"
+
+  utter_product_info:
+  - text: "Let me get you information about that product. {product_info}"
+
+  utter_shipping_info:
+  - text: "For shipping to {location}, it typically takes {shipping_time}. The cost is {shipping_cost}."
+
+  utter_payment_methods:
+  - text: "We accept various payment methods including credit cards, PayPal, and Apple Pay. Is there a specific payment method you're interested in?"
+
+  utter_transfer_to_agent:
+  - text: "I understand you'd like to speak with a human agent. I'm transferring you now. Please hold for a moment."
+
+  utter_fallback:
+  - text: "I'm sorry, I didn't quite understand that. Could you rephrase or provide more details?"
+
+rules:
+  - rule: Greet user
+    steps:
+      - intent: greet
+      - action: utter_greet
+
+  - rule: Say goodbye
+    steps:
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - rule: Transfer to human
+    steps:
+      - intent: speak_to_human
+      - action: utter_transfer_to_agent
+
+stories:
+  - story: Order status inquiry
+    steps:
+      - intent: ask_order_status
+      - action: utter_ask_order_number
+      - intent: inform
+      - action: utter_order_status
+
+  - story: Return item
+    steps:
+      - intent: return_item
+      - action: utter_return_policy
+      - intent: affirm
+      - action: utter_ask_order_number
+
+  - story: Product question
+    steps:
+      - intent: product_question
+      - action: utter_product_info
+
+  - story: Shipping question
+    steps:
+      - intent: shipping_question
+      - action: utter_shipping_info
+
+  - story: Payment question
+    steps:
+      - intent: payment_question
+      - action: utter_payment_methods

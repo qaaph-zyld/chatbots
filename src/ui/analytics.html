@@ -99,14 +99,62 @@
                 <canvas id="output-types-chart"></canvas>
               </div>
             </div>
+            <div class="chart-card">
+              <h3>Conversation Length</h3>
+              <div class="chart-container">
+                <canvas id="conversation-length-chart"></canvas>
+              </div>
+            </div>
+            <div class="chart-card">
+              <h3>User Satisfaction</h3>
+              <div class="chart-container">
+                <canvas id="user-satisfaction-chart"></canvas>
+              </div>
+            </div>
           </div>
         </section>
 
         <!-- Insights -->
         <section class="dashboard-section">
           <h2>Insights</h2>
+          <div class="section-controls">
+            <button id="refresh-insights-btn" class="btn btn-primary">
+              <i class="material-icons">refresh</i> Refresh Insights
+            </button>
+          </div>
           <div id="insights-container" class="insights-grid">
-            <!-- Insights cards will be inserted here -->
+            <!-- Insights will be inserted here -->
+          </div>
+        </section>
+        
+        <!-- Conversation Patterns -->
+        <section class="dashboard-section">
+          <h2>Conversation Patterns</h2>
+          <div class="patterns-grid">
+            <div class="pattern-card">
+              <h3>Common User Paths</h3>
+              <div class="pattern-content" id="user-paths-container">
+                <!-- User paths will be inserted here -->
+              </div>
+            </div>
+            <div class="pattern-card">
+              <h3>Conversation Flows</h3>
+              <div class="pattern-content" id="conversation-flows-container">
+                <!-- Conversation flows will be inserted here -->
+              </div>
+            </div>
+            <div class="pattern-card">
+              <h3>Drop-off Points</h3>
+              <div class="pattern-content" id="dropoff-points-container">
+                <!-- Drop-off points will be inserted here -->
+              </div>
+            </div>
+            <div class="pattern-card">
+              <h3>Session Timing</h3>
+              <div class="pattern-content" id="session-timing-container">
+                <!-- Session timing will be inserted here -->
+              </div>
+            </div>
           </div>
         </section>
 

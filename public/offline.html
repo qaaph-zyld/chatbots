@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Offline - Chatbot Platform</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      text-align: center;
+      background-color: #f8f9fa;
+      color: #333;
+    }
+    
+    .container {
+      max-width: 600px;
+      padding: 2rem;
+      background-color: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+    
+    h1 {
+      font-size: 2rem;
+      margin-bottom: 1rem;
+      color: #2c3e50;
+    }
+    
+    p {
+      font-size: 1.1rem;
+      line-height: 1.5;
+      margin-bottom: 1.5rem;
+      color: #555;
+    }
+    
+    .offline-image {
+      width: 200px;
+      height: auto;
+      margin-bottom: 2rem;
+    }
+    
+    .button {
+      display: inline-block;
+      background-color: #3498db;
+      color: white;
+      padding: 0.75rem 1.5rem;
+      border-radius: 4px;
+      text-decoration: none;
+      font-weight: 500;
+      transition: background-color 0.2s;
+    }
+    
+    .button:hover {
+      background-color: #2980b9;
+    }
+    
+    .features {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    
+    .feature {
+      background-color: #f1f1f1;
+      padding: 1rem;
+      border-radius: 4px;
+      width: calc(50% - 0.5rem);
+      box-sizing: border-box;
+    }
+    
+    .feature h3 {
+      margin-top: 0;
+      font-size: 1.1rem;
+      color: #2c3e50;
+    }
+    
+    .feature p {
+      font-size: 0.9rem;
+      margin-bottom: 0;
+    }
+    
+    @media (max-width: 600px) {
+      .container {
+        padding: 1.5rem;
+        margin: 0 1rem;
+      }
+      
+      h1 {
+        font-size: 1.75rem;
+      }
+      
+      .offline-image {
+        width: 150px;
+      }
+      
+      .feature {
+        width: 100%;
+      }
+    }
+    
+    /* Dark mode support */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #1a1a1a;
+        color: #f0f0f0;
+      }
+      
+      .container {
+        background-color: #2a2a2a;
+      }
+      
+      h1 {
+        color: #f0f0f0;
+      }
+      
+      p {
+        color: #d0d0d0;
+      }
+      
+      .feature {
+        background-color: #333;
+      }
+      
+      .feature h3 {
+        color: #f0f0f0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <img src="/images/offline.svg" alt="Offline" class="offline-image" onerror="this.src='/images/icons/icon-192x192.png'; this.onerror=null;">
+    
+    <h1>You're Offline</h1>
+    
+    <p>It looks like you don't have an internet connection right now. Don't worry - many features of the Chatbot Platform are still available offline.</p>
+    
+    <a href="/" class="button">Try Again</a>
+    
+    <div class="features">
+      <div class="feature">
+        <h3>Cached Content</h3>
+        <p>You can still access previously loaded chatbots and content.</p>
+      </div>
+      
+      <div class="feature">
+        <h3>Offline Chatbots</h3>
+        <p>Your local chatbots will continue to function.</p>
+      </div>
+      
+      <div class="feature">
+        <h3>Data Synchronization</h3>
+        <p>Changes you make will sync when you're back online.</p>
+      </div>
+      
+      <div class="feature">
+        <h3>Local Knowledge Base</h3>
+        <p>Access your downloaded knowledge bases.</p>
+      </div>
+    </div>
+  </div>
+  
+  <script>
+    // Check connection status periodically
+    function checkConnection() {
+      if (navigator.onLine) {
+        // If we're back online, try to reload the page
+        window.location.reload();
+      }
+    }
+    
+    // Check connection every 5 seconds
+    setInterval(checkConnection, 5000);
+    
+    // Also check when the online event fires
+    window.addEventListener('online', () => {
+      window.location.reload();
+    });
+  </script>
+</body>
+</html>

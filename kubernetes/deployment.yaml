@@ -1,0 +1,215 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: chatbots-platform
+  labels:
+    app: chatbots-platform
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: chatbots-platform
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        app: chatbots-platform
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+      - name: chatbots-platform
+        image: ${DOCKER_REGISTRY}/chatbots-platform:${IMAGE_TAG}
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 3000
+          name: http
+        resources:
+          limits:
+            cpu: 1000m
+            memory: 1024Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        env:
+        - name: NODE_ENV
+          value: "production"
+        - name: PORT
+          value: "3000"
+        - name: MONGODB_URI
+          valueFrom:
+            secretKeyRef:
+              name: chatbots-platform-secrets
+              key: mongodb-uri
+        - name: REDIS_HOST
+          value: "redis"
+        - name: REDIS_PORT
+          value: "6379"
+        - name: JWT_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: chatbots-platform-secrets
+              key: jwt-secret
+        - name: REFRESH_TOKEN_SECRET
+          valueFrom:
+            secretKeyRef:
+              name: chatbots-platform-secrets
+              key: refresh-token-secret
+        - name: TOKEN_EXPIRATION
+          value: "3600"
+        - name: REFRESH_TOKEN_EXPIRATION
+          value: "604800"
+        - name: MFA_ENABLED
+          value: "true"
+        - name: PASSWORD_POLICY_MIN_LENGTH
+          value: "10"
+        - name: ENCRYPTION_ALGORITHM
+          value: "aes-256-gcm"
+        - name: HASH_ALGORITHM
+          value: "sha256"
+        - name: AUDIT_RETENTION_DAYS
+          value: "365"
+        - name: AUDIT_LOG_LEVEL
+          value: "info"
+        - name: AUDIT_ENABLED_CATEGORIES
+          value: "authentication,authorization,data,system"
+        - name: DEFAULT_RETENTION_DAYS
+          value: "365"
+        - name: ENABLE_AUTOMATIC_PURGE
+          value: "true"
+        - name: PURGE_FREQUENCY
+          value: "daily"
+        volumeMounts:
+        - name: uploads
+          mountPath: /usr/src/app/uploads
+        - name: logs
+          mountPath: /usr/src/app/logs
+        livenessProbe:
+          httpGet:
+            path: /api/health/liveness
+            port: http
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /api/health/readiness
+            port: http
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      volumes:
+      - name: uploads
+        persistentVolumeClaim:
+          claimName: chatbots-platform-uploads
+      - name: logs
+        persistentVolumeClaim:
+          claimName: chatbots-platform-logs
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbots-platform
+  labels:
+    app: chatbots-platform
+spec:
+  type: ClusterIP
+  ports:
+  - port: 80
+    targetPort: http
+    protocol: TCP
+    name: http
+  selector:
+    app: chatbots-platform
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: chatbots-platform-uploads
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: chatbots-platform-logs
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  storageClassName: standard
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: chatbots-platform-secrets
+type: Opaque
+data:
+  mongodb-uri: bW9uZ29kYjovL21vbmdvZGI6MjcwMTcvY2hhdGJvdHM=  # mongodb://mongodb:27017/chatbots
+  jwt-secret: Y2hhbmdlLXRoaXMtdG8tYS1zZWN1cmUtc2VjcmV0  # change-this-to-a-secure-secret
+  refresh-token-secret: Y2hhbmdlLXRoaXMtdG8tYS1zZWN1cmUtc2VjcmV0LWZvci1yZWZyZXNoLXRva2Vu  # change-this-to-a-secure-secret-for-refresh-token
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: chatbots-platform
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+spec:
+  tls:
+  - hosts:
+    - chatbots.example.com
+    secretName: chatbots-platform-tls
+  rules:
+  - host: chatbots.example.com
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: chatbots-platform
+            port:
+              name: http
+---
+apiVersion: autoscaling/v2
+kind: HorizontalPodAutoscaler
+metadata:
+  name: chatbots-platform
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1
+    kind: Deployment
+    name: chatbots-platform
+  minReplicas: 3
+  maxReplicas: 10
+  metrics:
+  - type: Resource
+    resource:
+      name: cpu
+      target:
+        type: Utilization
+        averageUtilization: 80
+  - type: Resource
+    resource:
+      name: memory
+      target:
+        type: Utilization
+        averageUtilization: 80

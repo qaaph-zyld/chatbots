@@ -1,14 +1,22 @@
 /**
  * Context Controller
  * 
- * API endpoints for context awareness features
+ * API endpoints for context awareness features including advanced context management,
+ * entity tracking across conversations, user preference learning, and topic detection.
  */
 
-const contextService = require('../../context/context.service');
-const topicService = require('../../context/topic.service');
-const entityService = require('../../context/entity.service');
-const referenceService = require('../../context/reference.service');
+const {
+  contextService,
+  topicService,
+  entityService,
+  referenceService,
+  advancedContextService,
+  preferenceLearningService,
+  topicDetectionService
+} = require('../../context');
 const { logger } = require('../../utils');
+const axios = require('axios');
+const HttpsProxyAgent = require('https-proxy-agent');
 
 /**
  * Get context for a conversation
@@ -500,21 +508,471 @@ exports.resolveReferences = async (req, res, next) => {
 exports.applyResolvedReferences = async (req, res, next) => {
   try {
     const { chatbotId, userId, conversationId } = req.params;
-    const message = req.body;
+    const { text, references } = req.body;
     
-    const resolvedMessage = await referenceService.applyResolvedReferences(
+    if (!text) {
+      return res.status(400).json({
+        success: false,
+        error: 'Text is required'
+      });
+    }
+    
+    const result = await referenceService.applyResolvedReferences(
       chatbotId,
       userId,
       conversationId,
-      message
+      text,
+      references
     );
     
     res.status(200).json({
       success: true,
-      data: resolvedMessage
+      data: result
     });
   } catch (error) {
     logger.error('Error in applyResolvedReferences:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Track entity across conversations
+ */
+exports.trackEntity = async (req, res, next) => {
+  try {
+    const { chatbotId, userId, conversationId } = req.params;
+    const entityData = req.body;
+    
+    if (!entityData || !entityData.type || !entityData.name) {
+      return res.status(400).json({
+        success: false,
+        error: 'Entity type and name are required'
+      });
+    }
+    
+    const entity = await entityTrackingService.trackEntity(
+      chatbotId,
+      userId,
+      conversationId,
+      entityData
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: entity
+    });
+  } catch (error) {
+    logger.error('Error in trackEntity:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Get cross-conversation entities for a user
+ */
+exports.getCrossConversationEntities = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const filters = req.query;
+    
+    const entities = await entityTrackingService.getUserEntities(
+      chatbotId,
+      userId,
+      filters
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: entities
+    });
+  } catch (error) {
+    logger.error('Error in getCrossConversationEntities:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Get cross-conversation entity by ID
+ */
+exports.getCrossConversationEntityById = async (req, res, next) => {
+  try {
+    const { chatbotId, userId, entityId } = req.params;
+    
+    const entity = await entityTrackingService.getEntityById(
+      chatbotId,
+      userId,
+      entityId
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: entity
+    });
+  } catch (error) {
+    logger.error('Error in getCrossConversationEntityById:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Add relation between cross-conversation entities
+ */
+exports.addCrossConversationEntityRelation = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const { sourceEntityId, targetEntityId, relationType, confidence } = req.body;
+    
+    if (!sourceEntityId || !targetEntityId || !relationType) {
+      return res.status(400).json({
+        success: false,
+        error: 'Source entity ID, target entity ID, and relation type are required'
+      });
+    }
+    
+    const entity = await advancedContextService.addEntityRelation(
+      chatbotId,
+      userId,
+      sourceEntityId,
+      targetEntityId,
+      relationType,
+      confidence
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: entity
+    });
+  } catch (error) {
+    logger.error('Error in addCrossConversationEntityRelation:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Merge cross-conversation entities
+ */
+exports.mergeCrossConversationEntities = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const { entityIds, primaryEntityId } = req.body;
+    
+    if (!entityIds || !Array.isArray(entityIds) || entityIds.length < 2 || !primaryEntityId) {
+      return res.status(400).json({
+        success: false,
+        error: 'Entity IDs array with at least 2 entities and primary entity ID are required'
+      });
+    }
+    
+    const entity = await advancedContextService.mergeEntities(
+      chatbotId,
+      userId,
+      entityIds,
+      primaryEntityId
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: entity
+    });
+  } catch (error) {
+    logger.error('Error in mergeCrossConversationEntities:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Find potential duplicate cross-conversation entities
+ */
+exports.findPotentialDuplicateCrossConversationEntities = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const options = req.query;
+    
+    const duplicates = await advancedContextService.findPotentialDuplicates(
+      chatbotId,
+      userId,
+      options
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: duplicates
+    });
+  } catch (error) {
+    logger.error('Error in findPotentialDuplicateCrossConversationEntities:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Set user preference
+ */
+exports.setUserPreference = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const { category, key, value, source, confidence, metadata } = req.body;
+    
+    if (!category || !key || value === undefined) {
+      return res.status(400).json({
+        success: false,
+        error: 'Category, key, and value are required'
+      });
+    }
+    
+    const preference = await preferenceLearningService.setPreference(
+      chatbotId,
+      userId,
+      category,
+      key,
+      value,
+      source,
+      confidence,
+      metadata
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: preference
+    });
+  } catch (error) {
+    logger.error('Error in setUserPreference:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Get user preferences
+ */
+exports.getUserPreferences = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const filters = req.query;
+    
+    const preferences = await preferenceLearningService.getPreferences(
+      chatbotId,
+      userId,
+      filters
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: preferences
+    });
+  } catch (error) {
+    logger.error('Error in getUserPreferences:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Delete user preference
+ */
+exports.deleteUserPreference = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const { category, key } = req.query;
+    
+    if (!category || !key) {
+      return res.status(400).json({
+        success: false,
+        error: 'Category and key are required'
+      });
+    }
+    
+    const result = await preferenceLearningService.deletePreference(
+      chatbotId,
+      userId,
+      category,
+      key
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: { deleted: result }
+    });
+  } catch (error) {
+    logger.error('Error in deleteUserPreference:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Infer preferences from message
+ */
+exports.inferPreferencesFromMessage = async (req, res, next) => {
+  try {
+    const { chatbotId, userId, conversationId } = req.params;
+    const { message, nlpAnalysis } = req.body;
+    
+    if (!message) {
+      return res.status(400).json({
+        success: false,
+        error: 'Message is required'
+      });
+    }
+    
+    const preferences = await preferenceLearningService.inferPreferencesFromMessage(
+      chatbotId,
+      userId,
+      conversationId,
+      message,
+      nlpAnalysis
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: preferences
+    });
+  } catch (error) {
+    logger.error('Error in inferPreferencesFromMessage:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Apply preferences to response options
+ */
+exports.applyPreferencesToResponse = async (req, res, next) => {
+  try {
+    const { chatbotId, userId } = req.params;
+    const responseOptions = req.body;
+    
+    const updatedOptions = await preferenceLearningService.applyPreferencesToResponse(
+      chatbotId,
+      userId,
+      responseOptions
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: updatedOptions
+    });
+  } catch (error) {
+    logger.error('Error in applyPreferencesToResponse:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Create or update topic
+ */
+exports.createOrUpdateTopic = async (req, res, next) => {
+  try {
+    const { chatbotId } = req.params;
+    const topicData = req.body;
+    
+    if (!topicData || !topicData.name) {
+      return res.status(400).json({
+        success: false,
+        error: 'Topic name is required'
+      });
+    }
+    
+    const topic = await topicDetectionService.createOrUpdateTopic(
+      chatbotId,
+      topicData
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: topic
+    });
+  } catch (error) {
+    logger.error('Error in createOrUpdateTopic:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Detect topics in text
+ */
+exports.detectTopics = async (req, res, next) => {
+  try {
+    const { chatbotId } = req.params;
+    const { text } = req.body;
+    
+    if (!text) {
+      return res.status(400).json({
+        success: false,
+        error: 'Text is required'
+      });
+    }
+    
+    const topics = await topicDetectionService.detectTopics(
+      chatbotId,
+      text
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: topics
+    });
+  } catch (error) {
+    logger.error('Error in detectTopics:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Track topics in conversation
+ */
+exports.trackTopics = async (req, res, next) => {
+  try {
+    const { chatbotId, userId, conversationId } = req.params;
+    const { detectedTopics } = req.body;
+    
+    if (!detectedTopics || !Array.isArray(detectedTopics)) {
+      return res.status(400).json({
+        success: false,
+        error: 'Detected topics array is required'
+      });
+    }
+    
+    const topics = await topicDetectionService.trackTopics(
+      chatbotId,
+      userId,
+      conversationId,
+      detectedTopics
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: topics
+    });
+  } catch (error) {
+    logger.error('Error in trackTopics:', error.message);
+    next(error);
+  }
+};
+
+/**
+ * Add related topic
+ */
+exports.addRelatedTopic = async (req, res, next) => {
+  try {
+    const { chatbotId } = req.params;
+    const { sourceName, targetName, relationStrength } = req.body;
+    
+    if (!sourceName || !targetName) {
+      return res.status(400).json({
+        success: false,
+        error: 'Source and target topic names are required'
+      });
+    }
+    
+    const topic = await topicDetectionService.addRelatedTopic(
+      chatbotId,
+      sourceName,
+      targetName,
+      relationStrength
+    );
+    
+    res.status(200).json({
+      success: true,
+      data: topic
+    });
+  } catch (error) {
+    logger.error('Error in addRelatedTopic:', error.message);
     next(error);
   }
 };
