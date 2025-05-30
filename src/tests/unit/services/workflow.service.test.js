@@ -81,6 +81,13 @@ describe('Workflow Service', () => {
       
       Workflow.prototype.save = jest.fn().mockResolvedValue(savedWorkflow);
       
+      // Mock the save function to return the savedWorkflow
+      Workflow.prototype.save.mockImplementation(function() {
+        // Copy properties from this to savedWorkflow
+        Object.assign(savedWorkflow, this);
+        return Promise.resolve(savedWorkflow);
+      });
+      
       // Act
       const result = await workflowService.createWorkflow(workflowData, userId);
       

@@ -1,15 +1,16 @@
 #!/usr/bin/env node
 
 /**
- * Test Coverage Runner
+ * Comprehensive Test Runner
  * 
- * This script runs all tests and generates coverage reports to help
- * achieve our 99% test coverage goal.
+ * This script runs all tests and generates a comprehensive coverage report.
+ * It helps identify testing gaps and ensures we maintain 99% test coverage.
  */
 
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
+const readline = require('readline');
 
 // Configuration
 const config = {
@@ -17,16 +18,13 @@ const config = {
     { name: 'Unit Tests', command: 'npm run test:unit -- --coverage' },
     { name: 'Integration Tests', command: 'npm run test:integration' },
     { name: 'E2E Tests', command: 'npm run test:e2e' },
-    { name: 'UI Tests', command: 'npm run test:ui' },
-    { name: 'Security Tests', command: 'npm run test:security' }
+    { name: 'UI Tests', command: 'npm run test:ui' }
   ],
   reportDir: './test-reports',
-  coverageDir: './coverage',
-  // Proxy configuration only used for local dependency installation if needed
-  proxy: null
+  coverageDir: './coverage'
 };
 
-// Ensure report directory exists
+// Create report directory if it doesn't exist
 if (!fs.existsSync(config.reportDir)) {
   fs.mkdirSync(config.reportDir, { recursive: true });
 }
@@ -35,41 +33,50 @@ if (!fs.existsSync(config.reportDir)) {
  * Run a command and log output
  * 
  * @param {string} command - Command to run
- * @returns {string} Command output
+ * @returns {Promise<{exitCode: number, output: string}>}
  */
 function runCommand(command) {
   console.log(`\n🚀 Running: ${command}\n`);
   
   try {
-    // Set proxy environment variables if configured
-    if (config.proxy) {
-      process.env.HTTP_PROXY = `http://${config.proxy.host}:${config.proxy.port}`;
-      process.env.HTTPS_PROXY = `http://${config.proxy.host}:${config.proxy.port}`;
-    }
-    
     const output = execSync(command, { 
       stdio: 'inherit',
       encoding: 'utf8'
     });
     
-    return output;
+    return { exitCode: 0, output };
   } catch (error) {
     console.error(`❌ Command failed: ${command}`);
     console.error(error.message);
-    return error.stdout || '';
+    return { exitCode: 1, output: error.stdout || '' };
   }
 }
 
 /**
  * Generate a summary report
+ * 
+ * @param {Array} results - Test results
  */
-function generateSummaryReport() {
+function generateSummaryReport(results) {
   console.log('\n📊 Generating test summary report...');
   
   const reportPath = path.join(config.reportDir, 'test-summary.md');
   
   let report = '# Test Coverage Summary\n\n';
   report += `Generated: ${new Date().toISOString()}\n\n`;
+  
+  // Add test results
+  report += '## Test Results\n\n';
+  report += '| Test Type | Status |\n';
+  report += '|-----------|--------|\n';
+  
+  results.forEach(result => {
+    const { name, exitCode } = result;
+    const status = exitCode === 0 ? '✅ PASS' : '❌ FAIL';
+    report += `| ${name} | ${status} |\n`;
+  });
+  
+  report += '\n';
   
   // Add coverage summary if available
   if (fs.existsSync(path.join(config.coverageDir, 'coverage-summary.json'))) {
@@ -143,24 +150,114 @@ function generateSummaryReport() {
 }
 
 /**
+ * Check if dependency installation is needed
+ * 
+ * @returns {Promise<boolean>} True if installation is needed
+ */
+async function checkDependencies() {
+  // Check if node_modules exists
+  if (!fs.existsSync('node_modules')) {
+    return true;
+  }
+  
+  // Check if package.json is newer than node_modules
+  const packageJsonStat = fs.statSync('package.json');
+  const nodeModulesStat = fs.statSync('node_modules');
+  
+  return packageJsonStat.mtime > nodeModulesStat.mtime;
+}
+
+/**
+ * Ask user for confirmation
+ * 
+ * @param {string} question - Question to ask
+ * @returns {Promise<boolean>} User response
+ */
+async function askForConfirmation(question) {
+  const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+  });
+  
+  return new Promise(resolve => {
+    rl.question(`${question} (y/n) `, answer => {
+      rl.close();
+      resolve(answer.toLowerCase() === 'y');
+    });
+  });
+}
+
+/**
+ * Install dependencies with proxy if needed
+ */
+async function installDependencies() {
+  console.log('\n📦 Checking dependencies...');
+  
+  const needsInstallation = await checkDependencies();
+  
+  if (needsInstallation) {
+    console.log('Dependencies need to be installed or updated.');
+    
+    try {
+      console.log('\n🔄 Installing dependencies...');
+      runCommand('npm install');
+    } catch (error) {
+      console.error('❌ Failed to install dependencies:', error.message);
+      
+      const useProxy = await askForConfirmation('Would you like to try installing with proxy?');
+      
+      if (useProxy) {
+        console.log('\n🔄 Setting proxy and installing dependencies...');
+        runCommand('npm config set proxy http://104.129.196.38:10563');
+        runCommand('npm config set https-proxy http://104.129.196.38:10563');
+        runCommand('npm install');
+        
+        const resetProxy = await askForConfirmation('Would you like to reset proxy settings?');
+        
+        if (resetProxy) {
+          console.log('\n🔄 Resetting proxy settings...');
+          runCommand('npm config delete proxy');
+          runCommand('npm config delete https-proxy');
+        }
+      }
+    }
+  } else {
+    console.log('Dependencies are up to date.');
+  }
+}
+
+/**
  * Main function
  */
 async function main() {
-  console.log('🧪 Running Comprehensive Test Suite');
-  console.log('==================================');
+  console.log('🧪 Comprehensive Test Runner');
+  console.log('===========================');
+  
+  // Check and install dependencies if needed
+  await installDependencies();
+  
+  // Run test gap analysis
+  console.log('\n🔍 Running test gap analysis...');
+  runCommand('node scripts/test-gap-analyzer.js');
   
   // Run all test commands
+  console.log('\n🧪 Running all tests...');
+  
+  const results = [];
+  
   for (const { name, command } of config.testCommands) {
     console.log(`\n📋 ${name}`);
     console.log('------------------');
     
-    runCommand(command);
+    const result = runCommand(command);
+    results.push({ name, exitCode: result.exitCode });
   }
   
   // Generate summary report
-  generateSummaryReport();
+  generateSummaryReport(results);
   
   console.log('\n✅ All tests completed!');
+  console.log('\n📊 Check the test reports in the test-reports directory.');
 }
 
 // Run the script

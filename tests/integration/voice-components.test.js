@@ -6,10 +6,6 @@
 
 const path = require('path');
 const fs = require('fs');
-const audioProcessor = require('../../src/utils/audio-processor');
-const languageDetector = require('../../src/utils/language-detector');
-const modelManager = require('../../src/utils/model-manager');
-const voiceRecognitionService = require('../../src/services/voice-recognition.service');
 
 // Create test directory if it doesn't exist
 const testDir = path.join(process.cwd(), 'tests', 'temp');
@@ -17,24 +13,63 @@ if (!fs.existsSync(testDir)) {
   fs.mkdirSync(testDir, { recursive: true });
 }
 
-// Mock some functions to avoid external dependencies
-jest.mock('../../src/utils/model-manager', () => {
-  const originalModule = jest.requireActual('../../src/utils/model-manager');
-  return {
-    ...originalModule,
-    downloadModel: jest.fn().mockImplementation(() => {
-      return Promise.resolve({
-        success: true,
-        model: {
-          name: 'Test Model',
-          language: 'en-US',
-          path: '/path/to/model'
-        }
-      });
-    }),
-    isModelInstalled: jest.fn().mockReturnValue(Promise.resolve(true))
-  };
-});
+// Mock the config module first to prevent undefined errors
+jest.mock('../../src/config', () => ({
+  storage: {
+    baseDir: path.join(process.cwd(), 'tests', 'temp'),
+    tempDir: path.join(process.cwd(), 'tests', 'temp', 'temp'),
+    dataDir: path.join(process.cwd(), 'tests', 'temp', 'data'),
+    cacheDir: path.join(process.cwd(), 'tests', 'temp', 'cache'),
+    modelDir: path.join(process.cwd(), 'tests', 'temp', 'models')
+  },
+  stt: {
+    modelPath: path.join(process.cwd(), 'tests', 'temp', 'models', 'stt')
+  },
+  tts: {
+    modelPath: path.join(process.cwd(), 'tests', 'temp', 'models', 'tts')
+  },
+  recognition: {
+    modelPath: path.join(process.cwd(), 'tests', 'temp', 'models', 'recognition')
+  }
+}));
+
+// Now import the modules after config is mocked
+const audioProcessor = require('../../src/utils/audio-processor');
+const languageDetector = require('../../src/utils/language-detector');
+const modelManager = require('../../src/utils/model-manager');
+
+// Mock the voice recognition service
+jest.mock('../../src/services/voice-recognition.service', () => ({
+  initialize: jest.fn().mockResolvedValue(true),
+  recognizeSpeech: jest.fn().mockResolvedValue({
+    text: 'Hello world',
+    confidence: 0.95
+  }),
+  getAvailableModels: jest.fn().mockReturnValue(['en-US', 'fr-FR']),
+  detectLanguage: jest.fn().mockResolvedValue('en-US')
+}));
+
+// Import the mocked service
+const voiceRecognitionService = require('../../src/services/voice-recognition.service');
+
+// Mock model manager
+jest.mock('../../src/utils/model-manager', () => ({
+  ensureDirectories: jest.fn(),
+  downloadModel: jest.fn().mockResolvedValue({
+    success: true,
+    model: {
+      name: 'Test Model',
+      language: 'en-US',
+      path: '/path/to/model'
+    }
+  }),
+  isModelInstalled: jest.fn().mockReturnValue(Promise.resolve(true)),
+  getModelStatus: jest.fn().mockResolvedValue({
+    stt: { installed: [], available: [] },
+    tts: { installed: [], available: [] }
+  }),
+  getAvailableModels: jest.fn().mockReturnValue([])
+}));
 
 describe('Voice Components Integration', () => {
   beforeAll(async () => {

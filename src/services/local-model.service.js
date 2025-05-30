@@ -38,6 +38,18 @@ class LocalModelService {
     };
     
     this.loadedModels = {};
+    this.proxyConfig = null;
+  }
+
+  /**
+   * Set proxy configuration for network requests
+   * 
+   * @param {Object|null} proxyConfig - Proxy configuration or null to disable
+   * @returns {void}
+   */
+  setProxyConfig(proxyConfig) {
+    this.proxyConfig = proxyConfig;
+    logger.debug('Proxy configuration updated', { enabled: !!proxyConfig });
   }
 
   /**

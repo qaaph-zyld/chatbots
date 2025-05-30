@@ -4,6 +4,9 @@
  * Central configuration for the chatbot platform
  */
 
+// Import voice configuration
+const voiceConfig = require('./config/open-voice.config');
+
 module.exports = {
   // Server configuration
   server: {
@@ -56,6 +59,30 @@ module.exports = {
   // Voice processing configuration
   voice: {
     sttModelPath: process.env.STT_MODEL_PATH || './models/stt',
-    ttsModelPath: process.env.TTS_MODEL_PATH || './models/tts'
+    ttsModelPath: process.env.TTS_MODEL_PATH || './models/tts',
+    // Import voice configuration from external file
+    ...voiceConfig
+  },
+  
+  // Chatbot configuration
+  chatbot: {
+    enabledEngines: process.env.ENABLED_ENGINES ? process.env.ENABLED_ENGINES.split(',') : ['botpress', 'huggingface'],
+    defaultEngine: process.env.DEFAULT_ENGINE || 'botpress',
+    fallbackEngine: 'huggingface',
+    contextLength: 10,
+    maxTokens: 2048,
+    temperature: 0.7,
+    modelPath: process.env.CHATBOT_MODEL_PATH || './models/chatbot'
+  },
+  
+  // Storage configuration
+  storage: {
+    baseDir: process.env.STORAGE_BASE_DIR || './storage',
+    tempDir: process.env.STORAGE_TEMP_DIR || './storage/temp',
+    dataDir: process.env.STORAGE_DATA_DIR || './storage/data',
+    cacheDir: process.env.STORAGE_CACHE_DIR || './storage/cache',
+    modelDir: process.env.STORAGE_MODEL_DIR || './storage/models',
+    maxCacheSize: process.env.STORAGE_MAX_CACHE_SIZE || 100 * 1024 * 1024, // 100MB
+    allowedFileTypes: ['jpg', 'jpeg', 'png', 'gif', 'pdf', 'doc', 'docx', 'xls', 'xlsx', 'txt', 'csv', 'wav', 'mp3', 'mp4']
   }
 };

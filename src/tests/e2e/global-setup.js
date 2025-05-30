@@ -4,6 +4,7 @@
  * This file contains setup code that runs once before all end-to-end tests
  */
 
+require('dotenv').config();
 const { spawn } = require('child_process');
 const { logger } = require('../../utils');
 

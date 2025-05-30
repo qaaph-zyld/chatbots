@@ -6,8 +6,11 @@
 const { defineConfig } = require('@playwright/test');
 
 module.exports = defineConfig({
-  // Test directory
+  // Test directory - explicitly set to e2e tests only
   testDir: './src/tests/e2e',
+  
+  // Test pattern - only match files with .e2e.test.js extension
+  testMatch: '**/*.e2e.test.js',
   
   // Maximum time one test can run for
   timeout: 60000,

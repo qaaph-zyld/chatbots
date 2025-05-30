@@ -1,0 +1,34 @@
+[
+  {
+    "id": "bot1",
+    "name": "Support Bot",
+    "description": "Customer support chatbot",
+    "type": "support",
+    "personality": "helpful",
+    "createdBy": "user1",
+    "settings": {
+      "welcomeMessage": "Hello! How can I help you today?",
+      "fallbackMessage": "I'm sorry, I didn't understand that. Could you rephrase?",
+      "language": "en",
+      "activeIntegrations": ["email", "slack"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "bot2",
+    "name": "Sales Bot",
+    "description": "Sales assistant chatbot",
+    "type": "sales",
+    "personality": "professional",
+    "createdBy": "user1",
+    "settings": {
+      "welcomeMessage": "Welcome! I can help you find the perfect product.",
+      "fallbackMessage": "I'm not sure I understand. Could you tell me more about what you're looking for?",
+      "language": "en",
+      "activeIntegrations": ["crm", "website"]
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+]

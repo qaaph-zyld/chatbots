@@ -250,10 +250,102 @@ describe('Analytics Service', () => {
   
   // Test generating reports
   describe('generateReport', () => {
-    it('should generate a summary report', async () => {
+    it('should generate a comprehensive report for a specific period', async () => {
       // Arrange
-      const chatbotId = new mongoose.Types.ObjectId();
+      const chatbotId = new mongoose.Types.ObjectId().toString();
+      const period = 'daily';
+      const startDate = new Date('2025-01-01');
+      const endDate = new Date('2025-01-07');
+      
+      // Mock analytics data
+      const mockAnalyticsData = [
+        {
+          chatbotId,
+          period: 'daily',
+          date: new Date('2025-01-01'),
+          metrics: {
+            conversations: { total: 100, new: 80, completed: 75 },
+            messages: { total: 500, user: 250, bot: 250 },
+            users: { total: 50, new: 20, returning: 30 },
+            engagement: { averageConversationLength: 5, averageResponseTime: 1.2 }
+          }
+        },
+        {
+          chatbotId,
+          period: 'daily',
+          date: new Date('2025-01-02'),
+          metrics: {
+            conversations: { total: 120, new: 90, completed: 85 },
+            messages: { total: 600, user: 300, bot: 300 },
+            users: { total: 60, new: 25, returning: 35 },
+            engagement: { averageConversationLength: 5.2, averageResponseTime: 1.1 }
+          }
+        }
+      ];
+      
+      // Mock the Analytics.findByDateRange method
+      Analytics.findByDateRange = jest.fn().mockResolvedValue(mockAnalyticsData);
+      
+      // Act
+      const report = await analyticsService.generateReport(chatbotId, period, startDate, endDate);
+      
+      // Assert
+      expect(Analytics.findByDateRange).toHaveBeenCalledWith(chatbotId, startDate, endDate, period);
+      expect(report).toBeDefined();
+      expect(report.summary).toBeDefined();
+      expect(report.summary.conversations.total).toBe(220); // 100 + 120
+      expect(report.summary.messages.total).toBe(1100); // 500 + 600
+      expect(report.summary.users.total).toBe(60); // Max of 50 and 60
+      expect(report.trends).toBeDefined();
+      expect(report.trends.conversations).toHaveLength(2);
+      expect(report.trends.messages).toHaveLength(2);
+      expect(report.period).toBe(period);
+      expect(report.startDate).toEqual(startDate);
+      expect(report.endDate).toEqual(endDate);
+      expect(logger.debug).toHaveBeenCalledWith('Analytics report generated', expect.any(Object));
+    });
+    
+    it('should handle empty analytics data', async () => {
+      // Arrange
+      const chatbotId = new mongoose.Types.ObjectId().toString();
+      const period = 'weekly';
+      const startDate = new Date('2025-01-01');
+      const endDate = new Date('2025-01-07');
+      
+      // Mock empty analytics data
+      Analytics.findByDateRange = jest.fn().mockResolvedValue([]);
+      
+      // Act
+      const report = await analyticsService.generateReport(chatbotId, period, startDate, endDate);
+      
+      // Assert
+      expect(report).toBeDefined();
+      expect(report.summary).toBeDefined();
+      expect(report.summary.conversations.total).toBe(0);
+      expect(report.summary.messages.total).toBe(0);
+      expect(report.trends).toBeDefined();
+      expect(report.trends.conversations).toHaveLength(0);
+      expect(report.period).toBe(period);
+    });
+    
+    it('should handle errors when generating report', async () => {
+      // Arrange
+      const chatbotId = new mongoose.Types.ObjectId().toString();
       const period = 'monthly';
+      const startDate = new Date('2025-01-01');
+      const endDate = new Date('2025-01-31');
+      
+      // Mock error
+      const testError = new Error('Database error');
+      Analytics.findByDateRange = jest.fn().mockRejectedValue(testError);
+      
+      // Act & Assert
+      await expect(analyticsService.generateReport(chatbotId, period, startDate, endDate))
+        .rejects.toThrow(testError);
+      expect(logger.error).toHaveBeenCalledWith('Error generating analytics report', expect.any(Object));
+    });
+    
+    it('should generate report with performance metrics', async () => {
       const startDate = new Date('2023-01-01');
       const endDate = new Date('2023-12-31');
       

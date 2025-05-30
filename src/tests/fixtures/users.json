@@ -1,0 +1,30 @@
+[
+  {
+    "id": "user1",
+    "username": "testuser",
+    "email": "test@example.com",
+    "password": "$2b$10$abcdefghijklmnopqrstuvwxyz12345678901234567890",
+    "role": "user",
+    "preferences": {
+      "theme": "light",
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  },
+  {
+    "id": "admin1",
+    "username": "admin",
+    "email": "admin@example.com",
+    "password": "$2b$10$abcdefghijklmnopqrstuvwxyz12345678901234567890",
+    "role": "admin",
+    "preferences": {
+      "theme": "dark",
+      "notifications": true,
+      "language": "en"
+    },
+    "createdAt": "2025-01-01T00:00:00.000Z",
+    "updatedAt": "2025-01-01T00:00:00.000Z"
+  }
+]

@@ -256,11 +256,7 @@ router.use('/', workflowRoutes);
 // Workflow template routes
 router.use('/workflow-templates', require('./routes/workflow-template.routes'));
 
-// Import advanced context routes
-const advancedContextRoutes = require('./routes/advanced-context.routes');
-
-// Use advanced context routes
-router.use('/', advancedContextRoutes);
+// Advanced context routes already imported above
 
 // Export router
 // External API routes
