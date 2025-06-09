@@ -4,8 +4,8 @@
  * Provides conversation insights and recommendations based on analytics data
  */
 
-const analyticsService = require('./analytics.service');
-const { logger } = require('../utils');
+require('@src/analytics\analytics.service');
+require('@src/utils');
 
 /**
  * Insights Service class

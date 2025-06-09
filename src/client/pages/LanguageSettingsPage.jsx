@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import './LanguageSettingsPage.css';
+import '@src/client\pages\LanguageSettingsPage.css';
 
 /**
  * Language Settings Page

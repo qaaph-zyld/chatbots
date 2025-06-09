@@ -12,20 +12,20 @@ import 'reactflow/dist/style.css';
 import axios from 'axios';
 
 // Import custom node types
-import StartNode from './nodes/StartNode';
-import MessageNode from './nodes/MessageNode';
-import ConditionNode from './nodes/ConditionNode';
-import InputNode from './nodes/InputNode';
-import ActionNode from './nodes/ActionNode';
-import IntegrationNode from './nodes/IntegrationNode';
-import ContextNode from './nodes/ContextNode';
-import JumpNode from './nodes/JumpNode';
-import EndNode from './nodes/EndNode';
+import '@src/client\components\workflow-editor\nodes\StartNode';
+import '@src/client\components\workflow-editor\nodes\MessageNode';
+import '@src/client\components\workflow-editor\nodes\ConditionNode';
+import '@src/client\components\workflow-editor\nodes\InputNode';
+import '@src/client\components\workflow-editor\nodes\ActionNode';
+import '@src/client\components\workflow-editor\nodes\IntegrationNode';
+import '@src/client\components\workflow-editor\nodes\ContextNode';
+import '@src/client\components\workflow-editor\nodes\JumpNode';
+import '@src/client\components\workflow-editor\nodes\EndNode';
 
 // Import sidebar and toolbar components
-import NodePalette from './NodePalette';
-import Toolbar from './Toolbar';
-import PropertiesPanel from './PropertiesPanel';
+import '@src/client\components\workflow-editor\NodePalette';
+import '@src/client\components\workflow-editor\Toolbar';
+import '@src/client\components\workflow-editor\PropertiesPanel';
 
 // Configure axios with proxy as specified in user requirements
 axios.defaults.proxy = {

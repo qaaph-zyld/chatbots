@@ -6,10 +6,10 @@
  * integration with open-source monitoring tools like Prometheus and Grafana.
  */
 
-const { resourceMonitorService } = require('./resource-monitor.service');
-const { rateLimiterService } = require('./rate-limiter.service');
-const { prometheusExporterService } = require('./prometheus-exporter.service');
-const { metricsServer } = require('./metrics-server');
+require('@src/monitoring\resource-monitor.service');
+require('@src/monitoring\rate-limiter.service');
+require('@src/monitoring\prometheus-exporter.service');
+require('@src/monitoring\metrics-server');
 
 module.exports = {
   resourceMonitorService,

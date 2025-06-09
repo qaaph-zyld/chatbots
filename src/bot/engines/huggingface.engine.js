@@ -4,8 +4,8 @@
  * Integration with Hugging Face models for chatbot functionality
  */
 
-const BaseChatbotEngine = require('./base.engine');
-const { logger } = require('../../utils');
+require('@src/bot\engines\base.engine');
+require('@src/utils');
 const axios = require('axios');
 
 class HuggingFaceEngine extends BaseChatbotEngine {

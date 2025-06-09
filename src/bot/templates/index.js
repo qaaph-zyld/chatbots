@@ -4,7 +4,7 @@
  * Manages conversation templates and provides a unified interface
  */
 
-const SimpleTemplate = require('./simple.template');
+require('@src/bot\templates\simple.template');
 
 // Map of template types to their implementations
 const templateTypes = {

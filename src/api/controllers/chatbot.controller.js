@@ -4,9 +4,9 @@
  * Handles all chatbot-related operations and API endpoints
  */
 
-const chatbotService = require('../../services/chatbot.service');
-const { logger } = require('../../utils');
-const { ValidationError } = require('../../utils/errors');
+require('@src/services\chatbot.service');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Get all chatbots
@@ -104,7 +104,7 @@ exports.getChatbotById = async (req, res, next) => {
     // Get chatbot by ID from service
     let chatbot;
     try {
-      chatbot = chatbotService.getChatbot(id);
+      chatbot = await chatbotService.getChatbotById(id);
       logger.info(`Retrieved chatbot: ${id}`);
       
       res.status(200).json({
@@ -265,7 +265,7 @@ exports.getConversationHistory = async (req, res, next) => {
     const { sessionId, conversationId } = req.query;
     
     // Get conversation service
-    const conversationService = require('../../services/conversation.service');
+    require('@src/services\conversation.service');
     
     let conversation;
     

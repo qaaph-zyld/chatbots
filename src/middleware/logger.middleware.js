@@ -4,7 +4,7 @@
  * Express middleware for request logging
  */
 
-const { logger } = require('../utils');
+require('@src/utils');
 
 /**
  * Request logging middleware

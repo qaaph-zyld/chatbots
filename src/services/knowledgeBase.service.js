@@ -4,10 +4,10 @@
  * Handles CRUD operations for knowledge bases and knowledge items
  */
 
-const KnowledgeBase = require('../database/schemas/knowledgeBase.schema');
-const Chatbot = require('../database/schemas/chatbot.schema');
-const { logger } = require('../utils');
-const { NotFoundError, ValidationError } = require('../utils/errors');
+require('@src/database\schemas\knowledgeBase.schema');
+require('@src/database\schemas\chatbot.schema');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Create a new knowledge base

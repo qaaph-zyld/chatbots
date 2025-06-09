@@ -7,9 +7,9 @@
 
 const express = require('express');
 const router = express.Router();
-const advancedContextController = require('../controllers/advanced-context.controller');
-const { authenticate, authorize } = require('../middleware/auth');
-const validate = require('../middleware/validate');
+require('@src/api\controllers\advanced-context.controller');
+require('@src/api\middleware\auth');
+require('@src/api\middleware\validate');
 const Joi = require('joi');
 
 // Validation schemas

@@ -6,10 +6,10 @@
 
 const request = require('supertest');
 const mongoose = require('mongoose');
-const app = require('../../app');
-const Personality = require('../../database/schemas/personality.schema');
-const Chatbot = require('../../database/schemas/chatbot.schema');
-const { connectDB, disconnectDB } = require('../../database/connection');
+require('@src/app');
+require('@src/database\schemas\personality.schema');
+require('@src/database\schemas\chatbot.schema');
+require('@src/database\connection');
 
 describe('Personality API', () => {
   let testChatbot;

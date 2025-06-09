@@ -6,8 +6,8 @@
  * and structured outputs like cards and carousels.
  */
 
-const { inputService } = require('./input');
-const { outputService } = require('./output');
+require('@src/nlp\multimodal\input');
+require('@src/nlp\multimodal\output');
 
 module.exports = {
   inputService,

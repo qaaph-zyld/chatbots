@@ -4,7 +4,7 @@
  * Basic template for simple intent-based conversations
  */
 
-const BaseTemplate = require('./base.template');
+require('@src/bot\templates\base.template');
 
 class SimpleTemplate extends BaseTemplate {
   /**

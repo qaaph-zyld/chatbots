@@ -5,12 +5,7 @@
  * including tracking, dashboard generation, insights, and external integration.
  */
 
-const {
-  conversationTrackingService,
-  conversationDashboardService,
-  conversationInsightsService,
-  analyticsIntegrationService
-} = require('./index');
+require('@src/analytics\conversation\index');
 
 // Sample conversation data
 const sampleConversations = [

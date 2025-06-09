@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-const config = require('../config');
+require('@src/config');
 
 /**
  * Connect to MongoDB database

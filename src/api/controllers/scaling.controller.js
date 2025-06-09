@@ -4,8 +4,8 @@
  * Handles API endpoints for scaling configuration and metrics
  */
 
-const scalingService = require('../../scaling/scaling.service');
-const { logger } = require('../../utils');
+require('@src/scaling\scaling.service');
+require('@src/utils');
 
 /**
  * Get scaling metrics

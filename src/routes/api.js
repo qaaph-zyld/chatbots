@@ -8,11 +8,11 @@ const express = require('express');
 const router = express.Router();
 
 // Import route modules
-const openVoiceRoutes = require('./open-voice.routes');
-const modelManagerRoutes = require('./model-manager.routes');
-const voiceRecognitionRoutes = require('./voice-recognition.routes');
-const languageDetectorRoutes = require('./language-detector.routes');
-const audioProcessorRoutes = require('./audio-processor.routes');
+require('@src/routes\open-voice.routes');
+require('@src/routes\model-manager.routes');
+require('@src/routes\voice-recognition.routes');
+require('@src/routes\language-detector.routes');
+require('@src/routes\audio-processor.routes');
 
 // Open Voice routes
 router.use('/open-voice', openVoiceRoutes);

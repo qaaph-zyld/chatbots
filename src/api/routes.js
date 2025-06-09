@@ -6,35 +6,35 @@
 
 const express = require('express');
 const router = express.Router();
-const voiceRoutes = require('../routes/voice.routes');
-const openVoiceRoutes = require('../routes/open-voice.routes');
-const externalRoutes = require('./external');
-const advancedContextRoutes = require('./routes/advanced-context.routes');
-const advancedTemplateRoutes = require('./routes/advanced-template.routes');
-const themeRoutes = require('./routes/theme.routes');
-const workflowRoutes = require('./routes/workflow.routes');
+require('@src/routes\voice.routes');
+require('@src/routes\open-voice.routes');
+require('@src/api\external');
+require('@src/api\routes\advanced-context.routes');
+require('@src/api\routes\advanced-template.routes');
+require('@src/api\routes\theme.routes');
+require('@src/api\routes\workflow.routes');
 
 // Import controllers
 // These will be implemented as we progress through the roadmap
-const chatbotController = require('./controllers/chatbot.controller');
-const templateController = require('./controllers/template.controller');
-const advancedTemplateController = require('./controllers/advanced-template.controller');
-const integrationController = require('./controllers/integration.controller');
-const personalityController = require('./controllers/personality.controller');
-const knowledgeBaseController = require('./controllers/knowledgeBase.controller');
-const pluginController = require('./controllers/plugin.controller');
-const trainingController = require('./controllers/training.controller');
-const analyticsController = require('./controllers/analytics.controller');
-const contextController = require('./controllers/context.controller');
-const advancedContextController = require('./controllers/advanced-context.controller');
-const authController = require('./controllers/auth.controller');
-const healthController = require('./controllers/health.controller');
-const usageController = require('./controllers/usage.controller');
-const scalingController = require('./controllers/scaling.controller');
-const themeController = require('./controllers/theme.controller');
+require('@src/api\controllers\chatbot.controller');
+require('@src/api\controllers\template.controller');
+require('@src/api\controllers\advanced-template.controller');
+require('@src/api\controllers\integration.controller');
+require('@src/api\controllers\personality.controller');
+require('@src/api\controllers\knowledgeBase.controller');
+require('@src/api\controllers\plugin.controller');
+require('@src/api\controllers\training.controller');
+require('@src/api\controllers\analytics.controller');
+require('@src/api\controllers\context.controller');
+require('@src/api\controllers\advanced-context.controller');
+require('@src/api\controllers\auth.controller');
+require('@src/api\controllers\health.controller');
+require('@src/api\controllers\usage.controller');
+require('@src/api\controllers\scaling.controller');
+require('@src/api\controllers\theme.controller');
 
 // Import middleware
-const { authenticateToken, authenticateApiKey, hasPermission, hasRole, rateLimit } = require('../auth/auth.middleware');
+require('@src/auth\auth.middleware');
 
 // Health check endpoints
 router.get('/health', healthController.healthCheck);

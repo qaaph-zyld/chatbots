@@ -4,7 +4,7 @@
  * Mocks the context module index to prevent model compilation errors
  */
 
-const { mockAdvancedContextService } = require('./context-service-mock');
+require('@src/tests\mocks\context-service-mock');
 
 // Export mock services
 module.exports = {

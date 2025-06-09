@@ -9,21 +9,21 @@
  * feedback collection, continuous learning, and model fine-tuning.
  */
 
-const analyticsService = require('./analytics.service');
-const insightsService = require('./insights.service');
-const learningService = require('./learning.service');
-const conversationAnalytics = require('./conversation');
-const { conversationTrackingService, conversationDashboardService, conversationInsightsService } = require('./conversation');
-const feedbackService = require('./conversation/feedback.service');
-const learningModules = require('./learning');
-const engagementAnalytics = require('./engagement');
-const { abTestingService } = require('./testing/ab-testing.service');
-const { performanceBenchmarkService } = require('./benchmarking/performance-benchmark.service');
-const { reportBuilderService } = require('./reporting/report-builder.service');
-const { reportGeneratorService } = require('./reporting/report-generator.service');
-const { predictiveAnalyticsService } = require('./predictive/predictive-analytics.service');
-const { userBehaviorInsightsService } = require('./behavior/user-behavior-insights.service');
-const { performanceOptimizerService } = require('./optimization/performance-optimizer.service');
+require('@src/analytics\analytics.service');
+require('@src/analytics\insights.service');
+require('@src/analytics\learning.service');
+require('@src/analytics\conversation');
+require('@src/analytics\conversation');
+require('@src/analytics\conversation\feedback.service');
+require('@src/analytics\learning');
+require('@src/analytics\engagement');
+require('@src/analytics\testing\ab-testing.service');
+require('@src/analytics\benchmarking\performance-benchmark.service');
+require('@src/analytics\reporting\report-builder.service');
+require('@src/analytics\reporting\report-generator.service');
+require('@src/analytics\predictive\predictive-analytics.service');
+require('@src/analytics\behavior\user-behavior-insights.service');
+require('@src/analytics\optimization\performance-optimizer.service');
 
 module.exports = {
   analyticsService,

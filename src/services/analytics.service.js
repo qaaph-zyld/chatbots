@@ -4,9 +4,8 @@
  * Service for managing analytics data in the chatbot platform
  */
 
-const { logger } = require('../utils');
-const Analytics = require('../models/analytics.model');
-const Conversation = require('../models/conversation.model');
+require('@src/utils');
+require('@src/data');
 
 /**
  * Record analytics data
@@ -18,17 +17,12 @@ const Conversation = require('../models/conversation.model');
  */
 const recordAnalytics = async (chatbotId, period, date, metrics) => {
   try {
-    // Find existing record or create new one
-    let analytics = await Analytics.findOne({ chatbotId, period, date });
+    // Ensure database connection
+    await databaseService.connect();
     
-    if (!analytics) {
-      analytics = new Analytics({
-        chatbotId,
-        period,
-        date,
-        metrics: {}
-      });
-    }
+    // Find existing record or create new one
+    const analyticsRepo = repositories.analytics;
+    let analytics = await analyticsRepo.findOrCreate(chatbotId, period, date);
     
     // Update metrics
     for (const category in metrics) {
@@ -45,6 +39,7 @@ const recordAnalytics = async (chatbotId, period, date, metrics) => {
       }
     }
     
+    // Save analytics
     await analytics.save();
     logger.debug('Analytics recorded', { chatbotId, period, date });
     return analytics;
@@ -64,11 +59,16 @@ const recordAnalytics = async (chatbotId, period, date, metrics) => {
  */
 const getAnalyticsByPeriod = async (chatbotId, period, startDate, endDate) => {
   try {
-    const analytics = await Analytics.findByDateRange(chatbotId, startDate, endDate, period);
-    logger.debug(`Retrieved ${analytics.length} analytics records`, { chatbotId, period });
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Use repository with optimized query and caching
+    const analyticsRepo = repositories.analytics;
+    const analytics = await analyticsRepo.getByPeriod(chatbotId, period, startDate, endDate);
+    
     return analytics;
   } catch (error) {
-    logger.error('Error getting analytics by period', { error, chatbotId, period });
+    logger.error('Error getting analytics by period', { chatbotId, period, error: error.message });
     throw error;
   }
 };
@@ -82,11 +82,16 @@ const getAnalyticsByPeriod = async (chatbotId, period, startDate, endDate) => {
  */
 const getLatestAnalytics = async (chatbotId, period = 'daily', limit = 30) => {
   try {
-    const analytics = await Analytics.getLatestByPeriod(chatbotId, period, limit);
-    logger.debug(`Retrieved ${analytics.length} latest analytics records`, { chatbotId, period });
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Use repository with optimized query and caching
+    const analyticsRepo = repositories.analytics;
+    const analytics = await analyticsRepo.getLatest(chatbotId, period, limit);
+    
     return analytics;
   } catch (error) {
-    logger.error('Error getting latest analytics', { error, chatbotId, period });
+    logger.error('Error getting latest analytics', { chatbotId, period, error: error.message });
     throw error;
   }
 };
@@ -98,122 +103,62 @@ const getLatestAnalytics = async (chatbotId, period = 'daily', limit = 30) => {
  */
 const getAllTimeAnalytics = async (chatbotId) => {
   try {
-    // Get all analytics records for the chatbot
-    const allRecords = await Analytics.find({ chatbotId });
+    // Ensure database connection
+    await databaseService.connect();
     
-    // Initialize summary object
+    // Use repository with optimized aggregation pipeline and caching
+    const analyticsRepo = repositories.analytics;
+    const conversationRepo = repositories.conversation;
+    
+    // Get analytics summary from repository
+    const analyticsSummary = await analyticsRepo.generateSummary(chatbotId);
+    
+    // Get conversation statistics
+    const startDate = new Date(0); // Beginning of time
+    const endDate = new Date(); // Now
+    const conversationStats = await conversationRepo.getStatistics(chatbotId, startDate, endDate);
+    
+    // Get conversation insights for user retention data
+    const conversationInsights = await conversationRepo.getInsights(chatbotId, startDate, endDate);
+    
+    // Combine data into comprehensive summary
     const summary = {
-      conversations: {
+      sessions: {
         total: 0,
-        completed: 0,
-        abandoned: 0
+        average: 0
       },
       messages: {
         total: 0,
-        user: 0,
-        bot: 0
+        average: 0
       },
       users: {
-        total: 0,
-        new: 0,
-        returning: 0
+        total: conversationStats.uniqueUsers || 0,
+        returning: conversationInsights.userRetention.returningUsers || 0
       },
       engagement: {
-        averageSessionDuration: 0,
-        averageMessagesPerConversation: 0,
-        averageResponseTime: 0
+        averageSessionDuration: conversationStats.averageDuration || 0,
+        averageMessagesPerSession: conversationStats.averageMessages || 0
       },
-      performance: {
-        successfulResponses: 0,
-        failedResponses: 0,
-        handoffs: 0
-      },
-      satisfaction: {
-        averageRating: 0,
-        feedbackCount: 0,
-        positiveCount: 0,
-        negativeCount: 0
-      }
+      periods: {}
     };
     
-    // Aggregate data from all records
-    let totalRecords = 0;
-    let totalRatings = 0;
-    
-    allRecords.forEach(record => {
-      totalRecords++;
+    // Process analytics by period
+    for (const period in analyticsSummary) {
+      const periodData = analyticsSummary[period];
       
-      // Conversations
-      if (record.metrics.conversations) {
-        summary.conversations.total += record.metrics.conversations.total || 0;
-        summary.conversations.completed += record.metrics.conversations.completed || 0;
-        summary.conversations.abandoned += record.metrics.conversations.abandoned || 0;
-      }
+      summary.sessions.total += periodData.totalSessions || 0;
+      summary.messages.total += periodData.totalMessages || 0;
       
-      // Messages
-      if (record.metrics.messages) {
-        summary.messages.total += record.metrics.messages.total || 0;
-        summary.messages.user += record.metrics.messages.user || 0;
-        summary.messages.bot += record.metrics.messages.bot || 0;
-      }
-      
-      // Users
-      if (record.metrics.users) {
-        summary.users.total += record.metrics.users.total || 0;
-        summary.users.new += record.metrics.users.new || 0;
-        summary.users.returning += record.metrics.users.returning || 0;
-      }
-      
-      // Performance
-      if (record.metrics.performance) {
-        summary.performance.successfulResponses += record.metrics.performance.successfulResponses || 0;
-        summary.performance.failedResponses += record.metrics.performance.failedResponses || 0;
-        summary.performance.handoffs += record.metrics.performance.handoffs || 0;
-      }
-      
-      // Satisfaction
-      if (record.metrics.satisfaction) {
-        if (record.metrics.satisfaction.averageRating && record.metrics.satisfaction.feedbackCount) {
-          totalRatings += (record.metrics.satisfaction.averageRating * record.metrics.satisfaction.feedbackCount);
-          summary.satisfaction.feedbackCount += record.metrics.satisfaction.feedbackCount;
+      summary.periods[period] = {
+        sessions: periodData.totalSessions || 0,
+        messages: periodData.totalMessages || 0,
+        users: periodData.totalUsers || 0,
+        averageSessionDuration: periodData.averageSessionDuration || 0,
+        dateRange: {
+          start: periodData.latestDate ? new Date(periodData.latestDate) : null,
+          end: periodData.latestDate ? new Date(periodData.latestDate) : null
         }
-        summary.satisfaction.positiveCount += record.metrics.satisfaction.positiveCount || 0;
-        summary.satisfaction.negativeCount += record.metrics.satisfaction.negativeCount || 0;
-      }
-    });
-    
-    // Calculate averages
-    if (summary.conversations.total > 0) {
-      summary.engagement.averageMessagesPerConversation = summary.messages.total / summary.conversations.total;
-    }
-    
-    if (summary.satisfaction.feedbackCount > 0) {
-      summary.satisfaction.averageRating = totalRatings / summary.satisfaction.feedbackCount;
-    }
-    
-    // Get additional data from conversations
-    const conversations = await Conversation.find({ chatbotId });
-    let totalDuration = 0;
-    let totalResponseTime = 0;
-    let responseTimeCount = 0;
-    
-    conversations.forEach(conversation => {
-      if (conversation.metrics.duration) {
-        totalDuration += conversation.metrics.duration;
-      }
-      
-      if (conversation.metrics.averageResponseTime) {
-        totalResponseTime += conversation.metrics.averageResponseTime;
-        responseTimeCount++;
-      }
-    });
-    
-    if (conversations.length > 0) {
-      summary.engagement.averageSessionDuration = totalDuration / conversations.length;
-    }
-    
-    if (responseTimeCount > 0) {
-      summary.engagement.averageResponseTime = totalResponseTime / responseTimeCount;
+      };
     }
     
     logger.debug('Retrieved all-time analytics summary', { chatbotId });

@@ -4,8 +4,8 @@
  * Middleware to track requests and response times for the scaling service
  */
 
-const scalingService = require('./scaling.service');
-const { logger } = require('../utils');
+require('@src/scaling\scaling.service');
+require('@src/utils');
 
 /**
  * Middleware to track requests and response times

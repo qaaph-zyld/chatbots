@@ -7,12 +7,12 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 
 // Mock dependencies
-const localStorageService = require('../../../storage/local-storage.service');
+require('@src/storage\local-storage.service');
 const fs = require('fs').promises;
 const path = require('path');
 
 // Import the service to test
-const trainingService = require('../../../training/training.service');
+require('@src/training\training.service');
 
 describe('Training Service', () => {
   let sandbox;

@@ -6,7 +6,7 @@
  */
 
 const axios = require('axios');
-const { logger } = require('../src/utils');
+require('@src/utils');
 
 // Configure axios with proxy as per user requirements
 axios.defaults.proxy = {

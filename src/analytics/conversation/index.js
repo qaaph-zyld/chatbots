@@ -6,11 +6,11 @@
  * and collecting user feedback for continuous learning.
  */
 
-const { conversationTrackingService } = require('./tracking.service');
-const { conversationDashboardService } = require('./dashboard.service');
-const { conversationInsightsService } = require('./insights.service');
-const { analyticsIntegrationService } = require('./integration.service');
-const feedbackService = require('./feedback.service');
+require('@src/analytics\conversation\tracking.service');
+require('@src/analytics\conversation\dashboard.service');
+require('@src/analytics\conversation\insights.service');
+require('@src/analytics\conversation\integration.service');
+require('@src/analytics\conversation\feedback.service');
 
 module.exports = {
   conversationTrackingService,

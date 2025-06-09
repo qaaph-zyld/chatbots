@@ -9,8 +9,8 @@ const path = require('path');
 const fs = require('fs').promises;
 const { spawn } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../utils');
-const { localStorageService } = require('../../storage');
+require('@src/utils');
+require('@src/storage');
 
 class EntityRecognitionService {
   constructor() {
@@ -221,7 +221,7 @@ class EntityRecognitionService {
       // Use spaCy if specified or as fallback
       else if (this.models['spacy']?.loaded && 
                (opts.modelName === 'spacy' || this.config.fallbackToSpacy)) {
-        const { spaCyEngine } = require('../engines');
+        require('@src/nlp\engines');
         const spaCyResult = await spaCyEngine.analyze(text, { features: ['entities'] });
         
         if (spaCyResult.success) {

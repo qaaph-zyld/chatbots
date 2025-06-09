@@ -5,8 +5,8 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
-const contextService = require('./context.service');
+require('@src/utils');
+require('@src/context\context.service');
 
 // Define topic schema
 const TopicSchema = new mongoose.Schema({

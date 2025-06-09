@@ -7,11 +7,11 @@ const sinon = require('sinon');
 const httpMocks = require('node-mocks-http');
 
 // Mock dependencies
-const trainingService = require('../../../training/training.service');
-const { logger } = require('../../../utils');
+require('@src/training\training.service');
+require('@src/utils');
 
 // Import the controller to test
-const trainingController = require('../../../training/training.controller');
+require('@src/training\training.controller');
 
 describe('Training Controller', () => {
   let sandbox;

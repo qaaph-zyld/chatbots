@@ -4,8 +4,8 @@
  * Handles API requests for language detection.
  */
 
-const languageDetector = require('../utils/language-detector');
-const logger = require('../utils/logger');
+require('@src/utils\language-detector');
+require('@src/utils\logger');
 
 /**
  * Detect language from text

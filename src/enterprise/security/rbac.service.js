@@ -7,8 +7,8 @@
  */
 
 // Use mock utilities for testing
-const { logger, generateUuid } = require('../../utils/mock-utils');
-const { authorizationService } = require('./authorization.service');
+require('@src/utils\mock-utils');
+require('@src/enterprise\security\authorization.service');
 
 /**
  * RBAC Service class

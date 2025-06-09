@@ -7,11 +7,11 @@ const os = require('os');
 const { mockDeep } = require('jest-mock-extended');
 
 // Import the service to test
-const ScalingService = require('../../../scaling/scaling.service');
+require('@src/scaling\scaling.service');
 
 // Import dependencies
-const cluster = require('../../../scaling/cluster');
-const { logger } = require('../../../utils');
+require('@src/scaling\cluster');
+require('@src/utils');
 
 // Mock dependencies
 jest.mock('../../../scaling/cluster');

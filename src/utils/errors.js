@@ -4,7 +4,7 @@
  * Provides custom error classes and error handling functions
  */
 
-const logger = require('./logger');
+require('@src/utils\logger');
 
 /**
  * Base custom error class

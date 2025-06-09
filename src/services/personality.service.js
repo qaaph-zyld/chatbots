@@ -5,8 +5,8 @@
  */
 
 const mongoose = require('mongoose');
-const Personality = require('../database/schemas/personality.schema');
-const { logger } = require('../utils');
+require('@src/database\schemas\personality.schema');
+require('@src/utils');
 
 class PersonalityService {
   /**

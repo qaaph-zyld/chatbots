@@ -6,7 +6,7 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
+require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 
@@ -71,7 +71,7 @@ class EntityTrackingService {
    * Constructor
    */
   constructor() {
-    this.proxyConfig = process.env.HTTP_PROXY || 'http://104.129.196.38:10563';
+    this.proxyConfig = null;
     this.httpClient = axios.create({
       httpAgent: new HttpsProxyAgent(this.proxyConfig),
       httpsAgent: new HttpsProxyAgent(this.proxyConfig)

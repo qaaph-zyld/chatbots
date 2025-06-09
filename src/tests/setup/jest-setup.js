@@ -4,7 +4,8 @@
  * Setup file for Jest tests
  */
 
-const { clearModels, connectTestDB, disconnectTestDB } = require('./mongoose-test-setup');
+require('@src/tests\setup\mongoose-test-setup');
+require('@src/tests\setup\mongoose-model-helper');
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
@@ -18,7 +19,7 @@ jest.mock('../../config', () => {
 beforeAll(async () => {
   clearModels();
   // Create test directories for storage
-  const testConfig = require('./test-config');
+  require('@src/tests\setup\test-config');
   const dirs = [
     testConfig.storage.baseDir,
     testConfig.storage.tempDir,
@@ -44,6 +45,16 @@ beforeEach(() => {
   clearModels();
   jest.clearAllMocks();
   jest.restoreAllMocks();
+  
+  // Mock timers to prevent hanging tests due to setTimeout/setInterval
+  jest.useFakeTimers('modern');
+});
+
+// Reset timers after each test
+afterEach(() => {
+  // Run any pending timers and clear them
+  jest.runOnlyPendingTimers();
+  jest.useRealTimers();
 });
 
 // Clean up after tests
@@ -60,9 +71,7 @@ process.env.NODE_ENV = 'test';
 process.env.JWT_SECRET = 'test-secret-key';
 process.env.MONGODB_URI = 'mongodb://localhost:27017/chatbots-test';
 
-// Set proxy configuration for tests
-process.env.HTTP_PROXY = 'http://104.129.196.38:10563';
-process.env.HTTPS_PROXY = 'http://104.129.196.38:10563';
+// No proxy configuration needed for tests
 
 // Increase test timeout for slower tests
 jest.setTimeout(60000);
@@ -133,6 +142,9 @@ global.testUtils = {
     return mockModel;
   }
 };
+
+// Expose helper functions globally for tests
+global.safeCompileModel = safeCompileModel;
 
 // Mock common modules that cause issues in tests
 jest.mock('../../utils/model-manager', () => {

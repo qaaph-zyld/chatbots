@@ -4,8 +4,8 @@
  * Exports all learning-related services for easy access.
  */
 
-const continuousLearningService = require('./continuous.service');
-const fineTuningService = require('./finetune.service');
+require('@src/analytics\learning\continuous.service');
+require('@src/analytics\learning\finetune.service');
 
 module.exports = {
   continuousLearning: continuousLearningService,

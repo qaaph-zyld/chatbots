@@ -10,8 +10,8 @@ const mongoose = require('mongoose');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const logger = require('./logger');
-const nlpService = require('../services/nlp.service');
+require('@src/utils\logger');
+require('@src/services\nlp.service');
 
 /**
  * Schema for UAT feedback

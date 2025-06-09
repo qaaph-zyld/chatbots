@@ -6,7 +6,7 @@
  * feature usage statistics.
  */
 
-const { userEngagementService } = require('./engagement.service');
+require('@src/analytics\engagement\engagement.service');
 
 module.exports = {
   userEngagementService

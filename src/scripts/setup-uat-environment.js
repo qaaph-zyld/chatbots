@@ -12,16 +12,16 @@ const path = require('path');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const mongoose = require('mongoose');
-const logger = require('../utils/logger');
-const config = require('../config');
+require('@src/utils\logger');
+require('@src/config');
 
 // Models
-const User = require('../models/user.model');
-const Chatbot = require('../models/chatbot.model');
-const KnowledgeBase = require('../models/knowledge-base.model');
-const Personality = require('../models/personality.model');
-const Plugin = require('../models/plugin.model');
-const TrainingDataset = require('../models/training-dataset.model');
+require('@src/models\user.model');
+require('@src/models\chatbot.model');
+require('@src/models\knowledge-base.model');
+require('@src/models\personality.model');
+require('@src/models\plugin.model');
+require('@src/models\training-dataset.model');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -433,8 +433,8 @@ async function setupUatServer() {
  */
 
 require('dotenv').config({ path: './config/uat.env' });
-const app = require('../app');
-const logger = require('../utils/logger');
+require('@src/app');
+require('@src/utils\logger');
 
 const port = process.env.PORT || 3001;
 

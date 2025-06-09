@@ -6,7 +6,7 @@
 
 const cluster = require('cluster');
 const os = require('os');
-const { logger } = require('../utils');
+require('@src/utils');
 
 /**
  * Initialize clustering

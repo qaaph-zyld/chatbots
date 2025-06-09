@@ -9,8 +9,8 @@ const { execSync } = require('child_process');
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
-const logger = require('../src/utils/logger');
-const performanceOptimizer = require('../src/utils/performance-optimizer');
+require('@src/utils\logger');
+require('@src/utils\performance-optimizer');
 
 // Configure AWS SDK
 AWS.config.update({

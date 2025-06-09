@@ -8,10 +8,10 @@
 
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../utils');
+require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-const contextService = require('./context.service');
+require('@src/context\context.service');
 
 // Define cross-conversation entity schema
 const CrossConversationEntitySchema = new mongoose.Schema({
@@ -179,7 +179,7 @@ class AdvancedContextService {
    * Constructor
    */
   constructor() {
-    this.proxyConfig = process.env.HTTP_PROXY || 'http://104.129.196.38:10563';
+    this.proxyConfig = null;
     this.httpClient = axios.create({
       httpAgent: new HttpsProxyAgent(this.proxyConfig),
       httpsAgent: new HttpsProxyAgent(this.proxyConfig)

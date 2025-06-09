@@ -4,7 +4,7 @@
  * Handles API requests related to translations and language settings
  */
 
-const translationService = require('../../services/translation.service');
+require('@src/services\translation.service');
 
 /**
  * Get all supported languages

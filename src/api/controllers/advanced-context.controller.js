@@ -5,11 +5,11 @@
  * entity tracking, topic detection, and preference learning.
  */
 
-const advancedContextService = require('../../services/advanced-context.service');
-const entityTrackingService = require('../../services/entity-tracking.service');
-const topicDetectionService = require('../../services/topic-detection.service');
-const preferenceLearningService = require('../../services/preference-learning.service');
-const { logger } = require('../../utils');
+require('@src/services\advanced-context.service');
+require('@src/services\entity-tracking.service');
+require('@src/services\topic-detection.service');
+require('@src/services\preference-learning.service');
+require('@src/utils');
 
 /**
  * Process a message to extract context

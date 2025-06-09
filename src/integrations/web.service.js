@@ -6,8 +6,8 @@
 
 const WebSocket = require('ws');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../utils');
-const Integration = require('../models/integration.model');
+require('@src/utils');
+require('@src/models\integration.model');
 
 class WebIntegrationService {
   constructor() {
@@ -228,7 +228,7 @@ class WebIntegrationService {
       await integration.recordMessageReceived();
       
       // Process message with integration service
-      const integrationService = require('./integration.service');
+      require('@src/integrations\integration.service');
       await integrationService.processMessage(integration, message);
     } catch (error) {
       logger.error(`Error handling WebSocket message:`, error.message);
@@ -266,7 +266,7 @@ class WebIntegrationService {
       await integration.recordMessageReceived();
       
       // Process message with integration service
-      const integrationService = require('./integration.service');
+      require('@src/integrations\integration.service');
       return await integrationService.processMessage(integration, message);
     } catch (error) {
       logger.error(`Error handling HTTP message:`, error.message);

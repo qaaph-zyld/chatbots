@@ -7,16 +7,16 @@ const sinon = require('sinon');
 const { mockDeep } = require('jest-mock-extended');
 
 // Import the service to test
-const entityService = require('../../../services/entity.service');
+require('@src/services\entity.service');
 
 // Import models and dependencies
-const Entity = require('../../../models/entity.model');
-const EntityRelation = require('../../../models/entity-relation.model');
-const EntityReference = require('../../../models/entity-reference.model');
-const { logger } = require('../../../utils');
+require('@src/models\entity.model');
+require('@src/models\entity-relation.model');
+require('@src/models\entity-reference.model');
+require('@src/utils');
 
 // Import test utilities
-const { createMockModel } = require('../../utils/mock-factory');
+require('@src/tests\utils\mock-factory');
 
 // Mock dependencies
 jest.mock('../../../models/entity.model');

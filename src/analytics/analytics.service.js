@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
+require('@src/utils');
 
 // Define analytics schema
 const AnalyticsSchema = new mongoose.Schema({
@@ -212,13 +212,80 @@ class AnalyticsService {
         messageData.timestamp = new Date();
       }
       
-      // Add to buffer
+      // Format date for daily period
+      const date = new Date(messageData.timestamp);
+      date.setHours(0, 0, 0, 0);
+      
+      // Determine message direction
+      const isUserMessage = messageData.direction === 'incoming';
+      
+      // Calculate response time for bot messages
+      let responseTime = 0;
+      if (!isUserMessage && messageData.conversationId) {
+        try {
+          const lastUserMessage = await Conversation.findOne({
+            conversationId: messageData.conversationId,
+            direction: 'incoming'
+          }).sort({ timestamp: -1 }).exec();
+          
+          if (lastUserMessage) {
+            responseTime = messageData.timestamp - lastUserMessage.timestamp;
+          }
+        } catch (error) {
+          logger.warn(`Error calculating response time: ${error.message}`);
+        }
+      }
+      
+      // Update daily analytics
+      await Analytics.findOneAndUpdate(
+        { 
+          chatbotId: messageData.chatbotId, 
+          period: 'daily', 
+          date: date 
+        },
+        { 
+          $inc: { 
+            'metrics.messageCount': 1,
+            [`metrics.${isUserMessage ? 'userMessageCount' : 'botMessageCount'}`]: 1,
+            ...(responseTime > 0 ? { 'metrics.totalResponseTime': responseTime } : {})
+          },
+          $set: {
+            updatedAt: new Date()
+          }
+        },
+        { upsert: true }
+      );
+      
+      // Also update all-time analytics
+      await Analytics.findOneAndUpdate(
+        { 
+          chatbotId: messageData.chatbotId, 
+          period: 'all', 
+          date: new Date(0)
+        },
+        { 
+          $inc: { 
+            'metrics.messageCount': 1,
+            [`metrics.${isUserMessage ? 'userMessageCount' : 'botMessageCount'}`]: 1,
+            ...(responseTime > 0 ? { 'metrics.totalResponseTime': responseTime } : {})
+          },
+          $set: {
+            updatedAt: new Date()
+          }
+        },
+        { upsert: true }
+      );
+      
+      // Add to buffer for batch processing of more detailed analytics
       this.messageBuffer.push(messageData);
       
       // Process buffer if it reaches the threshold
       if (this.messageBuffer.length >= this.bufferSize) {
         await this.processBuffer();
       }
+      
+      logger.debug(`Message tracked for chatbot ${messageData.chatbotId}`);
+    }
     } catch (error) {
       logger.error('Error tracking message for analytics:', error.message);
     }
@@ -859,6 +926,533 @@ class AnalyticsService {
     } catch (error) {
       logger.error(`Error tracking response rating for chatbot ${chatbotId}:`, error.message);
     }
+  }
+  /**
+   * Get analytics for a chatbot by period
+   * @param {string} chatbotId - Chatbot ID
+   * @param {string} period - Period type (daily, weekly, monthly)
+   * @param {Date} startDate - Start date
+   * @param {Date} endDate - End date
+   * @returns {Promise<Array<Object>>} - Analytics data
+   */
+  async getAnalytics(chatbotId, period, startDate, endDate) {
+    try {
+      logger.debug(`Getting ${period} analytics for chatbot ${chatbotId} from ${startDate} to ${endDate}`);
+      
+      // Find analytics documents for the specified period and date range
+      const analytics = await Analytics.find({
+        chatbotId,
+        period,
+        date: { $gte: startDate, $lte: endDate }
+      }).sort({ date: 1 }).lean().exec();
+      
+      logger.info(`Retrieved ${analytics.length} ${period} analytics records for chatbot ${chatbotId}`);
+      return analytics;
+    } catch (error) {
+      logger.error(`Error getting analytics for chatbot ${chatbotId}:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Get all-time analytics for a chatbot
+   * @param {string} chatbotId - Chatbot ID
+   * @returns {Promise<Object|null>} - All-time analytics or null if not found
+   */
+  async getAllTimeAnalytics(chatbotId) {
+    try {
+      logger.debug(`Getting all-time analytics for chatbot ${chatbotId}`);
+      
+      // Find the all-time analytics document
+      const analytics = await Analytics.findOne({
+        chatbotId,
+        period: 'all'
+      });
+      
+      return analytics;
+    } catch (error) {
+      logger.error(`Error getting all-time analytics for chatbot ${chatbotId}:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Generate a comprehensive analytics report
+   * @param {string} chatbotId - Chatbot ID
+   * @param {string} period - Period type (daily, weekly, monthly)
+   * @param {Date} startDate - Start date
+   * @param {Date} endDate - End date
+   * @returns {Promise<Object>} - Generated report
+   */
+  async generateReport(chatbotId, period, startDate, endDate) {
+    try {
+      logger.debug(`Generating ${period} report for chatbot ${chatbotId} from ${startDate} to ${endDate}`);
+      
+      // Get analytics for the specified period
+      const analyticsData = await Analytics.findByDateRange(chatbotId, startDate, endDate, period);
+      
+      if (!analyticsData || analyticsData.length === 0) {
+        logger.warn(`No analytics data found for chatbot ${chatbotId} in the specified period`);
+        return {
+          chatbotId,
+          period,
+          startDate,
+          endDate,
+          generatedAt: new Date(),
+          summary: {
+            conversations: { total: 0, new: 0, completed: 0 },
+            messages: { total: 0, user: 0, bot: 0 },
+            users: { total: 0, new: 0, returning: 0 },
+            engagement: { averageConversationLength: 0, averageResponseTime: 0 }
+          },
+          trends: {
+            conversations: [],
+            messages: [],
+            users: [],
+            engagement: []
+          }
+        };
+      }
+      
+      // Calculate summary metrics
+      const summary = {
+        conversations: {
+          total: analyticsData.reduce((sum, data) => sum + (data.metrics.conversations?.total || 0), 0),
+          new: analyticsData.reduce((sum, data) => sum + (data.metrics.conversations?.new || 0), 0),
+          completed: analyticsData.reduce((sum, data) => sum + (data.metrics.conversations?.completed || 0), 0)
+        },
+        messages: {
+          total: analyticsData.reduce((sum, data) => sum + (data.metrics.messages?.total || 0), 0),
+          user: analyticsData.reduce((sum, data) => sum + (data.metrics.messages?.user || 0), 0),
+          bot: analyticsData.reduce((sum, data) => sum + (data.metrics.messages?.bot || 0), 0)
+        },
+        users: {
+          total: Math.max(...analyticsData.map(data => data.metrics.users?.total || 0)),
+          new: analyticsData.reduce((sum, data) => sum + (data.metrics.users?.new || 0), 0),
+          returning: analyticsData.reduce((sum, data) => sum + (data.metrics.users?.returning || 0), 0)
+        },
+        engagement: {
+          averageConversationLength: analyticsData.reduce((sum, data, index, array) => 
+            sum + (data.metrics.engagement?.averageConversationLength || 0) / array.length, 0),
+          averageResponseTime: analyticsData.reduce((sum, data, index, array) => 
+            sum + (data.metrics.engagement?.averageResponseTime || 0) / array.length, 0)
+        }
+      };
+      
+      // Calculate trends
+      const trends = {
+        conversations: analyticsData.map(data => ({
+          date: data.date,
+          total: data.metrics.conversations?.total || 0,
+          new: data.metrics.conversations?.new || 0,
+          completed: data.metrics.conversations?.completed || 0
+        })),
+        messages: analyticsData.map(data => ({
+          date: data.date,
+          total: data.metrics.messages?.total || 0,
+          user: data.metrics.messages?.user || 0,
+          bot: data.metrics.messages?.bot || 0
+        })),
+        users: analyticsData.map(data => ({
+          date: data.date,
+          total: data.metrics.users?.total || 0,
+          new: data.metrics.users?.new || 0,
+          returning: data.metrics.users?.returning || 0
+        })),
+        engagement: analyticsData.map(data => ({
+          date: data.date,
+          averageConversationLength: data.metrics.engagement?.averageConversationLength || 0,
+          averageResponseTime: data.metrics.engagement?.averageResponseTime || 0
+        }))
+      };
+      
+      // Generate the report
+      const report = {
+        chatbotId,
+        period,
+        startDate,
+        endDate,
+        generatedAt: new Date(),
+        summary,
+        trends
+      };
+      
+      logger.info(`Generated ${period} report for chatbot ${chatbotId}`);
+      return report;
+    } catch (error) {
+      logger.error(`Error generating report for chatbot ${chatbotId}:`, error.message);
+      throw error;
+    }
+  }
+
+  /**
+   * Aggregate metrics from multiple analytics documents
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Object} - Aggregated metrics
+   * @private
+   */
+  aggregateMetrics(analyticsData) {
+    if (!analyticsData || analyticsData.length === 0) {
+      return {
+        messageCount: 0,
+        userMessageCount: 0,
+        botMessageCount: 0,
+        averageResponseTime: 0,
+        conversationCount: 0,
+        uniqueUserCount: 0,
+        averageConversationLength: 0,
+        averageUserMessageLength: 0,
+        averageBotMessageLength: 0
+      };
+    }
+    
+    // Initialize aggregated metrics
+    const aggregated = {
+      messageCount: 0,
+      userMessageCount: 0,
+      botMessageCount: 0,
+      totalResponseTime: 0,
+      conversationCount: 0,
+      uniqueUserCount: 0,
+      totalConversationLength: 0,
+      totalUserMessageLength: 0,
+      totalBotMessageLength: 0
+    };
+    
+    // Sum up metrics
+    for (const analytics of analyticsData) {
+      aggregated.messageCount += analytics.metrics.messageCount || 0;
+      aggregated.userMessageCount += analytics.metrics.userMessageCount || 0;
+      aggregated.botMessageCount += analytics.metrics.botMessageCount || 0;
+      aggregated.totalResponseTime += (analytics.metrics.averageResponseTime || 0) * (analytics.metrics.botMessageCount || 0);
+      aggregated.conversationCount += analytics.metrics.conversationCount || 0;
+      aggregated.uniqueUserCount = Math.max(aggregated.uniqueUserCount, analytics.metrics.uniqueUserCount || 0);
+      aggregated.totalConversationLength += (analytics.metrics.averageConversationLength || 0) * (analytics.metrics.conversationCount || 0);
+      aggregated.totalUserMessageLength += (analytics.metrics.averageUserMessageLength || 0) * (analytics.metrics.userMessageCount || 0);
+      aggregated.totalBotMessageLength += (analytics.metrics.averageBotMessageLength || 0) * (analytics.metrics.botMessageCount || 0);
+    }
+    
+    // Calculate averages
+    return {
+      messageCount: aggregated.messageCount,
+      userMessageCount: aggregated.userMessageCount,
+      botMessageCount: aggregated.botMessageCount,
+      averageResponseTime: aggregated.botMessageCount > 0 ? aggregated.totalResponseTime / aggregated.botMessageCount : 0,
+      conversationCount: aggregated.conversationCount,
+      uniqueUserCount: aggregated.uniqueUserCount,
+      averageConversationLength: aggregated.conversationCount > 0 ? aggregated.totalConversationLength / aggregated.conversationCount : 0,
+      averageUserMessageLength: aggregated.userMessageCount > 0 ? aggregated.totalUserMessageLength / aggregated.userMessageCount : 0,
+      averageBotMessageLength: aggregated.botMessageCount > 0 ? aggregated.totalBotMessageLength / aggregated.botMessageCount : 0
+    };
+  }
+
+  /**
+   * Calculate trends from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Object} - Calculated trends
+   * @private
+   */
+  calculateTrends(analyticsData) {
+    if (!analyticsData || analyticsData.length < 2) {
+      return {
+        messageCountTrend: 0,
+        responseTimeTrend: 0,
+        userSentimentTrend: 0
+      };
+    }
+    
+    // Sort by date
+    const sorted = [...analyticsData].sort((a, b) => new Date(a.date) - new Date(b.date));
+    
+    // Calculate trends
+    const firstPeriod = sorted[0];
+    const lastPeriod = sorted[sorted.length - 1];
+    
+    const messageCountTrend = this.calculatePercentageChange(
+      firstPeriod.metrics.messageCount || 0,
+      lastPeriod.metrics.messageCount || 0
+    );
+    
+    const responseTimeTrend = this.calculatePercentageChange(
+      firstPeriod.metrics.averageResponseTime || 0,
+      lastPeriod.metrics.averageResponseTime || 0
+    );
+    
+    const firstPositiveRatio = firstPeriod.sentimentAnalysis ? 
+      (firstPeriod.sentimentAnalysis.positive || 0) / 
+      ((firstPeriod.sentimentAnalysis.positive || 0) + 
+       (firstPeriod.sentimentAnalysis.neutral || 0) + 
+       (firstPeriod.sentimentAnalysis.negative || 0)) : 0;
+    
+    const lastPositiveRatio = lastPeriod.sentimentAnalysis ? 
+      (lastPeriod.sentimentAnalysis.positive || 0) / 
+      ((lastPeriod.sentimentAnalysis.positive || 0) + 
+       (lastPeriod.sentimentAnalysis.neutral || 0) + 
+       (lastPeriod.sentimentAnalysis.negative || 0)) : 0;
+    
+    const userSentimentTrend = this.calculatePercentageChange(firstPositiveRatio, lastPositiveRatio);
+    
+    return {
+      messageCountTrend,
+      responseTimeTrend,
+      userSentimentTrend
+    };
+  }
+
+  /**
+   * Calculate percentage change between two values
+   * @param {number} oldValue - Old value
+   * @param {number} newValue - New value
+   * @returns {number} - Percentage change
+   * @private
+   */
+  calculatePercentageChange(oldValue, newValue) {
+    if (oldValue === 0) return newValue > 0 ? 100 : 0;
+    return ((newValue - oldValue) / oldValue) * 100;
+  }
+  
+  /**
+   * Get top intents from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Array<Object>} - Top intents
+   * @private
+   */
+  /**
+   * Get top intents from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Array<Object>} - Top intents
+   * @private
+   */
+  getTopIntents(analyticsData) {
+    const intentMap = new Map();
+    
+    for (const analytics of analyticsData) {
+      if (analytics.intentAnalysis) {
+        for (const [intent, count] of Object.entries(analytics.intentAnalysis)) {
+          const currentCount = intentMap.get(intent) || 0;
+          intentMap.set(intent, currentCount + count);
+        }
+      }
+    }
+    
+    // Convert to array and sort
+    return [...intentMap.entries()]
+      .map(([intent, count]) => ({ intent, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+  }
+  
+  /**
+   * Get top entities from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Array<Object>} - Top entities
+   * @private
+   */
+  /**
+   * Get top entities from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Array<Object>} - Top entities
+   * @private
+   */
+  getTopEntities(analyticsData) {
+    const entityMap = new Map();
+    
+    for (const analytics of analyticsData) {
+      if (analytics.topEntities) {
+        for (const [entity, count] of Object.entries(analytics.topEntities)) {
+          const currentCount = entityMap.get(entity) || 0;
+          entityMap.set(entity, currentCount + count);
+        }
+      }
+    }
+    
+    // Convert to array and sort
+    return [...entityMap.entries()]
+      .map(([entity, count]) => {
+        const [type, value] = entity.split(':');
+        return { type, value, count };
+      })
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+  }
+  
+  /**
+   * Get top queries from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Array<Object>} - Top queries
+   * @private
+   */
+  /**
+   * Get top queries from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Array<Object>} - Top queries
+   * @private
+   */
+  getTopQueries(analyticsData) {
+    const queryMap = new Map();
+    
+    for (const analytics of analyticsData) {
+      if (analytics.topUserQueries) {
+        for (const { query, count } of analytics.topUserQueries) {
+          const currentCount = queryMap.get(query) || 0;
+          queryMap.set(query, currentCount + count);
+        }
+      }
+    }
+    
+    // Convert to array and sort
+    return [...queryMap.entries()]
+      .map(([query, count]) => ({ query, count }))
+      .sort((a, b) => b.count - a.count)
+      .slice(0, 10);
+  }
+  
+  /**
+   * Aggregate sentiment analysis from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Object} - Aggregated sentiment analysis
+   * @private
+   */
+  /**
+   * Aggregate sentiment analysis from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Object} - Aggregated sentiment analysis
+   * @private
+   */
+  aggregateSentiment(analyticsData) {
+    const sentiment = {
+      positive: 0,
+      neutral: 0,
+      negative: 0
+    };
+    
+    for (const analytics of analyticsData) {
+      if (analytics.sentimentAnalysis) {
+        sentiment.positive += analytics.sentimentAnalysis.positive || 0;
+        sentiment.neutral += analytics.sentimentAnalysis.neutral || 0;
+        sentiment.negative += analytics.sentimentAnalysis.negative || 0;
+      }
+    }
+    
+    return sentiment;
+  }
+  
+  /**
+   * Calculate performance metrics from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Object} - Performance metrics
+   * @private
+   */
+  /**
+   * Calculate performance metrics from analytics data
+   * @param {Array<Object>} analyticsData - Analytics data
+   * @returns {Object} - Performance metrics
+   * @private
+   */
+  calculatePerformanceMetrics(analyticsData) {
+    if (!analyticsData || analyticsData.length === 0) {
+      return {
+        averageResponseTime: 0,
+        peakResponseTime: 0,
+        responseTimeDistribution: []
+      };
+    }
+    
+    // Calculate response time metrics
+    let totalResponseTime = 0;
+    let totalResponses = 0;
+    let peakResponseTime = 0;
+    const responseTimeBuckets = {
+      '0-500ms': 0,
+      '500ms-1s': 0,
+      '1s-2s': 0,
+      '2s-5s': 0,
+      '5s+': 0
+    };
+    
+    for (const analytics of analyticsData) {
+      const responseTime = analytics.metrics.averageResponseTime || 0;
+      const responses = analytics.metrics.botMessageCount || 0;
+      
+      totalResponseTime += responseTime * responses;
+      totalResponses += responses;
+      peakResponseTime = Math.max(peakResponseTime, responseTime);
+      
+      // Categorize response times
+      if (responseTime < 500) {
+        responseTimeBuckets['0-500ms'] += responses;
+      } else if (responseTime < 1000) {
+        responseTimeBuckets['500ms-1s'] += responses;
+      } else if (responseTime < 2000) {
+        responseTimeBuckets['1s-2s'] += responses;
+      } else if (responseTime < 5000) {
+        responseTimeBuckets['2s-5s'] += responses;
+      } else {
+        responseTimeBuckets['5s+'] += responses;
+      }
+    }
+    
+    // Convert buckets to distribution
+    const responseTimeDistribution = Object.entries(responseTimeBuckets)
+      .map(([range, count]) => ({ range, count }));
+    
+    return {
+      averageResponseTime: totalResponses > 0 ? totalResponseTime / totalResponses : 0,
+      peakResponseTime,
+      responseTimeDistribution
+    };
+  }
+  
+  /**
+   * Generate insights from metrics and trends
+   * @param {Object} metrics - Aggregated metrics
+   * @param {Object} allTimeMetrics - All-time metrics
+   * @param {Object} trends - Calculated trends
+   * @returns {Array<string>} - Generated insights
+   * @private
+   */
+  /**
+   * Generate insights from metrics and trends
+   * @param {Object} metrics - Aggregated metrics
+   * @param {Object} allTimeMetrics - All-time metrics
+   * @param {Object} trends - Calculated trends
+   * @returns {Array<string>} - Generated insights
+   * @private
+   */
+  generateInsights(metrics, allTimeMetrics, trends) {
+    const insights = [];
+    
+    // Message volume insights
+    if (metrics.messageCount > 0) {
+      if (trends.messageCountTrend > 20) {
+        insights.push(`Message volume increased by ${trends.messageCountTrend.toFixed(1)}% during this period.`);
+      } else if (trends.messageCountTrend < -20) {
+        insights.push(`Message volume decreased by ${Math.abs(trends.messageCountTrend).toFixed(1)}% during this period.`);
+      }
+      
+      const allTimeAvg = allTimeMetrics.messageCount / 30; // Assuming 30 days average
+      if (metrics.messageCount > allTimeAvg * 1.5) {
+        insights.push(`Message volume is ${((metrics.messageCount / allTimeAvg) * 100).toFixed(1)}% higher than the historical average.`);
+      }
+    }
+    
+    // Response time insights
+    if (metrics.averageResponseTime > 0) {
+      if (trends.responseTimeTrend < -10) {
+        insights.push(`Response time improved by ${Math.abs(trends.responseTimeTrend).toFixed(1)}% during this period.`);
+      } else if (trends.responseTimeTrend > 10) {
+        insights.push(`Response time increased by ${trends.responseTimeTrend.toFixed(1)}% during this period, indicating potential performance issues.`);
+      }
+    }
+    
+    // User sentiment insights
+    if (trends.userSentimentTrend > 10) {
+      insights.push(`User sentiment improved by ${trends.userSentimentTrend.toFixed(1)}% during this period.`);
+    } else if (trends.userSentimentTrend < -10) {
+      insights.push(`User sentiment declined by ${Math.abs(trends.userSentimentTrend).toFixed(1)}% during this period.`);
+    }
+    
+    return insights;
   }
 }
 

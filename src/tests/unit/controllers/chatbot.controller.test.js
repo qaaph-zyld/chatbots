@@ -2,10 +2,10 @@
  * Chatbot Controller Tests
  */
 
-const chatbotController = require('../../../api/controllers/chatbot.controller');
-const chatbotService = require('../../../services/chatbot.service');
-const { ValidationError } = require('../../../utils/errors');
-const { logger } = require('../../../utils');
+require('@src/api\controllers\chatbot.controller');
+require('@src/services\chatbot.service');
+require('@src/utils\errors');
+require('@src/utils');
 
 // Mock dependencies
 jest.mock('../../../services/chatbot.service');

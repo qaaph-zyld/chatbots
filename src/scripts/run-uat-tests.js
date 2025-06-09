@@ -10,7 +10,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-const logger = require('../utils/logger');
+require('@src/utils\logger');
 
 // Parse command line arguments
 const args = process.argv.slice(2);

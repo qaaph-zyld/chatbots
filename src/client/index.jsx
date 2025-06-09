@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
-import '../i18n/i18n'; // Import i18n configuration
-import './index.css';
+import '@src/client\App';
+import '@src/i18n\i18n'; // Import i18n configuration
+import '@src/client\index.css';
 
 /**
  * Main client-side entry point

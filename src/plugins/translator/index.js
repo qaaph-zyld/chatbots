@@ -5,7 +5,7 @@
  */
 
 const axios = require('axios');
-const { logger } = require('../../utils');
+require('@src/utils');
 
 // Plugin metadata
 const pluginInfo = {

@@ -4,11 +4,11 @@
  * Central service for managing chatbot instances and processing messages
  */
 
-const { createEngine, getAvailableEngines } = require('./engines');
-const config = require('../config');
-const { analyticsService, insightsService, learningService } = require('../analytics');
-const { contextService, topicService, entityService, referenceService } = require('../context');
-const { logger } = require('../utils');
+require('@src/bot\engines');
+require('@src/config');
+require('@src/analytics');
+require('@src/context');
+require('@src/utils');
 
 class ChatbotService {
   constructor() {
@@ -167,7 +167,7 @@ class ChatbotService {
    */
   async _processMessageWithNLP(message) {
     try {
-      const { nlpService, intentService, entityService, sentimentService } = require('../nlp');
+      require('@src/nlp');
       
       // Process in parallel for efficiency
       const [intentResult, entityResult, sentimentResult] = await Promise.all([
@@ -237,7 +237,7 @@ class ChatbotService {
       const conversation = this.conversations.get(userId);
       
       // Process multi-modal input if needed
-      const { inputService, outputService } = require('../multimodal');
+      require('@src/multimodal');
       let processedInput;
       let textMessage;
       

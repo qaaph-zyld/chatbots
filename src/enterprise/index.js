@@ -6,8 +6,8 @@
  * and data retention policies.
  */
 
-const { teamCollaborationService } = require('./collaboration/team-collaboration.service');
-const security = require('./security');
+require('@src/enterprise\collaboration\team-collaboration.service');
+require('@src/enterprise\security');
 
 module.exports = {
   teamCollaborationService,

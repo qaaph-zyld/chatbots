@@ -5,9 +5,9 @@
  * for integration with Prometheus monitoring system and Grafana dashboards.
  */
 
-const { logger } = require('../utils');
-const { resourceMonitorService } = require('./resource-monitor.service');
-const { rateLimiterService } = require('./rate-limiter.service');
+require('@src/utils');
+require('@src/monitoring\resource-monitor.service');
+require('@src/monitoring\rate-limiter.service');
 
 /**
  * Prometheus Exporter Service class

@@ -5,9 +5,9 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
-const Integration = require('../models/integration.model');
-const chatbotService = require('../bot/core');
+require('@src/utils');
+require('@src/models\integration.model');
+require('@src/bot\core');
 
 class IntegrationService {
   /**

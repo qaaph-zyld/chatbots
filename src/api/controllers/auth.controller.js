@@ -4,8 +4,8 @@
  * API endpoints for user authentication and management
  */
 
-const authService = require('../../auth/auth.service');
-const { logger } = require('../../utils');
+require('@src/auth\auth.service');
+require('@src/utils');
 
 /**
  * Register a new user

@@ -2,8 +2,8 @@
  * Input Service Tests
  */
 
-const inputService = require('../../../services/input.service');
-const logger = require('../../../utils/logger');
+require('@src/services\input.service');
+require('@src/utils\logger');
 
 // Mock dependencies
 jest.mock('../../../utils/logger', () => ({

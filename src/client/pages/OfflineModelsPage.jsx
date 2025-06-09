@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import OfflineModelManager from '../components/OfflineModelManager';
-import './OfflineModelsPage.css';
+import '@src/client\components\OfflineModelManager';
+import '@src/client\pages\OfflineModelsPage.css';
 
 /**
  * Offline Models Page

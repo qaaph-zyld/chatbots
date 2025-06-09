@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const marketplaceController = require('../controllers/marketplace.controller');
-const { authenticateUser } = require('../middleware/auth.middleware');
+require('@src/api\controllers\marketplace.controller');
+require('@src/api\middleware\auth.middleware');
 
 // Apply authentication middleware to all routes
 router.use(authenticateUser);

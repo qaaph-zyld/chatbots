@@ -8,7 +8,7 @@
 const path = require('path');
 const { spawn } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../utils');
+require('@src/utils');
 
 class SentimentAnalysisService {
   constructor() {

@@ -6,12 +6,12 @@
  * audit logging, and data retention policies.
  */
 
-const { authenticationService } = require('./authentication.service');
-const { authorizationService } = require('./authorization.service');
-const { dataProtectionService } = require('./data-protection.service');
-const { rbacService } = require('./rbac.service');
-const { auditLoggingService } = require('./audit-logging.service');
-const { dataRetentionService } = require('./data-retention.service');
+require('@src/enterprise\security\authentication.service');
+require('@src/enterprise\security\authorization.service');
+require('@src/enterprise\security\data-protection.service');
+require('@src/enterprise\security\rbac.service');
+require('@src/enterprise\security\audit-logging.service');
+require('@src/enterprise\security\data-retention.service');
 
 module.exports = {
   authenticationService,

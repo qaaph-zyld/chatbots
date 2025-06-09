@@ -5,7 +5,7 @@
  * Supports VADER and TextBlob for local sentiment analysis
  */
 
-const sentimentAnalysisService = require('./sentiment.service');
+require('@src/nlp\sentiment\sentiment.service');
 
 module.exports = {
   sentimentAnalysisService

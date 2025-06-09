@@ -24,8 +24,8 @@ jest.mock('../../../utils', () => ({
   }
 }));
 
-const { localStorageService } = require('../../../storage');
-const templateService = require('../../../templates/template.service');
+require('@src/storage');
+require('@src/templates\template.service');
 
 describe('Template Service', () => {
   beforeEach(() => {

@@ -4,9 +4,9 @@
  * Handles API requests for theme operations
  */
 
-const themeService = require('../../services/theme.service');
-const { logger } = require('../../utils');
-const { NotFoundError, ValidationError } = require('../../utils/errors');
+require('@src/services\theme.service');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Create a new theme

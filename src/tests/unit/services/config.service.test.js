@@ -2,8 +2,8 @@
  * Config Service Tests
  */
 
-const config = require('../../../config');
-const logger = require('../../../utils/logger');
+require('@src/config');
+require('@src/utils\logger');
 
 // Mock dependencies
 jest.mock('../../../utils/logger', () => ({
@@ -76,7 +76,7 @@ describe('Config Module', () => {
       
       // Reload config (this may not work as expected if config is cached)
       jest.resetModules();
-      const freshConfig = require('../../../config');
+      require('@src/config');
       
       // Test that env vars are used
       expect(freshConfig.server.port).toBe('4000');

@@ -6,8 +6,8 @@
  * service and generates visualizations and reports.
  */
 
-const { logger } = require('../../utils');
-const { conversationTrackingService } = require('./tracking.service');
+require('@src/utils');
+require('@src/analytics\conversation\tracking.service');
 
 /**
  * Conversation Dashboard Service class

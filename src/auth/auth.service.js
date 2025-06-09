@@ -8,8 +8,8 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
 const { v4: uuidv4 } = require('uuid');
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
-const config = require('../config');
+require('@src/utils');
+require('@src/config');
 
 // Define user schema
 const UserSchema = new mongoose.Schema({

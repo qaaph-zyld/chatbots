@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import DocumentationBrowser from '../components/DocumentationBrowser';
-import './DocumentationPage.css';
+import '@src/client\components\DocumentationBrowser';
+import '@src/client\pages\DocumentationPage.css';
 
 /**
  * Documentation Page

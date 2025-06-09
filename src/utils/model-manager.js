@@ -11,8 +11,8 @@ const axios = require('axios');
 const AdmZip = require('adm-zip');
 const { createHash } = require('crypto');
 const { spawn } = require('child_process');
-const logger = require('./logger');
-const config = require('../config/open-voice.config');
+require('@src/utils\logger');
+require('@src/config\open-voice.config');
 
 class ModelManager {
   constructor() {

@@ -4,13 +4,13 @@
  * Main service for managing chatbot operations
  */
 
-const { nlpManager } = require('../bot/nlp');
-const { templateManager } = require('../bot/templates');
-const { integrationManager } = require('../integrations');
-const { engineFactory } = require('../bot/engines');
-const { personalityService, personalityMessageProcessor } = require('../personality');
-const { logger } = require('../utils');
-const config = require('../config');
+require('@src/bot\nlp');
+require('@src/bot\templates');
+require('@src/integrations');
+require('@src/bot\engines');
+require('@src/personality');
+require('@src/utils');
+require('@src/config');
 
 class ChatbotService {
   constructor() {

@@ -4,9 +4,9 @@
  * Provides reference resolution capabilities for chatbots
  */
 
-const { logger } = require('../utils');
-const contextService = require('./context.service');
-const entityService = require('./entity.service');
+require('@src/utils');
+require('@src/context\context.service');
+require('@src/context\entity.service');
 
 /**
  * Reference Service class

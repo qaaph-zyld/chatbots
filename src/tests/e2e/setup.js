@@ -5,8 +5,8 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../../utils');
-const config = require('../../config');
+require('@src/utils');
+require('@src/config');
 
 // Disable logging during tests
 logger.silent = true;

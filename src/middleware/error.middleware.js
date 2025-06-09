@@ -4,7 +4,7 @@
  * Express middleware for handling errors
  */
 
-const { errors, logger } = require('../utils');
+require('@src/utils');
 
 /**
  * Error handling middleware

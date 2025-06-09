@@ -5,7 +5,7 @@
  * for creating prediction models, generating predictions, and analyzing user behavior.
  */
 
-const { predictiveAnalyticsService } = require('./predictive-analytics.service');
+require('@src/analytics\predictive\predictive-analytics.service');
 
 /**
  * Example data sources for predictions

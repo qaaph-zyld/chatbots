@@ -4,8 +4,8 @@
 
 const path = require('path');
 const fs = require('fs').promises;
-const localModelService = require('../../../services/local-model.service');
-const { logger } = require('../../../utils');
+require('@src/services\local-model.service');
+require('@src/utils');
 
 // Mock dependencies
 jest.mock('fs', () => ({
@@ -192,7 +192,7 @@ describe('LocalModelService', () => {
       expect(fs.createWriteStream).toHaveBeenCalled();
       expect(axios.get).toHaveBeenCalledWith(
         modelUrl,
-        { responseType: 'stream', proxy: { host: '104.129.196.38', port: 10563 } }
+        { responseType: 'stream', proxy: require('../../../config').proxy.getProxyConfig() }
       );
       expect(logger.info).toHaveBeenCalledWith(`Model ${modelId} downloaded successfully`);
     });
@@ -322,10 +322,8 @@ describe('LocalModelService', () => {
   describe('setProxyConfig', () => {
     it('should set proxy configuration for axios', () => {
       // Arrange
-      const proxyConfig = {
-        host: '104.129.196.38',
-        port: 10563
-      };
+      // Use centralized proxy configuration
+      require('@src/config').proxy.getProxyConfig();
       
       // Act
       localModelService.setProxyConfig(proxyConfig);

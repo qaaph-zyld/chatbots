@@ -7,7 +7,7 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../utils');
+require('@src/utils');
 
 /**
  * Storage Service class

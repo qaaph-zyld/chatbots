@@ -4,8 +4,8 @@
  * Integration with Botpress open-source chatbot platform
  */
 
-const BaseChatbotEngine = require('./base.engine');
-const { logger } = require('../../utils');
+require('@src/bot\engines\base.engine');
+require('@src/utils');
 const axios = require('axios');
 
 class BotpressEngine extends BaseChatbotEngine {

@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const translationController = require('../controllers/translation.controller');
-const { adminAuthMiddleware } = require('../../middleware');
+require('@src/api\controllers\translation.controller');
+require('@src/middleware');
 
 // Public routes
 router.get('/languages/supported', translationController.getSupportedLanguages);

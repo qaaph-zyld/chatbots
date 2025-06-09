@@ -3,8 +3,8 @@ import { useParams, useNavigate } from 'react-router-dom';
 import ReactFlow, { Background, Controls } from 'reactflow';
 import 'reactflow/dist/style.css';
 import axios from 'axios';
-import WorkflowService from '../services/workflow.service';
-import './WorkflowPages.css';
+import WorkflowService from "@modules/workflow.service";
+import '@src/client\pages\WorkflowPages.css';
 
 // Configure axios with proxy as specified in user requirements
 axios.defaults.proxy = {

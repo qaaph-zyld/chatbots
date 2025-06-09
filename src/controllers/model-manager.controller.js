@@ -4,9 +4,9 @@
  * Handles API requests for managing voice models.
  */
 
-const modelManager = require('../utils/model-manager');
-const logger = require('../utils/logger');
-const config = require('../config/open-voice.config');
+require('@src/utils\model-manager');
+require('@src/utils\logger');
+require('@src/config\open-voice.config');
 const path = require('path');
 const fs = require('fs');
 

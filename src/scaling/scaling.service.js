@@ -6,8 +6,8 @@
 
 const os = require('os');
 const cluster = require('cluster');
-const { logger } = require('../utils');
-const config = require('../config');
+require('@src/utils');
+require('@src/config');
 
 class ScalingService {
   constructor() {

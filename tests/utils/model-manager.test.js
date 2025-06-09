@@ -6,7 +6,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const modelManager = require('../../src/utils/model-manager');
+require('@src/utils\model-manager');
 
 // Mock data for testing
 const mockModelRegistry = {

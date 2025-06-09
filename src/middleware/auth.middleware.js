@@ -4,8 +4,8 @@
  * Express middleware for authentication and authorization
  */
 
-const { errors } = require('../utils');
-const config = require('../config');
+require('@src/utils');
+require('@src/config');
 
 /**
  * Authenticate API requests using API key

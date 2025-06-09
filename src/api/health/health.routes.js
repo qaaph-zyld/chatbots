@@ -5,7 +5,7 @@
 const express = require('express');
 const router = express.Router();
 const mongoose = require('mongoose');
-const redis = require('../../config/redis');
+require('@src/config\redis');
 
 /**
  * @swagger

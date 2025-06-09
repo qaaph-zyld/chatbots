@@ -9,7 +9,7 @@ const path = require('path');
 const fs = require('fs');
 const { spawn } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../../utils');
+require('@src/utils');
 
 /**
  * Multi-Modal Output Service class

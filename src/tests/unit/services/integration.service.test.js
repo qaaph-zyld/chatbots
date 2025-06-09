@@ -7,15 +7,15 @@ const sinon = require('sinon');
 const { mockDeep } = require('jest-mock-extended');
 
 // Import the service to test
-const integrationService = require('../../../integrations/integration.service');
+require('@src/integrations\integration.service');
 
 // Import models and dependencies
-const Integration = require('../../../models/integration.model');
-const Chatbot = require('../../../models/chatbot.model');
-const { logger } = require('../../../utils');
+require('@src/models\integration.model');
+require('@src/models\chatbot.model');
+require('@src/utils');
 
 // Import test utilities
-const { createMockModel } = require('../../utils/mock-factory');
+require('@src/tests\utils\mock-factory');
 
 // Mock dependencies
 jest.mock('../../../models/integration.model');

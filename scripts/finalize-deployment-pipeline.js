@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
-const logger = require('../src/utils/logger');
+require('@src/utils\logger');
 
 // Configuration
 const config = {

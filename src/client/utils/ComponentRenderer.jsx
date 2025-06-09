@@ -5,7 +5,7 @@
  */
 
 import React from 'react';
-import { useComponent } from '../hooks/useComponent';
+import '@src/client\hooks\useComponent';
 
 /**
  * Component Renderer

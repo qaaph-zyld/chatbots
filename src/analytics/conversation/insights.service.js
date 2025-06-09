@@ -5,8 +5,8 @@
  * about user behavior, common issues, and opportunities for improvement.
  */
 
-const { logger } = require('../../utils');
-const { conversationTrackingService } = require('./tracking.service');
+require('@src/utils');
+require('@src/analytics\conversation\tracking.service');
 
 /**
  * Conversation Insights Service class

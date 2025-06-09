@@ -4,7 +4,7 @@
  * Exports the entity recognition service for use in other parts of the application.
  */
 
-const entityRecognitionService = require('./entity.service');
+require('@src/nlp\entity\entity.service');
 
 module.exports = {
   entityRecognitionService

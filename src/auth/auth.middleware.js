@@ -4,8 +4,8 @@
  * Middleware for protecting API routes
  */
 
-const authService = require('./auth.service');
-const { logger } = require('../utils');
+require('@src/auth\auth.service');
+require('@src/utils');
 
 /**
  * Authenticate JWT token

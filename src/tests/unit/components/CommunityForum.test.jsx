@@ -6,7 +6,7 @@ import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import axios from 'axios';
-import CommunityForum from '../../../client/components/CommunityForum';
+import '@src/client\components\CommunityForum';
 
 // Mock axios
 jest.mock('axios');

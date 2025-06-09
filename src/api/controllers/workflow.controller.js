@@ -4,8 +4,8 @@
  * Handles API requests for workflow management and execution
  */
 
-const workflowService = require('../../services/workflow.service');
-const { logger } = require('../../utils');
+require('@src/services\workflow.service');
+require('@src/utils');
 
 /**
  * Create a new workflow

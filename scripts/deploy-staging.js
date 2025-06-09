@@ -9,7 +9,7 @@ const { execSync } = require('child_process');
 const AWS = require('aws-sdk');
 const fs = require('fs');
 const path = require('path');
-const logger = require('../src/utils/logger');
+require('@src/utils\logger');
 
 // Configure AWS SDK
 AWS.config.update({

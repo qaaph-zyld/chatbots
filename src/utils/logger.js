@@ -4,7 +4,7 @@
  * Provides consistent logging functionality throughout the application
  */
 
-const config = require('../config');
+require('@src/config');
 
 // Define log levels
 const LOG_LEVELS = {

@@ -8,8 +8,8 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
-const logger = require('./logger');
-const config = require('../config/open-voice.config');
+require('@src/utils\logger');
+require('@src/config\open-voice.config');
 
 // Language detection libraries
 let franc;

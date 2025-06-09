@@ -6,9 +6,9 @@
  */
 
 const mongoose = require('mongoose');
-const Topic = require('../models/topic.model');
-const TopicReference = require('../models/topic-reference.model');
-const { logger } = require('../utils');
+require('@src/models\topic.model');
+require('@src/models\topic-reference.model');
+require('@src/utils');
 const axios = require('axios');
 
 // Configure axios with proxy

@@ -6,10 +6,10 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
+require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-const { Personality } = require('./personality.schema');
+require('@src/personality\personality.schema');
 
 /**
  * Personality Service class

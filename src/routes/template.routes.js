@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const templateController = require('../controllers/template.controller');
-const { authenticate } = require('../middleware/auth');
+require('@src/controllers\template.controller');
+require('@src/middleware\auth');
 
 // Public routes
 router.get('/featured', templateController.getFeaturedTemplates);

@@ -8,7 +8,7 @@
  */
 
 const axios = require('axios');
-const { logger } = require('../src/utils');
+require('@src/utils');
 
 // Mock the axios module to prevent actual API calls
 jest.mock('axios');

@@ -4,9 +4,9 @@
  * Exports all template components for easy access
  */
 
-const templateService = require('./template.service');
-const templateController = require('./template.controller');
-const templateRoutes = require('./template.routes');
+require('@src/templates\template.service');
+require('@src/templates\template.controller');
+require('@src/templates\template.routes');
 
 module.exports = {
   templateService,

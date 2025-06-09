@@ -6,9 +6,9 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../../utils');
-const learningService = require('../learning.service');
-const continuousLearningService = require('./continuous.service');
+require('@src/utils');
+require('@src/analytics\learning.service');
+require('@src/analytics\learning\continuous.service');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 const path = require('path');

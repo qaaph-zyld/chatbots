@@ -6,7 +6,7 @@
 
 const express = require('express');
 const router = express.Router();
-const modelManagerController = require('../controllers/model-manager.controller');
+require('@src/controllers\model-manager.controller');
 
 /**
  * @route GET /api/model-manager/status

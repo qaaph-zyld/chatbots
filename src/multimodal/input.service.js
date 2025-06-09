@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../utils');
+require('@src/utils');
 
 /**
  * Input types

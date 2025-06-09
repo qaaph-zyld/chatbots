@@ -9,8 +9,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const performanceOptimizer = require('../utils/performance-optimizer');
-const logger = require('../utils/logger');
+require('@src/utils\performance-optimizer');
+require('@src/utils\logger');
 
 // Parse command line arguments
 const args = process.argv.slice(2);

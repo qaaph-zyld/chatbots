@@ -2,23 +2,26 @@
  * Main Application Entry Point
  */
 
+// Register module aliases before any other imports
+require('./core/module-alias');
+
 const express = require('express');
 const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const http = require('http');
-const { connectDB } = require('./database/connection');
-const apiRoutes = require('./api/routes');
-const swaggerRoutes = require('./api/swagger');
-const { trainingRoutes } = require('./training');
-const chatbotService = require('./bot/core');
-const { logger } = require('./utils');
-const { pluginLoader } = require('./utils/pluginLoader');
-const integrationManager = require('./integrations/integration.manager');
-const usageMonitoringService = require('./monitoring/usage.service');
-const scalingService = require('./scaling/scaling.service');
-const { trackRequest } = require('./scaling/scaling.middleware');
-const config = require('./config');
+const { connectDB } = require('@data/connection');
+const apiRoutes = require('@api/routes');
+const swaggerRoutes = require('@api/swagger');
+const { trainingRoutes } = require('@modules/training');
+const chatbotService = require('@modules/bot/core');
+const { logger } = require('@utils');
+const { pluginLoader } = require('@utils/pluginLoader');
+const integrationManager = require('@modules/integrations/integration.manager');
+const usageMonitoringService = require('@modules/monitoring/usage.service');
+const scalingService = require('@modules/scaling/scaling.service');
+const { trackRequest } = require('@modules/scaling/scaling.middleware');
+const config = require('@core/config');
 
 // Create Express app
 const app = express();
@@ -80,7 +83,7 @@ async function initializeApp() {
     await pluginLoader.initializePlugins();
     
     // Initialize training service with bot service for integration
-    const { trainingService } = require('./training');
+    require('@src/training');
     trainingService.setBotService(chatbotService);
     logger.info('Training service initialized');
     

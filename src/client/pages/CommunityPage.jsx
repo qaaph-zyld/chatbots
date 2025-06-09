@@ -1,7 +1,7 @@
 import React from 'react';
 import { useTranslation } from 'react-i18next';
-import CommunityForum from '../components/CommunityForum';
-import './CommunityPage.css';
+import '@src/client\components\CommunityForum';
+import '@src/client\pages\CommunityPage.css';
 
 /**
  * Community Page

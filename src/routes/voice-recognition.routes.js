@@ -6,7 +6,7 @@
 
 const express = require('express');
 const router = express.Router();
-const voiceRecognitionController = require('../controllers/voice-recognition.controller');
+require('@src/controllers\voice-recognition.controller');
 
 /**
  * @route POST /api/voice-recognition/initialize

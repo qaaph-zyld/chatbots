@@ -4,12 +4,12 @@
  * Handles API requests for voice recognition features.
  */
 
-const voiceRecognitionService = require('../services/voice-recognition.service');
-const logger = require('../utils/logger');
+require('@src/services\voice-recognition.service');
+require('@src/utils\logger');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const config = require('../config/open-voice.config');
+require('@src/config\open-voice.config');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const multilingualKbController = require('../controllers/multilingual-kb.controller');
-const { authMiddleware } = require('../../middleware');
+require('@src/api\controllers\multilingual-kb.controller');
+require('@src/middleware');
 
 // Get knowledge base in a specific language
 router.get('/:kbId', authMiddleware, multilingualKbController.getKnowledgeBase);

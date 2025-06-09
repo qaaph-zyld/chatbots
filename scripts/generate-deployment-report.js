@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const logger = require('../src/utils/logger');
+require('@src/utils\logger');
 
 // Configuration
 const config = {

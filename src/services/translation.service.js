@@ -6,7 +6,7 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-const { logger } = require('../utils');
+require('@src/utils');
 
 class TranslationService {
   constructor() {

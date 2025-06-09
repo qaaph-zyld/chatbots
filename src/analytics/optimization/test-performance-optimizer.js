@@ -6,8 +6,8 @@
  */
 
 // Import the performance optimizer service
-const { performanceOptimizerService } = require('./performance-optimizer.service');
-const { logger } = require('../../utils/mock-utils');
+require('@src/analytics\optimization\performance-optimizer.service');
+require('@src/utils\mock-utils');
 
 /**
  * Generate mock system metrics

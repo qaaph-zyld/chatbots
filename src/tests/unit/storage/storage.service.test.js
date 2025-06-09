@@ -4,8 +4,8 @@
 
 const path = require('path');
 const fs = require('fs').promises;
-const { StorageService } = require('../../../storage/storage.service');
-const { logger } = require('../../../utils');
+require('@src/storage\storage.service');
+require('@src/utils');
 
 // Mock dependencies
 jest.mock('../../../utils', () => ({

@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const workflowController = require('../controllers/workflow.controller');
-const { authenticateToken, hasPermission } = require('../../auth/auth.middleware');
+require('@src/api\controllers\workflow.controller');
+require('@src/auth\auth.middleware');
 
 // Workflow management routes
 router.post('/chatbots/:chatbotId/workflows', 

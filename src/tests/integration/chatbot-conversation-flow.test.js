@@ -8,11 +8,11 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const request = require('supertest');
-const app = require('../../app');
-const User = require('../../models/user.model');
-const Chatbot = require('../../models/chatbot.model');
-const Conversation = require('../../models/conversation.model');
-const Analytics = require('../../models/analytics.model');
+require('@src/app');
+require('@src/models\user.model');
+require('@src/models\chatbot.model');
+require('@src/models\conversation.model');
+require('@src/models\analytics.model');
 
 describe('Chatbot Conversation Flow', () => {
   let mongoServer;

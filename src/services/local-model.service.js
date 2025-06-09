@@ -6,8 +6,8 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-const { logger } = require('../utils');
-const { getModel, storeModel, getModelsByType, deleteModel } = require('../utils/indexedDB');
+require('@src/utils');
+require('@src/utils\indexedDB');
 
 class LocalModelService {
   constructor() {

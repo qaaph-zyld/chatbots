@@ -4,9 +4,9 @@
  * Handles external API requests related to conversations
  */
 
-const Conversation = require('../../../../models/conversation.model');
-const Chatbot = require('../../../../models/chatbot.model');
-const ApiError = require('../../../../utils/apiError');
+require('@src/models\conversation.model');
+require('@src/models\chatbot.model');
+require('@src/utils\apiError');
 
 /**
  * Get all conversations

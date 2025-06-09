@@ -2,10 +2,11 @@
  * Preference Service
  * 
  * Service for managing user preferences in the chatbot platform
+ * Refactored to use the repository pattern
  */
 
-const { logger } = require('../utils');
-const Preference = require('../models/preference.model');
+require('@src/data');
+require('@src/utils');
 
 /**
  * Get user preferences
@@ -14,16 +15,36 @@ const Preference = require('../models/preference.model');
  */
 const getUserPreferences = async (userId) => {
   try {
-    let preferences = await Preference.findOne({ userId });
+    // Ensure database connection
+    await databaseService.connect();
     
-    if (!preferences) {
+    // Get preference repository
+    const preferenceRepo = repositories.preference;
+    
+    // Get user preferences by category
+    const preferences = await preferenceRepo.getByUserId(userId, { lean: true });
+    
+    if (preferences.length === 0) {
       // Create default preferences if not found
-      preferences = await createUserPreferences(userId);
+      return await createUserPreferences(userId);
     }
     
-    return preferences;
+    // Transform to structured object
+    const result = {
+      userId
+    };
+    
+    // Group preferences by category and key
+    preferences.forEach(pref => {
+      if (!result[pref.category]) {
+        result[pref.category] = {};
+      }
+      result[pref.category][pref.key] = pref.value;
+    });
+    
+    return result;
   } catch (error) {
-    logger.error('Error getting user preferences', { error, userId });
+    logger.error('Error getting user preferences', { error: error.message, userId });
     throw error;
   }
 };
@@ -35,6 +56,13 @@ const getUserPreferences = async (userId) => {
  */
 const createUserPreferences = async (userId) => {
   try {
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Get preference repository
+    const preferenceRepo = repositories.preference;
+    
+    // Define default preferences
     const defaultPreferences = {
       userId,
       theme: 'light',
@@ -50,24 +78,71 @@ const createUserPreferences = async (userId) => {
         reducedMotion: false
       },
       privacy: {
-        shareUsageData: true,
-        allowCookies: true
+        shareData: false,
+        saveHistory: true
       },
-      chatInterface: {
-        showTimestamps: true,
-        showAvatars: true,
-        messageGrouping: true,
-        soundEffects: true
+      chatSettings: {
+        autoSend: true,
+        enterToSend: true,
+        showTimestamps: true
       }
     };
     
-    const preferences = new Preference(defaultPreferences);
-    await preferences.save();
+    // Start a transaction for batch creation
+    const session = await preferenceRepo.startTransaction();
     
-    logger.info('Created default preferences for user', { userId });
-    return preferences;
+    try {
+      // Create preference entries for each category and key
+      const preferences = [];
+      
+      // Process each category
+      for (const [category, values] of Object.entries(defaultPreferences)) {
+        // Skip userId as it's not a preference category
+        if (category === 'userId') continue;
+        
+        if (typeof values === 'object') {
+          // Process nested preferences
+          for (const [key, value] of Object.entries(values)) {
+            const pref = await preferenceRepo.setPreference(
+              userId, category, key, value, 
+              { 
+                source: 'explicit', 
+                confidence: 1.0, 
+                metadata: { userId, createdAt: new Date() },
+                session
+              }
+            );
+            preferences.push(pref);
+          }
+        } else {
+          // Process direct preferences
+          const pref = await preferenceRepo.setPreference(
+            userId, 'general', category, values, 
+            { 
+              source: 'explicit', 
+              confidence: 1.0, 
+              metadata: { userId, createdAt: new Date() },
+              session
+            }
+          );
+          preferences.push(pref);
+        }
+      }
+      
+      // Commit transaction
+      await preferenceRepo.commitTransaction(session);
+      
+      logger.info('Created default preferences for user', { userId });
+      
+      // Return structured preferences object
+      return getUserPreferences(userId);
+    } catch (error) {
+      // Abort transaction on error
+      await preferenceRepo.abortTransaction(session);
+      throw error;
+    }
   } catch (error) {
-    logger.error('Error creating user preferences', { error, userId });
+    logger.error('Error creating user preferences', { error: error.message, userId });
     throw error;
   }
 };
@@ -80,47 +155,66 @@ const createUserPreferences = async (userId) => {
  */
 const updateUserPreferences = async (userId, updates) => {
   try {
-    let preferences = await Preference.findOne({ userId });
+    // Ensure database connection
+    await databaseService.connect();
     
-    if (!preferences) {
-      // Create with provided updates if not found
-      preferences = new Preference({
-        userId,
-        ...updates
-      });
-    } else {
-      // Apply updates to existing preferences
-      Object.keys(updates).forEach(key => {
-        if (key !== 'userId') {
-          if (typeof updates[key] === 'object' && updates[key] !== null) {
-            preferences[key] = { ...preferences[key], ...updates[key] };
-          } else {
-            preferences[key] = updates[key];
+    // Get preference repository
+    const preferenceRepo = repositories.preference;
+    
+    // Start a transaction
+    const session = await preferenceRepo.startTransaction();
+    
+    try {
+      // Process each update
+      const updatedPrefs = [];
+      
+      for (const [category, values] of Object.entries(updates)) {
+        // Skip userId as it's not a preference category
+        if (category === 'userId' || category === '_id') continue;
+        
+        if (typeof values === 'object') {
+          // Process nested preferences
+          for (const [key, value] of Object.entries(values)) {
+            const pref = await preferenceRepo.setPreference(
+              userId, category, key, value, 
+              { 
+                source: 'explicit', 
+                confidence: 1.0, 
+                metadata: { userId, updatedAt: new Date() },
+                session
+              }
+            );
+            updatedPrefs.push(pref);
           }
+        } else {
+          // Process direct preferences
+          const pref = await preferenceRepo.setPreference(
+            userId, 'general', category, values, 
+            { 
+              source: 'explicit', 
+              confidence: 1.0, 
+              metadata: { userId, updatedAt: new Date() },
+              session
+            }
+          );
+          updatedPrefs.push(pref);
         }
-      });
+      }
+      
+      // Commit transaction
+      await preferenceRepo.commitTransaction(session);
+      
+      logger.info('Updated user preferences', { userId, count: updatedPrefs.length });
+      
+      // Return updated preferences
+      return getUserPreferences(userId);
+    } catch (error) {
+      // Abort transaction on error
+      await preferenceRepo.abortTransaction(session);
+      throw error;
     }
-    
-    await preferences.save();
-    logger.info('Updated user preferences', { userId });
-    return preferences;
   } catch (error) {
-    logger.error('Error updating user preferences', { error, userId });
-    throw error;
-  }
-};
-
-/**
- * Reset user preferences to defaults
- * @param {string} userId - User ID
- * @returns {Promise<Object>} Reset preferences
- */
-const resetUserPreferences = async (userId) => {
-  try {
-    await Preference.findOneAndDelete({ userId });
-    return createUserPreferences(userId);
-  } catch (error) {
-    logger.error('Error resetting user preferences', { error, userId });
+    logger.error('Error updating user preferences', { error: error.message, userId });
     throw error;
   }
 };
@@ -133,27 +227,40 @@ const resetUserPreferences = async (userId) => {
  */
 const getPreference = async (userId, key) => {
   try {
-    const preferences = await getUserPreferences(userId);
+    // Ensure database connection
+    await databaseService.connect();
     
     // Handle dot notation (e.g., 'notifications.email')
     if (key.includes('.')) {
       const parts = key.split('.');
-      let value = preferences;
+      const category = parts[0];
+      const prefKey = parts[1];
       
-      for (const part of parts) {
-        if (value && typeof value === 'object') {
-          value = value[part];
-        } else {
-          return null;
-        }
+      // Get preference repository
+      const preferenceRepo = repositories.preference;
+      
+      // Get specific preference
+      const preference = await preferenceRepo.getPreference(userId, category, prefKey);
+      
+      if (!preference) {
+        return null;
       }
       
-      return { key, value };
+      return {
+        key,
+        value: preference.value
+      };
+    } else {
+      // For top-level keys, get all preferences and extract the value
+      const preferences = await getUserPreferences(userId);
+      
+      return {
+        key,
+        value: preferences[key]
+      };
     }
-    
-    return { key, value: preferences[key] };
   } catch (error) {
-    logger.error('Error getting preference', { error, userId, key });
+    logger.error('Error getting preference', { error: error.message, userId, key });
     throw error;
   }
 };
@@ -166,27 +273,10 @@ const getPreference = async (userId, key) => {
  */
 const getPreferenceValue = async (userId, key) => {
   try {
-    const preferences = await getUserPreferences(userId);
-    
-    // Handle dot notation (e.g., 'notifications.email')
-    if (key.includes('.')) {
-      const parts = key.split('.');
-      let value = preferences;
-      
-      for (const part of parts) {
-        if (value && typeof value === 'object') {
-          value = value[part];
-        } else {
-          return null;
-        }
-      }
-      
-      return value;
-    }
-    
-    return preferences[key];
+    const preference = await getPreference(userId, key);
+    return preference ? preference.value : null;
   } catch (error) {
-    logger.error('Error getting preference value', { error, userId, key });
+    logger.error('Error getting preference value', { error: error.message, userId, key });
     throw error;
   }
 };
@@ -200,26 +290,72 @@ const getPreferenceValue = async (userId, key) => {
  */
 const setPreferenceValue = async (userId, key, value) => {
   try {
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Get preference repository
+    const preferenceRepo = repositories.preference;
+    
     // Handle dot notation (e.g., 'notifications.email')
     if (key.includes('.')) {
       const parts = key.split('.');
-      const updates = {};
-      let current = updates;
+      const category = parts[0];
+      const prefKey = parts[1];
       
-      for (let i = 0; i < parts.length - 1; i++) {
-        current[parts[i]] = {};
-        current = current[parts[i]];
-      }
-      
-      current[parts[parts.length - 1]] = value;
-      return updateUserPreferences(userId, updates);
+      // Set the preference
+      await preferenceRepo.setPreference(
+        userId, category, prefKey, value, 
+        { 
+          source: 'explicit', 
+          confidence: 1.0, 
+          metadata: { userId, updatedAt: new Date() }
+        }
+      );
+    } else {
+      // For top-level keys, set as general preference
+      await preferenceRepo.setPreference(
+        userId, 'general', key, value, 
+        { 
+          source: 'explicit', 
+          confidence: 1.0, 
+          metadata: { userId, updatedAt: new Date() }
+        }
+      );
     }
     
-    // Simple key
-    const updates = { [key]: value };
-    return updateUserPreferences(userId, updates);
+    logger.info('Updated preference value', { userId, key });
+    
+    // Return updated preferences
+    return getUserPreferences(userId);
   } catch (error) {
-    logger.error('Error setting preference value', { error, userId, key });
+    logger.error('Error setting preference value', { error: error.message, userId, key });
+    throw error;
+  }
+};
+
+/**
+ * Reset user preferences to defaults
+ * @param {string} userId - User ID
+ * @returns {Promise<Object>} Reset preferences
+ */
+const resetUserPreferences = async (userId) => {
+  try {
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Get preference repository
+    const preferenceRepo = repositories.preference;
+    
+    // Delete all user preferences
+    await preferenceRepo.deleteAllUserPreferences(userId);
+    
+    // Create new default preferences
+    const preferences = await createUserPreferences(userId);
+    
+    logger.info('Reset user preferences to defaults', { userId });
+    return preferences;
+  } catch (error) {
+    logger.error('Error resetting user preferences', { error: error.message, userId });
     throw error;
   }
 };
@@ -231,17 +367,19 @@ const setPreferenceValue = async (userId, key, value) => {
  */
 const deleteUserPreferences = async (userId) => {
   try {
-    const result = await Preference.findOneAndDelete({ userId });
+    // Ensure database connection
+    await databaseService.connect();
     
-    if (!result) {
-      logger.warn('No preferences found to delete', { userId });
-      return false;
-    }
+    // Get preference repository
+    const preferenceRepo = repositories.preference;
+    
+    // Delete all user preferences
+    await preferenceRepo.deleteAllUserPreferences(userId);
     
     logger.info('Deleted user preferences', { userId });
     return true;
   } catch (error) {
-    logger.error('Error deleting user preferences', { error, userId });
+    logger.error('Error deleting user preferences', { error: error.message, userId });
     throw error;
   }
 };

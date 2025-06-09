@@ -4,8 +4,8 @@
  * Handles API endpoints for usage monitoring and analytics
  */
 
-const usageService = require('../../monitoring/usage.service');
-const { logger } = require('../../utils');
+require('@src/monitoring\usage.service');
+require('@src/utils');
 
 /**
  * Get usage statistics

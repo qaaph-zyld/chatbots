@@ -4,9 +4,9 @@
  * Handles all personality-related operations and API endpoints
  */
 
-const { personalityService } = require('../../personality');
-const { logger } = require('../../utils');
-const { ValidationError } = require('../../utils/errors');
+require('@src/personality');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Get all personalities for a chatbot

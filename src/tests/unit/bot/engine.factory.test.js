@@ -36,11 +36,11 @@ jest.mock('../../../bot/engines/huggingface.engine', () => {
 });
 
 // Import the engine factory after mocks
-const engineFactory = require('../../../bot/engines/engine.factory');
-const BotpressEngine = require('../../../bot/engines/botpress.engine');
-const HuggingFaceEngine = require('../../../bot/engines/huggingface.engine');
-const { logger } = require('../../../utils');
-const config = require('../../../config');
+require('@src/bot\engines\engine.factory');
+require('@src/bot\engines\botpress.engine');
+require('@src/bot\engines\huggingface.engine');
+require('@src/utils');
+require('@src/config');
 
 describe('Chatbot Engine Factory', () => {
   beforeEach(() => {

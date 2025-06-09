@@ -2,8 +2,8 @@
  * Output Service Tests
  */
 
-const outputService = require('../../../services/output.service');
-const logger = require('../../../utils/logger');
+require('@src/services\output.service');
+require('@src/utils\logger');
 
 // Mock dependencies
 jest.mock('../../../utils/logger', () => ({

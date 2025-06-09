@@ -2,8 +2,8 @@
  * Tests for Model Controller
  */
 
-const modelController = require('../../../api/controllers/model.controller');
-const localModelService = require('../../../services/local-model.service');
+require('@src/api\controllers\model.controller');
+require('@src/services\local-model.service');
 
 // Mock dependencies
 jest.mock('../../../services/local-model.service');
@@ -28,11 +28,7 @@ describe('Model Controller', () => {
       send: jest.fn().mockReturnThis()
     };
     
-    // Configure proxy for tests
-    localModelService.setProxyConfig({
-      host: '104.129.196.38',
-      port: 10563
-    });
+    // No proxy configuration needed
   });
 
   describe('getAvailableModels', () => {

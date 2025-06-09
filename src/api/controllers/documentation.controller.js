@@ -4,8 +4,8 @@
  * Handles API requests for documentation management
  */
 
-const documentationService = require('../../services/documentation.service');
-const { logger } = require('../../utils');
+require('@src/services\documentation.service');
+require('@src/utils');
 
 /**
  * Get all documentation categories

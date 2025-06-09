@@ -6,7 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
-const componentRegistry = require('./ComponentRegistry');
+require('@src/components\custom\ComponentRegistry');
 
 class ComponentScaffolder {
   /**
@@ -111,8 +111,8 @@ class ComponentScaffolder {
  */
 
 const React = require('react');
-const ComponentInterface = require('../../ComponentInterface');
-const Component = require('./component.jsx');
+require('@src/ComponentInterface');
+require('@src/components\custom\component.jsx');
 
 // Define component metadata
 const metadata = {

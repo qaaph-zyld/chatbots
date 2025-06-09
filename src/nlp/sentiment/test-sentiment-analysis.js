@@ -5,8 +5,8 @@
  * to analyze sentiment in text using open-source libraries.
  */
 
-const { nlpService } = require('../nlp.service');
-const { logger } = require('../../utils');
+require('@src/nlp\nlp.service');
+require('@src/utils');
 
 // Sample texts for testing
 const sampleTexts = [

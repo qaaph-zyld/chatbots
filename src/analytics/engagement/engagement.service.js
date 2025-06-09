@@ -5,8 +5,8 @@
  * session duration, retention rates, feature usage, and satisfaction.
  */
 
-const { logger } = require('../../utils');
-const { conversationTrackingService } = require('../conversation/tracking.service');
+require('@src/utils');
+require('@src/analytics\conversation\tracking.service');
 const { v4: uuidv4 } = require('uuid');
 
 /**

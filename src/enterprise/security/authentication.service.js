@@ -6,7 +6,7 @@
  */
 
 // Use mock utilities for testing
-const { logger, generateUuid } = require('../../utils/mock-utils');
+require('@src/utils\mock-utils');
 const crypto = require('crypto');
 
 /**

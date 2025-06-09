@@ -6,7 +6,7 @@
 
 const express = require('express');
 const router = express.Router();
-const audioProcessorController = require('../controllers/audio-processor.controller');
+require('@src/controllers\audio-processor.controller');
 
 /**
  * @route POST /api/audio-processor/process

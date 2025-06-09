@@ -4,8 +4,8 @@
  * Handles API requests for workflow templates
  */
 
-const WorkflowTemplateService = require('../../services/workflow-template.service');
-const { handleError, handleSuccess } = require('../utils/response.utils');
+require('@src/services\workflow-template.service');
+require('@src/api\utils\response.utils');
 
 /**
  * Get all available workflow templates

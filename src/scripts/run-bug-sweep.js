@@ -8,8 +8,8 @@ const path = require('path');
 const fs = require('fs');
 const { promisify } = require('util');
 const mkdir = promisify(fs.mkdir);
-const { runBugSweep, saveReport } = require('../utils/bug-sweep');
-const { logger } = require('../utils/logger');
+require('@src/utils\bug-sweep');
+require('@src/utils\logger');
 
 // Configuration
 const REPORTS_DIR = path.join(process.cwd(), 'reports', 'bug-sweep');

@@ -9,9 +9,9 @@
 require('dotenv').config();
 
 // Import required modules
-const { engineFactory } = require('../../bot/engines');
-const { logger } = require('../../utils');
-const config = require('../../config');
+require('@src/bot\engines');
+require('@src/utils');
+require('@src/config');
 
 // Configure logger for testing
 logger.setLevel('debug');

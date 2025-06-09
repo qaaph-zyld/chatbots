@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import axios from 'axios';
-import './DocumentationBrowser.css';
+import '@src/client\components\DocumentationBrowser.css';
 
 /**
  * Documentation Browser Component

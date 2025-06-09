@@ -8,8 +8,8 @@
 const path = require('path');
 const fs = require('fs').promises;
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../utils');
-const { localStorageService } = require('../../storage');
+require('@src/utils');
+require('@src/storage');
 
 // Will use TensorFlow.js for local model inference
 let tf;

@@ -7,15 +7,15 @@ const sinon = require('sinon');
 const { mockDeep } = require('jest-mock-extended');
 
 // Import the service to test
-const workflowService = require('../../../services/workflow.service');
+require('@src/services\workflow.service');
 
 // Import models and dependencies
-const Workflow = require('../../../models/workflow.model');
-const WorkflowExecution = require('../../../models/workflow-execution.model');
-const { logger } = require('../../../utils');
+require('@src/models\workflow.model');
+require('@src/models\workflow-execution.model');
+require('@src/utils');
 
 // Import test utilities
-const { createMockModel } = require('../../utils/mock-factory');
+require('@src/tests\utils\mock-factory');
 
 // Mock dependencies
 jest.mock('../../../models/workflow.model');

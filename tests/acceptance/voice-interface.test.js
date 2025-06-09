@@ -11,10 +11,10 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 // Import voice components
-const audioProcessor = require('../../src/utils/audio-processor');
-const languageDetector = require('../../src/utils/language-detector');
-const modelManager = require('../../src/utils/model-manager');
-const voiceRecognitionService = require('../../src/services/voice-recognition.service');
+require('@src/utils\audio-processor');
+require('@src/utils\language-detector');
+require('@src/utils\model-manager');
+require('@src/services\voice-recognition.service');
 
 // Import performance optimizer
 const performanceOptimizer = require('../../utils/performance-optimizer');

@@ -4,9 +4,9 @@
  * Handles all training-related operations and API endpoints
  */
 
-const trainingService = require('../../services/training.service');
-const { logger } = require('../../utils');
-const { ValidationError } = require('../../utils/errors');
+require('@src/services\training.service');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Get all training datasets for a chatbot

@@ -5,8 +5,8 @@
  * for creating, scheduling, and distributing custom reports.
  */
 
-const { reportGeneratorService } = require('./report-generator.service');
-const { reportBuilderService } = require('./report-builder.service');
+require('@src/analytics\reporting\report-generator.service');
+require('@src/analytics\reporting\report-builder.service');
 
 // No need to mock the logger as we're using test-utils
 

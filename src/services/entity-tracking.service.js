@@ -6,10 +6,10 @@
  */
 
 const mongoose = require('mongoose');
-const Entity = require('../models/entity.model');
-const EntityRelation = require('../models/entity-relation.model');
-const EntityReference = require('../models/entity-reference.model');
-const { logger } = require('../utils');
+require('@src/models\entity.model');
+require('@src/models\entity-relation.model');
+require('@src/models\entity-reference.model');
+require('@src/utils');
 const axios = require('axios');
 
 // Configure axios with proxy

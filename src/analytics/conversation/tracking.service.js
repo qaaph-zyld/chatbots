@@ -7,8 +7,8 @@
  */
 
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../utils');
-const { StorageService } = require('../../storage/storage.service');
+require('@src/utils');
+require('@src/storage\storage.service');
 
 /**
  * Conversation Tracking Service class

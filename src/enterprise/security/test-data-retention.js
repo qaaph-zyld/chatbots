@@ -6,8 +6,8 @@
  */
 
 // Import required services
-const { dataRetentionService } = require('./data-retention.service');
-const { logger } = require('../../utils/mock-utils');
+require('@src/enterprise\security\data-retention.service');
+require('@src/utils\mock-utils');
 
 /**
  * Main test function

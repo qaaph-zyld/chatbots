@@ -4,7 +4,7 @@
  * Provides advanced intent classification capabilities using local models.
  */
 
-const intentClassificationService = require('./intent.service');
+require('@src/nlp\intent\intent.service');
 
 module.exports = {
   intentClassificationService

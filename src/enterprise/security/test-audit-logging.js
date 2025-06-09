@@ -6,11 +6,11 @@
  */
 
 // Import required services
-const { authenticationService } = require('./authentication.service');
-const { authorizationService } = require('./authorization.service');
-const { dataProtectionService } = require('./data-protection.service');
-const { auditLoggingService } = require('./audit-logging.service');
-const { logger } = require('../../utils/mock-utils');
+require('@src/enterprise\security\authentication.service');
+require('@src/enterprise\security\authorization.service');
+require('@src/enterprise\security\data-protection.service');
+require('@src/enterprise\security\audit-logging.service');
+require('@src/utils\mock-utils');
 
 /**
  * Main test function

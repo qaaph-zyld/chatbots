@@ -72,10 +72,10 @@ jest.mock('fs', () => {
 });
 
 // Import the service after mocks
-const intentService = require('../../../../nlp/intent/intent.service');
+require('@src/nlp\intent\intent.service');
 const tf = require('@tensorflow/tfjs-node');
-const { logger } = require('../../../../utils');
-const { localStorageService } = require('../../../../storage');
+require('@src/utils');
+require('@src/storage');
 
 describe('Intent Classification Service', () => {
   beforeEach(() => {

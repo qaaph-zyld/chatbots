@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const voiceController = require('../controllers/voice.controller');
-const { authenticateToken, authenticateApiKey, hasPermission } = require('../auth/auth.middleware');
+require('@src/controllers\voice.controller');
+require('@src/auth\auth.middleware');
 
 // Process voice input and get chatbot response
 router.post(

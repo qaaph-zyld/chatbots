@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useTranslation } from 'react-i18next';
-import './LanguageSelector.css';
+import '@src/client\components\LanguageSelector.css';
 
 /**
  * Language Selector Component

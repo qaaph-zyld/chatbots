@@ -4,8 +4,8 @@
  * Handles API requests for model management
  */
 
-const localModelService = require('../../services/local-model.service');
-const { logger } = require('../../utils');
+require('@src/services\local-model.service');
+require('@src/utils');
 
 /**
  * Get available models

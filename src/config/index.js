@@ -5,8 +5,12 @@
  */
 
 require('dotenv').config();
+require('@src/config\environment');
+require('@src/config\mongodb');
 
 const config = {
+  // MongoDB configuration
+  mongodb,
   // Server configuration
   server: {
     port: process.env.PORT || 3000,
@@ -58,4 +62,8 @@ const config = {
   }
 };
 
-module.exports = config;
+// Export configuration
+module.exports = {
+  ...config,
+  environment
+};

@@ -6,8 +6,8 @@
 
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const conversationService = require('../../services/conversation.service');
-const Conversation = require('../../database/schemas/conversation.schema');
+require('@src/services\conversation.service');
+require('@src/database\schemas\conversation.schema');
 
 // Mock logger to prevent console output during tests
 jest.mock('../../utils', () => ({

@@ -1,13 +1,13 @@
 # Test Coverage Gap Analysis
 
-Generated: 2025-05-29T08:17:58.181Z
+Generated: 2025-06-01T03:51:27.898Z
 
 ## Summary
 
-- Total source files: 372
-- Total test files: 32
-- Files without tests: 307
-- Files with tests: 65
+- Total source files: 398
+- Total test files: 43
+- Files without tests: 308
+- Files with tests: 90
 - Exported items without tests: 1
 
 ## Files Without Tests
@@ -50,7 +50,6 @@ Generated: 2025-05-29T08:17:58.181Z
 | src\api\controllers\advanced-template.controller.js | None |
 | src\api\controllers\analytics.controller.js | None |
 | src\api\controllers\auth.controller.js | None |
-| src\api\controllers\chatbot.controller.js | None |
 | src\api\controllers\component.controller.js | None |
 | src\api\controllers\context.controller.js | None |
 | src\api\controllers\documentation.controller.js | None |
@@ -72,7 +71,6 @@ Generated: 2025-05-29T08:17:58.181Z
 | src\api\docs\index.js | None |
 | src\api\docs\swagger.js | None |
 | src\api\external\index.js | None |
-| src\api\external\v1\controllers\chatbot.controller.js | None |
 | src\api\external\v1\controllers\conversation.controller.js | None |
 | src\api\external\v1\controllers\knowledgeBase.controller.js | None |
 | src\api\external\v1\controllers\message.controller.js | None |
@@ -103,9 +101,7 @@ Generated: 2025-05-29T08:17:58.181Z
 | src\api\webhooks\webhook.routes.js | None |
 | src\api\webhooks\webhook.service.js | None |
 | src\bot\core.js | None |
-| src\bot\engines\base.engine.js | None |
 | src\bot\engines\botpress.engine.js | None |
-| src\bot\engines\engine.factory.js | None |
 | src\bot\engines\huggingface.engine.js | None |
 | src\bot\engines\index.js | None |
 | src\bot\engines\processors\index.js | None |
@@ -142,6 +138,7 @@ Generated: 2025-05-29T08:17:58.181Z
 | src\controllers\voice-recognition.controller.js | None |
 | src\controllers\voice.controller.js | None |
 | src\database\connection.js | None |
+| src\database\db.connection.js | None |
 | src\database\models.js | None |
 | src\database\schemas\chatbot.schema.js | None |
 | src\database\schemas\conversation.schema.js | None |
@@ -212,9 +209,7 @@ Generated: 2025-05-29T08:17:58.181Z
 | src\nlp\entity\index.js | None |
 | src\nlp\entity\test-entity-recognition.js | None |
 | src\nlp\index.js | None |
-| src\nlp\intent.service.js | None |
 | src\nlp\intent\index.js | None |
-| src\nlp\intent\intent.service.js | None |
 | src\nlp\intent\test-intent-classification.js | None |
 | src\nlp\multimodal\index.js | None |
 | src\nlp\multimodal\input\index.js | None |
@@ -282,8 +277,14 @@ Generated: 2025-05-29T08:17:58.181Z
 | src\tests\integration\global-teardown.js | None |
 | src\tests\integration\setup.js | None |
 | src\tests\manual\test-chatbot.js | None |
+| src\tests\mocks\context-index-mock.js | None |
+| src\tests\mocks\context-service-mock.js | None |
 | src\tests\performance\run-performance-tests.js | None |
 | src\tests\performance\setup.js | None |
+| src\tests\run-test-report.js | None |
+| src\tests\setup\jest-setup.js | None |
+| src\tests\setup\mongoose-test-setup.js | None |
+| src\tests\setup\test-config.js | None |
 | src\tests\uat\setup.js | None |
 | src\tests\unit\mocks\db.connection.js | None |
 | src\tests\utils\mock-factory.js | None |
@@ -344,7 +345,7 @@ Create tests for these files that have no test coverage:
 1. **src\analytics\conversation\insights.service.js** - Test all functionality
 1. **src\analytics\conversation\test-analytics.js** - Test all functionality
 1. **src\analytics\conversation\test-conversation-tracking.js** - Test all functionality
-... and 297 more files
+... and 298 more files
 
 ### Medium Priority
 

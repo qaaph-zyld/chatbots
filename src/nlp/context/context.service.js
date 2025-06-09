@@ -6,8 +6,8 @@
  */
 
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../../utils');
-const { localStorageService } = require('../../storage');
+require('@src/utils');
+require('@src/storage');
 
 class ContextManagementService {
   constructor() {

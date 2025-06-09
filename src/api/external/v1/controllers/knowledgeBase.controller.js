@@ -4,10 +4,10 @@
  * Handles external API requests related to knowledge bases
  */
 
-const KnowledgeBase = require('../../../../models/knowledgeBase.model');
-const Chatbot = require('../../../../models/chatbot.model');
-const ApiError = require('../../../../utils/apiError');
-const { searchKnowledgeItems } = require('../../../../services/knowledgeBase.service');
+require('@src/models\knowledgeBase.model');
+require('@src/models\chatbot.model');
+require('@src/utils\apiError');
+require('@src/services\knowledgeBase.service');
 
 /**
  * Search the knowledge base

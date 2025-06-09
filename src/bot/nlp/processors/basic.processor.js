@@ -4,7 +4,7 @@
  * Simple rule-based NLP processor for basic intent recognition
  */
 
-const BaseNLPProcessor = require('../base.processor');
+require('@src/bot\nlp\base.processor');
 
 class BasicProcessor extends BaseNLPProcessor {
   /**

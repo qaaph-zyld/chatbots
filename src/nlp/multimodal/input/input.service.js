@@ -13,7 +13,7 @@ const fs = require('fs');
 const { spawn } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
 const axios = require('axios');
-const { logger } = require('../../../utils');
+require('@src/utils');
 
 /**
  * Multi-Modal Input Service class

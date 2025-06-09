@@ -6,9 +6,9 @@
  */
 
 const express = require('express');
-const { logger } = require('../utils');
-const { prometheusExporterService } = require('./prometheus-exporter.service');
-const { resourceMonitorService } = require('./resource-monitor.service');
+require('@src/utils');
+require('@src/monitoring\prometheus-exporter.service');
+require('@src/monitoring\resource-monitor.service');
 
 /**
  * Metrics Server class

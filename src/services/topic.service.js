@@ -2,10 +2,11 @@
  * Topic Service
  * 
  * Service for managing conversation topics in the chatbot platform
+ * Refactored to use the MongoDB data abstraction layer with repository pattern
  */
 
-const { logger } = require('../utils');
-const Topic = require('../models/topic.model');
+require('@src/utils');
+require('@src/data');
 
 /**
  * Create a new topic
@@ -14,13 +15,16 @@ const Topic = require('../models/topic.model');
  */
 const createTopic = async (topicData) => {
   try {
-    const topic = new Topic(topicData);
-    await topic.save();
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Create topic using repository
+    const topic = await repositories.topic.create(topicData);
     
     logger.info(`Topic created: ${topic._id}`, { name: topic.name });
     return topic;
   } catch (error) {
-    logger.error('Error creating topic', { error, topicData });
+    logger.error('Error creating topic', { error: error.message, name: topicData.name });
     throw error;
   }
 };
@@ -32,7 +36,11 @@ const createTopic = async (topicData) => {
  */
 const getTopicById = async (topicId) => {
   try {
-    const topic = await Topic.findById(topicId);
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Get topic using repository with caching
+    const topic = await repositories.topic.findById(topicId);
     
     if (!topic) {
       logger.warn(`Topic not found: ${topicId}`);
@@ -41,7 +49,7 @@ const getTopicById = async (topicId) => {
     
     return topic;
   } catch (error) {
-    logger.error('Error getting topic by ID', { error, topicId });
+    logger.error('Error getting topic by ID', { error: error.message, topicId });
     throw error;
   }
 };
@@ -54,7 +62,11 @@ const getTopicById = async (topicId) => {
  */
 const getTopicByName = async (name, chatbotId) => {
   try {
-    const topic = await Topic.findOne({ name, chatbotId });
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Get topic by name using repository with caching
+    const topic = await repositories.topic.findByName(name, chatbotId);
     
     if (!topic) {
       logger.warn(`Topic not found: ${name}`, { chatbotId });
@@ -63,7 +75,7 @@ const getTopicByName = async (name, chatbotId) => {
     
     return topic;
   } catch (error) {
-    logger.error('Error getting topic by name', { error, name, chatbotId });
+    logger.error('Error getting topic by name', { error: error.message, name, chatbotId });
     throw error;
   }
 };
@@ -76,7 +88,11 @@ const getTopicByName = async (name, chatbotId) => {
  */
 const updateTopic = async (topicId, updateData) => {
   try {
-    const topic = await Topic.findByIdAndUpdate(
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Update topic using repository with cache invalidation
+    const topic = await repositories.topic.findByIdAndUpdate(
       topicId,
       updateData,
       { new: true, runValidators: true }
@@ -90,7 +106,7 @@ const updateTopic = async (topicId, updateData) => {
     logger.info(`Topic updated: ${topicId}`, { name: topic.name });
     return topic;
   } catch (error) {
-    logger.error('Error updating topic', { error, topicId, updateData });
+    logger.error('Error updating topic', { error: error.message, topicId });
     throw error;
   }
 };
@@ -102,17 +118,21 @@ const updateTopic = async (topicId, updateData) => {
  */
 const deleteTopic = async (topicId) => {
   try {
-    const result = await Topic.findByIdAndDelete(topicId);
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Delete topic using repository with cache invalidation
+    const result = await repositories.topic.deleteById(topicId);
     
     if (!result) {
       logger.warn(`Topic not found for deletion: ${topicId}`);
       return false;
     }
     
-    logger.info(`Topic deleted: ${topicId}`, { name: result.name });
+    logger.info(`Topic deleted: ${topicId}`);
     return true;
   } catch (error) {
-    logger.error('Error deleting topic', { error, topicId });
+    logger.error('Error deleting topic', { error: error.message, topicId });
     throw error;
   }
 };
@@ -125,22 +145,16 @@ const deleteTopic = async (topicId) => {
  */
 const listTopics = async (chatbotId, options = {}) => {
   try {
-    const query = { chatbotId };
+    // Ensure database connection
+    await databaseService.connect();
     
-    if (options.category) {
-      query.category = options.category;
-    }
-    
-    if (options.isActive !== undefined) {
-      query.isActive = options.isActive;
-    }
-    
-    const topics = await Topic.find(query).sort({ priority: -1, name: 1 });
+    // Use repository to find topics by chatbot with filtering and sorting
+    const topics = await repositories.topic.findByChatbot(chatbotId, options);
     
     logger.debug(`Listed ${topics.length} topics for chatbot`, { chatbotId });
     return topics;
   } catch (error) {
-    logger.error('Error listing topics', { error, chatbotId });
+    logger.error('Error listing topics', { error: error.message, chatbotId });
     throw error;
   }
 };
@@ -153,20 +167,21 @@ const listTopics = async (chatbotId, options = {}) => {
  */
 const addTopicPattern = async (topicId, patternData) => {
   try {
-    const topic = await Topic.findById(topicId);
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Add pattern using repository with transaction support
+    const topic = await repositories.topic.addPattern(topicId, patternData);
     
     if (!topic) {
       logger.warn(`Topic not found for adding pattern: ${topicId}`);
       return null;
     }
     
-    topic.patterns.push(patternData);
-    await topic.save();
-    
     logger.info(`Pattern added to topic: ${topicId}`, { pattern: patternData.pattern });
     return topic;
   } catch (error) {
-    logger.error('Error adding topic pattern', { error, topicId, patternData });
+    logger.error('Error adding topic pattern', { error: error.message, topicId });
     throw error;
   }
 };
@@ -179,20 +194,21 @@ const addTopicPattern = async (topicId, patternData) => {
  */
 const removeTopicPattern = async (topicId, patternId) => {
   try {
-    const topic = await Topic.findById(topicId);
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Remove pattern using repository with transaction support
+    const topic = await repositories.topic.removePattern(topicId, patternId);
     
     if (!topic) {
       logger.warn(`Topic not found for removing pattern: ${topicId}`);
       return null;
     }
     
-    topic.patterns = topic.patterns.filter(p => p._id.toString() !== patternId);
-    await topic.save();
-    
     logger.info(`Pattern removed from topic: ${topicId}`, { patternId });
     return topic;
   } catch (error) {
-    logger.error('Error removing topic pattern', { error, topicId, patternId });
+    logger.error('Error removing topic pattern', { error: error.message, topicId, patternId });
     throw error;
   }
 };
@@ -205,20 +221,21 @@ const removeTopicPattern = async (topicId, patternId) => {
  */
 const addTopicResponse = async (topicId, responseData) => {
   try {
-    const topic = await Topic.findById(topicId);
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Add response using repository with transaction support
+    const topic = await repositories.topic.addResponse(topicId, responseData);
     
     if (!topic) {
       logger.warn(`Topic not found for adding response: ${topicId}`);
       return null;
     }
     
-    topic.responses.push(responseData);
-    await topic.save();
-    
     logger.info(`Response added to topic: ${topicId}`);
     return topic;
   } catch (error) {
-    logger.error('Error adding topic response', { error, topicId, responseData });
+    logger.error('Error adding topic response', { error: error.message, topicId });
     throw error;
   }
 };
@@ -231,20 +248,21 @@ const addTopicResponse = async (topicId, responseData) => {
  */
 const removeTopicResponse = async (topicId, responseId) => {
   try {
-    const topic = await Topic.findById(topicId);
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Remove response using repository with transaction support
+    const topic = await repositories.topic.removeResponse(topicId, responseId);
     
     if (!topic) {
       logger.warn(`Topic not found for removing response: ${topicId}`);
       return null;
     }
     
-    topic.responses = topic.responses.filter(r => r._id.toString() !== responseId);
-    await topic.save();
-    
     logger.info(`Response removed from topic: ${topicId}`, { responseId });
     return topic;
   } catch (error) {
-    logger.error('Error removing topic response', { error, topicId, responseId });
+    logger.error('Error removing topic response', { error: error.message, topicId, responseId });
     throw error;
   }
 };
@@ -257,7 +275,11 @@ const removeTopicResponse = async (topicId, responseId) => {
  */
 const detectTopics = async (text, chatbotId) => {
   try {
-    const topics = await Topic.find({ chatbotId, isActive: true });
+    // Ensure database connection
+    await databaseService.connect();
+    
+    // Use repository to get active topics with caching
+    const topics = await repositories.topic.findActiveByChatbot(chatbotId);
     const detectedTopics = [];
     
     for (const topic of topics) {
@@ -321,7 +343,7 @@ const detectTopics = async (text, chatbotId) => {
     logger.debug(`Detected ${detectedTopics.length} topics in text`, { chatbotId });
     return detectedTopics;
   } catch (error) {
-    logger.error('Error detecting topics', { error, chatbotId });
+    logger.error('Error detecting topics', { error: error.message, chatbotId });
     throw error;
   }
 };

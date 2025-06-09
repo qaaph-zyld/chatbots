@@ -27,19 +27,7 @@ class ApiClient {
       timeout: 30000 // 30 seconds
     });
     
-    // Configure proxy if provided
-    if (config.proxyUrl) {
-      // Set HTTP_PROXY environment variable for Node.js environments
-      if (typeof process !== 'undefined' && process.env) {
-        process.env.HTTP_PROXY = config.proxyUrl;
-      }
-      
-      // For browser environments, configure axios to use proxy
-      this.client.defaults.proxy = {
-        host: config.proxyUrl.split(':')[0],
-        port: parseInt(config.proxyUrl.split(':')[1], 10)
-      };
-    }
+    // No proxy configuration needed
     
     // Add request interceptor for additional headers
     this.client.interceptors.request.use((config) => {

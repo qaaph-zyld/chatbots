@@ -6,10 +6,10 @@
 
 const fs = require('fs');
 const path = require('path');
-const { connectDB, disconnectDB } = require('../database/connection');
-const Chatbot = require('../database/schemas/chatbot.schema');
-const trainingService = require('../services/training.service');
-const { logger } = require('./index');
+require('@src/database\connection');
+require('@src/database\schemas\chatbot.schema');
+require('@src/services\training.service');
+require('@src/utils\index');
 
 /**
  * Load sample training data for a chatbot

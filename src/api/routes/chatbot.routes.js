@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-const chatbotController = require('../controllers/chatbot.controller');
-const { apiKeyAuth, checkRole } = require('../../middleware');
+require('@src/api\controllers\chatbot.controller');
+require('@src/middleware');
 
 // Get all chatbots
 router.get('/', chatbotController.getAllChatbots);

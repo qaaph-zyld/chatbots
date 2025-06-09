@@ -4,10 +4,10 @@
  * Exports all NLP services for easy access
  */
 
-const nlpService = require('./nlp.service');
-const intentService = require('./intent.service');
-const { entityService, EntityType } = require('./entity.service');
-const { sentimentService, SentimentCategory } = require('./sentiment.service');
+require('@src/nlp\nlp.service');
+require('@src/nlp\intent.service');
+require('@src/nlp\entity.service');
+require('@src/nlp\sentiment.service');
 
 module.exports = {
   nlpService,

@@ -5,8 +5,8 @@
  */
 
 const mongoose = require('mongoose');
-const analyticsService = require('./analytics.service');
-const { logger } = require('../utils');
+require('@src/analytics\analytics.service');
+require('@src/utils');
 
 // Define learning schema
 const LearningSchema = new mongoose.Schema({
@@ -338,7 +338,7 @@ class LearningService {
       }
       
       // Get knowledge base service
-      const knowledgeBaseService = require('../services/knowledgeBase.service');
+      require('@src/services\knowledgeBase.service');
       
       // Find or create a learning knowledge base
       let knowledgeBase = await knowledgeBaseService.getKnowledgeBaseByName(chatbotId, 'Learned Responses');
@@ -392,7 +392,7 @@ class LearningService {
       }
       
       // Get training service
-      const trainingService = require('../services/training.service');
+      require('@src/services\training.service');
       
       // Find or create a learning dataset
       let dataset = await trainingService.getDatasetByName(chatbotId, 'Learned Intents');
@@ -446,7 +446,7 @@ class LearningService {
       }
       
       // Get training service
-      const trainingService = require('../services/training.service');
+      require('@src/services\training.service');
       
       // Find or create a learning dataset
       let dataset = await trainingService.getDatasetByName(chatbotId, 'Learned Entities');
@@ -505,7 +505,7 @@ class LearningService {
       }
       
       // Get knowledge base service
-      const knowledgeBaseService = require('../services/knowledgeBase.service');
+      require('@src/services\knowledgeBase.service');
       
       // Find or create a learning knowledge base
       let knowledgeBase = await knowledgeBaseService.getKnowledgeBaseByName(chatbotId, 'Learned Fallbacks');

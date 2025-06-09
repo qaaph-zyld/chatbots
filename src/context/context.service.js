@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
+require('@src/utils');
 
 // Define context schema
 const ContextSchema = new mongoose.Schema({

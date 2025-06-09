@@ -4,9 +4,9 @@
  * Handles API requests for advanced template operations
  */
 
-const advancedTemplateService = require('../../services/advanced-template.service');
-const { logger } = require('../../utils');
-const { ValidationError, NotFoundError, AuthorizationError } = require('../../utils/errors');
+require('@src/services\advanced-template.service');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Create a template with inheritance

@@ -7,8 +7,8 @@
 
 const mongoose = require('mongoose');
 const axios = require('axios');
-const { logger } = require('../utils');
-const { NotFoundError, ValidationError } = require('../utils/errors');
+require('@src/utils');
+require('@src/utils\errors');
 
 // Define theme schema if not already defined
 let Theme;

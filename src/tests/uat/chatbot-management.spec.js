@@ -6,7 +6,7 @@
  */
 
 const { test, expect } = require('@playwright/test');
-const { UAT_URL } = require('./setup');
+require('@src/tests\uat\setup');
 
 // Test suite for chatbot management
 test.describe('Chatbot Management', () => {

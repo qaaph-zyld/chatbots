@@ -4,8 +4,8 @@
  * Handles API requests for domain-specific training
  */
 
-const trainingService = require('./training.service');
-const { logger } = require('../utils');
+require('@src/training\training.service');
+require('@src/utils');
 
 /**
  * Get all training domains

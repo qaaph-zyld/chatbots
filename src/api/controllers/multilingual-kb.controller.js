@@ -4,8 +4,8 @@
  * Handles API requests related to multilingual knowledge bases
  */
 
-const multilingualKbService = require('../../services/multilingual-kb.service');
-const { logger } = require('../../utils');
+require('@src/services\multilingual-kb.service');
+require('@src/utils');
 
 /**
  * Get knowledge base in a specific language

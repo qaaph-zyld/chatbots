@@ -6,10 +6,10 @@
 
 const dotenv = require('dotenv');
 const mongoose = require('mongoose');
-const { createTestUser, createTestChatbot } = require('../utils/test-helpers');
-const User = require('../../models/user.model');
-const Chatbot = require('../../models/chatbot.model');
-const Integration = require('../../models/integration.model');
+require('@src/tests\utils\test-helpers');
+require('@src/models\user.model');
+require('@src/models\chatbot.model');
+require('@src/models\integration.model');
 
 // Load environment variables
 dotenv.config({ path: '.env.test' });

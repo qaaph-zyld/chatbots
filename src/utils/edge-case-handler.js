@@ -5,8 +5,8 @@
  * Provides standardized approaches for dealing with edge cases and improving robustness.
  */
 
-const { logger } = require('./logger');
-const { ValidationError, NotFoundError } = require('./error-handler');
+require('@src/utils\logger');
+require('@src/utils\error-handler');
 
 /**
  * Safely access nested object properties

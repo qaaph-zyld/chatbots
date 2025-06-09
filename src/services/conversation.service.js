@@ -2,12 +2,12 @@
  * Conversation Service
  * 
  * Handles conversation state management operations
+ * Refactored to use the MongoDB model abstraction layer with repository pattern
  */
 
-const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
-const Conversation = require('../database/schemas/conversation.schema');
-const { logger } = require('../utils');
+require('@src/data');
+require('@src/utils');
 
 class ConversationService {
   /**
@@ -19,11 +19,15 @@ class ConversationService {
    */
   async createConversation(chatbotId, userId = 'anonymous', initialContext = {}) {
     try {
+      // Ensure database connection
+      await databaseService.connect();
+      
       logger.debug(`Creating new conversation for chatbot ${chatbotId} and user ${userId}`);
       
       const sessionId = uuidv4();
       
-      const conversation = new Conversation({
+      // Create conversation using repository
+      const conversationData = {
         chatbotId,
         sessionId,
         userId,
@@ -33,9 +37,9 @@ class ConversationService {
         lastMessageAt: new Date(),
         isActive: true,
         metadata: {}
-      });
+      };
       
-      await conversation.save();
+      const conversation = await repositories.conversation.create(conversationData);
       
       logger.info(`Created new conversation: ${conversation._id} (session: ${sessionId})`);
       
@@ -53,7 +57,11 @@ class ConversationService {
    */
   async getConversationById(conversationId) {
     try {
-      const conversation = await Conversation.findById(conversationId);
+      // Ensure database connection
+      await databaseService.connect();
+      
+      // Use repository to find conversation by ID
+      const conversation = await repositories.conversation.findById(conversationId);
       
       if (!conversation) {
         logger.warn(`Conversation not found: ${conversationId}`);
@@ -74,7 +82,11 @@ class ConversationService {
    */
   async getConversationBySessionId(sessionId) {
     try {
-      const conversation = await Conversation.findOne({ sessionId });
+      // Ensure database connection
+      await databaseService.connect();
+      
+      // Use repository to find conversation by session ID
+      const conversation = await repositories.conversation.findOne({ sessionId });
       
       if (!conversation) {
         logger.warn(`Conversation not found for session: ${sessionId}`);
@@ -96,12 +108,16 @@ class ConversationService {
    */
   async getActiveConversations(chatbotId, limit = 100) {
     try {
-      const conversations = await Conversation.find({ 
-        chatbotId, 
-        isActive: true 
-      })
-      .sort({ lastMessageAt: -1 })
-      .limit(limit);
+      // Ensure database connection
+      await databaseService.connect();
+      
+      // Use repository to find active conversations
+      const options = {
+        sort: { lastMessageAt: -1 },
+        limit
+      };
+      
+      const conversations = await repositories.conversation.findActive(chatbotId, options);
       
       return conversations;
     } catch (error) {
@@ -120,18 +136,53 @@ class ConversationService {
    */
   async addMessage(conversationId, text, sender, metadata = {}) {
     try {
-      const conversation = await Conversation.findById(conversationId);
+      // Ensure database connection
+      await databaseService.connect();
       
-      if (!conversation) {
-        logger.warn(`Cannot add message: Conversation not found: ${conversationId}`);
-        throw new Error(`Conversation not found: ${conversationId}`);
+      // Start a transaction for adding the message
+      const session = await repositories.conversation.startTransaction();
+      
+      try {
+        // Get conversation by ID
+        const conversation = await repositories.conversation.findById(conversationId);
+        
+        if (!conversation) {
+          logger.warn(`Cannot add message: Conversation not found: ${conversationId}`);
+          throw new Error(`Conversation not found: ${conversationId}`);
+        }
+        
+        // Create message object
+        const message = {
+          text,
+          sender,
+          timestamp: new Date(),
+          metadata
+        };
+        
+        // Update conversation with new message
+        const update = {
+          $push: { messages: message },
+          $set: { lastMessageAt: new Date() }
+        };
+        
+        // Update conversation in database
+        const updatedConversation = await repositories.conversation.findByIdAndUpdate(
+          conversationId,
+          update,
+          { session, new: true }
+        );
+        
+        // Commit transaction
+        await repositories.conversation.commitTransaction(session);
+        
+        logger.debug(`Added ${sender} message to conversation ${conversationId}`);
+        
+        return updatedConversation;
+      } catch (error) {
+        // Abort transaction on error
+        await repositories.conversation.abortTransaction(session);
+        throw error;
       }
-      
-      await conversation.addMessage(text, sender, metadata);
-      
-      logger.debug(`Added ${sender} message to conversation ${conversationId}`);
-      
-      return conversation;
     } catch (error) {
       logger.error(`Error adding message to conversation ${conversationId}:`, error.message);
       throw error;
@@ -147,28 +198,39 @@ class ConversationService {
    */
   async updateContext(conversationId, contextUpdate, merge = true) {
     try {
-      const conversation = await Conversation.findById(conversationId);
+      // Ensure database connection
+      await databaseService.connect();
+      
+      // Get conversation by ID
+      const conversation = await repositories.conversation.findById(conversationId);
       
       if (!conversation) {
         logger.warn(`Cannot update context: Conversation not found: ${conversationId}`);
         throw new Error(`Conversation not found: ${conversationId}`);
       }
       
-      // Update context based on merge preference
+      // Prepare context update
+      let updatedContext;
+      
       if (merge) {
-        conversation.context = {
+        updatedContext = {
           ...conversation.context,
           ...contextUpdate
         };
       } else {
-        conversation.context = contextUpdate;
+        updatedContext = contextUpdate;
       }
       
-      await conversation.save();
+      // Update conversation context
+      const updatedConversation = await repositories.conversation.findByIdAndUpdate(
+        conversationId,
+        { $set: { context: updatedContext } },
+        { new: true }
+      );
       
       logger.debug(`Updated context for conversation ${conversationId}`);
       
-      return conversation;
+      return updatedConversation;
     } catch (error) {
       logger.error(`Error updating context for conversation ${conversationId}:`, error.message);
       throw error;
@@ -182,19 +244,24 @@ class ConversationService {
    */
   async endConversation(conversationId) {
     try {
-      const conversation = await Conversation.findById(conversationId);
+      // Ensure database connection
+      await databaseService.connect();
       
-      if (!conversation) {
+      // Update conversation to inactive
+      const updatedConversation = await repositories.conversation.findByIdAndUpdate(
+        conversationId,
+        { $set: { isActive: false } },
+        { new: true }
+      );
+      
+      if (!updatedConversation) {
         logger.warn(`Cannot end conversation: Conversation not found: ${conversationId}`);
         throw new Error(`Conversation not found: ${conversationId}`);
       }
       
-      conversation.isActive = false;
-      await conversation.save();
-      
       logger.info(`Ended conversation ${conversationId}`);
       
-      return conversation;
+      return updatedConversation;
     } catch (error) {
       logger.error(`Error ending conversation ${conversationId}:`, error.message);
       throw error;

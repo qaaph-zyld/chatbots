@@ -4,7 +4,7 @@
 
 const express = require('express');
 const path = require('path');
-const { logger } = require('../utils');
+require('@src/utils');
 
 // Create Express app
 const app = express();

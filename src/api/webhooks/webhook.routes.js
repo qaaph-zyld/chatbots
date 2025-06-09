@@ -4,11 +4,11 @@
  */
 const express = require('express');
 const router = express.Router();
-const webhookService = require('./webhook.service');
-const { EVENT_TYPES } = require('./webhook.model');
-const { authenticate } = require('../../middleware/auth');
-const { validateRequest } = require('../../middleware/validation');
-const { createLogger } = require('../../utils/logger');
+require('@src/api\webhooks\webhook.service');
+require('@src/api\webhooks\webhook.model');
+require('@src/middleware\auth');
+require('@src/middleware\validation');
+require('@src/utils\logger');
 
 const logger = createLogger('webhook-routes');
 

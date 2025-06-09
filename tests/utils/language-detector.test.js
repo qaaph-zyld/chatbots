@@ -4,7 +4,7 @@
  * Tests for the language detector utility.
  */
 
-const languageDetector = require('../../src/utils/language-detector');
+require('@src/utils\language-detector');
 
 describe('Language Detector', () => {
   beforeAll(async () => {

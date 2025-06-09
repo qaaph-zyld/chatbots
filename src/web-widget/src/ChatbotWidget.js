@@ -3,9 +3,9 @@
  * Core functionality for the embeddable chatbot widget
  */
 import EventEmitter from 'eventemitter3';
-import ApiClient from './utils/ApiClient';
-import WidgetUI from './ui/WidgetUI';
-import { generateUUID, validateConfig, mergeConfig } from './utils/helpers';
+import ApiClient from "@utils/ApiClient";
+import '@src/web-widget\src\ui\WidgetUI';
+import { generateUUID, validateConfig, mergeConfig } from "@utils/helpers";
 
 // Default configuration
 const DEFAULT_CONFIG = {

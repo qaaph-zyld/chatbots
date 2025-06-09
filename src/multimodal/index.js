@@ -4,8 +4,8 @@
  * Exports all multi-modal services for easy access
  */
 
-const { inputService, InputType } = require('./input.service');
-const { outputService, OutputType } = require('./output.service');
+require('@src/multimodal\input.service');
+require('@src/multimodal\output.service');
 
 module.exports = {
   inputService,

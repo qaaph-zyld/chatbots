@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import WorkflowEditor from '../components/workflow-editor/WorkflowEditor';
-import '../components/workflow-editor/WorkflowEditor.css';
+import '@src/client\components\workflow-editor\WorkflowEditor';
+import '@src/client\components\workflow-editor\WorkflowEditor.css';
 
 // Configure axios with proxy as specified in user requirements
 axios.defaults.proxy = {

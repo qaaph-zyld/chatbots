@@ -5,8 +5,8 @@
  */
 
 const express = require('express');
-const templateController = require('./template.controller');
-const { authMiddleware } = require('../middleware/auth.middleware');
+require('@src/templates\template.controller');
+require('@src/middleware\auth.middleware');
 
 const router = express.Router();
 

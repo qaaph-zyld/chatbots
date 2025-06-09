@@ -5,14 +5,14 @@
  */
 
 // Import Swagger documentation files
-const authDocs = require('./auth');
-const healthDocs = require('./health');
-const usageDocs = require('./usage');
-const scalingDocs = require('./scaling');
+require('@src/api\swagger\auth');
+require('@src/api\swagger\health');
+require('@src/api\swagger\usage');
+require('@src/api\swagger\scaling');
 
 const express = require('express');
 const swaggerUi = require('swagger-ui-express');
-const swaggerSpec = require('../../config/swagger');
+require('@src/config\swagger');
 
 const router = express.Router();
 

@@ -7,9 +7,9 @@
 
 const path = require('path');
 const fs = require('fs');
-const { inputService } = require('./input');
-const { outputService } = require('./output');
-const { logger } = require('../../utils');
+require('@src/nlp\multimodal\input');
+require('@src/nlp\multimodal\output');
+require('@src/utils');
 
 /**
  * Run multi-modal tests

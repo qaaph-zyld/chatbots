@@ -4,7 +4,7 @@
  * Integration channel for web-based chat interfaces
  */
 
-const BaseChannel = require('../base.channel');
+require('@src/integrations\base.channel');
 
 class WebChannel extends BaseChannel {
   /**

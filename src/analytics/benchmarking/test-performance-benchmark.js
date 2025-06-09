@@ -5,7 +5,7 @@
  * for measuring and optimizing chatbot component performance.
  */
 
-const { performanceBenchmarkService } = require('./performance-benchmark.service');
+require('@src/analytics\benchmarking\performance-benchmark.service');
 
 // Mock logger to avoid dependency issues
 const mockLogger = {

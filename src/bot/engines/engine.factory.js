@@ -4,10 +4,10 @@
  * Factory pattern implementation for creating and managing chatbot engines
  */
 
-const { logger } = require('../../utils');
-const config = require('../../config');
-const BotpressEngine = require('./botpress.engine');
-const HuggingFaceEngine = require('./huggingface.engine');
+require('@src/utils');
+require('@src/config');
+require('@src/bot\engines\botpress.engine');
+require('@src/bot\engines\huggingface.engine');
 
 class ChatbotEngineFactory {
   constructor() {

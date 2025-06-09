@@ -2,10 +2,10 @@
  * Server Entry Point
  */
 
-const { app, server } = require('./app');
-const { logger } = require('./utils');
-const config = require('./config');
-const clusterManager = require('./scaling/cluster');
+require('@src/app');
+require('@src/utils');
+require('@src/config');
+require('@src/scaling\cluster');
 
 // Get port from config or use default
 const PORT = config.port || 3000;

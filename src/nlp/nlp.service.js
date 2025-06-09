@@ -10,12 +10,12 @@
  */
 
 const axios = require('axios');
-const { logger } = require('../utils');
-const { spacyEngine, nltkEngine } = require('./engines');
-const { entityRecognitionService } = require('./entity');
-const { intentClassificationService } = require('./intent');
-const { contextManagementService } = require('./context');
-const { sentimentAnalysisService } = require('./sentiment');
+require('@src/utils');
+require('@src/nlp\engines');
+require('@src/nlp\entity');
+require('@src/nlp\intent');
+require('@src/nlp\context');
+require('@src/nlp\sentiment');
 
 /**
  * NLP Service class

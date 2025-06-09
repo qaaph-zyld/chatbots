@@ -5,9 +5,9 @@
  * including creation, retrieval, updating, and deletion.
  */
 
-const Template = require('../models/template.model');
-const ChatbotService = require('./chatbot.service');
-const logger = require('../utils/logger');
+require('@src/models\template.model');
+require('@src/services\chatbot.service');
+require('@src/utils\logger');
 
 class TemplateService {
   /**

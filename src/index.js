@@ -10,11 +10,11 @@ const path = require('path');
 const cors = require('cors');
 
 // Import core modules
-const config = require('./config');
-const apiRoutes = require('./api/routes');
-const { errorMiddleware, notFoundMiddleware, requestLogger, apiKeyAuth } = require('./middleware');
-const { logger } = require('./utils');
-const chatbotService = require('./services/chatbot.service');
+require('@src/config');
+require('@src/api\routes');
+require('@src/middleware');
+require('@src/utils');
+require('@src/services\chatbot.service');
 
 // Initialize express app
 const app = express();

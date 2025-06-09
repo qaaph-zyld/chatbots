@@ -72,55 +72,50 @@ The Customizable Chatbots Platform allows developers and businesses to:
 
 ```
 chatbots/
-├── src/                      # Source code
-│   ├── api/                  # API endpoints and controllers
-│   │   ├── controllers/      # Request handlers
-│   │   ├── models/           # Data models
-│   │   └── routes/           # API route definitions
-│   ├── bot/                  # Chatbot core functionality
-│   │   ├── engines/          # Engine implementations
-│   │   │   ├── processors/   # Engine-specific processors
-│   │   │   ├── base.engine.js      # Base engine class
-│   │   │   ├── botpress.engine.js  # Botpress implementation
-│   │   │   ├── huggingface.engine.js # Hugging Face implementation
-│   │   │   └── engine.factory.js   # Engine factory pattern
-│   │   ├── nlp/              # NLP components
-│   │   │   ├── processors/   # NLP processors
-│   │   │   └── base.processor.js # Base NLP processor
-│   │   └── templates/        # Conversation templates
-│   │       ├── base.template.js # Base template class
-│   │       └── simple.template.js # Simple template implementation
-│   ├── config/               # Configuration files
-│   │   └── index.js          # Centralized configuration
-│   ├── database/             # Database models and connections
-│   │   ├── connection.js     # Database connection logic
-│   │   └── schemas/          # Mongoose schemas
-│   ├── integrations/         # Third-party integrations
-│   │   ├── channels/         # Channel implementations
-│   │   │   └── web.channel.js # Web channel integration
-│   │   └── base.channel.js   # Base channel class
-│   ├── middleware/           # Express middleware
-│   │   ├── auth.middleware.js # Authentication middleware
-│   │   ├── error.middleware.js # Error handling middleware
-│   │   └── logger.middleware.js # Request logging middleware
-│   ├── public/               # Static assets
-│   │   ├── css/              # Stylesheets
-│   │   ├── js/               # Client-side scripts
-│   │   └── images/           # Images and icons
-│   ├── services/             # Business logic layer
-│   │   └── chatbot.service.js # Chatbot service implementation
-│   ├── tests/                # Test files
-│   │   ├── integration/      # Integration tests
-│   │   ├── manual/           # Manual test scripts
-│   │   └── unit/             # Unit tests
+├── configs/                # Configuration files
+│   ├── eslint/              # ESLint configuration
+│   ├── jest/                # Jest configuration
+│   └── webpack/             # Webpack configuration
+├── docs/                   # Documentation files
+│   ├── mongodb-connection-guide.md
+│   └── workspace_structure.md
+├── src/                    # Source code
+│   ├── api/                  # API endpoints
+│   │   ├── controllers/       # API controllers
+│   │   └── routes/            # API routes
+│   ├── core/                 # Core functionality
+│   │   ├── engine/            # Engine abstractions
+│   │   └── interfaces/        # Core interfaces
+│   ├── data/                 # Data access layer
+│   │   └── repositories/      # Data repositories
+│   ├── domain/               # Domain models
+│   │   ├── analytics.model.js # Analytics model
+│   │   ├── chatbot.model.js   # Chatbot model
+│   │   └── topic.model.js     # Topic model
+│   ├── modules/              # Feature modules
+│   │   ├── analytics/         # Analytics module
+│   │   ├── chatbot/           # Chatbot module
+│   │   ├── conversation/      # Conversation module
+│   │   ├── entity/            # Entity module
+│   │   ├── preference/        # Preference module
+│   │   └── topic/             # Topic module
 │   └── utils/                # Utility functions
-│       ├── errors.js         # Error handling utilities
-│       ├── logger.js         # Logging utilities
-│       └── validation.js     # Validation utilities
-├── .env.example              # Example environment variables
-├── .gitignore                # Git ignore file
-├── package.json              # Project dependencies
-└── README.md                 # Project overview
+│       ├── errors.js          # Error handling utilities
+│       ├── logger.js          # Logging utilities
+│       └── validation.js      # Validation utilities
+├── tests/                  # Test files
+│   ├── e2e/                  # End-to-end tests
+│   ├── integration/          # Integration tests
+│   └── unit/                 # Unit tests
+│       └── setup/              # Test setup files
+├── .eslintrc.js            # ESLint configuration
+├── .github/                # GitHub configuration
+│   └── workflows/            # GitHub Actions workflows
+├── .gitignore              # Git ignore file
+├── jest.config.js          # Jest configuration
+├── package.json            # Project dependencies
+├── README.md               # Project overview
+└── webpack.config.js       # Webpack configuration
 ```
 
 ## Development Roadmap

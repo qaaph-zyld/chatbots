@@ -5,7 +5,7 @@
  * for protecting resources and ensuring fair usage.
  */
 
-const { rateLimiterService } = require('./index');
+require('@src/monitoring\index');
 
 /**
  * Run the test

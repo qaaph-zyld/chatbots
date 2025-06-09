@@ -6,8 +6,8 @@
 
 const path = require('path');
 const fs = require('fs');
-const componentRegistry = require('../components/custom/ComponentRegistry');
-const componentScaffolder = require('../components/custom/ComponentScaffolder');
+require('@src/components\custom\ComponentRegistry');
+require('@src/components\custom\ComponentScaffolder');
 
 class ComponentService {
   constructor() {

@@ -5,8 +5,8 @@
  * of chatbot components, including response times, throughput, and resource usage.
  */
 
-const { logger } = require('../../utils');
-const { resourceMonitorService } = require('../../monitoring/resource-monitor.service');
+require('@src/utils');
+require('@src/monitoring\resource-monitor.service');
 
 /**
  * Performance Benchmark Service class

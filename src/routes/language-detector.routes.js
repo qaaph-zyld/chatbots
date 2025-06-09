@@ -6,7 +6,7 @@
 
 const express = require('express');
 const router = express.Router();
-const languageDetectorController = require('../controllers/language-detector.controller');
+require('@src/controllers\language-detector.controller');
 
 /**
  * @route POST /api/language-detector/detect

@@ -5,7 +5,7 @@
  * for creating customized analytics reports from various data sources.
  */
 
-const { reportBuilderService } = require('./report-builder.service');
+require('@src/analytics\reporting\report-builder.service');
 
 // No need to mock the logger as we're using test-utils
 

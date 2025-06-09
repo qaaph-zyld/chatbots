@@ -4,8 +4,8 @@
  * Applies personality modifiers to chatbot messages
  */
 
-const { personalityService } = require('./index');
-const { logger } = require('../utils');
+require('@src/personality\index');
+require('@src/utils');
 
 /**
  * Personality Message Processor class

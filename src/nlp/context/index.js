@@ -5,7 +5,7 @@
  * Maintains conversation state and resolves references across messages
  */
 
-const contextManagementService = require('./context.service');
+require('@src/nlp\context\context.service');
 
 module.exports = {
   contextManagementService

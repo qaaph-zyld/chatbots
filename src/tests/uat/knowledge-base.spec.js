@@ -6,7 +6,7 @@
  */
 
 const { test, expect } = require('@playwright/test');
-const { UAT_URL } = require('./setup');
+require('@src/tests\uat\setup');
 
 // Test suite for knowledge base management
 test.describe('Knowledge Base Management', () => {

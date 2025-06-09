@@ -4,7 +4,7 @@
  * NLP processor implementation using Hugging Face models
  */
 
-const BaseNLPProcessor = require('../base.processor');
+require('@src/bot\nlp\base.processor');
 
 class HuggingFaceProcessor extends BaseNLPProcessor {
   /**

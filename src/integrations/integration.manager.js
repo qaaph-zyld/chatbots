@@ -7,9 +7,9 @@
 const WebSocket = require('ws');
 const http = require('http');
 const express = require('express');
-const { logger } = require('../utils');
-const Integration = require('../models/integration.model');
-const integrationService = require('./integration.service');
+require('@src/utils');
+require('@src/models\integration.model');
+require('@src/integrations\integration.service');
 
 class IntegrationManager {
   constructor() {

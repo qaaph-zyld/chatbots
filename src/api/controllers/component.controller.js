@@ -4,7 +4,7 @@
  * Controller for managing custom components
  */
 
-const componentService = require('../../services/component.service');
+require('@src/services\component.service');
 
 /**
  * Get all components

@@ -5,8 +5,8 @@
  * to classify intents from text using local models.
  */
 
-const intentClassificationService = require('./intent.service');
-const { logger } = require('../../utils');
+require('@src/nlp\intent\intent.service');
+require('@src/utils');
 
 // Sample texts for testing
 const sampleTexts = [

@@ -6,16 +6,10 @@
  */
 
 const mongoose = require('mongoose');
-const Workflow = require('../models/workflow.model');
-const WorkflowExecution = require('../models/workflow-execution.model');
-const { logger } = require('../utils');
+require('@src/models\workflow.model');
+require('@src/models\workflow-execution.model');
+require('@src/utils');
 const axios = require('axios');
-
-// Configure axios with proxy as specified in user requirements
-axios.defaults.proxy = {
-  host: '104.129.196.38',
-  port: 10563
-};
 
 class WorkflowService {
   /**

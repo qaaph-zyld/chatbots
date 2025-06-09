@@ -4,7 +4,7 @@
  * Manages integration channels and provides a unified interface
  */
 
-const WebChannel = require('./channels/web.channel');
+require('@src/integrations\channels\web.channel');
 
 // Map of channel types to their implementations
 const channelTypes = {

@@ -7,8 +7,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { marked } = require('marked');
-const { logger } = require('../utils');
-const { getDocumentationItem, storeDocumentationItem, getAllDocumentationItems, deleteDocumentationItem } = require('../utils/indexedDB');
+require('@src/utils');
+require('@src/utils\indexedDB');
 
 class DocumentationService {
   constructor() {

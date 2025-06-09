@@ -7,7 +7,7 @@ import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
-import DocumentationPage from '../../../client/pages/DocumentationPage';
+import '@src/client\pages\DocumentationPage';
 
 // Mock axios
 jest.mock('axios');

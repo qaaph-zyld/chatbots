@@ -11,10 +11,10 @@
 
 const axios = require('axios');
 const mongoose = require('mongoose');
-const Template = require('../models/template.model');
-const TemplateService = require('./template.service');
-const logger = require('../utils/logger');
-const { NotFoundError, ValidationError } = require('../utils/errors');
+require('@src/models\template.model');
+require('@src/services\template.service');
+require('@src/utils\logger');
+require('@src/utils\errors');
 
 class AdvancedTemplateService {
   constructor() {

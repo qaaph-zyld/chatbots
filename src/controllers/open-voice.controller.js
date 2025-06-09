@@ -8,10 +8,10 @@ const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const multer = require('multer');
-const openVoiceService = require('../services/open-voice.service');
-const chatbotService = require('../bot/core');
-const logger = require('../utils/logger');
-const config = require('../config/open-voice.config');
+require('@src/services\open-voice.service');
+require('@src/bot\core');
+require('@src/utils\logger');
+require('@src/config\open-voice.config');
 
 // Configure multer for audio file uploads
 const storage = multer.diskStorage({

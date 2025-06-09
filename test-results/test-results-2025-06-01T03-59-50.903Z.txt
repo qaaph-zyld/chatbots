@@ -1,0 +1,28 @@
+Test Results - 2025-06-01T03:59:50.905Z
+
+=== UNIT TESTS ===
+undefined
+
+=== INTEGRATION TESTS ===
+undefined
+
+=== ADVANCED CONTEXT AWARENESS TESTS ===
+undefined
+
+=== VOICE COMPONENT TESTS ===
+undefined
+
+=== TEST COVERAGE SUMMARY ===
+undefined
+
+
+=== OVERALL TEST SUMMARY ===
+Passed Test Suites: 0/4 (0.00%)
+
+Test Suites:
+Unit Tests: ❌ FAILED
+Integration Tests: ❌ FAILED
+Advanced Context Awareness Tests: ❌ FAILED
+Voice Component Tests: ❌ FAILED
+
+Complete test results saved to: C:\Users\ajelacn\Documents\chatbots\test-results\test-results-2025-06-01T03-59-50.903Z.txt

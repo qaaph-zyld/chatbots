@@ -9,8 +9,8 @@ const path = require('path');
 const fs = require('fs');
 const express = require('express');
 const multer = require('multer');
-const audioProcessorController = require('../../src/controllers/audio-processor.controller');
-const audioProcessor = require('../../src/utils/audio-processor');
+require('@src/controllers\audio-processor.controller');
+require('@src/utils\audio-processor');
 
 // Mock audio processor
 jest.mock('../../src/utils/audio-processor', () => ({

@@ -4,11 +4,11 @@
  * API endpoints for analytics, insights, and learning
  */
 
-const { analyticsService, insightsService, learningService } = require('../../analytics');
-const { conversationTrackingService, conversationDashboardService, conversationInsightsService } = require('../../analytics/conversation');
-const feedbackService = require('../../analytics/conversation/feedback.service');
-const { continuousLearning, fineTuning } = require('../../analytics/learning');
-const { logger } = require('../../utils');
+require('@src/analytics');
+require('@src/analytics\conversation');
+require('@src/analytics\conversation\feedback.service');
+require('@src/analytics\learning');
+require('@src/utils');
 
 /**
  * Get analytics for a chatbot

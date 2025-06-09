@@ -53,9 +53,8 @@ module.exports = (env, argv) => {
         filename: 'demo.html',
         inject: 'head'
       }),
-      // Make the proxy URL available to the client code
       new webpack.DefinePlugin({
-        'process.env.HTTP_PROXY': JSON.stringify(process.env.HTTP_PROXY || '104.129.196.38:10563')
+        'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development')
       })
     ],
     optimization: {

@@ -6,8 +6,8 @@
  */
 
 // Import the team collaboration service
-const { teamCollaborationService } = require('./team-collaboration.service');
-const { logger } = require('../../utils/mock-utils');
+require('@src/enterprise\collaboration\team-collaboration.service');
+require('@src/utils\mock-utils');
 
 /**
  * Run the test

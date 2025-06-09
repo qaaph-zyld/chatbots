@@ -4,8 +4,8 @@
  * Handles external API requests related to chatbots
  */
 
-const Chatbot = require('../../../../models/chatbot.model');
-const ApiError = require('../../../../utils/apiError');
+require('@src/models\chatbot.model');
+require('@src/utils\apiError');
 
 /**
  * Get all accessible chatbots

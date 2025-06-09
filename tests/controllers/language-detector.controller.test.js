@@ -6,8 +6,8 @@
 
 const request = require('supertest');
 const express = require('express');
-const languageDetectorController = require('../../src/controllers/language-detector.controller');
-const languageDetector = require('../../src/utils/language-detector');
+require('@src/controllers\language-detector.controller');
+require('@src/utils\language-detector');
 
 // Mock language detector
 jest.mock('../../src/utils/language-detector', () => ({

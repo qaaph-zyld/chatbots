@@ -4,9 +4,9 @@
  * Handles all plugin-related operations and API endpoints
  */
 
-const pluginService = require('../../services/plugin.service');
-const { logger } = require('../../utils');
-const { ValidationError } = require('../../utils/errors');
+require('@src/services\plugin.service');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Get all plugins

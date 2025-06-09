@@ -5,8 +5,8 @@
  * to extract entities from text using open-source models.
  */
 
-const entityRecognitionService = require('./entity.service');
-const { logger } = require('../../utils');
+require('@src/nlp\entity\entity.service');
+require('@src/utils');
 
 // Sample texts for testing
 const sampleTexts = [

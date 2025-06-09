@@ -5,28 +5,41 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../../utils');
+require('@src/utils');
 
 /**
  * Clear all Mongoose models to prevent "Cannot overwrite model" errors
  * This is useful for tests where models might be defined multiple times
  */
 const clearModels = () => {
-  // Store the current models
-  const modelNames = Object.keys(mongoose.models);
-  
-  // Delete each model
-  modelNames.forEach((modelName) => {
-    delete mongoose.models[modelName];
-  });
-  
-  // Clear model schemas
-  const schemaNames = Object.keys(mongoose.modelSchemas);
-  schemaNames.forEach((schemaName) => {
-    delete mongoose.modelSchemas[schemaName];
-  });
-  
-  logger.debug(`Cleared ${modelNames.length} Mongoose models for testing`);
+  try {
+    // Store the current models
+    const modelNames = Object.keys(mongoose.models || {});
+    
+    // Delete each model
+    modelNames.forEach((modelName) => {
+      delete mongoose.models[modelName];
+    });
+    
+    // Clear model schemas
+    if (mongoose.modelSchemas) {
+      const schemaNames = Object.keys(mongoose.modelSchemas);
+      schemaNames.forEach((schemaName) => {
+        delete mongoose.modelSchemas[schemaName];
+      });
+    }
+    
+    // Reset mongoose internal cache
+    if (mongoose.connection && mongoose.connection.models) {
+      Object.keys(mongoose.connection.models).forEach(modelName => {
+        delete mongoose.connection.models[modelName];
+      });
+    }
+    
+    logger.debug(`Cleared ${modelNames.length} Mongoose models for testing`);
+  } catch (error) {
+    logger.error('Error clearing Mongoose models', { error: error.message });
+  }
 };
 
 /**

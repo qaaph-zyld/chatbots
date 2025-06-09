@@ -6,9 +6,9 @@
 
 const express = require('express');
 const router = express.Router();
-const advancedTemplateController = require('../controllers/advanced-template.controller');
-const { authenticate } = require('../middlewares/auth.middleware');
-const { validateRequest } = require('../middlewares/validation.middleware');
+require('@src/api\controllers\advanced-template.controller');
+require('@src/api\middlewares\auth.middleware');
+require('@src/api\middlewares\validation.middleware');
 const Joi = require('joi');
 
 // Validation schemas

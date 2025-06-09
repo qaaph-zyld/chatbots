@@ -5,9 +5,9 @@
  * for chatbot personality customization
  */
 
-const personalityService = require('./personality.service');
-const personalityMessageProcessor = require('./message-processor');
-const { Personality, PersonalitySchema } = require('./personality.schema');
+require('@src/personality\personality.service');
+require('@src/personality\message-processor');
+require('@src/personality\personality.schema');
 
 module.exports = {
   personalityService,

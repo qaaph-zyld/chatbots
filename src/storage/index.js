@@ -4,7 +4,7 @@
  * Exports all storage services for easy access
  */
 
-const localStorageService = require('./local-storage.service');
+require('@src/storage\local-storage.service');
 
 module.exports = {
   localStorageService

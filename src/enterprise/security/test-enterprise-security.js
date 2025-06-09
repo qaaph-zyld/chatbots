@@ -6,15 +6,8 @@
  */
 
 // Import required services
-const { 
-  authenticationService,
-  authorizationService,
-  dataProtectionService,
-  rbacService,
-  auditLoggingService,
-  dataRetentionService
-} = require('./index');
-const { logger } = require('../../utils/mock-utils');
+require('@src/enterprise\security\index');
+require('@src/utils\mock-utils');
 
 /**
  * Main test function

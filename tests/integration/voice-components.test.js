@@ -34,9 +34,9 @@ jest.mock('../../src/config', () => ({
 }));
 
 // Now import the modules after config is mocked
-const audioProcessor = require('../../src/utils/audio-processor');
-const languageDetector = require('../../src/utils/language-detector');
-const modelManager = require('../../src/utils/model-manager');
+require('@src/utils\audio-processor');
+require('@src/utils\language-detector');
+require('@src/utils\model-manager');
 
 // Mock the voice recognition service
 jest.mock('../../src/services/voice-recognition.service', () => ({
@@ -50,7 +50,7 @@ jest.mock('../../src/services/voice-recognition.service', () => ({
 }));
 
 // Import the mocked service
-const voiceRecognitionService = require('../../src/services/voice-recognition.service');
+require('@src/services\voice-recognition.service');
 
 // Mock model manager
 jest.mock('../../src/utils/model-manager', () => ({

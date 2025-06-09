@@ -54,6 +54,9 @@ This document lists all dependencies used in the chatbot platform and confirms t
 | Sinon | BSD-3-Clause | Mocking | ✅ |
 | Playwright | Apache 2.0 | End-to-end testing | ✅ |
 | Artillery | MPL 2.0 | Load testing | ✅ |
+| MongoDB Memory Server | Apache 2.0 | In-memory MongoDB for testing | ✅ |
+| Cross-env | MIT | Cross-platform environment variables | ✅ |
+| Module-alias | MIT | Import path aliases | ✅ |
 
 ## Development Dependencies
 

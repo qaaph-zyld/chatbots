@@ -5,16 +5,8 @@
  * entity tracking across conversations, user preference learning, and topic detection.
  */
 
-const {
-  contextService,
-  topicService,
-  entityService,
-  referenceService,
-  advancedContextService,
-  preferenceLearningService,
-  topicDetectionService
-} = require('../../context');
-const { logger } = require('../../utils');
+require('@src/context');
+require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 

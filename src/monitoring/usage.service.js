@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
+require('@src/utils');
 const config = require('../../config');
 
 // Will be implemented once we have the usage model

@@ -5,7 +5,7 @@
  * for tracking system resource usage and generating alerts.
  */
 
-const { resourceMonitorService } = require('./index');
+require('@src/monitoring\index');
 
 /**
  * Run the test

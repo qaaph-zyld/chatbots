@@ -4,9 +4,9 @@
  * Provides advanced intent recognition capabilities for chatbots
  */
 
-const nlpService = require('./nlp.service');
-const { entityService } = require('./entity.service');
-const { logger } = require('../utils');
+require('@src/nlp\nlp.service');
+require('@src/nlp\entity.service');
+require('@src/utils');
 
 /**
  * Intent Recognition Service class

@@ -6,8 +6,8 @@
 
 const fs = require('fs');
 const path = require('path');
-const { logger } = require('./index');
-const pluginService = require('../services/plugin.service');
+require('@src/utils\index');
+require('@src/services\plugin.service');
 
 /**
  * Load and register all plugins in the plugins directory

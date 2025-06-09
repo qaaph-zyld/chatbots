@@ -5,8 +5,8 @@
  * to maintain conversation state and resolve references across messages.
  */
 
-const { nlpService } = require('../nlp.service');
-const { logger } = require('../../utils');
+require('@src/nlp\nlp.service');
+require('@src/utils');
 
 // Sample conversation
 const conversation = [

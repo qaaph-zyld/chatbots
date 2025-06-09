@@ -2,9 +2,9 @@
  * Tests for the Chatbots Platform Web Widget
  */
 
-import ChatbotWidget from '../src/ChatbotWidget';
-import ApiClient from '../src/utils/ApiClient';
-import WidgetUI from '../src/ui/WidgetUI';
+import '@src/web-widget\src\ChatbotWidget';
+import '@src/web-widget\src\utils\ApiClient';
+import '@src/web-widget\src\ui\WidgetUI';
 
 // Mock dependencies
 jest.mock('../src/utils/ApiClient');
@@ -14,8 +14,7 @@ describe('ChatbotWidget', () => {
   let widget;
   const mockConfig = {
     apiKey: 'test-api-key',
-    chatbotId: 'test-chatbot-id',
-    proxyUrl: '104.129.196.38:10563' // Use the proxy from user preferences
+    chatbotId: 'test-chatbot-id'
   };
   
   beforeEach(() => {

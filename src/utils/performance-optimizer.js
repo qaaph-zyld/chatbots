@@ -9,8 +9,8 @@ const os = require('os');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const mongoose = require('mongoose');
-const logger = require('./logger');
-const redis = require('../config/redis');
+require('@src/utils\logger');
+require('@src/config\redis');
 
 /**
  * Performance Optimizer class for identifying and addressing performance issues

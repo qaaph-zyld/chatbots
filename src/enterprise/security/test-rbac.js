@@ -6,10 +6,10 @@
  */
 
 // Import required services
-const { authenticationService } = require('./authentication.service');
-const { authorizationService } = require('./authorization.service');
-const { rbacService } = require('./rbac.service');
-const { logger } = require('../../utils/mock-utils');
+require('@src/enterprise\security\authentication.service');
+require('@src/enterprise\security\authorization.service');
+require('@src/enterprise\security\rbac.service');
+require('@src/utils\mock-utils');
 
 /**
  * Main test function

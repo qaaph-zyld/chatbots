@@ -8,10 +8,10 @@ const express = require('express');
 const router = express.Router();
 
 // Import controllers
-const chatbotController = require('./controllers/chatbot.controller');
-const conversationController = require('./controllers/conversation.controller');
-const messageController = require('./controllers/message.controller');
-const knowledgeBaseController = require('./controllers/knowledgeBase.controller');
+require('@src/api\external\v1\controllers\chatbot.controller');
+require('@src/api\external\v1\controllers\conversation.controller');
+require('@src/api\external\v1\controllers\message.controller');
+require('@src/api\external\v1\controllers\knowledgeBase.controller');
 
 // API documentation
 /**

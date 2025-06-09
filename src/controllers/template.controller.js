@@ -5,9 +5,9 @@
  * providing endpoints for template management and the template gallery.
  */
 
-const templateService = require('../services/template.service');
-const { validateRequest } = require('../utils/validator');
-const logger = require('../utils/logger');
+require('@src/services\template.service');
+require('@src/utils\validator');
+require('@src/utils\logger');
 
 /**
  * Create a new template

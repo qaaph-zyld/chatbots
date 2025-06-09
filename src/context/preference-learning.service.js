@@ -6,10 +6,10 @@
  */
 
 const mongoose = require('mongoose');
-const { logger } = require('../utils');
+require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-const advancedContextService = require('./advanced-context.service');
+require('@src/context\advanced-context.service');
 
 // Define user preference schema if not already defined in advanced-context.service.js
 let UserPreference;
@@ -85,7 +85,7 @@ class PreferenceLearningService {
    * Constructor
    */
   constructor() {
-    this.proxyConfig = process.env.HTTP_PROXY || 'http://104.129.196.38:10563';
+    this.proxyConfig = null;
     this.httpClient = axios.create({
       httpAgent: new HttpsProxyAgent(this.proxyConfig),
       httpsAgent: new HttpsProxyAgent(this.proxyConfig)

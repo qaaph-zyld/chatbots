@@ -4,11 +4,11 @@
 
 const request = require('supertest');
 const mongoose = require('mongoose');
-const { app } = require('../../../app');
-const Integration = require('../../../models/integration.model');
-const Chatbot = require('../../../models/chatbot.model');
-const User = require('../../../models/user.model');
-const { createTestUser, createTestChatbot, generateToken } = require('../../utils/test-helpers');
+require('@src/app');
+require('@src/models\integration.model');
+require('@src/models\chatbot.model');
+require('@src/models\user.model');
+require('@src/tests\utils\test-helpers');
 
 describe('Integration API', () => {
   let testUser;

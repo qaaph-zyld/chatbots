@@ -5,7 +5,7 @@
  * from abuse and ensure fair resource allocation among users.
  */
 
-const { logger } = require('../utils');
+require('@src/utils');
 const { EventEmitter } = require('events');
 
 /**

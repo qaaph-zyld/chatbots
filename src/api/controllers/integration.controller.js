@@ -4,8 +4,8 @@
  * Handles all integration-related operations and API endpoints
  */
 
-const integrationService = require('../../integrations/integration.service');
-const { logger } = require('../../utils');
+require('@src/integrations\integration.service');
+require('@src/utils');
 
 /**
  * Get all integrations

@@ -4,7 +4,7 @@
  * Handles various output processing for the chatbot platform
  */
 
-const logger = require('../utils/logger');
+require('@src/utils\logger');
 
 class OutputService {
   /**

@@ -7,10 +7,10 @@
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const request = require('supertest');
-const app = require('../../app');
-const User = require('../../models/user.model');
+require('@src/app');
+require('@src/models\user.model');
 const jwt = require('jsonwebtoken');
-const config = require('../../config');
+require('@src/config');
 
 describe('Authentication Flow Integration', () => {
   let mongoServer;

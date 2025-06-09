@@ -6,7 +6,7 @@
 
 const path = require('path');
 const fs = require('fs');
-const voiceRecognitionService = require('../../src/services/voice-recognition.service');
+require('@src/services\voice-recognition.service');
 
 // Create test directory if it doesn't exist
 const testDir = path.join(process.cwd(), 'tests', 'temp');

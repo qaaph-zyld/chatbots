@@ -4,18 +4,11 @@
  */
 
 const webpack = require('webpack');
-const webpackConfig = require('./webpack.config');
+require('@src/web-widget\webpack.config');
 const fs = require('fs');
 const path = require('path');
 
-// Set proxy configuration if available
-if (process.env.HTTP_PROXY) {
-  console.log(`Using proxy: ${process.env.HTTP_PROXY}`);
-} else {
-  // Use default proxy from user preferences
-  process.env.HTTP_PROXY = '104.129.196.38:10563';
-  console.log(`Using default proxy: ${process.env.HTTP_PROXY}`);
-}
+// No proxy configuration needed
 
 // Build for production
 const prodConfig = webpackConfig({}, { mode: 'production' });
@@ -37,7 +30,7 @@ webpack(prodConfig, (err, stats) => {
   }));
   
   // Create a package.json for the dist folder
-  const packageJson = require('./package.json');
+  require('@src/web-widget\package.json');
   const distPackageJson = {
     name: packageJson.name,
     version: packageJson.version,

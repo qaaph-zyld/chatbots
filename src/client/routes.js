@@ -2,33 +2,33 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Import pages
-import WorkflowsListPage from './pages/WorkflowsListPage';
-import WorkflowBuilderPage from './pages/WorkflowBuilderPage';
-import WorkflowAnalyticsPage from './pages/WorkflowAnalyticsPage';
-import WorkflowExecutionPage from './pages/WorkflowExecutionPage';
-import WorkflowTemplatesPage from './pages/WorkflowTemplatesPage';
-import WorkflowTemplatePreviewPage from './pages/WorkflowTemplatePreviewPage';
-import WorkflowFromTemplatePage from './pages/WorkflowFromTemplatePage';
-import WorkflowDetailsPage from './pages/WorkflowDetailsPage';
-import ComponentsListPage from './pages/ComponentsListPage';
-import ComponentCreatePage from './pages/ComponentCreatePage';
-import ComponentDetailsPage from './pages/ComponentDetailsPage';
-import MarketplaceListPage from './pages/MarketplaceListPage';
-import MarketplaceDetailPage from './pages/MarketplaceDetailPage';
-import OfflineModelsPage from './pages/OfflineModelsPage';
-import LanguageSettingsPage from './pages/LanguageSettingsPage';
-import DocumentationPage from './pages/DocumentationPage';
-import CommunityPage from './pages/CommunityPage';
+import '@src/client\pages\WorkflowsListPage';
+import '@src/client\pages\WorkflowBuilderPage';
+import '@src/client\pages\WorkflowAnalyticsPage';
+import '@src/client\pages\WorkflowExecutionPage';
+import '@src/client\pages\WorkflowTemplatesPage';
+import '@src/client\pages\WorkflowTemplatePreviewPage';
+import '@src/client\pages\WorkflowFromTemplatePage';
+import '@src/client\pages\WorkflowDetailsPage';
+import '@src/client\pages\ComponentsListPage';
+import '@src/client\pages\ComponentCreatePage';
+import '@src/client\pages\ComponentDetailsPage';
+import '@src/client\pages\MarketplaceListPage';
+import '@src/client\pages\MarketplaceDetailPage';
+import '@src/client\pages\OfflineModelsPage';
+import '@src/client\pages\LanguageSettingsPage';
+import '@src/client\pages\DocumentationPage';
+import '@src/client\pages\CommunityPage';
 
 // Import CSS
-import './pages/WorkflowPages.css';
-import './pages/ComponentPages.css';
-import './pages/MarketplacePages.css';
-import './pages/WorkflowExecutionPage.css';
-import './pages/OfflineModelsPage.css';
-import './pages/LanguageSettingsPage.css';
-import './pages/DocumentationPage.css';
-import './pages/CommunityPage.css';
+import '@src/client\pages\WorkflowPages.css';
+import '@src/client\pages\ComponentPages.css';
+import '@src/client\pages\MarketplacePages.css';
+import '@src/client\pages\WorkflowExecutionPage.css';
+import '@src/client\pages\OfflineModelsPage.css';
+import '@src/client\pages\LanguageSettingsPage.css';
+import '@src/client\pages\DocumentationPage.css';
+import '@src/client\pages\CommunityPage.css';
 
 /**
  * Application Routes

@@ -10,7 +10,7 @@ const path = require('path');
 const sqlite3 = require('sqlite3');
 const { open } = require('sqlite');
 const { v4: uuidv4 } = require('uuid');
-const { logger } = require('../utils');
+require('@src/utils');
 
 /**
  * Local Storage Service class

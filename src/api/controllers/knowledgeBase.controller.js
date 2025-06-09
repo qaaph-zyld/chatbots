@@ -4,9 +4,9 @@
  * Handles all knowledge base-related operations and API endpoints
  */
 
-const knowledgeBaseService = require('../../services/knowledgeBase.service');
-const { logger } = require('../../utils');
-const { ValidationError } = require('../../utils/errors');
+require('@src/services\knowledgeBase.service');
+require('@src/utils');
+require('@src/utils\errors');
 
 /**
  * Get all knowledge bases for a chatbot

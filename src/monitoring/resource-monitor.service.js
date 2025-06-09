@@ -7,7 +7,7 @@
 
 const os = require('os');
 const fs = require('fs').promises;
-const { logger } = require('../utils');
+require('@src/utils');
 const { EventEmitter } = require('events');
 
 /**

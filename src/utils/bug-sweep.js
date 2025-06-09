@@ -11,7 +11,7 @@ const { promisify } = require('util');
 const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
 const readFile = promisify(fs.readFile);
-const { logger } = require('./logger');
+require('@src/utils\logger');
 
 /**
  * Bug sweep configuration

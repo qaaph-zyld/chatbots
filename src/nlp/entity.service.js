@@ -4,8 +4,8 @@
  * Provides advanced entity recognition capabilities for chatbots
  */
 
-const nlpService = require('./nlp.service');
-const { logger } = require('../utils');
+require('@src/nlp\nlp.service');
+require('@src/utils');
 
 /**
  * Entity types

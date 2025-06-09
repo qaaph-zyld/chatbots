@@ -4,13 +4,8 @@
  * Manages synchronization of data between local storage and server
  */
 
-const { logger } = require('../utils');
-const { 
-  getPendingRequests, 
-  updatePendingRequestStatus, 
-  storePendingRequest,
-  syncPendingRequests
-} = require('../utils/indexedDB');
+require('@src/utils');
+require('@src/utils\indexedDB');
 
 class OfflineSyncService {
   constructor() {

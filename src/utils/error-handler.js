@@ -5,7 +5,7 @@
  * Provides standardized error handling, logging, and recovery mechanisms.
  */
 
-const { logger } = require('./logger');
+require('@src/utils\logger');
 
 /**
  * Custom error types

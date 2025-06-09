@@ -13,7 +13,7 @@ function uuidv4() {
     return v.toString(16);
   });
 }
-const { logger } = require('../../utils');
+require('@src/utils');
 
 /**
  * A/B Testing Service class

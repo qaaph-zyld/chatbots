@@ -4,10 +4,10 @@
  * Exports all engine-related modules and provides factory functionality
  */
 
-const BaseChatbotEngine = require('./base.engine');
-const BotpressEngine = require('./botpress.engine');
-const HuggingFaceEngine = require('./huggingface.engine');
-const engineFactory = require('./engine.factory');
+require('@src/bot\engines\base.engine');
+require('@src/bot\engines\botpress.engine');
+require('@src/bot\engines\huggingface.engine');
+require('@src/bot\engines\engine.factory');
 
 // Map of engine types to their implementations
 const engineTypes = {

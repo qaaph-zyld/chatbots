@@ -4,7 +4,7 @@
  * Provides validation functions for various data types
  */
 
-const logger = require('./logger');
+require('@src/utils\logger');
 
 /**
  * Validate an email address

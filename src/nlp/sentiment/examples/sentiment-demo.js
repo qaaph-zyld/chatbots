@@ -6,8 +6,8 @@
  */
 
 const readline = require('readline');
-const { nlpService } = require('../../nlp.service');
-const { logger } = require('../../../utils');
+require('@src/nlp\nlp.service');
+require('@src/utils');
 
 // Create readline interface for user input
 const rl = readline.createInterface({

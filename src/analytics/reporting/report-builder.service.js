@@ -6,7 +6,7 @@
  */
 
 // Use mock utilities for testing
-const { logger, generateUuid } = require('./test-utils');
+require('@src/analytics\reporting\test-utils');
 
 /**
  * Report Builder Service class

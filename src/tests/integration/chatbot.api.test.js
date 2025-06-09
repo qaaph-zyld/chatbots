@@ -7,9 +7,9 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-const app = require('../../index');
-const chatbotService = require('../../services/chatbot.service');
-const conversationService = require('../../services/conversation.service');
+require('@src/index');
+require('@src/services\chatbot.service');
+require('@src/services\conversation.service');
 
 // Mock the chatbot service to avoid external dependencies
 jest.mock('../../services/chatbot.service', () => ({

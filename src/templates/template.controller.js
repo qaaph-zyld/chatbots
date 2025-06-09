@@ -4,8 +4,8 @@
  * Handles API requests for template management
  */
 
-const templateService = require('./template.service');
-const { logger } = require('../utils');
+require('@src/templates\template.service');
+require('@src/utils');
 
 /**
  * Get all templates
