@@ -5,7 +5,7 @@
  */
 
 // Import voice configuration
-require('@src/config\open-voice.config');
+const voiceConfig = require('@src/config/open-voice.config');
 
 module.exports = {
   // Server configuration

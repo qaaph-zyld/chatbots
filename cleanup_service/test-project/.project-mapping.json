@@ -1,0 +1,30 @@
+{
+  "metadata": {
+    "lastUpdate": "2025-06-15T14:07:18.041Z",
+    "version": "1.0.0",
+    "totalFiles": 0,
+    "totalDirectories": 0,
+    "projectHash": "99914b932bd37a50b983c5e7c90ae93b"
+  },
+  "structure": {},
+  "explanations": {},
+  "dependencies": {
+    "internal": {},
+    "external": {},
+    "circular": [],
+    "orphaned": [],
+    "graph": {}
+  },
+  "patterns": {
+    "architectural": [],
+    "naming": {
+      "camelCase": 0,
+      "kebabCase": 0,
+      "snakeCase": 0,
+      "PascalCase": 0
+    },
+    "structure": [],
+    "antipatterns": []
+  },
+  "changes": []
+}

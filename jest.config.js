@@ -62,16 +62,11 @@ module.exports = {
   // Module name mapper for module aliases
   moduleNameMapper: {
     '^@src/(.*)$': '<rootDir>/src/$1',
+    '^@data/(.*)$': '<rootDir>/src/data/$1',
     '^@core/(.*)$': '<rootDir>/src/core/$1',
     '^@modules/(.*)$': '<rootDir>/src/modules/$1',
-    '^@domain/(.*)$': '<rootDir>/src/domain/$1',
     '^@api/(.*)$': '<rootDir>/src/api/$1',
-    '^@data/(.*)$': '<rootDir>/src/data/$1',
-    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
-    '^@tests/(.*)$': '<rootDir>/tests/$1',
-    // Legacy mock modules to prevent errors
-    '^src/context$': '<rootDir>/tests/unit/mocks/context-index-mock.js',
-    '^src/context/(.*)$': '<rootDir>/tests/unit/mocks/context-service-mock.js'
+    '^@tests/(.*)$': '<rootDir>/tests/$1'
   },
   
   // Set timeout for tests
@@ -82,6 +77,10 @@ module.exports = {
   
   // Force exit after tests to prevent hanging
   forceExit: true,
+  
+  // Global setup and teardown scripts
+  globalSetup: '<rootDir>/global-test-setup.js',
+  globalTeardown: '<rootDir>/global-test-teardown.js',
   
   // Detect open handles to help troubleshoot hanging tests
   detectOpenHandles: true,

@@ -1,0 +1,56 @@
+{
+  "watchPatterns": [
+    "**/*.js",
+    "**/*.ts",
+    "**/*.jsx",
+    "**/*.tsx",
+    "**/*.py",
+    "**/*.java",
+    "**/*.cpp",
+    "**/*.c",
+    "**/*.h",
+    "**/*.json",
+    "**/*.yaml",
+    "**/*.yml",
+    "**/*.toml",
+    "**/*.md",
+    "**/*.txt",
+    "**/*.rst",
+    "**/*.sql",
+    "**/*.sh",
+    "**/*.bat",
+    "**/*.css",
+    "**/*.scss",
+    "**/*.html",
+    "**/*.dockerfile",
+    "**/Makefile",
+    "**/package.json"
+  ],
+  "ignorePatterns": [
+    "node_modules/**",
+    ".git/**",
+    "*.log",
+    "dist/**",
+    "build/**",
+    "coverage/**",
+    "*.tmp",
+    "*.temp",
+    ".DS_Store"
+  ],
+  "analysisRules": {
+    "source": {},
+    "config": {},
+    "documentation": {},
+    "test": {},
+    "build": {},
+    "style": {},
+    "data": {}
+  },
+  "explanationTemplates": {
+    "directory": "Directory containing {fileCount} files, purpose: {purpose}",
+    "sourceFile": "Source file: {language}, exports: {exports}, imports: {imports}",
+    "configFile": "Configuration: {configType}, affects: {scope}",
+    "testFile": "Test suite for: {testTarget}, coverage: {coverage}",
+    "documentationFile": "Documentation: {docType}, covers: {topics}"
+  }
+}

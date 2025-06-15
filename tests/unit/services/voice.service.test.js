@@ -32,13 +32,13 @@ jest.mock('@src/utils/logger', () => ({
   warn: jest.fn(),
   error: jest.fn()
 }));
-jest.mock('../../../services/input.service', () => ({
+jest.mock('@src/services/input.service', () => ({
   processVoiceInput: jest.fn().mockResolvedValue({
     text: 'Transcribed text',
     confidence: 0.95
   })
 }));
-jest.mock('../../../services/output.service', () => ({
+jest.mock('@src/services/output.service', () => ({
   textToSpeech: jest.fn().mockResolvedValue({
     audioData: Buffer.from('synthesized audio data'),
     format: 'wav'

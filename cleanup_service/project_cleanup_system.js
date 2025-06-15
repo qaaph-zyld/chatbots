@@ -34,30 +34,224 @@ class ProjectCleanupAutomation {
             // Minimum file age for deletion (days)
             minAgeForDeletion: 30,
             // Backup directory
-            backupDir: '.cleanup-backup'
+            backupDir: '.cleanup-backup',
+            // Report output
+            reportFile: 'cleanup-report.json',
+            reportHtmlFile: 'cleanup-report.html'
         };
         this.analysisResults = {
             architecture: {},
             dependencies: {},
             obsoleteFiles: [],
-            recommendations: []
+            recommendations: [],
+            cleanupResults: null,
+            report: {}
         };
+        this.externalArchitectureData = null;
+    }
+
+    /**
+     * Set architecture data from ProjectMappingSystem
+     * @param {Object} architectureData - The architecture data from ProjectMappingSystem
+     */
+    setArchitectureData(architectureData) {
+        this.externalArchitectureData = architectureData;
+        console.log('📊 Using external architecture data for analysis');
+        return this;
     }
 
     // Phase 1: Project Architecture Analysis
     async analyzeProjectArchitecture() {
         console.log('🔍 Phase 1: Analyzing project architecture...');
         
-        const architecture = {
-            structure: await this.mapDirectoryStructure(),
-            dependencies: await this.analyzeDependencies(),
-            imports: await this.analyzeImportRelationships(),
-            tests: await this.analyzeTestCoverage(),
-            configs: await this.analyzeConfigurations()
-        };
+        let architecture;
+        
+        // If we have external architecture data from ProjectMappingSystem, use it
+        if (this.externalArchitectureData) {
+            console.log('🔄 Using pre-generated architecture mapping');
+            
+            // Convert the external architecture data format to our internal format
+            architecture = {
+                structure: this.convertExternalStructure(this.externalArchitectureData.structure),
+                dependencies: this.convertExternalDependencies(this.externalArchitectureData.dependencies),
+                imports: await this.analyzeImportRelationships(), // Still analyze imports for consistency
+                tests: this.extractTestsFromExternalData(this.externalArchitectureData),
+                configs: this.extractConfigsFromExternalData(this.externalArchitectureData)
+            };
+        } else {
+            // Perform our own analysis if no external data is available
+            console.log('🔍 Performing full architecture analysis');
+            architecture = {
+                structure: await this.mapDirectoryStructure(),
+                dependencies: await this.analyzeDependencies(),
+                imports: await this.analyzeImportRelationships(),
+                tests: await this.analyzeTestCoverage(),
+                configs: await this.analyzeConfigurations()
+            };
+        }
 
         this.analysisResults.architecture = architecture;
         return architecture;
+    }
+    
+    /**
+     * Convert external structure format to internal format
+     * @param {Object} externalStructure - Structure from ProjectMappingSystem
+     */
+    convertExternalStructure(externalStructure) {
+        const structure = {};
+        
+        // Recursive function to convert structure format
+        const convertStructure = (extStruct, intStruct) => {
+            for (const [key, value] of Object.entries(extStruct)) {
+                if (value.type === 'directory') {
+                    intStruct[key] = {
+                        type: 'directory',
+                        path: value.path,
+                        size: value.size || 0,
+                        files: {},
+                        lastModified: value.modified || new Date()
+                    };
+                    
+                    // Convert children recursively
+                    if (value.files) {
+                        convertStructure(value.files, intStruct[key].files);
+                    }
+                } else if (value.type === 'file') {
+                    intStruct[key] = {
+                        type: 'file',
+                        path: value.path,
+                        size: value.size || 0,
+                        extension: value.extension || path.extname(key),
+                        lastModified: value.modified || new Date(),
+                        lastAccessed: value.accessed || new Date()
+                    };
+                }
+            }
+        };
+        
+        convertStructure(externalStructure, structure);
+        return structure;
+    }
+    
+    /**
+     * Convert external dependencies to internal format
+     * @param {Object} externalDependencies - Dependencies from ProjectMappingSystem
+     */
+    convertExternalDependencies(externalDependencies) {
+        const dependencies = {
+            package: {},
+            imports: new Map(),
+            unused: []
+        };
+        
+        // Convert package dependencies
+        if (externalDependencies.external) {
+            const deps = {};
+            const devDeps = {};
+            
+            externalDependencies.external.forEach((value, key) => {
+                if (value.type === 'production') {
+                    deps[key] = value.version;
+                } else if (value.type === 'development') {
+                    devDeps[key] = value.version;
+                }
+            });
+            
+            dependencies.package = {
+                dependencies: deps,
+                devDependencies: devDeps,
+                peerDependencies: {}
+            };
+        }
+        
+        // Convert internal dependencies
+        if (externalDependencies.internal) {
+            externalDependencies.internal.forEach((value, key) => {
+                dependencies.imports.set(key, value);
+            });
+        }
+        
+        // Add orphaned files as unused
+        if (externalDependencies.orphaned) {
+            dependencies.unused = externalDependencies.orphaned;
+        }
+        
+        return dependencies;
+    }
+    
+    /**
+     * Extract test information from external architecture data
+     * @param {Object} externalData - External architecture data
+     */
+    extractTestsFromExternalData(externalData) {
+        const testAnalysis = {
+            testFiles: [],
+            testedFiles: new Set(),
+            untestedFiles: []
+        };
+        
+        // Helper function to recursively find test files
+        const findTestFiles = (structure, basePath = '') => {
+            for (const [name, item] of Object.entries(structure)) {
+                const itemPath = path.join(basePath, name);
+                
+                if (item.type === 'file' && this.config.patterns.tests.test(name)) {
+                    testAnalysis.testFiles.push(item.path);
+                    
+                    // If we have analysis data, extract tested files
+                    if (item.analysis && item.analysis.imports) {
+                        item.analysis.imports.forEach(importPath => {
+                            if (!importPath.startsWith('.')) return;
+                            
+                            const resolvedPath = path.resolve(path.dirname(item.path), importPath);
+                            testAnalysis.testedFiles.add(resolvedPath);
+                        });
+                    }
+                } else if (item.type === 'directory' && item.files) {
+                    findTestFiles(item.files, itemPath);
+                }
+            }
+        };
+        
+        // Find test files in the structure
+        if (externalData.structure) {
+            findTestFiles(externalData.structure);
+        }
+        
+        return testAnalysis;
+    }
+    
+    /**
+     * Extract config information from external architecture data
+     * @param {Object} externalData - External architecture data
+     */
+    extractConfigsFromExternalData(externalData) {
+        const configs = [];
+        
+        // Helper function to recursively find config files
+        const findConfigFiles = (structure, basePath = '') => {
+            for (const [name, item] of Object.entries(structure)) {
+                const itemPath = path.join(basePath, name);
+                
+                if (item.type === 'file' && this.config.patterns.config.test(name)) {
+                    configs.push({
+                        path: item.path,
+                        lastModified: item.modified || new Date(),
+                        size: item.size || 0
+                    });
+                } else if (item.type === 'directory' && item.files) {
+                    findConfigFiles(item.files, itemPath);
+                }
+            }
+        };
+        
+        // Find config files in the structure
+        if (externalData.structure) {
+            findConfigFiles(externalData.structure);
+        }
+        
+        return configs;
     }
 
     async mapDirectoryStructure() {
@@ -355,30 +549,49 @@ class ProjectCleanupAutomation {
         const cleanupResults = {
             removed: [],
             errors: [],
-            spaceFreed: 0
+            spaceFreed: 0,
+            timestamp: new Date().toISOString(),
+            dryRun: dryRun
         };
 
         for (const file of this.analysisResults.obsoleteFiles) {
             try {
                 if (dryRun) {
                     console.log(`🗑️  Would remove: ${file.relativePath} (${file.reason})`);
-                    cleanupResults.removed.push(file.relativePath);
+                    cleanupResults.removed.push({
+                        path: file.relativePath,
+                        size: file.size,
+                        reason: file.reason,
+                        scores: file.scores
+                    });
                     cleanupResults.spaceFreed += file.size;
                 } else {
                     await fs.unlink(file.path);
                     console.log(`✅ Removed: ${file.relativePath}`);
-                    cleanupResults.removed.push(file.relativePath);
+                    cleanupResults.removed.push({
+                        path: file.relativePath,
+                        size: file.size,
+                        reason: file.reason,
+                        scores: file.scores
+                    });
                     cleanupResults.spaceFreed += file.size;
                 }
             } catch (error) {
                 const errorMsg = `❌ Failed to remove ${file.relativePath}: ${error.message}`;
                 console.error(errorMsg);
-                cleanupResults.errors.push(errorMsg);
+                cleanupResults.errors.push({
+                    path: file.relativePath,
+                    error: error.message
+                });
             }
         }
 
         // Remove empty directories
-        await this.removeEmptyDirectories(dryRun);
+        const emptyDirs = await this.removeEmptyDirectories(dryRun);
+        cleanupResults.emptyDirectoriesRemoved = emptyDirs;
+        
+        // Store cleanup results for reporting
+        this.analysisResults.cleanupResults = cleanupResults;
 
         return cleanupResults;
     }
@@ -435,34 +648,481 @@ class ProjectCleanupAutomation {
         }
     }
 
-    // Phase 4: Generate Report
-    async generateCleanupReport(results) {
-        console.log('📊 Phase 4: Generating cleanup report...');
+    // Phase 4: Generate Comprehensive Report
+    async generateComprehensiveReport() {
+        console.log('📊 Phase 4: Generating comprehensive report...');
         
+        // Ensure we have cleanup results
+        if (!this.analysisResults.cleanupResults) {
+            console.warn('⚠️  No cleanup results available. Run performSafeCleanup first.');
+            return { error: 'No cleanup results available' };
+        }
+        
+        const results = this.analysisResults.cleanupResults;
+        
+        // Generate the report object
         const report = {
             timestamp: new Date().toISOString(),
             summary: {
-                totalFilesAnalyzed: Object.keys(this.analysisResults.architecture.structure).length,
+                totalFilesAnalyzed: Object.keys(this.analysisResults.architecture.structure || {}).length,
                 obsoleteFilesFound: this.analysisResults.obsoleteFiles.length,
                 filesRemoved: results.removed.length,
-                spaceFreed: this.formatBytes(results.spaceFreed),
-                errors: results.errors.length
+                spaceFreed: results.spaceFreed,
+                spaceFreedFormatted: this.formatBytes(results.spaceFreed),
+                errors: results.errors.length,
+                dryRun: results.dryRun
             },
             details: {
-                architecture: this.analysisResults.architecture,
-                obsoleteFiles: this.analysisResults.obsoleteFiles,
-                cleanupResults: results
+                architecture: {
+                    fileCount: this.countFiles(this.analysisResults.architecture.structure),
+                    directoryCount: this.countDirectories(this.analysisResults.architecture.structure),
+                    testFiles: this.analysisResults.architecture.tests?.testFiles?.length || 0,
+                    configFiles: this.analysisResults.architecture.configs?.length || 0
+                },
+                obsoleteFiles: this.analysisResults.obsoleteFiles.map(file => ({
+                    path: file.relativePath,
+                    size: file.size,
+                    reason: file.reason,
+                    scores: file.scores,
+                    lastModified: file.lastModified
+                })),
+                cleanupResults: {
+                    removed: results.removed,
+                    errors: results.errors,
+                    emptyDirectoriesRemoved: results.emptyDirectoriesRemoved || []
+                }
             },
-            recommendations: this.generateRecommendations()
+            recommendations: this.generateRecommendations(),
+            architecturalInsights: this.generateArchitecturalInsights()
         };
-
-        const reportPath = path.join(this.projectRoot, 'cleanup-report.json');
-        await fs.writeFile(reportPath, JSON.stringify(report, null, 2));
         
-        console.log(`📋 Detailed report saved to: cleanup-report.json`);
+        // Store the report in analysis results
+        this.analysisResults.report = report;
+        
+        // Save JSON report
+        const jsonReportPath = path.join(this.projectRoot, this.config.reportFile);
+        await fs.writeFile(jsonReportPath, JSON.stringify(report, null, 2));
+        console.log(`📋 JSON report saved to: ${this.config.reportFile}`);
+        
+        // Generate and save HTML report
+        const htmlReportPath = path.join(this.projectRoot, this.config.reportHtmlFile);
+        const htmlContent = this.generateHtmlReport(report);
+        await fs.writeFile(htmlReportPath, htmlContent);
+        console.log(`💻 HTML report saved to: ${this.config.reportHtmlFile}`);
+        
+        // Display summary
         this.displaySummary(report.summary);
         
-        return report;
+        return {
+            report,
+            outputPath: jsonReportPath,
+            htmlPath: htmlReportPath
+        };
+    }
+    
+    /**
+     * Generate architectural insights based on analysis
+     */
+    generateArchitecturalInsights() {
+        const insights = [];
+        
+        // Analyze directory structure
+        const structure = this.analysisResults.architecture.structure;
+        if (structure) {
+            // Check for overly nested directories
+            const maxDepth = this.calculateMaxDepth(structure);
+            if (maxDepth > 5) {
+                insights.push({
+                    type: 'structure',
+                    severity: 'medium',
+                    message: `Deep directory nesting detected (${maxDepth} levels). Consider flattening structure.`
+                });
+            }
+            
+            // Check for large directories
+            const largeDirectories = this.findLargeDirectories(structure);
+            if (largeDirectories.length > 0) {
+                insights.push({
+                    type: 'structure',
+                    severity: 'medium',
+                    message: `Large directories detected: ${largeDirectories.join(', ')}. Consider breaking them down.`,
+                    details: largeDirectories
+                });
+            }
+        }
+        
+        // Analyze dependencies
+        const dependencies = this.analysisResults.architecture.dependencies;
+        if (dependencies && dependencies.unused && dependencies.unused.length > 0) {
+            insights.push({
+                type: 'dependencies',
+                severity: 'high',
+                message: `${dependencies.unused.length} unused dependencies detected. Consider removing them.`,
+                details: dependencies.unused
+            });
+        }
+        
+        return insights;
+    }
+    
+    /**
+     * Calculate maximum directory depth
+     */
+    calculateMaxDepth(structure, currentDepth = 0) {
+        let maxDepth = currentDepth;
+        
+        for (const [, item] of Object.entries(structure)) {
+            if (item.type === 'directory' && item.files) {
+                const depth = this.calculateMaxDepth(item.files, currentDepth + 1);
+                maxDepth = Math.max(maxDepth, depth);
+            }
+        }
+        
+        return maxDepth;
+    }
+    
+    /**
+     * Find directories with too many files
+     */
+    findLargeDirectories(structure, path = '', threshold = 30) {
+        const largeDirectories = [];
+        
+        for (const [name, item] of Object.entries(structure)) {
+            if (item.type === 'directory') {
+                const dirPath = path ? `${path}/${name}` : name;
+                const fileCount = this.countFiles(item.files);
+                
+                if (fileCount > threshold) {
+                    largeDirectories.push(dirPath);
+                }
+                
+                // Check subdirectories
+                if (item.files) {
+                    const subLargeDirectories = this.findLargeDirectories(item.files, dirPath, threshold);
+                    largeDirectories.push(...subLargeDirectories);
+                }
+            }
+        }
+        
+        return largeDirectories;
+    }
+    
+    /**
+     * Count files in a structure
+     */
+    countFiles(structure) {
+        if (!structure) return 0;
+        
+        let count = 0;
+        
+        for (const [, item] of Object.entries(structure)) {
+            if (item.type === 'file') {
+                count++;
+            } else if (item.type === 'directory' && item.files) {
+                count += this.countFiles(item.files);
+            }
+        }
+        
+        return count;
+    }
+    
+    /**
+     * Count directories in a structure
+     */
+    countDirectories(structure) {
+        if (!structure) return 0;
+        
+        let count = 0;
+        
+        for (const [, item] of Object.entries(structure)) {
+            if (item.type === 'directory') {
+                count++;
+                if (item.files) {
+                    count += this.countDirectories(item.files);
+                }
+            }
+        }
+        
+        return count;
+    }
+    
+    /**
+     * Generate HTML report from report data
+     */
+    generateHtmlReport(report) {
+        return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Cleanup Report</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        header {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-left: 5px solid #007bff;
+        }
+        h1 {
+            color: #007bff;
+            margin-top: 0;
+        }
+        h2 {
+            color: #495057;
+            border-bottom: 1px solid #dee2e6;
+            padding-bottom: 10px;
+            margin-top: 30px;
+        }
+        .summary-box {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .summary-item {
+            background-color: #f8f9fa;
+            border-radius: 5px;
+            padding: 15px;
+            flex: 1;
+            min-width: 200px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        .summary-item h3 {
+            margin-top: 0;
+            color: #6c757d;
+            font-size: 14px;
+            text-transform: uppercase;
+        }
+        .summary-item p {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0 0;
+            color: #007bff;
+        }
+        .warning {
+            color: #dc3545;
+        }
+        .success {
+            color: #28a745;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+        }
+        th, td {
+            padding: 12px 15px;
+            text-align: left;
+            border-bottom: 1px solid #dee2e6;
+        }
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+        }
+        tr:hover {
+            background-color: #f8f9fa;
+        }
+        .badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 3px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .badge-warning {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        .badge-danger {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .badge-info {
+            background-color: #d1ecf1;
+            color: #0c5460;
+        }
+        .badge-success {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .recommendation {
+            background-color: #f8f9fa;
+            border-left: 4px solid #17a2b8;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 0 5px 5px 0;
+        }
+        .recommendation h4 {
+            margin-top: 0;
+            color: #17a2b8;
+        }
+        .recommendation p {
+            margin-bottom: 0;
+        }
+        .high-priority {
+            border-left-color: #dc3545;
+        }
+        .high-priority h4 {
+            color: #dc3545;
+        }
+        .medium-priority {
+            border-left-color: #fd7e14;
+        }
+        .medium-priority h4 {
+            color: #fd7e14;
+        }
+        .footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #6c757d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Project Cleanup Report</h1>
+        <p>Generated on ${new Date(report.timestamp).toLocaleString()}</p>
+        ${report.summary.dryRun ? '<p class="badge badge-warning">DRY RUN MODE - No files were actually removed</p>' : ''}
+    </header>
+
+    <section>
+        <h2>Summary</h2>
+        <div class="summary-box">
+            <div class="summary-item">
+                <h3>Files Analyzed</h3>
+                <p>${report.summary.totalFilesAnalyzed}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Obsolete Files</h3>
+                <p>${report.summary.obsoleteFilesFound}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Files ${report.summary.dryRun ? 'To Remove' : 'Removed'}</h3>
+                <p>${report.summary.filesRemoved}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Space ${report.summary.dryRun ? 'To Free' : 'Freed'}</h3>
+                <p>${report.summary.spaceFreedFormatted}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Errors</h3>
+                <p class="${report.summary.errors > 0 ? 'warning' : 'success'}">${report.summary.errors}</p>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2>Recommendations</h2>
+        ${report.recommendations.map(rec => `
+            <div class="recommendation ${rec.priority}-priority">
+                <h4>${rec.type.charAt(0).toUpperCase() + rec.type.slice(1)}</h4>
+                <p>${rec.message}</p>
+            </div>
+        `).join('')}
+        
+        ${report.architecturalInsights.map(insight => `
+            <div class="recommendation ${insight.severity}-priority">
+                <h4>${insight.type.charAt(0).toUpperCase() + insight.type.slice(1)} Insight</h4>
+                <p>${insight.message}</p>
+            </div>
+        `).join('')}
+    </section>
+
+    <section>
+        <h2>Obsolete Files</h2>
+        ${report.details.obsoleteFiles.length > 0 ? `
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Path</th>
+                        <th>Size</th>
+                        <th>Reason</th>
+                        <th>Last Modified</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${report.details.obsoleteFiles.map(file => `
+                        <tr>
+                            <td>${file.path}</td>
+                            <td>${this.formatBytes(file.size)}</td>
+                            <td>
+                                <span class="badge badge-warning">${file.reason}</span>
+                            </td>
+                            <td>${new Date(file.lastModified).toLocaleDateString()}</td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        ` : '<p>No obsolete files detected.</p>'}
+    </section>
+
+    ${report.details.cleanupResults.errors.length > 0 ? `
+        <section>
+            <h2>Errors</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>File Path</th>
+                        <th>Error</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${report.details.cleanupResults.errors.map(err => `
+                        <tr>
+                            <td>${err.path}</td>
+                            <td>
+                                <span class="badge badge-danger">${err.error}</span>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            </table>
+        </section>
+    ` : ''}
+
+    <section>
+        <h2>Architecture Details</h2>
+        <div class="summary-box">
+            <div class="summary-item">
+                <h3>Total Files</h3>
+                <p>${report.details.architecture.fileCount}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Total Directories</h3>
+                <p>${report.details.architecture.directoryCount}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Test Files</h3>
+                <p>${report.details.architecture.testFiles}</p>
+            </div>
+            <div class="summary-item">
+                <h3>Config Files</h3>
+                <p>${report.details.architecture.configFiles}</p>
+            </div>
+        </div>
+    </section>
+
+    <div class="footer">
+        <p>Generated by Project Architecture Cleanup System</p>
+    </div>
+</body>
+</html>`;
+    }
+    
+    // Legacy method for backward compatibility
+    async generateCleanupReport(results) {
+        console.log('⚠️  generateCleanupReport is deprecated, use generateComprehensiveReport instead');
+        return this.generateComprehensiveReport();
     }
 
     generateRecommendations() {

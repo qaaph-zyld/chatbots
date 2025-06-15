@@ -822,10 +822,53 @@ class ProjectMappingSystem {
         }
         
         // Circular dependencies
-        if (this.architecture.dependencies && this.architecture.dependencies.circular.length > 0) {
-            antipatterns.push(`Circular dependencies: ${this.architecture.dependencies.circular.length} cycles`);
+        if (this.architecture.dependencies && this.architecture.dependencies.circular) {
+            this.architecture.dependencies.circular.forEach(circle => {
+                antipatterns.push({
+                    type: 'circular_dependency',
+                    severity: 'high',
+                    message: `Circular dependency detected: ${circle.join(' → ')}`,
+                    files: circle
+                });
+            });
         }
-
+        
+        // Long dependency chains
+        if (this.architecture.dependencies && this.architecture.dependencies.longChains) {
+            this.architecture.dependencies.longChains.forEach(chain => {
+                if (chain.length > 5) {
+                    antipatterns.push({
+                        type: 'long_dependency_chain',
+                        severity: 'medium',
+                        message: `Long dependency chain (${chain.length} levels): ${chain.join(' → ')}`,
+                        files: chain
+                    });
+                }
+            });
+        }
+        
+        // Orphaned files
+        if (this.architecture.dependencies && this.architecture.dependencies.orphanedFiles) {
+            this.architecture.dependencies.orphanedFiles.forEach(file => {
+                antipatterns.push({
+                    type: 'orphaned_file',
+                    severity: 'low',
+                    message: `Orphaned file: ${file}`
+                });
+            });
+        }
+        
+        // Duplicate files
+        if (this.architecture.dependencies && this.architecture.dependencies.duplicateFiles) {
+            this.architecture.dependencies.duplicateFiles.forEach(group => {
+                antipatterns.push({
+                    type: 'duplicate_files',
+                    severity: 'medium',
+                    message: `Duplicate files found: ${group.join(', ')}`
+                });
+            });
+        }
+        
         return antipatterns;
     }
 

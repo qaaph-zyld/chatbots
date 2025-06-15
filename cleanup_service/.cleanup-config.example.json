@@ -1,0 +1,17 @@
+{
+  "analysisTargets": [
+    "src",
+    "lib",
+    "app",
+    "config"
+  ],
+  "protectedPatterns": [
+    ".env.local",
+    "docker-compose.yml",
+    "tsconfig.json"
+  ],
+  "minAgeForDeletion": 60,
+  "backupDir": ".project-cleanup-backups",
+  "reportFile": "project-cleanup-report.json",
+  "reportHtmlFile": "cleanup-summary.html"
+}

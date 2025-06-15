@@ -50,6 +50,8 @@ class VoiceService {
       }
     };
 
+    this.cleanupInterval = null;
+
     // Ensure temp directory exists
     if (!fs.existsSync(this.config.storage.tempDir)) {
       fs.mkdirSync(this.config.storage.tempDir, { recursive: true });
@@ -88,7 +90,7 @@ class VoiceService {
   scheduleCleanup() {
     const cleanupInterval = 3600000; // 1 hour
     
-    setInterval(() => {
+    this.cleanupInterval = setInterval(() => {
       this.cleanupTempFiles();
     }, cleanupInterval);
   }
@@ -120,6 +122,17 @@ class VoiceService {
       logger.info(`Cleaned up ${deletedCount} temporary voice files`);
     } catch (error) {
       logger.error('Error cleaning up temporary voice files', error);
+    }
+  }
+
+  /**
+   * Shutdown the voice service
+   */
+  shutdown() {
+    if (this.cleanupInterval) {
+      clearInterval(this.cleanupInterval);
+      this.cleanupInterval = null;
+      this.cleanupTempFiles();
     }
   }
 

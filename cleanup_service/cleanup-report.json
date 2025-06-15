@@ -1,0 +1,86 @@
+{
+  "timestamp": "2025-06-15T14:11:14.203Z",
+  "summary": {
+    "totalFilesAnalyzed": 0,
+    "obsoleteFilesFound": 2,
+    "filesRemoved": 2,
+    "spaceFreed": 59,
+    "spaceFreedFormatted": "59 Bytes",
+    "errors": 0,
+    "dryRun": true
+  },
+  "details": {
+    "architecture": {
+      "fileCount": 0,
+      "directoryCount": 0,
+      "testFiles": 0,
+      "configFiles": 0
+    },
+    "obsoleteFiles": [
+      {
+        "path": "test-project\\config\\old-settings.json",
+        "size": 20,
+        "reason": "Old file, Unused",
+        "scores": {
+          "ageScore": 2,
+          "usageScore": 2,
+          "dependencyScore": 0,
+          "testScore": 0,
+          "configScore": 0
+        },
+        "lastModified": "2025-04-16T14:07:17.974Z"
+      },
+      {
+        "path": "test-project\\src\\deprecated.js",
+        "size": 39,
+        "reason": "Old file, Unused",
+        "scores": {
+          "ageScore": 2,
+          "usageScore": 2,
+          "dependencyScore": 0,
+          "testScore": 0,
+          "configScore": 0
+        },
+        "lastModified": "2025-04-16T14:07:17.974Z"
+      }
+    ],
+    "cleanupResults": {
+      "removed": [
+        {
+          "path": "test-project\\config\\old-settings.json",
+          "size": 20,
+          "reason": "Old file, Unused",
+          "scores": {
+            "ageScore": 2,
+            "usageScore": 2,
+            "dependencyScore": 0,
+            "testScore": 0,
+            "configScore": 0
+          }
+        },
+        {
+          "path": "test-project\\src\\deprecated.js",
+          "size": 39,
+          "reason": "Old file, Unused",
+          "scores": {
+            "ageScore": 2,
+            "usageScore": 2,
+            "dependencyScore": 0,
+            "testScore": 0,
+            "configScore": 0
+          }
+        }
+      ],
+      "errors": [],
+      "emptyDirectoriesRemoved": []
+    }
+  },
+  "recommendations": [
+    {
+      "type": "testing",
+      "priority": "medium",
+      "message": "Low test coverage detected - consider adding more tests"
+    }
+  ],
+  "architecturalInsights": []
+}
