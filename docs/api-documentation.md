@@ -49,6 +49,8 @@ Available aliases:
 - `@core` - Points to the `src/core` directory
 - `@modules` - Points to the `src/modules` directory
 - `@api` - Points to the `src/api` directory
+- `@middleware` - Points to the `src/middleware` directory
+- `@config` - Points to the `src/config` directory
 - `@data` - Points to the `src/data` directory
 - `@domain` - Points to the `src/domain` directory
 - `@utils` - Points to the `src/utils` directory
@@ -161,11 +163,123 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+                
+  /sentiment/analyze:
+    post:
+      summary: Analyze sentiment of a text message
+      description: Analyzes the sentiment of a single text message
+      operationId: analyzeSentiment
+      tags:
+        - Sentiment Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - text
+              properties:
+                text:
+                  type: string
+                  description: The text to analyze
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SentimentResult'
+        '400':
+          description: Bad request - Missing required parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Invalid or missing authentication token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+                
+  /sentiment/analyze-batch:
+    post:
+      summary: Analyze sentiment of multiple text messages
+      description: Analyzes the sentiment of multiple text messages in a batch
+      operationId: analyzeBatchSentiment
+      tags:
+        - Sentiment Analysis
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - texts
+              properties:
+                texts:
+                  type: array
+                  description: Array of texts to analyze
+                  items:
+                    type: string
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/SentimentResult'
+        '400':
+          description: Bad request - Missing required parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '401':
+          description: Unauthorized - Invalid or missing authentication token
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
 components:
   securitySchemes:
     bearerAuth:
       type: http
       scheme: bearer
+  responses:
+    RateLimitExceeded:
+      description: Too many requests, please try again later
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              success:
+                type: boolean
+                example: false
+              message:
+                type: string
+                example: Too many requests, please try again later.
       bearerFormat: JWT
   schemas:
     Conversation:
@@ -242,6 +356,29 @@ components:
         error:
           type: string
           description: Detailed error information (only in development mode)
+          
+    SentimentResult:
+      type: object
+      properties:
+        text:
+          type: string
+          description: The original text that was analyzed
+        sentiment:
+          type: string
+          enum: [positive, neutral, negative]
+          description: The sentiment category
+        score:
+          type: number
+          description: Numerical score of the sentiment (positive values for positive sentiment, negative for negative)
+        confidence:
+          type: number
+          format: float
+          minimum: 0
+          maximum: 1
+          description: Confidence level of the sentiment analysis (0-1)
+        language:
+          type: string
+          description: Detected language of the text
 ```
 
 ## Modules
@@ -314,6 +451,278 @@ The project includes several utility scripts in the `scripts/` directory:
 - `update-imports.js` - Updates import paths to use module aliases
 - `verify-structure.js` - Validates the project structure
 - `install-dependencies.js` - Installs required dependencies
+
+## Rate Limiting and Caching
+
+The API implements rate limiting to protect against abuse and ensure fair usage of resources. Rate limits are applied to different endpoints based on their sensitivity and resource requirements. Additionally, response caching is implemented for specific endpoints to improve performance.
+
+### Rate Limit Headers
+
+When a request is made, the following headers are included in the response:
+
+- `RateLimit-Limit`: The maximum number of requests allowed in the current time window
+- `RateLimit-Remaining`: The number of requests remaining in the current time window
+- `RateLimit-Reset`: The time when the current window resets (in seconds since epoch)
+
+### Rate Limit Configuration
+
+The following rate limits are applied by default:
+
+| Endpoint | Time Window | Max Requests | Description |
+|----------|-------------|--------------|-------------|
+| `/api/*` | 15 minutes | 100 | General API rate limit |
+| `/api/auth/*` | 5 minutes | 5 | Authentication endpoints |
+| `/api/conversations/*` | 1 minute | 60 | Conversation endpoints |
+| `/api/sentiment/*` | 1 minute | 30 | Sentiment analysis endpoints |
+
+### Rate Limit Exceeded Response
+
+When a rate limit is exceeded, the API returns a `429 Too Many Requests` response with the following body:
+
+```json
+{
+  "success": false,
+  "message": "Too many requests, please try again later."
+}
+```
+
+### Environment-Specific Rate Limits
+
+Rate limits are adjusted based on the environment:
+
+- **Development**: Higher limits for easier development and testing
+- **Test**: Rate limiting is disabled for automated tests
+- **Production**: Standard limits as described above
+
+### Response Caching
+
+The API implements response caching for specific endpoints to improve performance and reduce server load. Currently, the following endpoints use caching:
+
+| Endpoint | Cache TTL | Cache Key Generation |
+|----------|-----------|----------------------|
+| `/api/sentiment/analyze` | 1 hour | Based on request body, path, and user ID |
+| `/api/sentiment/analyze-batch` | 1 hour | Based on request body, path, and user ID |
+
+#### Cache Headers
+
+Clients can control caching behavior using the following headers:
+
+- `X-Bypass-Cache`: If present, bypasses the cache and forces a fresh response
+
+Alternatively, the `_nocache` query parameter can be added to bypass the cache.
+
+#### Cache Management
+
+Administrators can clear the cache using the following endpoint:
+
+```
+DELETE /api/sentiment/cache
+```
+
+This endpoint requires admin privileges and will clear all cached sentiment analysis results.
+
+### Cache Monitoring
+
+The API includes a cache monitoring system that tracks cache hit/miss metrics and provides insights into cache performance. The following endpoints are available for monitoring:
+
+```
+GET /api/metrics/cache
+```
+
+Returns current cache metrics including hit rates, miss rates, and average latency for each resource type.
+
+Example response:
+
+```json
+{
+  "success": true,
+  "metrics": {
+    "timestamp": 1623456789000,
+    "uptime": 3600000,
+    "resources": {
+      "sentiment": {
+        "hits": 1250,
+        "misses": 250,
+        "total": 1500,
+        "hitRate": 0.83,
+        "avgLatency": 12.5,
+        "avgSize": 2048
+      },
+      "conversation": {
+        "hits": 850,
+        "misses": 150,
+        "total": 1000,
+        "hitRate": 0.85,
+        "avgLatency": 18.2,
+        "avgSize": 4096
+      }
+    },
+    "overall": {
+      "hits": 2100,
+      "misses": 400,
+      "total": 2500,
+      "hitRate": 0.84
+    }
+  }
+}
+```
+
+```
+GET /api/metrics/cache/history
+```
+
+Returns historical cache metrics for trend analysis. Supports a `limit` query parameter to control the number of records returned.
+
+```
+POST /api/metrics/cache/reset
+```
+
+Resets cache metrics. Requires admin privileges.
+
+### Cache Warming
+
+The API includes a cache warming system that pre-populates the cache with frequently accessed resources to improve response times. Cache warming runs automatically at configured intervals, but can also be triggered manually:
+
+```
+POST /api/metrics/cache/warm
+```
+
+Triggers manual cache warming. Requires admin privileges.
+
+Example response:
+
+```json
+{
+  "success": true,
+  "message": "Cache warming completed: 15/20 resources warmed in 350ms",
+  "result": {
+    "warmed": 15,
+    "total": 20,
+    "duration": 350
+  }
+}
+```
+
+### Adaptive TTL
+
+The API includes an adaptive Time-To-Live (TTL) system that dynamically adjusts cache expiration times based on resource usage patterns. This improves cache efficiency by keeping frequently accessed resources cached longer while allowing less frequently accessed resources to expire sooner.
+
+#### Configuration
+
+```
+GET /api/metrics/cache/adaptive-ttl
+```
+
+Returns the current adaptive TTL configuration. Requires admin privileges.
+
+Example response:
+
+```json
+{
+  "success": true,
+  "config": {
+    "enabled": true,
+    "defaultTTL": 300,
+    "minTTL": 60,
+    "maxTTL": 3600,
+    "decayInterval": 3600,
+    "decayFactor": 0.5,
+    "weights": {
+      "accessFrequency": 0.5,
+      "missRate": 0.3,
+      "latency": 0.2
+    }
+  }
+}
+```
+
+```
+PUT /api/metrics/cache/adaptive-ttl
+```
+
+Updates the adaptive TTL configuration. Requires admin privileges.
+
+Example request body:
+
+```json
+{
+  "config": {
+    "enabled": true,
+    "defaultTTL": 600,
+    "minTTL": 120,
+    "maxTTL": 7200,
+    "decayInterval": 7200,
+    "decayFactor": 0.7,
+    "weights": {
+      "accessFrequency": 0.6,
+      "missRate": 0.2,
+      "latency": 0.2
+    }
+  }
+}
+```
+
+Example response:
+
+```json
+{
+  "success": true,
+  "message": "Adaptive TTL configuration updated successfully"
+}
+```
+
+#### Resource Access Tracking
+
+```
+GET /api/metrics/cache/access-tracking
+```
+
+Returns resource access tracking data used by the adaptive TTL system. Requires admin privileges.
+
+Example response:
+
+```json
+{
+  "success": true,
+  "tracking": {
+    "api": {
+      "users": {
+        "count": 120,
+        "lastAccessed": 1623456789000
+      },
+      "products": {
+        "count": 85,
+        "lastAccessed": 1623456789000
+      }
+    },
+    "db": {
+      "users": {
+        "count": 95,
+        "lastAccessed": 1623456789000
+      },
+      "orders": {
+        "count": 42,
+        "lastAccessed": 1623456789000
+      }
+    }
+  }
+}
+```
+
+```
+POST /api/metrics/cache/decay-access
+```
+
+Manually triggers decay of resource access counts. Requires admin privileges.
+
+Example response:
+
+```json
+{
+  "success": true,
+  "message": "Resource access counts decayed successfully"
+}
+```
 
 ## Running the Application
 
