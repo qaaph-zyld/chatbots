@@ -7,6 +7,8 @@ const { execSync } = require('child_process');
 class ProjectCleanupAutomation {
     constructor(projectRoot = '.') {
         this.projectRoot = path.resolve(projectRoot);
+        
+        // Default configuration
         this.config = {
             // Analysis patterns for different file types
             patterns: {
@@ -39,6 +41,10 @@ class ProjectCleanupAutomation {
             reportFile: 'cleanup-report.json',
             reportHtmlFile: 'cleanup-report.html'
         };
+        
+        // Load user configuration if available
+        this.loadConfiguration();
+        
         this.analysisResults = {
             architecture: {},
             dependencies: {},
@@ -48,6 +54,52 @@ class ProjectCleanupAutomation {
             report: {}
         };
         this.externalArchitectureData = null;
+    }
+    
+    /**
+     * Load configuration from .cleanup-config.json if available
+     */
+    async loadConfiguration() {
+        const configPath = path.join(this.projectRoot, '.cleanup-config.json');
+        
+        try {
+            const configExists = await fs.access(configPath).then(() => true).catch(() => false);
+            
+            if (configExists) {
+                console.log('⚙️  Loading custom configuration from .cleanup-config.json');
+                const configContent = await fs.readFile(configPath, 'utf8');
+                const userConfig = JSON.parse(configContent);
+                
+                // Merge user configuration with defaults
+                this.config = {
+                    ...this.config,
+                    ...userConfig,
+                    // Special handling for patterns which may be regular expressions
+                    patterns: {
+                        ...this.config.patterns,
+                        ...(userConfig.patterns || {})
+                    }
+                };
+                
+                // Convert string patterns to RegExp if provided as strings
+                if (userConfig.protectedPatterns) {
+                    this.config.protectedPatterns = userConfig.protectedPatterns.map(pattern => {
+                        if (typeof pattern === 'string') {
+                            // Convert glob-like patterns to RegExp
+                            return new RegExp(pattern.replace(/\*/g, '.*').replace(/\?/g, '.'));
+                        }
+                        return pattern;
+                    });
+                }
+                
+                console.log('✅ Custom configuration loaded');
+            } else {
+                console.log('⚙️  Using default configuration (no .cleanup-config.json found)');
+            }
+        } catch (error) {
+            console.warn('⚠️  Error loading configuration:', error.message);
+            console.log('⚙️  Using default configuration');
+        }
     }
 
     /**
@@ -1174,6 +1226,44 @@ class ProjectCleanupAutomation {
     // Utility methods
     async walkDirectory(dir, callback) {
         try {
+            // Check if we should analyze this directory based on analysisTargets configuration
+            if (dir !== this.projectRoot) { // Always process the project root
+                const relativePath = path.relative(this.projectRoot, dir);
+                const dirName = path.basename(dir);
+                
+                // If analysisTargets is defined and not empty, check if this directory should be analyzed
+                if (this.config.analysisTargets && this.config.analysisTargets.length > 0) {
+                    // Check if this directory or any parent directory is in the analysis targets
+                    const shouldAnalyze = this.config.analysisTargets.some(target => {
+                        // Check if the directory itself matches a target
+                        if (dirName === target) {
+                            console.log(`✅ ANALYZING TARGET DIRECTORY: ${relativePath} (matches target: ${target})`);
+                            return true;
+                        }
+                        
+                        // Check if the directory is within a target path
+                        // For example, if target is 'src' and dir is '/project/src/components'
+                        const pathParts = relativePath.split(path.sep);
+                        const isInTarget = pathParts.includes(target);
+                        if (isInTarget) {
+                            console.log(`✅ ANALYZING SUBDIRECTORY: ${relativePath} (within target: ${target})`);
+                            return true;
+                        }
+                        return false;
+                    });
+                    
+                    if (!shouldAnalyze) {
+                        // Skip this directory as it's not in the analysis targets
+                        console.log(`❌ SKIPPING DIRECTORY: ${relativePath} (not in targets: ${this.config.analysisTargets.join(', ')})`);
+                        return;
+                    }
+                } else {
+                    console.log(`ℹ️ ANALYZING ALL DIRECTORIES: ${relativePath} (no targets configured)`);
+                }
+            } else {
+                console.log(`🔍 ANALYZING PROJECT ROOT: ${dir}`);
+            }
+            
             const items = await fs.readdir(dir);
             
             for (const item of items) {

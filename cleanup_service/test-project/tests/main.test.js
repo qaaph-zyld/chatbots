@@ -1,1 +1,0 @@
-test("main works", () => { expect(true).toBe(true); });

@@ -46,6 +46,15 @@ Create `.cleanup-config.json` in your project root:
 }
 ```
 
+#### Configuration Options
+
+- **analysisTargets**: Array of directories to include in analysis. Only these directories (and their subdirectories) will be analyzed and cleaned up. This improves performance and safety by limiting the scope of analysis. If not specified, all directories will be analyzed.
+- **protectedPatterns**: Array of regex patterns for files/directories that should never be removed, even if they're detected as obsolete.
+- **minAgeForDeletion**: Minimum age in days for a file to be considered for deletion. Files modified more recently than this will never be marked as obsolete.
+- **backupDir**: Directory where backups of removed files will be stored.
+- **reportFile**: Path for the JSON report output.
+- **reportHtmlFile**: Path for the HTML report output.
+
 ### Report Example
 ![Cleanup Report](cleanup-report-screenshot.png)
 
