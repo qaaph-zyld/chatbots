@@ -331,6 +331,6 @@ All APIs are documented using OpenAPI (Swagger) for REST APIs and GraphQL Schema
 
 ## Related Documentation
 
-- [REST_API_REFERENCE.md](../REST_API_REFERENCE.md) - Detailed REST API reference
-- [GRAPHQL_SCHEMA.md](../GRAPHQL_SCHEMA.md) - GraphQL schema documentation
-- [API_AUTHENTICATION.md](../API_AUTHENTICATION.md) - API authentication details
+- [Architecture Patterns](./02_Architecture_Patterns.md) - System architecture overview
+- [Component Structure](./04_Component_Structure.md) - Component design and structure
+- [Security Practices](../02_Security_and_DevOps/01_Security_Practices.md) - API security and authentication details

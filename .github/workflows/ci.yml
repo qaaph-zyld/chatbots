@@ -135,3 +135,50 @@ jobs:
         REDIS_PORT: 6379
         CACHE_ENABLED: true
         USE_REDIS_RATE_LIMIT: true
+
+  documentation-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install markdown-lint
+      run: npm install -g markdownlint-cli
+    
+    - name: Lint Markdown files
+      run: markdownlint "docs/**/*.md" --config .markdownlint.json || echo "Markdown linting found issues. Please fix them."
+    
+    - name: Check for broken links in documentation
+      run: |
+        npm install -g markdown-link-check
+        find docs -name "*.md" -exec markdown-link-check {} \;
+    
+    - name: Validate documentation structure
+      run: |
+        # Check if required directories exist
+        if [ ! -d "docs/01_Testing_Strategies" ] || \
+           [ ! -d "docs/02_Security_and_DevOps" ] || \
+           [ ! -d "docs/03_Development_Methodologies" ] || \
+           [ ! -d "docs/04_Project_Specifics" ]; then
+          echo "Error: One or more required documentation directories are missing."
+          exit 1
+        fi
+        
+        # Check if each directory has a README.md
+        for dir in docs/0*_*/; do
+          if [ ! -f "${dir}README.md" ]; then
+            echo "Error: README.md missing in ${dir}"
+            exit 1
+          fi
+        done
+        
+        echo "Documentation structure validation passed."

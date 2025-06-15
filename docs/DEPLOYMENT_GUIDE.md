@@ -249,8 +249,8 @@ Logs are written to the `logs` directory by default. In Docker deployments, logs
 
 If you encounter issues not covered in this guide, please:
 
-1. Check the [FAQ](./FAQ.md) for common questions
-2. Review the [Troubleshooting Guide](./TROUBLESHOOTING.md) for detailed solutions
+1. Check the [FAQ](./02_Security_and_DevOps/04_Monitoring.md#frequently-asked-questions) for common questions
+2. Review the [Troubleshooting Guide](./02_Security_and_DevOps/03_Deployment_Strategy.md#troubleshooting) for detailed solutions
 3. Submit an issue on GitHub with detailed information about your problem
 
 ## Self-Hosting Best Practices

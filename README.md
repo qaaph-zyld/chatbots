@@ -42,17 +42,62 @@ The Customizable Chatbots Platform allows developers and businesses to:
 
 ## Documentation
 
-The project documentation has been reorganized to align with the `dev_framework` principles, providing a structured approach to documenting testing strategies, security and DevOps practices, and development methodologies.
+> [!IMPORTANT]
+> The project documentation has been reorganized to align with the `dev_framework` principles, providing a structured approach to documenting all aspects of the project. Always refer to the documentation when developing new features or making changes to existing ones.
 
 ### Documentation Structure
 
-The documentation is organized into three main categories:
+The documentation is organized into four main categories:
 
-- **[Testing Strategies](./docs/01_Testing_Strategies/README.md)**: Documentation related to testing methodologies and best practices
-- **[Security and DevOps](./docs/02_Security_and_DevOps/README.md)**: Documentation related to security practices and operational considerations
-- **[Development Methodologies](./docs/03_Development_Methodologies/README.md)**: Documentation related to coding standards and architectural patterns
+- **[01_Testing_Strategies](./docs/01_Testing_Strategies/README.md)**: Documentation related to testing methodologies and best practices
+  - Unit Testing Approach
+  - Integration Testing
+  - End-to-End Testing
+  - Test Automation
 
-For more information, see the [Documentation README](./docs/README.md).
+- **[02_Security_and_DevOps](./docs/02_Security_and_DevOps/README.md)**: Documentation related to security practices and operational considerations
+  - Security Practices
+  - CI/CD Pipeline
+  - Deployment Strategy
+  - Monitoring
+
+- **[03_Development_Methodologies](./docs/03_Development_Methodologies/README.md)**: Documentation related to coding standards and architectural patterns
+  - Code Standards
+  - Architecture Patterns
+  - API Design
+  - Component Structure
+
+- **[04_Project_Specifics](./docs/04_Project_Specifics/README.md)**: Documentation for project-specific aspects
+  - Custom Components
+  - Prompt Engineering
+  - Community Features
+
+### Contributing to Documentation
+
+When adding new documentation:
+
+1. Identify the appropriate category for your documentation
+2. Create a new Markdown file in the corresponding directory
+3. Follow the naming convention: `XX_Descriptive_Name.md` where `XX` is the next available number in the directory
+4. Update the README.md file in the directory to include a reference to your new file
+5. Update the CHANGELOG.md in the project root to reflect your documentation changes
+
+### Documentation Maintenance
+
+To ensure documentation remains accurate and valuable:
+
+- **Regular Reviews**: Documentation should be reviewed quarterly to ensure it remains accurate
+- **Feature Documentation**: All new features must include corresponding documentation updates
+- **Validation**: Run `node scripts/validate-docs.js` to verify documentation integrity
+- **CI/CD Integration**: Documentation validation is part of the CI pipeline
+
+### Documentation Tools
+
+- **Validation Script**: `scripts/validate-docs.js` checks for broken links and structural issues
+- **Markdown Linting**: Use `.markdownlint.json` configuration for consistent formatting
+- **Cross-References**: Use relative links to reference other documentation files
+
+For more information, see the [Documentation README](./docs/README.md) and [Documentation Contributing Guide](./docs/DOCUMENTATION_CONTRIBUTING.md).
 
 ## Getting Started
 

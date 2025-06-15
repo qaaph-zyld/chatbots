@@ -97,7 +97,7 @@ The project follows a standard GitHub workflow:
 5. Address feedback from reviewers
 6. Once approved, a maintainer will merge your changes
 
-All contributions must adhere to the project's [Code of Conduct](CODE_OF_CONDUCT.md) and [Contributing Guidelines](CONTRIBUTING.md).
+All contributions must adhere to the project's [Code of Conduct](./03_Development_Methodologies/01_Code_Standards.md#code-of-conduct) and [Contributing Guidelines](./DOCUMENTATION_CONTRIBUTING.md).
 
 ## Release Management
 
@@ -127,7 +127,7 @@ The project is currently community-supported. Funding decisions are made by the 
 
 ## Code of Conduct
 
-All community members must adhere to the project's [Code of Conduct](CODE_OF_CONDUCT.md). Violations will be addressed by the core team according to the enforcement guidelines in the Code of Conduct.
+All community members must adhere to the project's [Code of Conduct](./03_Development_Methodologies/01_Code_Standards.md#code-of-conduct). Violations will be addressed by the core team according to the enforcement guidelines in the Code of Conduct.
 
 ## Amendments to Governance
 
@@ -143,7 +143,7 @@ Changes to this governance model can be proposed by any community member. Propos
 
 ## License
 
-The Open-Source Chatbots Platform is licensed under the [MIT License](LICENSE).
+The Open-Source Chatbots Platform is licensed under the [MIT License](../LICENSE).
 
 ---
 

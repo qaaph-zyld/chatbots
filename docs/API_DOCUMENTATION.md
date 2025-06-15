@@ -371,7 +371,7 @@ const response = await client.conversations.sendMessage(
 
 If you encounter any issues or have questions about the API, please:
 
-1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md)
+1. Check the [Troubleshooting Guide](./02_Security_and_DevOps/04_Monitoring.md)
 2. Visit our [Community Forum](https://community.chatbots-platform.example.com)
 3. Open an issue on [GitHub](https://github.com/example/chatbots-platform)
 4. Contact support at api-support@chatbots-platform.example.com

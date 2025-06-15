@@ -205,6 +205,7 @@ For complex domains with high performance requirements, we apply the CQRS patter
 
 ## Related Documentation
 
-- [SYSTEM_DESIGN.md](../SYSTEM_DESIGN.md) - Detailed system design documentation
-- [API_DESIGN.md](../API_DESIGN.md) - API design principles and standards
-- [SCALABILITY.md](../SCALABILITY.md) - Scalability considerations and strategies
+- [API Design](./03_API_Design.md) - API design principles and standards
+- [Component Structure](./04_Component_Structure.md) - Detailed system design documentation
+- [Security Practices](../02_Security_and_DevOps/01_Security_Practices.md) - Security considerations
+- [Deployment Strategy](../02_Security_and_DevOps/03_Deployment_Strategy.md) - Scalability and deployment considerations
