@@ -6,14 +6,17 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\routes\chatbot.routes');
-require('@src/api\routes\component.routes');
-require('@src/api\routes\marketplace.routes');
-require('@src/api\routes\translation.routes');
-require('@src/api\routes\multilingual-kb.routes');
-require('@src/api\routes\model.routes');
-require('@src/api\routes\documentation.routes');
+
+// Import routes
+const chatbotRoutes = require('@api/external/v1/routes/chatbot.routes');
+const componentRoutes = require('@api/external/v1/routes/component.routes');
+const marketplaceRoutes = require('@api/external/v1/routes/marketplace.routes');
+const translationRoutes = require('@api/external/v1/routes/translation.routes');
+const multilingualKbRoutes = require('@api/external/v1/routes/multilingual-kb.routes');
+const modelRoutes = require('@api/external/v1/routes/model.routes');
+const documentationRoutes = require('@api/external/v1/routes/documentation.routes');
 const conversationRoutes = require('@api/external/v1/routes/conversation.routes');
+const sentimentRoutes = require('@api/external/v1/routes/sentiment.routes');
 
 // Mount routes
 router.use('/chatbots', chatbotRoutes);
@@ -24,6 +27,7 @@ router.use('/multilingual-kb', multilingualKbRoutes);
 router.use('/models', modelRoutes);
 router.use('/documentation', documentationRoutes);
 router.use('/conversations', conversationRoutes);
+router.use('/sentiment', sentimentRoutes);
 
 // Health check endpoint
 router.get('/health', (req, res) => {

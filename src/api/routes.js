@@ -6,40 +6,46 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/routes\voice.routes');
-require('@src/routes\open-voice.routes');
-require('@src/api\external');
-require('@src/api\routes\advanced-context.routes');
-require('@src/api\routes\advanced-template.routes');
-require('@src/api\routes\theme.routes');
-require('@src/api\routes\workflow.routes');
+require('@src/routes/voice.routes');
+require('@src/routes/open-voice.routes');
+require('@src/api/external');
+require('@src/api/routes/advanced-context.routes');
+require('@src/api/routes/advanced-template.routes');
+require('@src/api/routes/theme.routes');
+require('@src/api/routes/workflow.routes');
 
 // Import controllers
 // These will be implemented as we progress through the roadmap
-require('@src/api\controllers\chatbot.controller');
-require('@src/api\controllers\template.controller');
-require('@src/api\controllers\advanced-template.controller');
-require('@src/api\controllers\integration.controller');
-require('@src/api\controllers\personality.controller');
-require('@src/api\controllers\knowledgeBase.controller');
-require('@src/api\controllers\plugin.controller');
-require('@src/api\controllers\training.controller');
-require('@src/api\controllers\analytics.controller');
-require('@src/api\controllers\context.controller');
-require('@src/api\controllers\advanced-context.controller');
-require('@src/api\controllers\auth.controller');
-require('@src/api\controllers\health.controller');
-require('@src/api\controllers\usage.controller');
-require('@src/api\controllers\scaling.controller');
-require('@src/api\controllers\theme.controller');
+require('@src/api/controllers/chatbot.controller');
+require('@src/api/controllers/template.controller');
+require('@src/api/controllers/advanced-template.controller');
+require('@src/api/controllers/integration.controller');
+require('@src/api/controllers/personality.controller');
+require('@src/api/controllers/knowledgeBase.controller');
+require('@src/api/controllers/plugin.controller');
+require('@src/api/controllers/training.controller');
+require('@src/api/controllers/analytics.controller');
+require('@src/api/controllers/context.controller');
+require('@src/api/controllers/advanced-context.controller');
+require('@src/api/controllers/auth.controller');
+require('@src/api/controllers/health.controller');
+require('@src/api/controllers/usage.controller');
+require('@src/api/controllers/scaling.controller');
+require('@src/api/controllers/theme.controller');
+
+// Import metrics routes
+const metricsRoutes = require('@src/routes/metrics.routes');
 
 // Import middleware
-require('@src/auth\auth.middleware');
+require('@src/auth/auth.middleware');
 
 // Health check endpoints
 router.get('/health', healthController.healthCheck);
 router.get('/health/status', authenticateToken, hasRole('admin'), healthController.systemStatus);
 router.get('/metrics', authenticateToken, hasRole('admin'), healthController.metrics);
+
+// Register metrics routes
+router.use('/metrics', metricsRoutes);
 
 // Authentication routes
 router.post('/auth/register', rateLimit(10, 60000), authController.register);

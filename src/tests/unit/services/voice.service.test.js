@@ -2,10 +2,10 @@
  * Voice Service Tests
  */
 
-require('@src/services\voice.service');
-require('@src/services\input.service');
-require('@src/services\output.service');
-require('@src/utils\logger');
+require('@src/services/voice.service');
+require('@src/services/input.service');
+require('@src/services/output.service');
+require('@src/utils/logger');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');

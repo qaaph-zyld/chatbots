@@ -37,6 +37,10 @@ app.use(express.json()); // Parse JSON bodies
 app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
 app.use(trackRequest); // Track requests for scaling logging
 
+// Apply rate limiting middleware
+const { applyRateLimiting } = require('@middleware/rate-limit');
+applyRateLimiting(app, { useRedis: config.useRedisRateLimit });
+
 // API routes
 app.use('/api', apiRoutes);
 

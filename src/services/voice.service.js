@@ -9,10 +9,10 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
-require('@src/utils\logger');
-require('@src/config');
-require('@src/services\input.service');
-require('@src/services\output.service');
+const logger = require('@src/utils/logger');
+const config = require('@src/config');
+const inputService = require('@src/services/input.service');
+const outputService = require('@src/services/output.service');
 
 class VoiceService {
   constructor() {

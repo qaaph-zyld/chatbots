@@ -4,8 +4,8 @@
  * Setup file for Jest tests
  */
 
-require('@tests/unit\setup\mongoose-test-setup');
-require('@tests/unit\setup\mongoose-model-helper');
+const { clearModels, connectTestDB, disconnectTestDB, clearDatabase } = require('@tests/unit/setup/mongoose-test-setup');
+const { safeCompileModel } = require('@tests/unit/setup/mongoose-model-helper');
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
@@ -19,7 +19,7 @@ jest.mock('../../config', () => {
 beforeAll(async () => {
   clearModels();
   // Create test directories for storage
-  require('@tests/unit\setup\test-config');
+  const testConfig = require('@tests/unit/setup/test-config');
   const dirs = [
     testConfig.storage.baseDir,
     testConfig.storage.tempDir,
@@ -147,7 +147,7 @@ global.testUtils = {
 global.safeCompileModel = safeCompileModel;
 
 // Mock common modules that cause issues in tests
-jest.mock('../../utils/model-manager', () => {
+jest.mock('@src/utils/model-manager', () => {
   return {
     ensureDirectories: jest.fn(),
     getAvailableModels: jest.fn().mockReturnValue([]),
@@ -161,7 +161,7 @@ jest.mock('../../utils/model-manager', () => {
   };
 });
 
-jest.mock('../../utils/audio-processor', () => {
+jest.mock('@src/utils/audio-processor', () => {
   return {
     initialize: jest.fn().mockResolvedValue(true),
     processAudio: jest.fn().mockResolvedValue({ success: true, data: Buffer.from('test') }),
@@ -174,7 +174,7 @@ jest.mock('../../utils/audio-processor', () => {
   };
 });
 
-jest.mock('../../utils/language-detector', () => {
+jest.mock('@src/utils/language-detector', () => {
   return {
     initialize: jest.fn().mockResolvedValue(true),
     detectLanguage: jest.fn().mockResolvedValue({ language: 'en', confidence: 0.95 }),

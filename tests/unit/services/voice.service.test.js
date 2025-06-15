@@ -2,10 +2,10 @@
  * Voice Service Tests
  */
 
-const voiceService = require('../../../services/voice.service');
-const inputService = require('../../../services/input.service');
-const outputService = require('../../../services/output.service');
-const logger = require('../../../utils/logger');
+const voiceService = require('@src/services/voice.service');
+const inputService = require('@src/services/input.service');
+const outputService = require('@src/services/output.service');
+const logger = require('@src/utils/logger');
 const fs = require('fs');
 const path = require('path');
 const axios = require('axios');
@@ -26,7 +26,7 @@ jest.mock('path', () => ({
   join: jest.fn().mockReturnValue('/test/path'),
   dirname: jest.fn().mockReturnValue('/test')
 }));
-jest.mock('../../../utils/logger', () => ({
+jest.mock('@src/utils/logger', () => ({
   debug: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),

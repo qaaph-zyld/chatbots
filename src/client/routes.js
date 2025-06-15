@@ -19,6 +19,10 @@ import '@src/client\pages\OfflineModelsPage';
 import '@src/client\pages\LanguageSettingsPage';
 import '@src/client\pages\DocumentationPage';
 import '@src/client\pages\CommunityPage';
+import '@src/client\pages\admin\CacheMetricsDashboard';
+
+// Import layouts
+import AdminLayout from '@src/client\components\admin\AdminLayout';
 
 // Import CSS
 import '@src/client\pages\WorkflowPages.css';
@@ -44,6 +48,14 @@ const AppRoutes = () => {
       {/* Chatbot routes */}
       <Route path="/chatbots" element={<div>Chatbots List Page</div>} />
       <Route path="/chatbots/:chatbotId" element={<div>Chatbot Details Page</div>} />
+      
+      {/* Admin routes */}
+      <Route path="/admin" element={<AdminLayout />}>
+        <Route index element={<Navigate to="/admin/cache-metrics" replace />} />
+        <Route path="cache-metrics" element={<CacheMetricsDashboard />} />
+        <Route path="performance" element={<div>Performance Dashboard (Coming Soon)</div>} />
+        <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
+      </Route>
       
       {/* Workflow routes */}
       <Route path="/chatbots/:chatbotId/workflows" element={<WorkflowsListPage />} />

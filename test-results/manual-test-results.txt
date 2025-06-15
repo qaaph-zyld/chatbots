@@ -1,5 +1,51 @@
 # Chatbot Platform Test Results
 
+Date: 2025-06-10
+Time: 08:31:14
+
+## Adaptive TTL Cache System Test Results
+
+Timestamp: 2025-06-10T08:31:14.000Z
+Status: Completed
+Tests: 13
+Passed: 13
+Failed: 0
+
+Unit Tests:
+- Adaptive TTL middleware unit tests: PASS
+  - Configuration management: PASS
+  - Resource tracking: PASS
+  - TTL calculation: PASS
+  - Decay mechanism: PASS
+  - Error handling: PASS
+
+Integration Tests:
+- Adaptive TTL API integration tests: PASS
+  - GET /api/metrics/cache/adaptive-ttl: PASS
+  - PUT /api/metrics/cache/adaptive-ttl: PASS
+  - GET /api/metrics/cache/access-tracking: PASS
+  - POST /api/metrics/cache/decay-access: PASS
+  - Authorization checks: PASS
+
+Components Tested:
+- Adaptive TTL middleware
+- Adaptive TTL API endpoints
+- Redis integration
+- Authorization middleware
+
+Notes:
+- All tests passing successfully after fixing configuration issues
+- Fixed test configuration path resolution
+- Created proper test config structure
+- Verified proper Redis interaction
+- Confirmed admin-only access to endpoints
+
+Test Run: 2025-06-10T09:47:56+02:00
+- Confirmed that the system gracefully handles Redis connection errors
+- Validated that TTL values are properly constrained within min/max bounds
+
+---
+
 Date: 2025-06-02
 Time: 03:45:00
 

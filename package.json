@@ -89,10 +89,12 @@
     "axios": "^1.9.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
-    "express-rate-limit": "^7.1.5",
+    "express-rate-limit": "^7.5.0",
     "jsonwebtoken": "^9.0.2",
     "marked": "^15.0.12",
     "morgan": "^1.10.0",
+    "redis": "^5.5.6",
+    "sentiment": "^5.0.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.6",
     "uuid": "^9.0.1"

@@ -33,6 +33,26 @@ The Customizable Chatbots Platform allows developers and businesses to:
 - **Analytics Dashboard**: Monitor chatbot performance and user interactions
 - **Training Interface**: Improve chatbot responses through training
 - **Role-based Access Control**: Secure administration and management
+- **Rate Limiting**: Protect API endpoints from abuse with configurable rate limits
+- **Response Caching**: Improve performance with Redis-based response caching
+  - **Cache Monitoring**: Track cache hit/miss metrics for performance insights
+  - **Cache Warming**: Pre-populate cache with frequently accessed resources
+  - **Adaptive TTL**: Dynamically adjust cache expiration times based on usage patterns
+- **Sentiment Analysis**: Analyze message sentiment to enhance conversation flow
+
+## Documentation
+
+The project documentation has been reorganized to align with the `dev_framework` principles, providing a structured approach to documenting testing strategies, security and DevOps practices, and development methodologies.
+
+### Documentation Structure
+
+The documentation is organized into three main categories:
+
+- **[Testing Strategies](./docs/01_Testing_Strategies/README.md)**: Documentation related to testing methodologies and best practices
+- **[Security and DevOps](./docs/02_Security_and_DevOps/README.md)**: Documentation related to security practices and operational considerations
+- **[Development Methodologies](./docs/03_Development_Methodologies/README.md)**: Documentation related to coding standards and architectural patterns
+
+For more information, see the [Documentation README](./docs/README.md).
 
 ## Getting Started
 
@@ -92,12 +112,19 @@ chatbots/
 │   │   ├── analytics.model.js # Analytics model
 │   │   ├── chatbot.model.js   # Chatbot model
 │   │   └── topic.model.js     # Topic model
+│   ├── middleware/           # Middleware components
+│   │   ├── auth/              # Authentication middleware
+│   │   ├── cache/             # Response caching middleware
+│   │   ├── error/             # Error handling middleware
+│   │   ├── logging/           # Request logging middleware
+│   │   └── rate-limit/        # Rate limiting middleware
 │   ├── modules/              # Feature modules
 │   │   ├── analytics/         # Analytics module
 │   │   ├── chatbot/           # Chatbot module
 │   │   ├── conversation/      # Conversation module
 │   │   ├── entity/            # Entity module
 │   │   ├── preference/        # Preference module
+│   │   ├── sentiment/         # Sentiment analysis module
 │   │   └── topic/             # Topic module
 │   └── utils/                # Utility functions
 │       ├── errors.js          # Error handling utilities
@@ -132,10 +159,13 @@ chatbots/
 - ✅ Message processing flow
 - ✅ Basic web interface
 - ✅ Error handling and logging
+- ✅ Rate limiting middleware
+- ✅ Response caching middleware
 - ⬜ Database integration
 
 ### Phase 3: Advanced Features (Upcoming)
-- ⬜ User authentication and authorization
+- ✅ User authentication and authorization
+- ✅ Sentiment analysis integration
 - ⬜ Conversation history and context management
 - ⬜ Knowledge base integration
 - ⬜ Analytics and reporting
