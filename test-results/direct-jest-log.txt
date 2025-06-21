@@ -1,0 +1,11 @@
+Script started at 2025-06-21T10:49:52.571Z
+Using Jest path: C:\Users\ajelacn\Documents\chatbots\node_modules\.bin\jest.cmd
+Will save stdout to: C:\Users\ajelacn\Documents\chatbots\test-results\direct-jest-stdout-2025-06-21T10-49-52-588Z.txt
+Will save stderr to: C:\Users\ajelacn\Documents\chatbots\test-results\direct-jest-stderr-2025-06-21T10-49-52-588Z.txt
+Attempting to spawn Jest at 2025-06-21T10:49:52.590Z
+Jest process spawned at 2025-06-21T10:49:52.631Z
+Got stdout: 29.7.0
+
+Jest process exited with code 0 at 2025-06-21T10:49:53.204Z
+Script completed at 2025-06-21T10:49:53.206Z
+Timeout reached at 2025-06-21T10:50:22.635Z

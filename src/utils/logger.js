@@ -4,7 +4,8 @@
  * Provides consistent logging functionality throughout the application
  */
 
-require('@src/config');
+// Get current log level from config or default to INFO
+const config = require('@src/config');
 
 // Define log levels
 const LOG_LEVELS = {
@@ -14,7 +15,6 @@ const LOG_LEVELS = {
   DEBUG: 3
 };
 
-// Get current log level from config or default to INFO
 const currentLevel = config.logging?.level 
   ? LOG_LEVELS[config.logging.level.toUpperCase()] 
   : LOG_LEVELS.INFO;

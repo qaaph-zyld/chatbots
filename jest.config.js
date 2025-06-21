@@ -78,10 +78,6 @@ module.exports = {
   // Force exit after tests to prevent hanging
   forceExit: true,
   
-  // Global setup and teardown scripts
-  globalSetup: '<rootDir>/global-test-setup.js',
-  globalTeardown: '<rootDir>/global-test-teardown.js',
-  
   // Detect open handles to help troubleshoot hanging tests
   detectOpenHandles: true,
   
@@ -123,5 +119,7 @@ module.exports = {
       functions: 55,
       lines: 55
     }
-  }
+  },
+  // globalSetup: '<rootDir>/global-test-setup.js',
+  // globalTeardown: '<rootDir>/global-test-teardown.js'
 };

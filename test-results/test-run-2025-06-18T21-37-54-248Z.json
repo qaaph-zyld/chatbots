@@ -1,0 +1,98 @@
+{
+  "startTime": "2025-06-18T21:37:54.247Z",
+  "endTime": "2025-06-18T21:39:24.302Z",
+  "duration": 90055,
+  "entries": [
+    {
+      "timestamp": "2025-06-18T21:37:54.259Z",
+      "level": "info",
+      "message": "Logger initialized. Log file: test-results\\test-run-2025-06-18T21-37-54-248Z.log",
+      "data": null,
+      "elapsedMs": 12
+    },
+    {
+      "timestamp": "2025-06-18T21:37:54.260Z",
+      "level": "info",
+      "message": "Starting test execution with auto-fix",
+      "data": {
+        "testCommand": "npm test",
+        "maxRetries": 3,
+        "aiFixEnabled": true
+      },
+      "elapsedMs": 13
+    },
+    {
+      "timestamp": "2025-06-18T21:37:54.261Z",
+      "level": "info",
+      "message": "Test attempt 1/3",
+      "data": null,
+      "elapsedMs": 14
+    },
+    {
+      "timestamp": "2025-06-18T21:38:24.267Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 30020
+    },
+    {
+      "timestamp": "2025-06-18T21:38:24.269Z",
+      "level": "info",
+      "message": "Test attempt 2/3",
+      "data": null,
+      "elapsedMs": 30022
+    },
+    {
+      "timestamp": "2025-06-18T21:38:54.283Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 60036
+    },
+    {
+      "timestamp": "2025-06-18T21:38:54.285Z",
+      "level": "info",
+      "message": "Test attempt 3/3",
+      "data": null,
+      "elapsedMs": 60038
+    },
+    {
+      "timestamp": "2025-06-18T21:39:24.299Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 90052
+    },
+    {
+      "timestamp": "2025-06-18T21:39:24.300Z",
+      "level": "info",
+      "message": "Test execution completed",
+      "data": {
+        "success": false,
+        "attempts": 4,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "stats": {
+          "totalRuns": 0,
+          "successfulRuns": 0,
+          "failedRuns": 3,
+          "networkErrors": 3,
+          "lastRunTimestamp": null
+        }
+      },
+      "elapsedMs": 90053
+    }
+  ],
+  "stats": {
+    "errors": 3,
+    "warnings": 0,
+    "totalEntries": 9,
+    "successRate": "66.67"
+  }
+}

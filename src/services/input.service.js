@@ -4,7 +4,7 @@
  * Handles various input processing for the chatbot platform
  */
 
-require('@src/utils\logger');
+require('@src/utils/logger');
 
 class InputService {
   /**

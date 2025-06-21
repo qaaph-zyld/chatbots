@@ -1,0 +1,2096 @@
+/**
+ * Automated Test Runner with Intelligent Failure Recovery
+ * 
+ * auto-test-runner.js
+ * 
+ * This module provides a robust framework for executing tests with automatic
+ * failure detection, logging, and recovery mechanisms. It includes:
+ * - Configurable test execution options
+ * - Structured logging and result storage
+ * - Network error detection and retry strategies
+ * - Integration points for AI-driven fix generation
+ * 
+ * @author Testing Engineer
+ * @version 1.0.0
+ */
+
+const { exec, spawn } = require('child_process');
+const stripAnsi = require('strip-ansi');
+const fs = require('fs');
+const path = require('path');
+const { v4: uuidv4 } = require('uuid');
+
+// VERSION CHECK: 2025-06-19T18:55:00 - Analytics Fix Implementation
+console.log('AUTO-TEST-RUNNER VERSION CHECK: 2025-06-19T18:55:00');
+
+// Import test parsers
+let JestTestResultParser, MochaTestResultParser, TestCategorization;
+try {
+  JestTestResultParser = require('./test-parsers/JestTestResultParser');
+} catch (e) {
+  // Jest parser not available
+}
+
+try {
+  MochaTestResultParser = require('./test-parsers/MochaTestResultParser');
+} catch (e) {
+  // Mocha parser not available
+}
+
+// Import analytics modules
+let TestRunAnalytics, ReportGenerator;
+try {
+  TestRunAnalytics = require('./analytics/TestRunAnalytics');
+  ReportGenerator = require('./analytics/ReportGenerator');
+} catch (e) {
+  // Analytics modules not available
+  console.warn('Analytics modules not available:', e.message);
+}
+
+// Import fix management modules
+let FixManager;
+try {
+  FixManager = require('./fix-management/FixManager');
+} catch (e) {
+  // Fix management modules not available
+  console.warn('Fix management modules not available:', e.message);
+}
+
+try {
+  const { TestCategorization: TC } = require('./test-parsers/TestCategorization');
+  TestCategorization = TC;
+} catch (e) {
+  // Test categorization not available
+}
+
+// Import AI integration components
+let EnhancedAIFixEngine, OllamaServiceConnector, APIKeyManager;
+try {
+  EnhancedAIFixEngine = require('./ai-integration/EnhancedAIFixEngine').EnhancedAIFixEngine;
+} catch (e) {
+  console.warn('EnhancedAIFixEngine not available:', e.message);
+}
+
+try {
+  OllamaServiceConnector = require('./ai-integration/OllamaServiceConnector').OllamaServiceConnector;
+} catch (e) {
+  console.warn('OllamaServiceConnector not available:', e.message);
+}
+
+try {
+  APIKeyManager = require('./ai-integration/APIKeyManager').APIKeyManager;
+} catch (e) {
+  console.warn('APIKeyManager not available:', e.message);
+}
+
+/**
+ * Basic AIFixEngine class for fallback when EnhancedAIFixEngine is not available
+ */
+class AIFixEngine {
+  /**
+   * Creates a new AIFixEngine instance
+   * 
+   * @param {Object} options - Configuration options
+   * @param {TestLogger} options.logger - Logger instance
+   * @param {Object} options.parser - Test result parser instance
+   */
+  constructor(options = {}) {
+    this.logger = options.logger;
+    this.parser = options.parser;
+    this.fixAttempts = 0;
+    this.fixHistory = [];
+  }
+  
+  /**
+   * Analyzes test failures and generates potential fixes
+   * 
+   * @param {string} testOutput - Raw test output
+   * @param {Array} failedTests - Array of failed test objects
+   * @param {Object} parsedResults - Optional parsed test results for additional context
+   * @returns {Promise<Object>} - Analysis results
+   */
+  async analyzeProblem(testOutput, failedTests = [], parsedResults = null) {
+    if (this.logger) {
+      this.logger.info('Basic AIFixEngine analyzing test failures', { 
+        failedTestCount: failedTests.length,
+        fixAttempt: this.fixAttempts + 1
+      });
+    } else {
+      console.log(`Basic AIFixEngine analyzing test failures (${failedTests.length} failed tests)`);
+    }
+    
+    // Return empty recommendations as this is just a fallback
+    return {
+      analyzed: true,
+      fixAttempt: 1,
+      recommendations: []
+    };
+  }
+  
+  /**
+   * Applies AI-recommended fixes to the codebase
+   * 
+   * @param {Array} recommendations - Array of fix recommendations
+   * @param {Object} parsedResults - Optional parsed test results for additional context
+   * @returns {Promise<Object>} - Results of fix application
+   */
+  async applyFixes(recommendations, parsedResults = null) {
+    if (this.logger) {
+      this.logger.warn('Basic AIFixEngine cannot apply fixes - use EnhancedAIFixEngine instead');
+    } else {
+      console.log('Basic AIFixEngine cannot apply fixes - use EnhancedAIFixEngine instead');
+    }
+    
+    return {
+      applied: 0,
+      modifiedFiles: [],
+      success: false,
+      message: 'Basic AIFixEngine does not support fix application'
+    };
+  }
+  
+  /**
+   * Generates a fix description for a given test
+   * 
+   * @param {Object} test - Test object
+   * @returns {string} - Fix description
+   */
+  generateFixDescription(test) {
+    const fixMap = {
+      'Potential null reference exception': 'Add null check before accessing property',
+      'Undefined variable access': 'Initialize variable before use',
+      'Incorrect parameter type': 'Add type conversion or validation',
+      'Promise rejection not handled': 'Add catch handler to promise chain',
+      'Async operation not awaited': 'Add await keyword to async call',
+      'Incorrect comparison operator': 'Replace == with === for strict equality',
+      'Off-by-one error in loop condition': 'Adjust loop boundary condition',
+      'Race condition in async code': 'Use proper synchronization mechanism',
+      'Memory leak in event listener': 'Remove event listener when component unmounts',
+      'Incorrect regular expression pattern': 'Fix regex pattern syntax'
+    };
+    
+    const problem = this.generateProblemDescription(test);
+    return fixMap[problem] || 'Review and fix the implementation';
+  }
+  
+  /**
+   * Generates a problem description for a given test
+   * 
+   * @param {Object} test - Test object
+   * @returns {string} - Problem description
+   */
+  generateProblemDescription(test) {
+    // TO DO: implement problem description generation
+    return '';
+  }
+}
+
+/**
+ * Network error detection with advanced patterns
+ */
+class NetworkErrorDetector {
+  /**
+   * Creates a new NetworkErrorDetector instance
+   */
+  constructor() {
+    // Common network error patterns
+    this.networkErrorPatterns = [
+      /ENOTFOUND/i,
+      /ECONNREFUSED/i,
+      /ETIMEDOUT/i,
+      /ECONNRESET/i,
+      /network\s+error/i,
+      /certificate\s+has\s+expired/i,
+      /unable\s+to\s+resolve\s+host/i,
+      /proxy\s+connection\s+failed/i,
+      /socket\s+hang\s+up/i,
+      /TLS\s+handshake\s+timeout/i
+    ];
+    
+    // Corporate proxy block patterns
+    this.corporateProxyPatterns = [
+      /proxy\s+authentication\s+required/i,
+      /407\s+proxy\s+authentication\s+required/i,
+      /blocked\s+by\s+network\s+policy/i,
+      /firewall\s+block/i
+    ];
+  }
+  
+  /**
+   * Checks if an error is related to network issues
+   * 
+   * @param {Error|Object} error - Error object to analyze
+   * @returns {boolean} - True if the error is network-related
+   */
+  isNetworkError(error) {
+    const errorMsg = error?.message || error?.toString() || '';
+    return this.networkErrorPatterns.some(pattern => pattern.test(errorMsg));
+  }
+  
+  /**
+   * Checks if an error is related to corporate proxy blocks
+   * 
+   * @param {Error|Object} error - Error object to analyze
+   * @returns {boolean} - True if the error is related to corporate proxy blocks
+   */
+  isCorporateProxyBlock(error) {
+    const errorMsg = error?.message || error?.toString() || '';
+    return this.corporateProxyPatterns.some(pattern => pattern.test(errorMsg));
+  }
+  
+  /**
+   * Gets the type of error
+   * 
+   * @param {Error|Object} error - Error object to analyze
+   * @returns {string} - Error type (CORPORATE_PROXY_BLOCK, NETWORK_ERROR, UNKNOWN_ERROR)
+   */
+  getErrorType(error) {
+    if (this.isCorporateProxyBlock(error)) return 'CORPORATE_PROXY_BLOCK';
+    if (this.isNetworkError(error)) return 'NETWORK_ERROR';
+    return 'UNKNOWN_ERROR';
+  }
+  
+  /**
+   * Creates a retry strategy with exponential backoff
+   * 
+   * @param {Object} config - Retry configuration
+   * @param {number} config.initialDelay - Initial delay in ms (default: 1000)
+   * @param {number} config.maxDelay - Maximum delay in ms (default: 30000)
+   * @param {number} config.factor - Backoff factor (default: 2)
+   * @param {number} config.jitter - Jitter factor (default: 0.1)
+   * @param {number} config.maxRetries - Maximum number of retries (default: 5)
+   * @returns {Object} - Retry strategy object
+   */
+  createRetryStrategy(config = {}) {
+    return {
+      initialDelay: config.initialDelay || 1000,
+      maxDelay: config.maxDelay || 30000,
+      factor: config.factor || 2,
+      jitter: config.jitter || 0.1,
+      maxRetries: config.maxRetries || 5
+    };
+  }
+  
+  /**
+   * Calculates the delay for the next retry attempt
+   * 
+   * @param {Object} retryStrategy - Retry strategy object
+   * @param {number} attempt - Current attempt number (1-based)
+   * @returns {number} - Delay in milliseconds
+   */
+  calculateBackoffDelay(retryStrategy, attempt) {
+    // Calculate base delay with exponential backoff
+    const baseDelay = Math.min(
+      retryStrategy.initialDelay * Math.pow(retryStrategy.factor, attempt - 1),
+      retryStrategy.maxDelay
+    );
+    
+    // Add jitter to prevent thundering herd problem
+    const jitterAmount = baseDelay * retryStrategy.jitter;
+    const jitter = (Math.random() * jitterAmount * 2) - jitterAmount;
+    
+    return baseDelay + jitter;
+  }
+}
+
+/**
+ * TestLogger class for structured logging with different log levels and formatting
+ */
+class TestLogger {
+  /**
+   * Creates a new TestLogger instance
+   * 
+   * @param {string} outputPath - Directory to store log files
+   */
+  constructor(outputPath) {
+    this.outputPath = outputPath;
+    this.buffer = [];
+    this.startTime = Date.now();
+    this.logFile = null;
+    this.jsonResultFile = null;
+  }
+
+  /**
+   * Initializes the logger by creating the output directory and log files
+   * 
+   * @returns {Promise<void>}
+   */
+  async initialize() {
+    // Create output directory if it doesn't exist
+    if (!fs.existsSync(this.outputPath)) {
+      fs.mkdirSync(this.outputPath, { recursive: true });
+    }
+    
+    // Generate log file paths with timestamps
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    this.logFile = path.join(
+      this.outputPath, 
+      `test-run-${timestamp}.log`
+    );
+    this.jsonResultFile = this.logFile.replace('.log', '.json');
+    
+    // Log initialization
+    this.info(`Logger initialized. Log file: ${this.logFile}`);
+  }
+
+  /**
+   * Logs a message with the specified level and optional data
+   * 
+   * @param {string} level - Log level (info, warn, error, success)
+   * @param {string} message - Log message
+   * @param {any} data - Optional data to include in the log
+   * @returns {Object} - The log entry
+   */
+  log(level, message, data = null) {
+    const entry = {
+      timestamp: new Date().toISOString(),
+      level,
+      message,
+      data,
+      elapsedMs: Date.now() - this.startTime
+    };
+    
+    // Console output with color coding
+    const colors = {
+      info: '\x1b[36m%s\x1b[0m',    // cyan
+      warn: '\x1b[33m%s\x1b[0m',    // yellow
+      error: '\x1b[31m%s\x1b[0m',   // red
+      success: '\x1b[32m%s\x1b[0m'  // green
+    };
+    
+    console.log(colors[level] || '%s', `[${level.toUpperCase()}] ${message}`);
+    if (data) console.dir(data, { depth: 2, colors: true });
+    
+    this.buffer.push(entry);
+    return entry;
+  }
+  
+  /**
+   * Logs an informational message
+   * 
+   * @param {string} message - Log message
+   * @param {any} data - Optional data
+   * @returns {Object} - The log entry
+   */
+  info(message, data) { 
+    return this.log('info', message, data); 
+  }
+  
+  /**
+   * Logs a warning message
+   * 
+   * @param {string} message - Log message
+   * @param {any} data - Optional data
+   * @returns {Object} - The log entry
+   */
+  warn(message, data) { 
+    return this.log('warn', message, data); 
+  }
+  
+  /**
+   * Logs an error message
+   * 
+   * @param {string} message - Log message
+   * @param {any} data - Optional data
+   * @returns {Object} - The log entry
+   */
+  error(message, data) { 
+    return this.log('error', message, data); 
+  }
+  
+  /**
+   * Logs a success message
+   * 
+   * @param {string} message - Log message
+   * @param {any} data - Optional data
+   * @returns {Object} - The log entry
+   */
+  success(message, data) { 
+    return this.log('success', message, data); 
+  }
+  
+  /**
+   * Flushes the log buffer to disk
+   * 
+   * @returns {Promise<Object>} - Summary of the log operation
+   */
+  async flush() {
+    const summary = {
+      startTime: new Date(this.startTime).toISOString(),
+      endTime: new Date().toISOString(),
+      duration: Date.now() - this.startTime,
+      entries: this.buffer,
+      stats: this.calculateStats()
+    };
+    
+    // Write text log file
+    fs.writeFileSync(this.logFile, this.formatLogOutput());
+    
+    // Write JSON results file
+    fs.writeFileSync(this.jsonResultFile, JSON.stringify(summary, null, 2));
+    
+    return {
+      logFile: this.logFile,
+      jsonResultFile: this.jsonResultFile,
+      summary
+    };
+  }
+  
+  /**
+   * Formats the log buffer as a text output
+   * 
+   * @returns {string} - Formatted log output
+   */
+  formatLogOutput() {
+    return this.buffer.map(entry => 
+      `[${entry.timestamp}] [${entry.level.toUpperCase()}] ${entry.message}` +
+      (entry.data ? `\n${JSON.stringify(entry.data, null, 2)}` : '')
+    ).join('\n');
+  }
+  
+  /**
+   * Calculates statistics from log entries
+   * 
+   * @returns {Object} - Log statistics
+   */
+  calculateStats() {
+    // Calculate statistics from log entries
+    const errors = this.buffer.filter(e => e.level === 'error').length;
+    const warnings = this.buffer.filter(e => e.level === 'warn').length;
+    
+    return {
+      errors,
+      warnings,
+      totalEntries: this.buffer.length,
+      successRate: errors === 0 ? 100 : (100 - (errors / this.buffer.length * 100)).toFixed(2)
+    };
+  }
+}
+
+/**
+ * Main test automation runner class that orchestrates the test execution workflow
+ */
+class TestAutomationRunner {
+  /**
+   * Creates a new TestAutomationRunner instance
+   * 
+   * @param {Object} options - Configuration options
+   * @param {number} options.maxRetries - Maximum number of test retry attempts (default: 3)
+   * @param {string} options.testCommand - Command to execute tests (default: 'npm test')
+   * @param {string} options.outputDir - Directory to store test results (default: './test-results')
+   * @param {string} options.testFramework - Test framework to use (e.g., 'jest', 'mocha')
+   * @param {Object} options.parserOptions - Options to pass to the test parser
+   * @param {Object} options.aiOptions - AI integration options
+   * @param {string} options.aiOptions.model - AI model to use (default: 'codellama:7b-instruct')
+   * @param {string} options.aiOptions.apiUrl - API URL for the AI service (default: 'http://localhost:11434')
+   * @param {boolean} options.aiOptions.dryRun - Whether to run AI fixes in dry run mode (default: false)
+   */
+  constructor(options = {}) {
+    // Initialize options with defaults
+    this.maxRetries = options.maxRetries || 3;
+    this.testCommand = options.testCommand || 'npm test';
+    this.outputDir = options.outputDir || path.join(process.cwd(), 'test-results');
+    this.networkTimeoutMs = options.networkTimeoutMs || 120000; // 2 minutes default timeout (increased from 30s)
+    this.aiFixEnabled = options.aiFixEnabled !== false; // Default to true
+    this.testFramework = options.testFramework || 'jest';
+    this.parserOptions = options.parserOptions || {};
+    this.aiOptions = options.aiOptions || {};
+    this.codebasePath = options.codebasePath || process.cwd();
+    
+    // Test categorization options
+    this.categorizationEnabled = options.categorizationEnabled !== false; // Default to true
+    this.categories = options.categories || [];
+    this.priorities = options.priorities || [];
+    this.categorizationOptions = options.categorizationOptions || {};
+    
+    // Initialize test parser based on framework
+    this.initializeParser();
+    
+    // Initialize test categorization if enabled
+    this.initializeTestCategorization();
+    
+    // Create output directory if it doesn't exist
+    this.ensureOutputDirectoryExists();
+    
+    // Initialize AI service connector if enabled
+    this.initializeAIServiceConnector();
+    
+    // Initialize analytics if available
+    this.analyticsEnabled = options.analyticsEnabled !== false; // Default to true
+    this.generateReportAfterRun = options.generateReportAfterRun || false;
+    this.analyticsOptions = options.analyticsOptions || {};
+    this.initializeAnalytics();
+    
+    // Initialize fix management if available
+    this.fixManagementEnabled = options.fixManagementEnabled !== false; // Default to true
+    this.autoRevertFailedFixes = options.autoRevertFailedFixes !== false; // Default to true
+    this.useFeedbackLoop = options.useFeedbackLoop !== false; // Default to true
+    this.fixManagementOptions = options.fixManagementOptions || {};
+    this.initializeFixManager();
+    
+    // Initialize run statistics
+    this.stats = {
+      totalRuns: 0,
+      successfulRuns: 0,
+      failedRuns: 0,
+      networkErrors: 0,
+      lastRunTimestamp: null
+    };
+    
+    console.log(`TestAutomationRunner initialized with:
+    - Max retries: ${this.maxRetries}
+    - Test command: ${this.testCommand}
+    - Output directory: ${this.outputDir}
+    - Network timeout: ${this.networkTimeoutMs}ms
+    - AI fix enabled: ${this.aiFixEnabled}${this.aiFixEnabled ? ' (' + (this.aiServiceConnector ? this.aiServiceConnector.getServiceName() : 'No AI service available') + ')' : ''}
+    - Test categorization enabled: ${this.categorizationEnabled}
+    - Categories filter: ${this.categories.length ? this.categories.join(', ') : 'none'}
+    - Priorities filter: ${this.priorities.length ? this.priorities.join(', ') : 'none'}`);
+  }
+  
+  /**
+   * Initializes the AI service connector if AI fix is enabled
+   * 
+   * @private
+   */
+  initializeAIServiceConnector() {
+    if (!this.aiFixEnabled) {
+      return;
+    }
+    
+    try {
+      // Check if required components are available
+      if (!OllamaServiceConnector) {
+        console.warn('AI fix is enabled but OllamaServiceConnector is not available');
+        return;
+      }
+      
+      // Initialize API key manager if available
+      let apiKeyManager = null;
+      if (APIKeyManager) {
+        try {
+          apiKeyManager = new APIKeyManager();
+        } catch (error) {
+          console.warn('Failed to initialize APIKeyManager:', error.message);
+        }
+      }
+      
+      // Initialize AI service connector
+      const model = this.aiOptions.model || 'codellama:7b-instruct';
+      const apiUrl = this.aiOptions.apiUrl || 'http://localhost:11434';
+      
+      this.aiServiceConnector = new OllamaServiceConnector({
+        model,
+        apiUrl,
+        apiKeyManager,
+        timeout: this.networkTimeoutMs
+      });
+      
+      console.log(`AI service connector initialized with model: ${model}`);
+    } catch (error) {
+      console.error('Failed to initialize AI service connector:', error.message);
+    }
+  }
+  
+  /**
+   * Initializes analytics modules if enabled
+   * 
+   * @private
+   */
+  initializeAnalytics() {
+    if (!this.analyticsEnabled) {
+      return;
+    }
+    
+    try {
+      // Initialize TestRunAnalytics if available
+      if (TestRunAnalytics) {
+        this.analytics = new TestRunAnalytics({
+          storageDir: path.join(this.outputDir, 'analytics'),
+          logger: null // Will be set per-run
+        });
+        console.log('Initialized analytics modules');
+      }
+      
+      // Initialize ReportGenerator if available
+      if (ReportGenerator) {
+        this.reportGenerator = new ReportGenerator({
+          outputDir: path.join(this.outputDir, 'reports'),
+          templateDir: path.join(__dirname, 'templates')
+        });
+      }
+    } catch (error) {
+      console.warn('Failed to initialize analytics modules:', error.message);
+    }
+  }
+  
+  /**
+   * Ensures the output directory exists, creating it if necessary
+   * 
+   * @private
+   */
+  ensureOutputDirectoryExists() {
+    if (!fs.existsSync(this.outputDir)) {
+      try {
+        fs.mkdirSync(this.outputDir, { recursive: true });
+        console.log(`Created output directory: ${this.outputDir}`);
+      } catch (error) {
+        console.error(`Failed to create output directory: ${error.message}`);
+        throw new Error(`Cannot create output directory: ${error.message}`);
+      }
+    }
+  }
+
+  /**
+   * Executes a command and returns the results using spawn for better I/O handling
+   * 
+   * @param {string} command - Command to execute
+   * @returns {Promise<Object>} - Promise resolving to command results
+   */
+  async runCommand(command, options = {}) {
+    console.log(`DEBUG: runCommand - Starting execution of command: ${command}`);
+    
+    // Set timeout from options or use default
+    const timeout = options.timeout || this.networkTimeoutMs;
+    console.log(`DEBUG: runCommand - Using timeout: ${timeout}ms`);
+    
+    // Generate a timestamp for the log files
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const logFile = path.join(this.outputDir, `test-output-${timestamp}.log`);
+    const stdoutFile = path.join(this.outputDir, `stdout-${timestamp}.txt`);
+    const stderrFile = path.join(this.outputDir, `stderr-${timestamp}.txt`);
+    console.log(`DEBUG: runCommand - Log file will be: ${logFile}`);
+    console.log(`DEBUG: runCommand - Stdout file will be: ${stdoutFile}`);
+    console.log(`DEBUG: runCommand - Stderr file will be: ${stderrFile}`);
+    
+    return new Promise((resolve, reject) => {
+      // Parse command into command and args for spawn
+      let args = [];
+      let cmd = command;
+      
+      // Simple parsing for command and arguments
+      if (command.includes(' ')) {
+        const parts = command.split(' ');
+        cmd = parts[0];
+        args = parts.slice(1);
+      }
+      
+      // Platform-specific path handling
+      if (process.platform === 'win32') {
+        // Convert forward slashes to backslashes for Windows
+        if (cmd.includes('/')) {
+          cmd = cmd.replace(/\//g, '\\');
+          console.log(`DEBUG: runCommand - Converted path for Windows: ${cmd}`);
+        }
+        
+        // For Windows, handle npm commands specially
+        if (cmd === 'npm') {
+          cmd = process.env.comspec || 'cmd.exe';
+          args = ['/c', 'npm'].concat(args);
+        }
+        
+        // For Windows, handle node_modules/.bin paths specially
+        if (cmd.includes('node_modules\\.bin')) {
+          console.log(`DEBUG: runCommand - Using node_modules\\.bin path on Windows: ${cmd}`);
+        }
+      }
+      
+      console.log(`DEBUG: runCommand - Spawning process: ${cmd} with args: ${args.join(' ')}`);
+      
+      // Track if the command has timed out
+      let isTimedOut = false;
+      let stdout = '';
+      let stderr = '';
+      let startTime = Date.now();
+      
+      // Create timeout handler
+      const timeoutId = setTimeout(() => {
+        isTimedOut = true;
+        const timeoutError = new Error(`Command timed out after ${timeout}ms: ${command}`);
+        timeoutError.code = 'TIMEOUT';
+        timeoutError.command = command;
+        
+        // Log timeout information
+        const timeoutData = {
+          command,
+          timestamp: new Date().toISOString(),
+          error: `Timed out after ${timeout}ms`,
+          exitCode: 'TIMEOUT'
+        };
+        
+        try {
+          fs.writeFileSync(logFile, JSON.stringify(timeoutData, null, 2));
+          console.error(`Command timed out. Details saved to: ${logFile}`);
+        } catch (writeError) {
+          console.error(`Failed to write timeout log: ${writeError.message}`);
+        }
+        
+        // Update statistics
+        this.stats.failedRuns++;
+        this.stats.networkErrors++;
+        
+        // Kill the child process if it's still running
+        if (childProcess && !childProcess.killed) {
+          childProcess.kill();
+          console.log(`DEBUG: runCommand - Killed child process due to timeout`);
+        }
+        
+        reject({ error: timeoutError, stdout, stderr, logFile });
+      }, timeout);
+      
+      // Spawn the child process
+      const childProcess = spawn(cmd, args, {
+        shell: true, // Use shell on all platforms - required for Windows .cmd files
+        stdio: ['ignore', 'pipe', 'pipe']
+      });
+      
+      console.log(`DEBUG: runCommand - Process spawned with shell: true`);
+      
+      // Collect stdout data
+      childProcess.stdout.on('data', (data) => {
+        const chunk = data.toString();
+        // Strip ANSI control characters for clean logs
+        const cleanChunk = stripAnsi(chunk);
+        stdout += cleanChunk;
+        
+        // Write stdout chunk directly to file for better readability
+        try {
+          fs.appendFileSync(stdoutFile, cleanChunk);
+        } catch (error) {
+          console.error(`Failed to write stdout chunk: ${error.message}`);
+        }
+        
+        console.log(`DEBUG: runCommand - Received stdout chunk: ${cleanChunk.length} bytes`);
+      });
+      
+      // Collect stderr data
+      childProcess.stderr.on('data', (data) => {
+        const chunk = data.toString();
+        // Strip ANSI control characters for clean logs
+        const cleanChunk = stripAnsi(chunk);
+        stderr += cleanChunk;
+        
+        // Write stderr chunk directly to file for better readability
+        try {
+          fs.appendFileSync(stderrFile, cleanChunk);
+        } catch (error) {
+          console.error(`Failed to write stderr chunk: ${error.message}`);
+        }
+        
+        console.log(`DEBUG: runCommand - Received stderr chunk: ${cleanChunk.length} bytes`);
+      });
+      
+      // Handle process errors
+      childProcess.on('error', (error) => {
+        console.log(`DEBUG: runCommand - Child process error event: ${error.message}`);
+        
+        if (!isTimedOut) {
+          clearTimeout(timeoutId);
+          
+          // Update statistics
+          this.stats.totalRuns++;
+          this.stats.failedRuns++;
+          this.stats.lastRunTimestamp = new Date().toISOString();
+          
+          // Create output data object
+          const outputData = {
+            command,
+            timestamp: new Date().toISOString(),
+            stdoutFile,
+            stderrFile,
+            error: error.message,
+            exitCode: -1,
+            duration: Date.now() - startTime
+          };
+          
+          // Save output to log file
+          try {
+            fs.writeFileSync(logFile, JSON.stringify(outputData, null, 2));
+            console.log(`Command output saved to: ${logFile}`);
+            console.log(`Stdout saved to: ${stdoutFile}`);
+            console.log(`Stderr saved to: ${stderrFile}`);
+          } catch (writeError) {
+            console.error(`Failed to write log file: ${writeError.message}`);
+          }
+          
+          reject({ error, stdout, stderr, logFile });
+        }
+      });
+      
+      // Handle process completion
+      childProcess.on('close', (code, signal) => {
+        console.log(`DEBUG: runCommand - Child process close event: code=${code}, signal=${signal}`);
+        
+        if (!isTimedOut) {
+          clearTimeout(timeoutId);
+          
+          // Update run statistics
+          this.stats.totalRuns++;
+          this.stats.lastRunTimestamp = new Date().toISOString();
+          
+          // Create output data object
+          const outputData = {
+            command,
+            timestamp: new Date().toISOString(),
+            stdoutFile,
+            stderrFile,
+            exitCode: code,
+            signal,
+            duration: Date.now() - startTime
+          };
+          
+          // Save output to log file
+          try {
+            fs.writeFileSync(logFile, JSON.stringify(outputData, null, 2));
+            console.log(`Command output saved to: ${logFile}`);
+            console.log(`Stdout saved to: ${stdoutFile}`);
+            console.log(`Stderr saved to: ${stderrFile}`);
+          } catch (writeError) {
+            console.error(`Failed to write log file: ${writeError.message}`);
+          }
+          
+          // Handle command execution results
+          if (code !== 0) {
+            this.stats.failedRuns++;
+            console.error(`Command failed with exit code ${code}`);
+            console.log(`DEBUG: runCommand - Rejecting promise due to non-zero exit code: ${code}`);
+            const error = new Error(`Command failed with exit code ${code}`);
+            error.code = code;
+            return reject({ error, stdout, stderr, logFile, exitCode: code });
+          }
+          
+          this.stats.successfulRuns++;
+          console.log(`DEBUG: runCommand - Command executed successfully, resolving promise`);
+          resolve({ stdout, stderr, logFile, exitCode: code });
+        }
+      });
+      
+      console.log(`DEBUG: runCommand - Child process created, waiting for completion...`);
+    });
+  }
+
+  /**
+   * Detects if an error is related to network or corporate proxy blocks
+   * 
+   * @param {Error} errorObj - Error object to analyze
+   * @returns {boolean} - True if the error is network-related
+   */
+  isNetworkBlockedError(errorObj) {
+    // Use NetworkErrorDetector to check for network errors
+    const detector = new NetworkErrorDetector();
+    return detector.isNetworkError(errorObj.error) || detector.isCorporateProxyBlock(errorObj.error);
+  }
+  
+  /**
+   * Gets parsed test results using the configured parser
+   * 
+   * @param {Object} testResult - Raw test execution result
+   * @returns {Object|null} - Parsed test results or null if parsing failed
+   */
+  getParsedResults(testResult) {
+    if (!this.parser || !testResult || !testResult.stdout) {
+      return null;
+    }
+    
+    try {
+      return this.parser.parse(testResult.stdout);
+    } catch (error) {
+      console.error('Error parsing test results:', error);
+      return null;
+    }
+  }
+  
+  /**
+   * Gets test summary information
+   * 
+   * @param {Object} testResult - Raw test execution result
+   * @returns {Object} - Test summary information
+   */
+  getTestSummary(testResult) {
+    const parsedResults = this.getParsedResults(testResult);
+    
+    if (parsedResults && this.parser) {
+      return this.parser.getSummary(parsedResults);
+    }
+    
+    // Default summary if no parser or parsing failed
+    return {
+      success: testResult && testResult.exitCode === 0,
+      totalTests: 0, // Unknown without proper parsing
+      passedTests: 0,
+      failedTests: testResult && testResult.exitCode !== 0 ? 1 : 0,
+      skippedTests: 0,
+      duration: testResult ? testResult.duration : 0
+    };
+  }
+  
+  /**
+   * Creates an appropriate AI fix engine instance
+   * 
+   * @param {TestLogger} logger - Logger instance
+   * @returns {AIFixEngine|EnhancedAIFixEngine} - AI fix engine instance
+   */
+  createAIFixEngine(logger) {
+    // Use EnhancedAIFixEngine if available with AI service connector
+    if (EnhancedAIFixEngine && this.aiServiceConnector) {
+      logger.info('Using EnhancedAIFixEngine with Ollama integration');
+      return new EnhancedAIFixEngine({
+        logger,
+        parser: this.parser,
+        aiServiceConnector: this.aiServiceConnector,
+        codebasePath: this.codebasePath,
+        dryRun: this.aiOptions?.dryRun || false
+      });
+    } else {
+      // Fall back to the basic AIFixEngine if enhanced version is not available
+      logger.warn('EnhancedAIFixEngine or AI service connector not available, falling back to basic AIFixEngine');
+      return new AIFixEngine({
+        logger,
+        parser: this.parser
+      });
+    }
+  }
+
+  /**
+   * Analyzes test failures using the AI fix engine
+   * 
+   * @param {Object} testResult - Test execution result
+   * @param {TestLogger} logger - Logger instance
+   * @returns {Promise<Object>} - Analysis results with recommendations
+   */
+  async analyzeTestFailures(testResult, logger) {
+    if (!this.aiFixEnabled) {
+      return { enabled: false };
+    }
+    
+    const failedTests = this.extractFailedTests(testResult);
+    
+    if (failedTests.length === 0) {
+      return { noFailures: true };
+    }
+    
+    // Get parsed results if available
+    const parsedResults = this.getParsedResults(testResult);
+    
+    // Create AI fix engine
+    const aiFixEngine = this.createAIFixEngine(logger);
+    
+    // Analyze failures
+    return await aiFixEngine.analyzeProblem(testResult.stdout, failedTests, parsedResults);
+  }
+
+  /**
+   * Applies AI-recommended fixes to the codebase
+   * 
+   * @param {Array} recommendations - Fix recommendations from AI
+   * @param {TestLogger} logger - Logger instance
+   * @param {Object} parsedResults - Optional parsed test results
+   * @returns {Promise<Object>} - Results of fix application
+   */
+  async applyAIFixes(recommendations, logger, parsedResults = null) {
+    if (!this.aiFixEnabled || !recommendations || recommendations.length === 0) {
+      return { enabled: false };
+    }
+    
+    // Create AI fix engine using the helper method
+    const aiFixEngine = this.createAIFixEngine(logger);
+    
+    // Apply fixes
+    return await aiFixEngine.applyFixes(recommendations, parsedResults);
+  }
+
+  /**
+   * Initializes the appropriate test parser based on the configured test framework
+   */
+  initializeParser() {
+    try {
+      if (this.testFramework === 'jest' && JestTestResultParser) {
+        this.parser = new JestTestResultParser(this.parserOptions);
+        console.log('Initialized Jest test result parser');
+      } else if (this.testFramework === 'mocha' && MochaTestResultParser) {
+        this.parser = new MochaTestResultParser(this.parserOptions);
+        console.log('Initialized Mocha test result parser');
+      } else {
+        console.warn(`No parser available for framework: ${this.testFramework}`);
+      }
+    } catch (error) {
+      console.warn(`Failed to initialize test parser: ${error.message}`);
+    }
+  }
+  
+  /**
+   * Initializes test categorization if enabled
+   */
+  initializeTestCategorization() {
+    if (!this.categorizationEnabled) {
+      return;
+    }
+    
+    if (TestCategorization) {
+      try {
+        this.categorization = new TestCategorization({
+          categories: this.categories,
+          priorities: this.priorities,
+          ...this.categorizationOptions
+        });
+        console.log('Initialized test categorization');
+      } catch (error) {
+        console.warn('Failed to initialize test categorization:', error.message);
+        this.categorizationEnabled = false;
+      }
+    } else {
+      console.warn('Test categorization not available. Disabling categorization features.');
+      this.categorizationEnabled = false;
+    }
+  }
+  
+  /**
+   * Initializes analytics modules if enabled
+   */
+  initializeAnalytics() {
+    if (!this.analyticsEnabled) {
+      return;
+    }
+    
+    // Check if analytics modules are available
+    if (!TestRunAnalytics || !ReportGenerator) {
+      console.warn('Analytics modules not available. Disabling analytics features.');
+      this.analyticsEnabled = false;
+      return;
+    }
+    
+    try {
+      // Initialize TestRunAnalytics
+      this.analytics = new TestRunAnalytics({
+        storageDir: path.join(this.outputDir, 'analytics'),
+        logger: null, // Will be set per-run
+        ...this.analyticsOptions
+      });
+      
+      // Initialize ReportGenerator
+      this.reportGenerator = new ReportGenerator({
+        outputDir: path.join(this.outputDir, 'reports'),
+        logger: null, // Will be set per-run
+        ...this.analyticsOptions
+      });
+      
+      console.log('Initialized analytics modules');
+    } catch (error) {
+      console.warn('Failed to initialize analytics modules:', error.message);
+      this.analyticsEnabled = false;
+    }
+  }
+  
+  /**
+   * Initializes fix management if enabled
+   */
+  initializeFixManager() {
+    if (!this.fixManagementEnabled) {
+      return;
+    }
+    
+    // Check if fix management modules are available
+    if (!FixManager) {
+      console.warn('Fix management modules not available. Disabling fix management features.');
+      this.fixManagementEnabled = false;
+      return;
+    }
+    
+    try {
+      // Initialize FixManager
+      this.fixManager = new FixManager({
+        backupDir: path.join(this.outputDir, 'backups'),
+        logger: null, // Will be set per-run
+        dryRun: this.aiOptions.dryRun || false,
+        ...this.fixManagementOptions
+      });
+      
+      console.log('Initialized fix management module');
+    } catch (error) {
+      console.warn('Failed to initialize fix management module:', error.message);
+      this.fixManagementEnabled = false;
+    }
+  }
+  
+  /**
+   * Creates an AI fix engine instance with the current configuration
+   * 
+   * @param {Object} logger - Logger instance for this run
+   * @returns {Object} - AI fix engine instance
+   */
+  createAIFixEngine(logger) {
+    // If enhanced AI fix engine is not available, use basic fallback
+    if (!EnhancedAIFixEngine) {
+      return new AIFixEngine({
+        logger,
+        parser: this.parser
+      });
+    }
+    
+    // Create enhanced AI fix engine with all available options
+    return new EnhancedAIFixEngine({
+      logger,
+      parser: this.parser,
+      aiServiceConnector: this.aiServiceConnector,
+      codebasePath: this.codebasePath,
+      dryRun: this.aiOptions.dryRun || false,
+      fixManager: this.fixManagementEnabled ? this.fixManager : null,
+      autoRevertFailedFixes: this.autoRevertFailedFixes
+    });
+  }
+  
+  /**
+   * Analyzes test failures using AI and generates potential fixes
+   * 
+   * @param {Object} testResult - Test execution result
+   * @param {Object} logger - Logger instance
+   * @returns {Promise<Object>} - Analysis results
+   */
+  async analyzeTestFailures(testResult, logger) {
+    if (!this.aiFixEnabled) {
+      if (logger) {
+        logger.info('AI fix generation is disabled');
+      }
+      return { analyzed: false, reason: 'AI fix generation is disabled' };
+    }
+    
+    // Extract failed tests
+    const failedTests = this.extractFailedTests(testResult);
+    
+    if (!failedTests || failedTests.length === 0) {
+      if (logger) {
+        logger.info('No failed tests to analyze');
+      }
+      return { analyzed: false, reason: 'No failed tests to analyze' };
+    }
+    
+    try {
+      // Create AI fix engine
+      const aiFixEngine = this.createAIFixEngine(logger);
+      
+      // Analyze test failures
+      const analysis = await aiFixEngine.analyzeProblem(
+        testResult.stdout || '',
+        failedTests,
+        this.parser ? this.parser.getParsedResults() : null
+      );
+      
+      return analysis;
+    } catch (error) {
+      if (logger) {
+        logger.error('Error analyzing test failures', { error: error.message });
+      } else {
+        console.error('Error analyzing test failures:', error.message);
+      }
+      
+      return {
+        analyzed: false,
+        error: error.message,
+        reason: 'Error analyzing test failures'
+      };
+    }
+  }
+  
+  /**
+   * Extracts failed tests from test execution result
+   * 
+   * @param {Object} testResult - Test execution result
+   * @returns {Array} - Array of failed test objects
+   */
+  extractFailedTests(testResult) {
+    // If we have a parser, use it
+    if (this.parser && typeof this.parser.parse === 'function' && typeof this.parser.getFailedTests === 'function') {
+      try {
+        const parsedResults = this.parser.parse(testResult.stdout || '');
+        if (parsedResults) {
+          const failedTests = this.parser.getFailedTests(parsedResults);
+          if (Array.isArray(failedTests)) {
+            return failedTests;
+          } else {
+            console.warn('Parser getFailedTests did not return an array, falling back to default extraction');
+          }
+        } else {
+          console.warn('Parser returned null or undefined results, falling back to default extraction');
+        }
+      } catch (error) {
+        console.error('Error parsing test results:', error);
+        // Fall back to default extraction if parser fails
+      }
+    }
+    
+    // Default extraction (fallback)
+    if (!testResult || testResult.exitCode === 0) {
+      return [];
+    }
+    
+    // Simple regex-based extraction of test failures from stdout
+    const failureRegex = /FAIL\s+([^\n]+)\n/g;
+    const failures = [];
+    let match;
+    
+    const stdout = testResult.stdout || '';
+    while ((match = failureRegex.exec(stdout)) !== null) {
+      failures.push({
+        name: match[1].trim(),
+        message: this.extractErrorMessage(stdout, match.index)
+      });
+    }
+    
+    // If no specific failures found but exit code indicates failure,
+    // create a generic failure entry
+    if (failures.length === 0 && testResult.exitCode !== 0) {
+      failures.push({
+        name: 'Unknown Test Failure',
+        message: 'Test execution failed with no specific failure information'
+      });
+    }
+    
+    return failures;
+  }
+  
+  /**
+   * Applies AI-recommended fixes to the codebase
+   * 
+   * @param {Array} recommendations - Array of fix recommendations
+   * @param {Object} logger - Logger instance
+   * @returns {Promise<Object>} - Results of fix application
+   */
+  async applyAIFixes(recommendations, logger) {
+    if (!this.aiFixEnabled) {
+      if (logger) {
+        logger.info('AI fix application is disabled');
+      }
+      return { applied: false, reason: 'AI fix application is disabled' };
+    }
+    
+    if (!recommendations || recommendations.length === 0) {
+      if (logger) {
+        logger.info('No recommendations to apply');
+      }
+      return { applied: false, reason: 'No recommendations to apply' };
+    }
+    
+    try {
+      // Create AI fix engine
+      const aiFixEngine = this.createAIFixEngine(logger);
+      
+      // If fix management is enabled, ensure the logger is set
+      if (this.fixManagementEnabled && this.fixManager) {
+        this.fixManager.logger = logger;
+      }
+      
+      // Apply fixes
+      const result = await aiFixEngine.applyFixes(
+        recommendations,
+        this.parser ? this.parser.getParsedResults() : null
+      );
+      
+      return result;
+    } catch (error) {
+      if (logger) {
+        logger.error('Error applying AI fixes', { error: error.message });
+      } else {
+        console.error('Error applying AI fixes:', error.message);
+      }
+      
+      return {
+        applied: false,
+        error: error.message,
+        reason: 'Error applying AI fixes'
+      };
+    }
+  }
+  
+  /**
+   * Runs tests with automatic fix generation and application
+   * 
+   * @param {Object} options - Run options
+   * @param {string} options.testCommand - Optional override for test command
+   * @param {boolean} options.dryRun - Whether to run in dry run mode (no actual fixes applied)
+   * @param {number} options.maxRetries - Maximum number of retries
+   * @returns {Promise<Object>} - Test run results
+   */
+  async runTestsWithAutoFix(options = {}) {
+    // Create a unique run ID
+    const runId = uuidv4();
+    
+    // Create a logger for this run
+    const logger = new TestLogger({
+      runId,
+      outputDir: this.outputDir
+    });
+    
+    // If fix management is enabled, ensure the logger is set
+    if (this.fixManagementEnabled && this.fixManager) {
+      this.fixManager.logger = logger;
+    }
+    
+    // Start logging
+    logger.info('Starting test run', {
+      runId,
+      testCommand: options.testCommand || this.testCommand,
+      maxRetries: options.maxRetries || this.maxRetries,
+      dryRun: options.dryRun || this.aiOptions.dryRun || false,
+      aiFixEnabled: this.aiFixEnabled,
+      categorizationEnabled: this.categorizationEnabled
+    });
+    
+    // Update statistics
+    this.stats.totalRuns++;
+    this.stats.lastRunTimestamp = new Date().toISOString();
+    
+    // Initialize test run variables
+    let testResult;
+    let retryCount = 0;
+    let fixAttempts = 0;
+    let success = false;
+    const testCommand = options.testCommand || this.testCommand;
+    const maxRetries = options.maxRetries || this.maxRetries;
+    
+    // Run tests until success or max retries reached
+    while (retryCount <= maxRetries) {
+      try {
+        // Run the test command
+        logger.info(`Running tests (attempt ${retryCount + 1}/${maxRetries + 1})`, { command: testCommand });
+        testResult = await this.runCommand(testCommand, { logger });
+        
+        // Check if tests passed
+        if (testResult.exitCode === 0) {
+          logger.success('Tests passed', { exitCode: testResult.exitCode });
+          success = true;
+          this.stats.successfulRuns++;
+          break;
+        }
+        
+        // Tests failed, log the failure
+        logger.error('Tests failed', { 
+          exitCode: testResult.exitCode,
+          attempt: retryCount + 1
+        });
+        
+        // If AI fix is not enabled, just retry
+        if (!this.aiFixEnabled) {
+          logger.info('AI fix is disabled, retrying tests');
+          retryCount++;
+          continue;
+        }
+        
+        // Analyze test failures and generate fixes
+        logger.info('Analyzing test failures');
+        const analysis = await this.analyzeTestFailures(testResult, logger);
+        
+        // If analysis failed or no recommendations, retry
+        if (!analysis.analyzed || !analysis.recommendations || analysis.recommendations.length === 0) {
+          logger.warn('No fix recommendations generated', { reason: analysis.reason || 'Unknown' });
+          retryCount++;
+          continue;
+        }
+        
+        // Log recommendations
+        logger.info('Fix recommendations generated', { 
+          count: analysis.recommendations.length,
+          fixAttempt: ++fixAttempts
+        });
+        
+        // Apply fixes
+        const fixResult = await this.applyAIFixes(analysis.recommendations, logger);
+        
+        // If fixes were not applied, retry
+        if (!fixResult.applied) {
+          logger.warn('Fixes not applied', { reason: fixResult.reason || 'Unknown' });
+          retryCount++;
+          continue;
+        }
+        
+        // Log applied fixes
+        logger.info('Fixes applied', { 
+          count: fixResult.appliedFixes ? fixResult.appliedFixes.length : 0,
+          modifiedFiles: fixResult.modifiedFiles || []
+        });
+        
+        // Run tests again to validate fixes
+        logger.info('Running tests to validate fixes');
+        const validationResult = await this.runCommand(testCommand, { logger });
+        
+        // Check if validation passed
+        if (validationResult.exitCode === 0) {
+          logger.success('Fixes validated successfully', { exitCode: validationResult.exitCode });
+          success = true;
+          this.stats.successfulRuns++;
+          
+          // Record successful fix feedback
+          if (this.fixManagementEnabled && this.fixManager) {
+            for (const fix of fixResult.appliedFixes || []) {
+              this.fixManager.recordFixFeedback(fix, true, 'Passed validation');
+            }
+          }
+          
+          break;
+        }
+        
+        // Validation failed, log the failure
+        logger.error('Fix validation failed', { exitCode: validationResult.exitCode });
+        
+        // Extract failed tests after fix
+        const failedTestsAfterFix = this.extractFailedTests(validationResult);
+        
+        // Check if any fixes need to be reverted
+        if (this.fixManagementEnabled && this.fixManager && this.autoRevertFailedFixes) {
+          for (const fix of fixResult.appliedFixes || []) {
+            // Check if the test that this fix was for is still failing
+            const testStillFailing = failedTestsAfterFix.some(test => 
+              test.name === fix.testName || test.file === fix.file
+            );
+            
+            if (testStillFailing && fix.backupPath) {
+              logger.warn(`Reverting failed fix for ${fix.file}`, { testName: fix.testName });
+              await this.fixManager.revertToBackup(fix.backupPath, fix.file);
+              this.fixManager.recordFixFeedback(fix, false, 'Failed validation, reverted');
+            } else if (!testStillFailing) {
+              // Test is now passing, record positive feedback
+              this.fixManager.recordFixFeedback(fix, true, 'Fixed specific test');
+            }
+          }
+        }
+        
+        // Increment retry counter
+        retryCount++;
+      } catch (error) {
+        // Check if it's a network error
+        const isNetworkError = await this.handleNetworkError(error, retryCount, logger);
+        
+        if (isNetworkError) {
+          this.stats.networkErrors++;
+          retryCount++;
+          continue;
+        }
+        
+        // Non-network error, log and break
+        logger.error('Error running tests', { error: error.message });
+        this.stats.failedRuns++;
+        break;
+      }
+    }
+    
+    console.log('CONSOLE DEBUG: After main test loop, before max retries check');
+    logger.info('LOGGER DEBUG: After main test loop, before max retries check');
+    
+    // If max retries reached without success
+    if (!success && retryCount > maxRetries) {
+      logger.error(`Maximum retries (${maxRetries}) exceeded`);
+      this.stats.failedRuns++;
+    }
+    
+    console.log('CONSOLE DEBUG: Immediately before analytics try-catch block');
+    logger.info('LOGGER DEBUG: Immediately before analytics try-catch block');
+    
+    try {
+      // Debug logging before analytics block with both logger and console
+      logger.info('DEBUG: Before analytics if block');
+      console.log('CONSOLE DEBUG: Before analytics if block');
+      
+      logger.info('DEBUG: Analytics enabled:', this.analyticsEnabled);
+      console.log('CONSOLE DEBUG: Analytics enabled:', this.analyticsEnabled);
+      
+      logger.info('DEBUG: Analytics defined:', !!this.analytics);
+      console.log('CONSOLE DEBUG: Analytics defined:', !!this.analytics);
+      
+      // Generate analytics report if enabled
+      if (this.analyticsEnabled && this.analytics) {
+        // Debug logging inside analytics block
+        logger.info('DEBUG: Entered analytics if block.');
+        console.log('CONSOLE DEBUG: Entered analytics if block');
+        
+        try {
+          // Get test summary statistics from the test result
+          console.log('CONSOLE DEBUG: About to call getTestSummary');
+          const stats = this.getTestSummary(currentTestResult);
+          console.log('CONSOLE DEBUG: getTestSummary returned:', stats ? 'object with keys: ' + Object.keys(stats).join(', ') : 'null/undefined');
+          
+          // Extract failed tests for detailed reporting
+          console.log('CONSOLE DEBUG: About to call extractFailedTests');
+          const failedTests = this.extractFailedTests(currentTestResult);
+          console.log('CONSOLE DEBUG: extractFailedTests returned array of length:', failedTests ? failedTests.length : 0);
+          
+          // Debug logging for analytics data
+          logger.info('Analytics data being sent to recordTestRun', {
+            id: runId,
+            timestamp: startTime.toISOString(),
+            duration: runDuration,
+            stats: JSON.stringify(stats),
+            statsType: typeof stats,
+            statsKeys: stats ? Object.keys(stats) : 'null',
+            currentTestResult: currentTestResult ? {
+              exitCode: currentTestResult.exitCode,
+              hasStdout: !!currentTestResult.stdout,
+              stdoutLength: currentTestResult.stdout ? currentTestResult.stdout.length : 0,
+              duration: currentTestResult.duration
+            } : 'null'
+          });
+          
+          console.log('CONSOLE DEBUG: About to call analytics.recordTestRun with stats:', 
+            stats ? JSON.stringify(stats) : 'null/undefined');
+          
+          // Prepare analytics data with all required fields
+          await this.analytics.recordTestRun({
+            id: runId,                           // Required: unique identifier
+            timestamp: startTime.toISOString(),  // Required: ISO timestamp
+            duration: runDuration,              // Required: duration in ms
+            stats: {                            // Required: test statistics
+              totalTests: stats?.totalTests || 0,
+              passedTests: stats?.passedTests || 0,
+              failedTests: stats?.failedTests || 0,
+              skippedTests: stats?.skippedTests || 0
+            },
+            failures: failedTests,              // Array of test failures
+            fixes: fixResults || [],            // Array of applied fixes
+            success: success,                   // Whether run was successful
+            attempts: retryCount + 1,           // Number of test run attempts
+            validation: validationResults || {} // Validation results
+          });
+          
+          console.log('CONSOLE DEBUG: analytics.recordTestRun completed successfully');
+          
+          if (this.generateReportAfterRun && this.reportGenerator) {
+            this.reportGenerator.logger = logger;
+            await this.reportGenerator.generateReport();
+          }
+        } catch (error) {
+          logger.error('Failed to record analytics', { error: error.message });
+          console.error('CONSOLE ERROR: Failed to record analytics:', error);
+        }
+      }
+    } catch (e) {
+      console.error('CONSOLE ERROR: Critical error before/during analytics block:', e);
+      if (logger && logger.error) {
+        logger.error('Critical error before/during analytics block', { error: e.message, stack: e.stack });
+      }
+    }
+    
+    // Flush logs
+    const logSummary = await logger.flush();
+    
+    // Return results
+    return {
+      runId,
+      success,
+      testResult,
+      retryCount,
+      fixAttempts,
+      logSummary
+    };
+  }
+  
+  /**
+   * Extracts error message for a test failure
+   * 
+   * @param {string} stdout - Test output
+   * @param {number} failureIndex - Index of failure in stdout
+   * @returns {string} - Extracted error message
+   */
+  extractErrorMessage(stdout, failureIndex) {
+    // Look for error message after the failure line
+    const errorSection = stdout.substring(failureIndex, failureIndex + 500);
+    const errorMatch = errorSection.match(/Error:\s+([^\n]+)/i);
+    return errorMatch ? errorMatch[1].trim() : 'No detailed error message available';
+  }
+  
+  /**
+   * Handles network errors with exponential backoff retry strategy
+   * 
+   * @param {Object} errorObj - Error object from runCommand
+   * @param {number} attempt - Current attempt number (1-based)
+   * @param {Object} logger - TestLogger instance
+   * @returns {Promise<boolean>} - True if retry should be attempted, false otherwise
+   */
+  async handleNetworkError(errorObj, attempt, logger) {
+    const detector = new NetworkErrorDetector();
+    const errorType = detector.getErrorType(errorObj.error);
+    
+    // Create retry strategy
+    const retryStrategy = detector.createRetryStrategy({
+      initialDelay: 1000,
+      maxDelay: 30000,
+      factor: 2,
+      jitter: 0.1,
+      maxRetries: this.maxRetries
+    });
+    
+    // Check if we've exceeded max retries
+    if (attempt >= retryStrategy.maxRetries) {
+      if (logger) {
+        logger.error(`Maximum network retries (${retryStrategy.maxRetries}) exceeded. Aborting.`, {
+          errorType,
+          attempt,
+          maxRetries: retryStrategy.maxRetries
+        });
+      } else {
+        console.error(`Maximum network retries (${retryStrategy.maxRetries}) exceeded. Aborting.`);
+      }
+      return false;
+    }
+    
+    // If it's a corporate proxy block, we might not want to retry
+    if (errorType === 'CORPORATE_PROXY_BLOCK') {
+      if (logger) {
+        logger.warn('Corporate proxy block detected. This may require manual intervention.', {
+          error: errorObj.error.message,
+          attempt
+        });
+      } else {
+        console.warn('Corporate proxy block detected. This may require manual intervention.');
+      }
+      
+      // For corporate blocks, we might want to skip retries or use a different strategy
+      // For now, we'll retry once with a longer delay
+      if (attempt > 1) {
+        return false; // Don't retry more than once for corporate blocks
+      }
+    }
+    
+    // Calculate delay with exponential backoff
+    const delay = detector.calculateBackoffDelay(retryStrategy, attempt);
+    
+    if (logger) {
+      logger.info(`Network error detected. Retrying in ${Math.round(delay/1000)} seconds...`, {
+        errorType,
+        attempt,
+        delay,
+        error: errorObj.error.message
+      });
+    } else {
+      console.log(`Network error detected. Retrying in ${Math.round(delay/1000)} seconds...`);
+    }
+    
+    // Wait for the calculated delay
+    await new Promise(resolve => setTimeout(resolve, delay));
+    return true;
+  }
+
+  /**
+   * Invokes AI-driven analysis and fix generation for test failures
+   * 
+   * @param {string} testOutput - Raw test output
+   * @param {Object} failureAnalysis - Structured failure analysis
+   * @returns {Promise<Object>} - Results of the fix attempt
+   */
+  async aiFixFunction(testOutput, failureAnalysis) {
+    // Implementation will be added in a future step
+  }
+
+  /**
+   * Filters tests based on categories and priorities
+   * 
+   * @param {Array} tests - Array of test objects
+   * @returns {Array} - Filtered tests
+   */
+  filterTests(tests) {
+    if (!this.categorizationEnabled || !this.categorization || !tests || tests.length === 0) {
+      return tests;
+    }
+    
+    let filteredTests = tests;
+    
+    // Filter by category if specified
+    if (this.categories && this.categories.length > 0) {
+      filteredTests = this.categorization.filterByCategory(filteredTests, this.categories);
+    }
+    
+    // Filter by priority if specified
+    if (this.priorities && this.priorities.length > 0) {
+      filteredTests = this.categorization.filterByPriority(filteredTests, this.priorities);
+    }
+    
+    return filteredTests;
+  }
+  
+  /**
+   * Sorts tests by priority
+   * 
+   * @param {Array} tests - Array of test objects
+   * @returns {Array} - Sorted tests
+   */
+  sortTestsByPriority(tests) {
+    if (!this.categorizationEnabled || !this.categorization || !tests || tests.length === 0) {
+      return tests;
+    }
+    
+    return this.categorization.sortByPriority(tests);
+  }
+  
+  /**
+   * Updates test history with new test results
+   * 
+   * @param {Object} parsedResults - Parsed test results
+   * @returns {Promise<void>}
+   */
+  async updateTestHistory(parsedResults) {
+    if (!this.categorizationEnabled || !this.categorization || !parsedResults) {
+      return;
+    }
+    
+    await this.categorization.updateTestHistory(parsedResults);
+  }
+  
+  /**
+   * Runs tests with automatic fix attempts for failures
+   * 
+   * @returns {Promise<Object>} - Test execution results
+   */
+  async runTestsWithAutoFix() {
+    // Create a logger for this test run
+    const logger = new TestLogger(this.outputDir);
+    await logger.initialize();
+    
+    // Debug logging to trace method entry
+    logger.info('DEBUG: Entered runTestsWithAutoFix method.');
+    
+    // Generate a unique ID for this test run
+    const runId = uuidv4();
+    const startTime = Date.now();
+    
+    logger.info('Starting test execution with auto-fix', {
+      runId,
+      testCommand: this.testCommand,
+      maxRetries: this.maxRetries,
+      aiFixEnabled: this.aiFixEnabled
+    });
+    
+    // Set the logger for analytics modules if enabled
+    if (this.analyticsEnabled) {
+      if (this.analytics && typeof this.analytics.setLogger === 'function') {
+        this.analytics.setLogger(logger);
+      } else if (this.analytics) {
+        logger.warn('Analytics module does not have a setLogger method');
+      }
+      if (this.reportGenerator) this.reportGenerator.logger = logger;
+    }
+    
+    let attempt = 1;
+    let success = false;
+    let lastResult = null;
+    let appliedFixes = [];
+    
+    // Create a timestamp for the JSON output file
+    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
+    const jsonOutputFile = path.join(this.outputDir, `jest-output-${timestamp}.json`);
+    
+    // Ensure the output directory exists
+    if (!fs.existsSync(this.outputDir)) {
+      fs.mkdirSync(this.outputDir, { recursive: true });
+    }
+    
+    // Create a debug log file for direct logging
+    const debugLogFile = path.join(this.outputDir, `debug-log-${new Date().toISOString().replace(/[:.]/g, '-')}.txt`);
+    
+    // Helper function to write to debug log file
+    const writeDebugLog = (message) => {
+      try {
+        fs.appendFileSync(debugLogFile, `${message}\n`);
+      } catch (error) {
+        console.error(`Failed to write to debug log: ${error.message}`);
+      }
+    };
+    
+    writeDebugLog('Starting debug log');
+    writeDebugLog(`Output directory: ${this.outputDir}`);
+    writeDebugLog(`Current working directory: ${process.cwd()}`);
+    
+    writeDebugLog('Running echo command test...');
+    try {
+      const echoResult = await this.runCommand('echo "Command execution test"', { timeout: 10000 });
+      writeDebugLog(`Echo command exit code: ${echoResult.exitCode}`);
+      writeDebugLog(`Echo command stdout: ${echoResult.stdout}`);
+      writeDebugLog(`Echo command stderr: ${echoResult.stderr}`);
+    } catch (error) {
+      writeDebugLog(`Error running echo command: ${error.message}`);
+    }
+    
+    // Check if Jest is installed
+    try {
+      const jestPackageJson = require('jest/package.json');
+      writeDebugLog(`Jest version: ${jestPackageJson.version}`);
+    } catch (error) {
+      writeDebugLog(`Error checking Jest installation: ${error.message}`);
+    }
+    
+    writeDebugLog('Attempting to run Jest directly with child_process.spawn...');
+    try {
+      const jestProcess = require('child_process').spawn('npx', ['jest', '--verbose'], {
+        cwd: process.cwd(),
+        shell: true,
+        stdio: 'pipe'
+      });
+      
+      let jestStdout = '';
+      let jestStderr = '';
+      
+      jestProcess.stdout.on('data', (data) => {
+        const chunk = data.toString();
+        jestStdout += chunk;
+        writeDebugLog(`JEST STDOUT: ${chunk}`);
+      });
+      
+      jestProcess.stderr.on('data', (data) => {
+        const chunk = data.toString();
+        jestStderr += chunk;
+        writeDebugLog(`JEST STDERR: ${chunk}`);
+      });
+      
+      await new Promise((resolve, reject) => {
+        jestProcess.on('close', (code) => {
+          writeDebugLog(`Jest process exited with code: ${code}`);
+          writeDebugLog(`Jest stdout: ${jestStdout}`);
+          writeDebugLog(`Jest stderr: ${jestStderr}`);
+          resolve();
+        });
+        
+        jestProcess.on('error', (error) => {
+          writeDebugLog(`Jest process error: ${error.message}`);
+          reject(error);
+        });
+        
+        // Set a timeout to prevent hanging
+        setTimeout(() => {
+          writeDebugLog('Jest process timed out after 60 seconds');
+          jestProcess.kill();
+          resolve();
+        }, 60000);
+      });
+    } catch (error) {
+      writeDebugLog(`Error running Jest directly: ${error.message}`);
+    }
+    
+    // Now continue with the normal flow using runCommand with direct path to Jest
+    const jestPath = path.join(process.cwd(), 'node_modules', '.bin', 'jest');
+    const verboseTestCommand = `${jestPath} --verbose`;
+    this.logger.info(`Using enhanced test command with direct path: ${verboseTestCommand}`, { runId });
+    writeDebugLog(`Using command with direct path: ${verboseTestCommand}`);
+    
+    while (attempt <= this.maxRetries && !success) {
+      logger.info(`Test attempt ${attempt}/${this.maxRetries}`);
+      
+      try {
+        // Run the tests with the enhanced verbose command instead of this.testCommand
+        const result = await this.runCommand(verboseTestCommand, { timeout: this.networkTimeoutMs });
+        lastResult = result;
+        console.log(`DEBUG: runTestsWithAutoFix - Command completed, got result with exitCode: ${lastResult?.exitCode}`);
+        
+        // Check if tests passed
+        if (lastResult.exitCode === 0) {
+          success = true;
+          logger.success('Tests passed successfully', {
+            attempt,
+            duration: lastResult.duration
+          });
+          break;
+        }
+        
+        logger.error(`Tests failed with exit code ${lastResult.exitCode}`, {
+          attempt,
+          duration: lastResult.duration
+        });
+        
+        // Check if this was a network error
+        if (this.isNetworkBlockedError(lastResult)) {
+          const shouldRetry = await this.handleNetworkError(lastResult, attempt, logger);
+          if (shouldRetry) {
+            attempt++;
+            continue;
+          } else {
+            break; // Stop retrying if handleNetworkError says to
+          }
+        }
+        
+        // If AI fixes are enabled, try to analyze and fix
+        if (this.aiFixEnabled) {
+          logger.info('Attempting AI-driven fixes');
+          
+          // Analyze failures
+          const analysis = await this.analyzeTestFailures(lastResult, logger);
+          
+          if (analysis.recommendations && analysis.recommendations.length > 0) {
+            // Apply fixes
+            const fixResult = await this.applyAIFixes(analysis.recommendations, logger);
+            
+            if (fixResult.success) {
+              appliedFixes.push({
+                attempt,
+                fixes: fixResult.applied,
+                files: fixResult.modifiedFiles
+              });
+              
+              logger.info(`Applied ${fixResult.applied} fixes to ${fixResult.modifiedFiles.length} files.`);
+              
+              // Validate fixes before proceeding with a full test run
+              if (fixResult.appliedFixes && fixResult.appliedFixes.length > 0) {
+                logger.info('Validating applied fixes...');
+                
+                // Get the list of failed tests from the last run
+                const failedTests = this.extractFailedTests(lastResult);
+                
+                // Create an AI fix engine instance for validation
+                const aiFixEngine = this.createAIFixEngine(logger);
+                
+                // Validate the fixes
+                const validationResult = await aiFixEngine.validateFixes(
+                  fixResult.appliedFixes,
+                  failedTests,
+                  this.testCommand
+                );
+                
+                if (validationResult.validated && validationResult.allPassed) {
+                  logger.success('Fix validation successful! Targeted tests now pass.', {
+                    validatedTests: validationResult.passedTests.length
+                  });
+                } else {
+                  logger.warn('Fix validation failed or was incomplete', {
+                    reason: validationResult.reason || 'Unknown reason',
+                    passedCount: validationResult.passedTests?.length || 0,
+                    failedCount: validationResult.failedTests?.length || 0
+                  });
+                }
+              }
+              
+              logger.info('Proceeding with full test run...');
+            } else {
+              logger.warn('Failed to apply AI fixes');
+            }
+          } else {
+            logger.warn('No fix recommendations generated by AI');
+          }
+        }
+        
+        attempt++;
+      } catch (error) {
+        logger.error('Error during test execution', { error: error.toString() });
+        
+        // Check if this was a network error
+        const errorObj = { error, stdout: '', stderr: error.toString(), exitCode: -1 };
+        if (this.isNetworkBlockedError(errorObj)) {
+          const shouldRetry = await this.handleNetworkError(errorObj, attempt, logger);
+          if (shouldRetry) {
+            attempt++;
+            continue;
+          } else {
+            break; // Stop retrying if handleNetworkError says to
+          }
+        }
+        
+        attempt++;
+      }
+    }
+    
+    // Calculate test duration
+    const endTime = Date.now();
+    const duration = endTime - startTime;
+    
+    // Extract parsed results if available
+    let parsedResults = null;
+    let failedTests = [];
+    
+    if (lastResult && lastResult.stdout) {
+      try {
+        parsedResults = this.parser ? await this.parser.parse(lastResult.stdout) : null;
+        failedTests = parsedResults ? parsedResults.failedTests || [] : [];
+      } catch (error) {
+        logger.error('Failed to parse test results', { error: error.toString() });
+      }
+    }
+    
+    // Summarize results
+    const summary = {
+      success,
+      attempts: attempt,
+      lastExitCode: lastResult ? lastResult.exitCode : -1,
+      appliedFixes,
+      duration,
+      stats: this.stats
+    };
+    
+    logger.info('Test execution completed', summary);
+    
+    // Record analytics if enabled
+    if (this.analyticsEnabled && this.analytics) {
+      try {
+        // Debug logs for analytics data
+        console.log('DEBUG: Analytics enabled, preparing test run data');
+        console.log('DEBUG: parsedResults available:', !!parsedResults);
+        if (parsedResults) {
+          console.log('DEBUG: parsedResults structure:', JSON.stringify({
+            totalTests: parsedResults.totalTests,
+            passedTests: parsedResults.passedTests,
+            failedTestsLength: parsedResults.failedTests?.length,
+            skippedTests: parsedResults.skippedTests
+          }));
+        }
+        
+        // Prepare test run data
+        const testRunData = {
+          id: runId,
+          timestamp: new Date(startTime).toISOString(),
+          duration,
+          success,
+          attempts: attempt,
+          stats: parsedResults ? {
+            totalTests: parsedResults.totalTests,
+            passedTests: parsedResults.passedTests,
+            failedTests: parsedResults.failedTests?.length || 0,
+            skippedTests: parsedResults.skippedTests || 0
+          } : {
+            // Provide default stats when parsedResults is not available
+            totalTests: 0,
+            passedTests: 0,
+            failedTests: lastResult && lastResult.exitCode !== 0 ? 1 : 0,
+            skippedTests: 0
+          },
+          failures: failedTests.map(test => ({
+            testName: test.fullName || test.name,
+            message: test.message,
+            file: test.file,
+            line: test.line
+          })),
+          fixes: appliedFixes.map(fix => ({
+            testName: fix.testName,
+            file: fix.file,
+            success: fix.success,
+            changes: fix.changes
+          }))
+        };
+        
+        // Record test run data
+        await this.analytics.recordTestRun(testRunData);
+        logger.info('Recorded test run analytics', { runId });
+        
+        // Generate report if enabled
+        if (this.generateReportAfterRun && this.reportGenerator) {
+          const reportPath = await this.reportGenerator.generateReport(
+            await this.analytics.getTestRuns(),
+            { title: 'Test Automation Report', filename: `test-report-${runId}` }
+          );
+          logger.info('Generated test run report', { reportPath });
+        }
+      } catch (error) {
+        logger.error('Failed to record analytics', { error: error.toString() });
+      }
+    }
+    
+    // Flush logs to disk
+    const logResult = await logger.flush();
+    
+    return {
+      ...summary,
+      logs: logResult,
+      runId
+    };
+  }
+}
+
+// Export the TestAutomationRunner class
+module.exports = { TestAutomationRunner };
+
+// Run if called directly
+if (require.main === module) {
+  const runner = new TestAutomationRunner();
+  runner.runTestsWithAutoFix().catch(console.error);
+}

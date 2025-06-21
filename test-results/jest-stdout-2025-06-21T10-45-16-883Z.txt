@@ -1,0 +1,224 @@
+{
+  "configs": [
+    {
+      "automock": false,
+      "cache": true,
+      "cacheDirectory": "C:\\Users\\ajelacn\\AppData\\Local\\Temp\\jest",
+      "clearMocks": true,
+      "collectCoverageFrom": [
+        "src/**/*.js",
+        "src/**/*.jsx",
+        "!**/node_modules/**",
+        "!**/dist/**",
+        "!**/build/**"
+      ],
+      "coverageDirectory": "C:\\Users\\ajelacn\\Documents\\chatbots\\coverage",
+      "coveragePathIgnorePatterns": [
+        "\\\\node_modules\\\\"
+      ],
+      "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+      "detectLeaks": false,
+      "detectOpenHandles": true,
+      "errorOnDeprecated": false,
+      "extensionsToTreatAsEsm": [],
+      "fakeTimers": {
+        "enableGlobally": false
+      },
+      "forceCoverageMatch": [],
+      "globals": {},
+      "haste": {
+        "computeSha1": false,
+        "enableSymlinks": false,
+        "forceNodeFilesystemAPI": true,
+        "throwOnModuleCollision": false
+      },
+      "id": "a3b45dc887d8dfa0cdfdece6dd27bbb3",
+      "injectGlobals": true,
+      "moduleDirectories": [
+        "node_modules"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "json",
+        "jsx",
+        "node"
+      ],
+      "moduleNameMapper": [
+        [
+          "^@src/(.*)$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\src\\$1"
+        ],
+        [
+          "^@data/(.*)$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\src\\data\\$1"
+        ],
+        [
+          "^@core/(.*)$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\src\\core\\$1"
+        ],
+        [
+          "^@modules/(.*)$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\src\\modules\\$1"
+        ],
+        [
+          "^@api/(.*)$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\src\\api\\$1"
+        ],
+        [
+          "^@tests/(.*)$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\tests\\$1"
+        ]
+      ],
+      "modulePathIgnorePatterns": [],
+      "openHandlesTimeout": 1000,
+      "prettierPath": "prettier",
+      "resetMocks": false,
+      "resetModules": false,
+      "restoreMocks": false,
+      "rootDir": "C:\\Users\\ajelacn\\Documents\\chatbots",
+      "roots": [
+        "C:\\Users\\ajelacn\\Documents\\chatbots"
+      ],
+      "runner": "C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\jest-runner\\build\\index.js",
+      "sandboxInjectedGlobals": [],
+      "setupFiles": [],
+      "setupFilesAfterEnv": [
+        "C:\\Users\\ajelacn\\Documents\\chatbots\\tests\\unit\\setup\\jest-setup.js"
+      ],
+      "skipFilter": false,
+      "slowTestThreshold": 5,
+      "snapshotFormat": {
+        "escapeString": false,
+        "printBasicPrototype": false
+      },
+      "snapshotSerializers": [],
+      "testEnvironment": "C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\jest-environment-node\\build\\index.js",
+      "testEnvironmentOptions": {},
+      "testLocationInResults": false,
+      "testMatch": [
+        "**/tests/**/*.test.js",
+        "**/tests/**/*.spec.js"
+      ],
+      "testPathIgnorePatterns": [
+        "\\\\node_modules\\\\",
+        "\\\\tests\\\\e2e\\\\",
+        "chatbot-flow.test.js",
+        "voice-components.test.js",
+        "advanced-context-awareness.test.js"
+      ],
+      "testRegex": [],
+      "testRunner": "C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\jest-circus\\runner.js",
+      "transform": [
+        [
+          "\\.[jt]sx?$",
+          "C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\babel-jest\\build\\index.js",
+          {}
+        ]
+      ],
+      "transformIgnorePatterns": [
+        "\\\\node_modules\\\\(?!(chai|sinon|node-mocks-http)\\\\)"
+      ],
+      "watchPathIgnorePatterns": []
+    }
+  ],
+  "globalConfig": {
+    "bail": 0,
+    "changedFilesWithAncestor": false,
+    "ci": false,
+    "collectCoverage": false,
+    "collectCoverageFrom": [
+      "src/**/*.js",
+      "src/**/*.jsx",
+      "!**/node_modules/**",
+      "!**/dist/**",
+      "!**/build/**"
+    ],
+    "coverageDirectory": "C:\\Users\\ajelacn\\Documents\\chatbots\\coverage",
+    "coverageProvider": "babel",
+    "coverageReporters": [
+      "json",
+      "text",
+      "lcov",
+      "clover"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 50,
+        "branches": 40,
+        "functions": 50,
+        "lines": 50
+      },
+      "src/modules/": {
+        "statements": 60,
+        "branches": 55,
+        "functions": 60,
+        "lines": 60
+      },
+      "src/api/": {
+        "statements": 65,
+        "branches": 60,
+        "functions": 65,
+        "lines": 65
+      },
+      "src/domain/": {
+        "statements": 60,
+        "branches": 55,
+        "functions": 60,
+        "lines": 60
+      },
+      "src/core/": {
+        "statements": 60,
+        "branches": 55,
+        "functions": 60,
+        "lines": 60
+      },
+      "src/utils/": {
+        "statements": 55,
+        "branches": 50,
+        "functions": 55,
+        "lines": 55
+      }
+    },
+    "detectLeaks": false,
+    "detectOpenHandles": true,
+    "errorOnDeprecated": false,
+    "expand": false,
+    "findRelatedTests": false,
+    "forceExit": true,
+    "json": false,
+    "lastCommit": false,
+    "listTests": false,
+    "logHeapUsage": false,
+    "maxConcurrency": 5,
+    "maxWorkers": 1,
+    "noStackTrace": false,
+    "nonFlagArgs": [],
+    "notify": false,
+    "notifyMode": "failure-change",
+    "onlyChanged": false,
+    "onlyFailures": false,
+    "openHandlesTimeout": 1000,
+    "passWithNoTests": false,
+    "projects": [],
+    "rootDir": "C:\\Users\\ajelacn\\Documents\\chatbots",
+    "runTestsByPath": false,
+    "seed": -882005679,
+    "skipFilter": false,
+    "snapshotFormat": {
+      "escapeString": false,
+      "printBasicPrototype": false
+    },
+    "testFailureExitCode": 1,
+    "testPathPattern": "",
+    "testSequencer": "C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\@jest\\test-sequencer\\build\\index.js",
+    "testTimeout": 60000,
+    "updateSnapshot": "new",
+    "useStderr": false,
+    "verbose": true,
+    "watch": false,
+    "watchAll": false,
+    "watchman": true,
+    "workerThreads": false
+  },
+  "version": "29.7.0"
+}

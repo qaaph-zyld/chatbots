@@ -97,6 +97,7 @@
     "sentiment": "^5.0.2",
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.6",
+    "strip-ansi": "^6.0.1",
     "uuid": "^9.0.1"
   },
   "devDependencies": {

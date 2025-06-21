@@ -1,0 +1,111 @@
+# Software Testing Enhancement Plan (Updated)
+
+## Notes
+- Persona: Embody a "World-Class Software Testing Engineer". Key characteristics include being systematic, architecture-first, focused on automation, and proficient with open-source toolchains.
+- The user has approved the detailed testing strategy outlined in `testing_implementation_plan.md`.
+- The implementation will proceed in phases, starting with Core Test Runner Enhancement.
+- The plan has been further broken down into granular steps to manage complexity and potential token limits, as per user request.
+- `changelog.md` will be updated after each major step to track progress.
+- **IMPORTANT**: The project follows a strict "open-source only" policy. All AI services and tools must be open-source compatible.
+
+## Task List
+- [x] Review persona and testing strategy documents.
+- [x] Create and save the detailed `testing_implementation_plan.md` (initial version).
+- [x] **Phase 1: Core Test Runner Enhancement (Granular)**
+    - [x] **P1.1: `TestAutomationRunner` Class Foundation**
+        - [x] P1.1.0: Create `auto-test-runner.js` file.
+        - [x] P1.1.1: Define the `TestAutomationRunner` class structure in the new `auto-test-runner.js`.
+        - [x] P1.1.2: Implement the constructor with default and configurable options (maxRetries, testCommand, outputDir).
+        - [x] P1.1.3: Ensure the output directory (`test-results`) is created if it doesn't exist.
+    - [x] **P1.2: Command Execution Module**
+        - [x] P1.2.1: Implement a basic `runCommand` method using `child_process.exec`.
+        - [x] P1.2.2: Integrate timeout handling for `runCommand`.
+        - [x] P1.2.3: Capture and return `stdout`, `stderr`, and exit codes.
+    - [x] **P1.3: Structured Logging System**
+        - [x] P1.3.1: Design and implement `TestLogger` class.
+        - [x] P1.3.2: Implement log levels and timestamping.
+        - [x] P1.3.3: Implement basic text-based log file output.
+        - [x] P1.3.4: Enhance `TestLogger` for structured JSON results.
+    - [x] **P1.4: Network Error Detection and Retry Logic**
+        - [x] P1.4.1: Create `NetworkErrorDetector` class/utilities.
+        - [x] P1.4.2: Implement common network error pattern detection.
+        - [x] P1.4.3: Implement exponential backoff retry strategy.
+        - [x] P1.4.4: Integrate network error handling into the main loop.
+    - [x] **P1.5: AI Fix Integration Placeholder**
+        - [x] P1.5.1: Create placeholder `AIFixEngine` class.
+        - [x] P1.5.2: Implement stub methods for `analyzeProblem` and `applyFixes`.
+        - [x] P1.5.3: Integrate calls to AI placeholders upon test failure.
+    - [x] **P1.6: Initial `TestAutomationRunner` Workflow**
+        - [x] P1.6.1: Assemble the main `runTestsWithAutoFix` loop.
+    - [x] Update `changelog.md` after completing Phase 1 (or major sub-milestones).
+- [x] **Phase 2: Test Framework Integration**
+    - [x] **P2.1: Test Result Parser Interface**
+        - [x] P2.1.1: Define a generic `ITestResultParser` interface.
+        - [x] P2.1.2: Document the expected output format for parsed test results (e.g., standardized JSON).
+    - [x] **P2.2: Jest Test Result Parser**
+        - [x] P2.2.1: Implement `JestTestResultParser` conforming to `ITestResultParser`.
+        - [x] P2.2.2: Handle Jest's JSON output format.
+        - [x] P2.2.3: Extract key information: test suites, test cases, status (pass/fail/skip), duration, error messages.
+    - [x] **P2.3: Mocha Test Result Parser (Optional)**
+        - [x] P2.3.1: Implement `MochaTestResultParser` conforming to `ITestResultParser`.
+        - [x] P2.3.2: Handle Mocha's reporter output (e.g., JSON or xUnit).
+    - [x] **P2.4: Test Parser Integration into `TestAutomationRunner`**
+        - [x] P2.4.1: Modify `TestAutomationRunner` to accept a parser instance or type.
+        - [x] P2.4.2: Update `extractFailedTests` to use the selected parser.
+        - [x] P2.4.3: Ensure parsed results are used by `AIFixEngine`.
+    - [x] **P2.5: Test Categorization and Prioritization (Initial Stub)**
+        - [x] P2.5.1: Design a basic structure for test metadata (e.g., tags, priority levels).
+        - [x] P2.5.2: Implement stub methods in `TestAutomationRunner` for filtering tests based on categories/priority.
+    - [x] **P2.6: Enhance Failure Analysis with Parsed Data**
+        - [x] P2.6.1: Update `AIFixEngine.analyzeProblem` to consume structured parsed test data.
+        - [x] P2.6.2: Improve mock recommendations based on more detailed failure info.
+    - [x] Update `changelog.md` after completing Phase 2 (or major sub-milestones).
+- [ ] **Phase 3: AI Integration for Intelligent Fix Generation**
+    - [ ] **P3.1: AI Service Connector**
+        - [x] P3.1.1: Design a generic interface for connecting to different AI services.
+        - [x] P3.1.2: Implement a connector for a specific AI service (Note: OpenAI connector created but needs replacement).
+        - [x] P3.1.3: Handle API key management securely.
+        - [ ] P3.1.4: Research and select suitable open-source AI model(s)/engine(s) for code analysis and fix generation.
+        - [ ] P3.1.5: Implement connector(s) for the selected open-source AI service(s).
+        - [ ] P3.1.6: Adapt `AIFixEngine` to use the new open-source AI connector(s).
+    - [ ] **P3.2: Code Analysis and Context Generation**
+        - [ ] P3.2.1: Implement logic to read the file content where the test failure occurred.
+        - [ ] P3.2.2: Develop a prompt generation strategy including test details and code snippets.
+        - [ ] P3.2.3: Integrate with `TestCategorization` to provide more context to the AI.
+    - [ ] **P3.3: Fix Generation and Parsing**
+        - [ ] P3.3.1: Update `AIFixEngine.analyzeProblem` to call the AI service.
+        - [ ] P3.3.2: Implement logic to parse the AI's response (e.g., code patch).
+        - [ ] P3.3.3: Handle potential errors from the AI service.
+    - [ ] **P3.4: Fix Application and Validation**
+        - [ ] P3.4.1: Update `AIFixEngine.applyFixes` to apply the generated code patch.
+        - [ ] P3.4.2: Implement a "dry run" mode to preview changes.
+        - [ ] P3.4.3: Create a validation step that re-runs the failed test to confirm the fix.
+    - [ ] **P3.5: Learning and History**
+        - [ ] P3.5.1: Store a history of successful and unsuccessful fixes.
+        - [ ] P3.5.2: Use fix history to improve future prompt generation.
+    - [ ] Update `changelog.md` after completing Phase 3.
+- [ ] **Phase 4: Advanced Testing Enhancements**
+    - [ ] **P4.1: Test Categorization and Prioritization (Advanced)**
+        - [ ] P4.1.1: Enhance test metadata with more detailed categories.
+        - [ ] P4.1.2: Implement dynamic prioritization based on test history.
+        - [ ] P4.1.3: Add support for custom tags and filters.
+    - [ ] **P4.2: Test Data Management**
+        - [ ] P4.2.1: Design a system for managing test data.
+        - [ ] P4.2.2: Implement data generation utilities.
+        - [ ] P4.2.3: Create data cleanup mechanisms.
+    - [ ] **P4.3: Parallel Test Execution**
+        - [ ] P4.3.1: Implement parallel test execution.
+        - [ ] P4.3.2: Add resource management for parallel tests.
+        - [ ] P4.3.3: Ensure proper logging and result aggregation.
+    - [ ] **P4.4: Advanced Reporting**
+        - [ ] P4.4.1: Design enhanced report formats.
+        - [ ] P4.4.2: Implement trend analysis.
+        - [ ] P4.4.3: Create visualization components.
+    - [ ] **P4.5: CI/CD Integration**
+        - [ ] P4.5.1: Design CI/CD integration points.
+        - [ ] P4.5.2: Implement CI/CD configuration templates.
+        - [ ] P4.5.3: Create documentation for CI/CD integration.
+    - [ ] Update `changelog.md` after completing Phase 4.
+
+## Current Goal
+Research open-source AI for fix generation (P3.1.4).

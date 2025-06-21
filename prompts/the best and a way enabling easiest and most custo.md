@@ -1,6 +1,26 @@
 <img src="https://r2cdn.perplexity.ai/pplx-full-logo-primary-dark%402x.png" class="logo" width="120"/>
 
-# the best and a way enabling easiest and most customizable way to build chatbots for smaller/local businesses, using only open source and free tools
+# the best and a way enabling easiest and most customizable way to build chatbots for smaller/local businesses, using only PS C:\Users\ajelacn\Documents\chatbots> node auto-test-runner.js --test-command="npx jest --json" --framework=jest --ai-fix=true
+EnhancedAIFixEngine not available: Unexpected identifier 'responseText'
+Initialized Jest test result parser
+C:\Users\ajelacn\Documents\chatbots\auto-test-runner.js:484
+    this.initializeTestCategorization();
+         ^
+
+TypeError: this.initializeTestCategorization is not a function
+    at new TestAutomationRunner (C:\Users\ajelacn\Documents\chatbots\auto-test-runner.js:484:10)
+    at Object.<anonymous> (C:\Users\ajelacn\Documents\chatbots\auto-test-runner.js:1168:18)
+    at Module._compile (node:internal/modules/cjs/loader:1546:14)
+    at Object..js (node:internal/modules/cjs/loader:1689:10)
+    at Module.load (node:internal/modules/cjs/loader:1318:32)
+    at Function._load (node:internal/modules/cjs/loader:1128:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:315:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:218:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.11.0
+PS C:\Users\ajelacn\Documents\chatbots>  and free tools
 
 For smaller or local businesses seeking the easiest, most customizable way to build chatbots using only open-source and free tools, several platforms stand out based on ease of use, customization, and minimal coding requirements.
 
