@@ -159,3 +159,55 @@ stages:
               publishLocation: 'pipeline'
             displayName: 'Publish test report'
             condition: succeededOrFailed()
+
+  - stage: GenerateAIDashboard
+    displayName: 'Generate AI Fix Dashboard'
+    dependsOn: AnalyzeResults
+    jobs:
+      - job: GenerateDashboard
+        displayName: 'Generate AI Fix Dashboard'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(NODE_VERSION)
+            displayName: 'Install Node.js'
+          
+          - script: npm ci
+            displayName: 'Install dependencies'
+          
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'test-results'
+              targetPath: '$(TEST_RESULTS_DIR)'
+            displayName: 'Download test results'
+          
+          - script: node scripts/generate-ai-monitoring-dashboard.js
+            displayName: 'Generate AI monitoring dashboard'
+            continueOnError: true
+            env:
+              KNOWLEDGE_BASE_PATH: $(TEST_RESULTS_DIR)/ai-knowledge-base
+              DASHBOARD_OUTPUT_DIR: $(TEST_RESULTS_DIR)/ai-dashboard
+              FEEDBACK_PATH: $(TEST_RESULTS_DIR)/ai-knowledge-base/feedback
+              HISTORY_DAYS: '90'
+          
+          - script: node scripts/analyze-dashboard-trends.js
+            displayName: 'Analyze dashboard trends'
+            continueOnError: true
+            env:
+              METRICS_PATH: $(TEST_RESULTS_DIR)/ai-dashboard/metrics.json
+              REPORT_OUTPUT_PATH: $(TEST_RESULTS_DIR)/ai-dashboard/trend-report.md
+          
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(TEST_RESULTS_DIR)/ai-dashboard'
+              artifact: 'ai-dashboard'
+              publishLocation: 'pipeline'
+            displayName: 'Publish AI dashboard'
+            condition: succeededOrFailed()
+          
+          - task: PublishHtmlReport@1
+            inputs:
+              reportDir: '$(TEST_RESULTS_DIR)/ai-dashboard'
+              tabName: 'AI Fix Dashboard'
+            displayName: 'Publish HTML dashboard'
+            condition: succeededOrFailed()

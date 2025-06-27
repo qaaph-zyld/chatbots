@@ -58,6 +58,19 @@ pipeline {
                 sh 'node scripts/generate-test-report.js'
             }
         }
+        
+        stage('Generate AI Dashboard') {
+            steps {
+                script {
+                    try {
+                        sh 'node scripts/generate-ai-monitoring-dashboard.js'
+                        sh 'node scripts/analyze-dashboard-trends.js'
+                    } catch (Exception e) {
+                        echo "Dashboard generation failed, but continuing pipeline: ${e.message}"
+                    }
+                }
+            }
+        }
     }
     
     post {

@@ -1,0 +1,101 @@
+name: AI Fix Dashboard Generator
+
+on:
+  # Run after test workflow completes
+  workflow_run:
+    workflows: ["Run Tests"]
+    types:
+      - completed
+  
+  # Also run on schedule (daily)
+  schedule:
+    - cron: '0 0 * * *'  # Run at midnight UTC every day
+  
+  # Allow manual triggering
+  workflow_dispatch:
+
+jobs:
+  generate-dashboard:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Generate AI Fix Dashboard
+        run: node scripts/generate-ai-monitoring-dashboard.js
+        env:
+          KNOWLEDGE_BASE_PATH: ${{ github.workspace }}/test-results/ai-knowledge-base
+          DASHBOARD_OUTPUT_DIR: ${{ github.workspace }}/test-results/ai-dashboard
+          FEEDBACK_PATH: ${{ github.workspace }}/test-results/ai-knowledge-base/feedback
+          HISTORY_DAYS: '90'  # Track 90 days of history for trend analysis
+      
+      - name: Upload dashboard as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ai-fix-dashboard
+          path: |
+            test-results/ai-dashboard/
+            test-results/ai-dashboard/metrics.json
+      
+      - name: Deploy dashboard to GitHub Pages
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: test-results/ai-dashboard
+          target-folder: ai-dashboard
+          clean: true
+
+  analyze-trends:
+    needs: generate-dashboard
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Download dashboard artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: ai-fix-dashboard
+          path: ./downloaded-dashboard
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Analyze trends and generate report
+        run: node scripts/analyze-dashboard-trends.js
+        env:
+          METRICS_PATH: ./downloaded-dashboard/metrics.json
+          REPORT_OUTPUT_PATH: ./test-results/ai-dashboard/trend-report.md
+      
+      - name: Upload trend report as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ai-trend-report
+          path: test-results/ai-dashboard/trend-report.md
+      
+      - name: Create issue if negative trends detected
+        if: ${{ env.NEGATIVE_TRENDS == 'true' }}
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          filename: test-results/ai-dashboard/trend-report.md
+          update_existing: true
+          search_existing: open
