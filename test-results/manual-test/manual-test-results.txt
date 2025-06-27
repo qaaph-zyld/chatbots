@@ -1,0 +1,21 @@
+Starting manual command execution tests...
+Test time: 2025-06-24T21:57:36.729Z
+
+=== Testing Simple Command ===
+Running echo command...
+Command test failed: Cannot access 'childProcess' before initialization
+
+=== Testing Node.js Script Execution ===
+Running script: C:\Users\ajelacn\Documents\chatbots\scripts\hello.js
+Node script test failed: Cannot access 'childProcess' before initialization
+
+=== Testing npm Command Execution ===
+Running npm --version command...
+npm command test failed: Cannot access 'childProcess' before initialization
+
+=== Test Summary ===
+Simple command test: FAILED
+Node.js script test: FAILED
+npm command test: FAILED
+
+Overall test result: FAILED

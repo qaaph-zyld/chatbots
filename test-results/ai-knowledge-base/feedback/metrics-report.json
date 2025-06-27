@@ -1,0 +1,43 @@
+{
+  "overall": {
+    "totalFixes": 4,
+    "successfulFixes": 4,
+    "successRate": 1,
+    "recentSuccessRate": 1
+  },
+  "patterns": [
+    {
+      "fixStrategy": "syntax-error",
+      "errorType": "syntax-error",
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "weight": 1
+    },
+    {
+      "fixStrategy": "unknown",
+      "errorType": "unknown",
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "weight": 1
+    },
+    {
+      "fixStrategy": "timeout",
+      "errorType": "timeout",
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "weight": 1
+    },
+    {
+      "fixStrategy": "dependency-error",
+      "errorType": "dependency-error",
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "weight": 1
+    }
+  ],
+  "timestamp": "2025-06-27T12:02:51.858Z"
+}

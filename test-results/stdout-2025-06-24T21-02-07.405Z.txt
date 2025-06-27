@@ -1,0 +1,8 @@
+Command: echo Special chars: !@#$%^&*()_+{}[]|:;"'<>,.?/
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-24T21-02-07.405Z
+
+
+
+Command completed with exit code: 255
+Duration: 61ms

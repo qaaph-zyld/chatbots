@@ -39,6 +39,11 @@ The Customizable Chatbots Platform allows developers and businesses to:
   - **Cache Warming**: Pre-populate cache with frequently accessed resources
   - **Adaptive TTL**: Dynamically adjust cache expiration times based on usage patterns
 - **Sentiment Analysis**: Analyze message sentiment to enhance conversation flow
+- **AI-Enhanced Test Automation**: Robust test framework with intelligent failure recovery
+  - **Automatic Fix Generation**: AI-powered analysis and fix suggestions
+  - **Network Error Handling**: Detection and recovery from network-related issues
+  - **Comprehensive Logging**: Structured logging with different log levels
+  - [Learn more about the Test Automation Framework](./docs/test-automation-framework.md)
 
 ## Documentation
 

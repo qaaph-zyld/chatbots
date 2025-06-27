@@ -1,0 +1,7 @@
+{
+  "command": "node -e try { require('./auto-test-runner.js'); console.log('File loaded successfully'); } catch(e) { console.error('Error loading file:', e); }",
+  "exitCode": 1,
+  "stdoutFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stdout-2025-06-22T12-25-37-056Z.txt",
+  "stderrFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stderr-2025-06-22T12-25-37-056Z.txt",
+  "timestamp": "2025-06-22T12:25:37.225Z"
+}

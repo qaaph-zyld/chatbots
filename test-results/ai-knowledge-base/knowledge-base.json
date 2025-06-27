@@ -1,0 +1,44 @@
+{
+  "fixes": [
+    {
+      "fixStrategy": "syntax-error",
+      "fixCode": "\ndescribe('Syntax Error Test', () => {\n  test('should handle syntax errors', () => {\n    const obj = {\n      name: 'test',\n      value: 42\n    }; // Fixed: added closing brace\n    expect(obj.name).toBe('test');\n  });\n});\n",
+      "errorPattern": null,
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "timestamp": "2025-06-27T12:02:51.047Z"
+    },
+    {
+      "fixStrategy": "unknown",
+      "fixCode": "// Generated fix for unknown\n// TODO: Implement actual fix\n",
+      "errorPattern": null,
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "timestamp": "2025-06-27T12:02:51.330Z"
+    },
+    {
+      "fixStrategy": "timeout",
+      "fixCode": "\ndescribe('Timeout Test', () => {\n  test('should handle timeouts', async () => {\n    const fetchData = () => new Promise(resolve => {\n      // Fixed: added resolve call\n      resolve({ data: 'test' });\n    });\n    const data = await fetchData();\n    expect(data).toBeDefined();\n  });\n});\n",
+      "errorPattern": null,
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "timestamp": "2025-06-27T12:02:51.601Z"
+    },
+    {
+      "fixStrategy": "dependency-error",
+      "fixCode": "\ndescribe('Dependency Error Test', () => {\n  test('should handle dependency errors', () => {\n    // Fixed: use built-in module instead of non-existent one\n    const fs = require('fs');\n    expect(fs).toBeDefined();\n  });\n});\n",
+      "errorPattern": null,
+      "attempts": 1,
+      "successes": 1,
+      "successRate": 1,
+      "timestamp": "2025-06-27T12:02:51.854Z"
+    }
+  ],
+  "statistics": {
+    "totalAttempts": 0,
+    "successfulFixes": 4
+  }
+}

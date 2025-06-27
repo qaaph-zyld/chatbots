@@ -1,0 +1,9 @@
+Command: npm --version
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-24T21-02-07.467Z
+
+10.9.0
+
+
+Command completed with exit code: 0
+Duration: 1079ms

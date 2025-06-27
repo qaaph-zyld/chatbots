@@ -1,0 +1,8 @@
+Command: node C:\Users\ajelacn\Documents\chatbots\test-results\temp-scripts\script-2025-06-24T21-02-07.169Z.js
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-24T21-02-07.241Z
+
+
+
+Command completed with exit code: 0
+Duration: 160ms

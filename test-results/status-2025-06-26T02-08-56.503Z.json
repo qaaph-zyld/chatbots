@@ -1,0 +1,10 @@
+{
+  "command": "echo Hello, World!",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-26T02:08:56.506Z",
+  "currentTime": "2025-06-26T02:08:56.574Z",
+  "duration": 68,
+  "status": "success",
+  "exitCode": null,
+  "pid": 14860
+}

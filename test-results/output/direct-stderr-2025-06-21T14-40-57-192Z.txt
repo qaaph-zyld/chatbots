@@ -1,0 +1,8 @@
+● Validation Error:
+
+  Module <rootDir>/tests/unit/setup/jest-setup.js in the setupFilesAfterEnv option was not found.
+         <rootDir> is: C:\Users\ajelacn\Documents\chatbots\test-results
+
+  Configuration Documentation:
+  https://jestjs.io/docs/configuration
+

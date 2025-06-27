@@ -1,0 +1,411 @@
+{
+  "timestamp": "2025-06-22T08-46-01-313Z",
+  "overallSuccess": false,
+  "tests": [
+    {
+      "name": "Baseline Tests (Should Pass)",
+      "success": false,
+      "jsonExists": false,
+      "result": {
+        "success": false,
+        "attempts": 2,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "duration": 16595,
+        "stats": {
+          "totalRuns": 1,
+          "successfulRuns": 0,
+          "failedRuns": 1,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-22T08:46:17.911Z"
+        },
+        "logs": {
+          "logFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-01-320Z.log",
+          "jsonResultFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-01-320Z.json",
+          "summary": {
+            "startTime": "2025-06-22T08:46:01.320Z",
+            "endTime": "2025-06-22T08:46:17.933Z",
+            "duration": 16613,
+            "entries": [
+              {
+                "timestamp": "2025-06-22T08:46:01.321Z",
+                "level": "info",
+                "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-01-320Z.log",
+                "data": null,
+                "elapsedMs": 1
+              },
+              {
+                "timestamp": "2025-06-22T08:46:01.321Z",
+                "level": "info",
+                "message": "DEBUG: Entered runTestsWithAutoFix method.",
+                "data": null,
+                "elapsedMs": 1
+              },
+              {
+                "timestamp": "2025-06-22T08:46:01.322Z",
+                "level": "info",
+                "message": "Starting test execution with auto-fix",
+                "data": {
+                  "runId": "61805762-db7f-499d-9a70-26f7c151830a",
+                  "testCommand": "npx jest C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\sample-tests\\baseline.test.js --config=C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\validation-baseline-tests-(should-pass)-2025-06-22T08-46-01-313Z.json\"",
+                  "maxRetries": 1,
+                  "aiFixEnabled": false
+                },
+                "elapsedMs": 2
+              },
+              {
+                "timestamp": "2025-06-22T08:46:01.331Z",
+                "level": "info",
+                "message": "Using configured test command: npx jest C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\sample-tests\\baseline.test.js --config=C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\validation-baseline-tests-(should-pass)-2025-06-22T08-46-01-313Z.json\"",
+                "data": {
+                  "runId": "61805762-db7f-499d-9a70-26f7c151830a"
+                },
+                "elapsedMs": 11
+              },
+              {
+                "timestamp": "2025-06-22T08:46:01.331Z",
+                "level": "info",
+                "message": "Test attempt 1/1",
+                "data": null,
+                "elapsedMs": 11
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.916Z",
+                "level": "error",
+                "message": "Error during test execution",
+                "data": {
+                  "error": "[object Object]"
+                },
+                "elapsedMs": 16596
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.918Z",
+                "level": "info",
+                "message": "Test execution completed",
+                "data": {
+                  "success": false,
+                  "attempts": 2,
+                  "lastExitCode": -1,
+                  "appliedFixes": [],
+                  "duration": 16595,
+                  "stats": {
+                    "totalRuns": 1,
+                    "successfulRuns": 0,
+                    "failedRuns": 1,
+                    "networkErrors": 0,
+                    "lastRunTimestamp": "2025-06-22T08:46:17.911Z"
+                  }
+                },
+                "elapsedMs": 16598
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.926Z",
+                "level": "info",
+                "message": "Loaded 7 historical test runs",
+                "data": null,
+                "elapsedMs": 16606
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.931Z",
+                "level": "info",
+                "message": "Recorded test run in analytics history",
+                "data": {
+                  "id": "61805762-db7f-499d-9a70-26f7c151830a",
+                  "success": false,
+                  "failedTests": 0
+                },
+                "elapsedMs": 16611
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.932Z",
+                "level": "info",
+                "message": "Recorded test run analytics",
+                "data": {
+                  "runId": "61805762-db7f-499d-9a70-26f7c151830a"
+                },
+                "elapsedMs": 16612
+              }
+            ],
+            "stats": {
+              "errors": 1,
+              "warnings": 0,
+              "totalEntries": 10,
+              "successRate": "90.00"
+            }
+          }
+        },
+        "runId": "61805762-db7f-499d-9a70-26f7c151830a"
+      }
+    },
+    {
+      "name": "Failing Tests (Should Fail)",
+      "success": false,
+      "jsonExists": false,
+      "result": {
+        "success": false,
+        "attempts": 2,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "duration": 6108,
+        "stats": {
+          "totalRuns": 1,
+          "successfulRuns": 0,
+          "failedRuns": 1,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-22T08:46:24.047Z"
+        },
+        "logs": {
+          "logFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-17-944Z.log",
+          "jsonResultFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-17-944Z.json",
+          "summary": {
+            "startTime": "2025-06-22T08:46:17.943Z",
+            "endTime": "2025-06-22T08:46:24.059Z",
+            "duration": 6116,
+            "entries": [
+              {
+                "timestamp": "2025-06-22T08:46:17.944Z",
+                "level": "info",
+                "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-17-944Z.log",
+                "data": null,
+                "elapsedMs": 1
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.944Z",
+                "level": "info",
+                "message": "DEBUG: Entered runTestsWithAutoFix method.",
+                "data": null,
+                "elapsedMs": 1
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.944Z",
+                "level": "info",
+                "message": "Starting test execution with auto-fix",
+                "data": {
+                  "runId": "9129dd2c-b11e-42ed-b041-450973e1b9ee",
+                  "testCommand": "npx jest C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\sample-tests\\failing.test.js --config=C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\validation-failing-tests-(should-fail)-2025-06-22T08-46-01-313Z.json\"",
+                  "maxRetries": 1,
+                  "aiFixEnabled": false
+                },
+                "elapsedMs": 1
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.956Z",
+                "level": "info",
+                "message": "Using configured test command: npx jest C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\sample-tests\\failing.test.js --config=C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\validation-failing-tests-(should-fail)-2025-06-22T08-46-01-313Z.json\"",
+                "data": {
+                  "runId": "9129dd2c-b11e-42ed-b041-450973e1b9ee"
+                },
+                "elapsedMs": 13
+              },
+              {
+                "timestamp": "2025-06-22T08:46:17.957Z",
+                "level": "info",
+                "message": "Test attempt 1/1",
+                "data": null,
+                "elapsedMs": 14
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.051Z",
+                "level": "error",
+                "message": "Error during test execution",
+                "data": {
+                  "error": "[object Object]"
+                },
+                "elapsedMs": 6108
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.052Z",
+                "level": "info",
+                "message": "Test execution completed",
+                "data": {
+                  "success": false,
+                  "attempts": 2,
+                  "lastExitCode": -1,
+                  "appliedFixes": [],
+                  "duration": 6108,
+                  "stats": {
+                    "totalRuns": 1,
+                    "successfulRuns": 0,
+                    "failedRuns": 1,
+                    "networkErrors": 0,
+                    "lastRunTimestamp": "2025-06-22T08:46:24.047Z"
+                  }
+                },
+                "elapsedMs": 6109
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.056Z",
+                "level": "info",
+                "message": "Loaded 8 historical test runs",
+                "data": null,
+                "elapsedMs": 6113
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.059Z",
+                "level": "info",
+                "message": "Recorded test run in analytics history",
+                "data": {
+                  "id": "9129dd2c-b11e-42ed-b041-450973e1b9ee",
+                  "success": false,
+                  "failedTests": 0
+                },
+                "elapsedMs": 6116
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.059Z",
+                "level": "info",
+                "message": "Recorded test run analytics",
+                "data": {
+                  "runId": "9129dd2c-b11e-42ed-b041-450973e1b9ee"
+                },
+                "elapsedMs": 6116
+              }
+            ],
+            "stats": {
+              "errors": 1,
+              "warnings": 0,
+              "totalEntries": 10,
+              "successRate": "90.00"
+            }
+          }
+        },
+        "runId": "9129dd2c-b11e-42ed-b041-450973e1b9ee"
+      }
+    },
+    {
+      "name": "Failing Tests with AI Fix (Should Attempt Fix)",
+      "success": false,
+      "jsonExists": false,
+      "result": {
+        "success": false,
+        "attempts": 2,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "duration": 11333,
+        "stats": {
+          "totalRuns": 1,
+          "successfulRuns": 0,
+          "failedRuns": 1,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-22T08:46:35.400Z"
+        },
+        "logs": {
+          "logFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-24-069Z.log",
+          "jsonResultFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-24-069Z.json",
+          "summary": {
+            "startTime": "2025-06-22T08:46:24.069Z",
+            "endTime": "2025-06-22T08:46:35.406Z",
+            "duration": 11337,
+            "entries": [
+              {
+                "timestamp": "2025-06-22T08:46:24.069Z",
+                "level": "info",
+                "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-22T08-46-24-069Z.log",
+                "data": null,
+                "elapsedMs": 0
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.069Z",
+                "level": "info",
+                "message": "DEBUG: Entered runTestsWithAutoFix method.",
+                "data": null,
+                "elapsedMs": 0
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.069Z",
+                "level": "info",
+                "message": "Starting test execution with auto-fix",
+                "data": {
+                  "runId": "565c60ee-b367-4ed6-96fa-9a5dd5d90e82",
+                  "testCommand": "npx jest C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\sample-tests\\failing.test.js --config=C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\validation-failing-tests-with-ai-fix-(should-attempt-fix)-2025-06-22T08-46-01-313Z.json\"",
+                  "maxRetries": 1,
+                  "aiFixEnabled": true
+                },
+                "elapsedMs": 0
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.097Z",
+                "level": "info",
+                "message": "Using configured test command: npx jest C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\sample-tests\\failing.test.js --config=C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\validation-failing-tests-with-ai-fix-(should-attempt-fix)-2025-06-22T08-46-01-313Z.json\"",
+                "data": {
+                  "runId": "565c60ee-b367-4ed6-96fa-9a5dd5d90e82"
+                },
+                "elapsedMs": 28
+              },
+              {
+                "timestamp": "2025-06-22T08:46:24.098Z",
+                "level": "info",
+                "message": "Test attempt 1/1",
+                "data": null,
+                "elapsedMs": 29
+              },
+              {
+                "timestamp": "2025-06-22T08:46:35.402Z",
+                "level": "error",
+                "message": "Error during test execution",
+                "data": {
+                  "error": "[object Object]"
+                },
+                "elapsedMs": 11333
+              },
+              {
+                "timestamp": "2025-06-22T08:46:35.403Z",
+                "level": "info",
+                "message": "Test execution completed",
+                "data": {
+                  "success": false,
+                  "attempts": 2,
+                  "lastExitCode": -1,
+                  "appliedFixes": [],
+                  "duration": 11333,
+                  "stats": {
+                    "totalRuns": 1,
+                    "successfulRuns": 0,
+                    "failedRuns": 1,
+                    "networkErrors": 0,
+                    "lastRunTimestamp": "2025-06-22T08:46:35.400Z"
+                  }
+                },
+                "elapsedMs": 11334
+              },
+              {
+                "timestamp": "2025-06-22T08:46:35.404Z",
+                "level": "info",
+                "message": "Loaded 9 historical test runs",
+                "data": null,
+                "elapsedMs": 11335
+              },
+              {
+                "timestamp": "2025-06-22T08:46:35.406Z",
+                "level": "info",
+                "message": "Recorded test run in analytics history",
+                "data": {
+                  "id": "565c60ee-b367-4ed6-96fa-9a5dd5d90e82",
+                  "success": false,
+                  "failedTests": 0
+                },
+                "elapsedMs": 11337
+              },
+              {
+                "timestamp": "2025-06-22T08:46:35.406Z",
+                "level": "info",
+                "message": "Recorded test run analytics",
+                "data": {
+                  "runId": "565c60ee-b367-4ed6-96fa-9a5dd5d90e82"
+                },
+                "elapsedMs": 11337
+              }
+            ],
+            "stats": {
+              "errors": 1,
+              "warnings": 0,
+              "totalEntries": 10,
+              "successRate": "90.00"
+            }
+          }
+        },
+        "runId": "565c60ee-b367-4ed6-96fa-9a5dd5d90e82"
+      }
+    }
+  ]
+}

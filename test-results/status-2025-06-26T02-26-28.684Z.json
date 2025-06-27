@@ -1,0 +1,10 @@
+{
+  "command": "npx [jest tests/integration/command-executor.test.js --verbose ]",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-26T02:26:28.690Z",
+  "currentTime": "2025-06-26T02:26:33.903Z",
+  "duration": 5213,
+  "status": "failed",
+  "exitCode": null,
+  "pid": 16572
+}

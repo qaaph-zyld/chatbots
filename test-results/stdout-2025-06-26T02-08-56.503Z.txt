@@ -1,0 +1,11 @@
+Command: echo Hello, World!
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-08-56.503Z
+
+PID: 14860
+
+Hello, World!
+
+
+Command completed with exit code: 0
+Duration: 67ms

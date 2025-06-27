@@ -1,0 +1,10 @@
+{
+  "command": "echo Command 3",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-26T02:26:21.568Z",
+  "currentTime": "2025-06-26T02:26:21.568Z",
+  "duration": 0,
+  "status": "success",
+  "exitCode": null,
+  "pid": 16848
+}

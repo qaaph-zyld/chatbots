@@ -1,0 +1,161 @@
+trigger:
+  branches:
+    include:
+    - main
+    - master
+    - develop
+  paths:
+    include:
+    - 'auto-test-runner.js'
+    - 'test-utils/**'
+    - 'scripts/robust-command-runner.js'
+    - 'tests/integration/command-executor.test.js'
+
+pr:
+  branches:
+    include:
+    - main
+    - master
+    - develop
+  paths:
+    include:
+    - 'auto-test-runner.js'
+    - 'test-utils/**'
+    - 'scripts/robust-command-runner.js'
+    - 'tests/integration/command-executor.test.js'
+
+parameters:
+  - name: testCommand
+    displayName: Test Command
+    type: string
+    default: 'npx jest'
+  - name: maxRetries
+    displayName: Maximum Retry Attempts
+    type: number
+    default: 3
+  - name: aiEnabled
+    displayName: Enable AI Fix Generation
+    type: boolean
+    default: true
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  - name: NODE_VERSION
+    value: '16.x'
+  - name: TEST_RESULTS_DIR
+    value: '$(Build.SourcesDirectory)/test-results'
+
+stages:
+  - stage: ValidateFramework
+    displayName: 'Validate Test Framework'
+    jobs:
+      - job: ValidateFramework
+        displayName: 'Validate Test Framework'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(NODE_VERSION)
+            displayName: 'Install Node.js'
+          
+          - script: npm ci
+            displayName: 'Install dependencies'
+          
+          - script: npx jest tests/integration/command-executor.test.js --verbose
+            displayName: 'Run command executor integration tests'
+          
+          - script: node scripts/validate-command-runner.js
+            displayName: 'Validate robust command runner'
+          
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(TEST_RESULTS_DIR)'
+              artifact: 'framework-validation-results'
+              publishLocation: 'pipeline'
+            displayName: 'Publish validation results'
+            condition: succeededOrFailed()
+
+  - stage: RunTests
+    displayName: 'Run Automated Tests'
+    dependsOn: ValidateFramework
+    jobs:
+      - job: RunTests
+        displayName: 'Run Automated Tests'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(NODE_VERSION)
+            displayName: 'Install Node.js'
+          
+          - script: npm ci
+            displayName: 'Install dependencies'
+          
+          - script: mkdir -p $(TEST_RESULTS_DIR)
+            displayName: 'Create test results directory'
+          
+          - script: |
+              node auto-test-runner.js \
+                --command="${{ parameters.testCommand }}" \
+                --output="$(TEST_RESULTS_DIR)" \
+                --retries=${{ parameters.maxRetries }} \
+                --ai=${{ parameters.aiEnabled }}
+            displayName: 'Run test automation framework'
+            continueOnError: true
+          
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(TEST_RESULTS_DIR)'
+              artifact: 'test-results'
+              publishLocation: 'pipeline'
+            displayName: 'Publish test results'
+            condition: succeededOrFailed()
+
+  - stage: AnalyzeResults
+    displayName: 'Analyze Test Results'
+    dependsOn: RunTests
+    jobs:
+      - job: AnalyzeResults
+        displayName: 'Analyze Test Results'
+        steps:
+          - task: NodeTool@0
+            inputs:
+              versionSpec: $(NODE_VERSION)
+            displayName: 'Install Node.js'
+          
+          - script: npm ci
+            displayName: 'Install dependencies'
+          
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'test-results'
+              targetPath: '$(TEST_RESULTS_DIR)'
+            displayName: 'Download test results'
+          
+          - script: node scripts/analyze-test-results.js
+            displayName: 'Analyze test results'
+            continueOnError: true
+          
+          - script: node scripts/check-recurring-failures.js
+            displayName: 'Check for recurring failures'
+            continueOnError: true
+          
+          - script: node scripts/generate-test-report.js
+            displayName: 'Generate test report'
+            continueOnError: true
+          
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(TEST_RESULTS_DIR)/analysis'
+              artifact: 'test-analysis'
+              publishLocation: 'pipeline'
+            displayName: 'Publish analysis results'
+            condition: succeededOrFailed()
+          
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: '$(TEST_RESULTS_DIR)/report'
+              artifact: 'test-report'
+              publishLocation: 'pipeline'
+            displayName: 'Publish test report'
+            condition: succeededOrFailed()

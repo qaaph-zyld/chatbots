@@ -19,6 +19,7 @@ const stripAnsi = require('strip-ansi');
 const fs = require('fs');
 const path = require('path');
 const { v4: uuidv4 } = require('uuid');
+const CommandExecutor = require('./test-utils/command-executor');
 
 // VERSION CHECK: 2025-06-19T18:55:00 - Analytics Fix Implementation
 console.log('AUTO-TEST-RUNNER VERSION CHECK: 2025-06-19T18:55:00');
@@ -27,13 +28,13 @@ console.log('AUTO-TEST-RUNNER VERSION CHECK: 2025-06-19T18:55:00');
 let JestTestResultParser, MochaTestResultParser, TestCategorization;
 try {
   JestTestResultParser = require('./test-parsers/JestTestResultParser');
-} catch (e) {
+} catch (_) {
   // Jest parser not available
 }
 
 try {
   MochaTestResultParser = require('./test-parsers/MochaTestResultParser');
-} catch (e) {
+} catch (_) {
   // Mocha parser not available
 }
 
@@ -224,7 +225,7 @@ class NetworkErrorDetector {
    */
   isNetworkError(error) {
     const errorMsg = error?.message || error?.toString() || '';
-    return this.networkErrorPatterns.some(pattern => pattern.test(errorMsg));
+    return this.networkErrorPatterns.some((pattern) => pattern.test(errorMsg));
   }
   
   /**
@@ -235,7 +236,7 @@ class NetworkErrorDetector {
    */
   isCorporateProxyBlock(error) {
     const errorMsg = error?.message || error?.toString() || '';
-    return this.corporateProxyPatterns.some(pattern => pattern.test(errorMsg));
+    return this.corporateProxyPatterns.some((pattern) => pattern.test(errorMsg));
   }
   
   /**
@@ -442,7 +443,7 @@ class TestLogger {
    * @returns {string} - Formatted log output
    */
   formatLogOutput() {
-    return this.buffer.map(entry => 
+    return this.buffer.map((entry) => 
       `[${entry.timestamp}] [${entry.level.toUpperCase()}] ${entry.message}` +
       (entry.data ? `\n${JSON.stringify(entry.data, null, 2)}` : '')
     ).join('\n');
@@ -455,8 +456,8 @@ class TestLogger {
    */
   calculateStats() {
     // Calculate statistics from log entries
-    const errors = this.buffer.filter(e => e.level === 'error').length;
-    const warnings = this.buffer.filter(e => e.level === 'warn').length;
+    const errors = this.buffer.filter((e) => e.level === 'error').length;
+    const warnings = this.buffer.filter((e) => e.level === 'warn').length;
     
     return {
       errors,
@@ -496,6 +497,14 @@ class TestAutomationRunner {
     this.parserOptions = options.parserOptions || {};
     this.aiOptions = options.aiOptions || {};
     this.codebasePath = options.codebasePath || process.cwd();
+    
+    // Initialize the robust command executor
+    this.commandExecutor = new CommandExecutor({
+      outputDir: this.outputDir,
+      defaultTimeout: this.networkTimeoutMs,
+      progressTimeout: 10000, // 10 seconds without output triggers warning
+      verbose: true
+    });
     
     // Test categorization options
     this.categorizationEnabled = options.categorizationEnabled !== false; // Default to true
@@ -642,90 +651,48 @@ class TestAutomationRunner {
   }
 
   /**
-   * Executes a command and returns the results using spawn for better I/O handling
+   * Executes a command and returns the results using the robust CommandExecutor
    * 
    * @param {string} command - Command to execute
+   * @param {Object} options - Command options
    * @returns {Promise<Object>} - Promise resolving to command results
    */
   async runCommand(command, options = {}) {
-    console.log(`DEBUG: runCommand - Starting execution of command: ${command}`);
-    
-    // Set timeout from options or use default
-    const timeout = options.timeout || this.networkTimeoutMs;
-    console.log(`DEBUG: runCommand - Using timeout: ${timeout}ms`);
-    
-    // Generate a timestamp for the log files
-    const timestamp = new Date().toISOString().replace(/[:.]/g, '-');
-    const logFile = path.join(this.outputDir, `test-output-${timestamp}.log`);
-    const stdoutFile = path.join(this.outputDir, `stdout-${timestamp}.txt`);
-    const stderrFile = path.join(this.outputDir, `stderr-${timestamp}.txt`);
-    console.log(`DEBUG: runCommand - Log file will be: ${logFile}`);
-    console.log(`DEBUG: runCommand - Stdout file will be: ${stdoutFile}`);
-    console.log(`DEBUG: runCommand - Stderr file will be: ${stderrFile}`);
-    
-    return new Promise((resolve, reject) => {
-      // Parse command into command and args for spawn
-      let args = [];
-      let cmd = command;
+    try {
+      console.log(`Executing command: ${command}`);
       
-      // Simple parsing for command and arguments
-      if (command.includes(' ')) {
-        const parts = command.split(' ');
-        cmd = parts[0];
-        args = parts.slice(1);
-      }
-      
-      // Platform-specific path handling
-      if (process.platform === 'win32') {
-        // Convert forward slashes to backslashes for Windows
-        if (cmd.includes('/')) {
-          cmd = cmd.replace(/\//g, '\\');
-          console.log(`DEBUG: runCommand - Converted path for Windows: ${cmd}`);
-        }
+      // Parse command into executable and args if it's a string
+      if (typeof command === 'string') {
+        const parts = command.trim().split(' ');
+        const executable = parts[0];
+        const args = parts.slice(1);
         
-        // For Windows, handle npm commands specially
-        if (cmd === 'npm') {
-          cmd = process.env.comspec || 'cmd.exe';
-          args = ['/c', 'npm'].concat(args);
-        }
+        // Execute the command using the robust command executor
+        const result = await this.commandExecutor.runCommand(executable, args, {
+          cwd: options.cwd || process.cwd(),
+          timeout: options.timeout || this.networkTimeoutMs,
+          ...options
+        });
         
-        // For Windows, handle node_modules/.bin paths specially
-        if (cmd.includes('node_modules\\.bin')) {
-          console.log(`DEBUG: runCommand - Using node_modules\\.bin path on Windows: ${cmd}`);
-        }
-      }
-      
-      console.log(`DEBUG: runCommand - Spawning process: ${cmd} with args: ${args.join(' ')}`);
-      
-      // Track if the command has timed out
-      let isTimedOut = false;
-      let stdout = '';
-      let stderr = '';
-      let startTime = Date.now();
-      
-      // Create timeout handler
-      const timeoutId = setTimeout(() => {
-        isTimedOut = true;
-        const timeoutError = new Error(`Command timed out after ${timeout}ms: ${command}`);
-        timeoutError.code = 'TIMEOUT';
-        timeoutError.command = command;
+        // Clean ANSI color codes from output
+        const cleanStdout = stripAnsi(result.stdout);
+        const cleanStderr = stripAnsi(result.stderr);
         
-        // Log timeout information
-        const timeoutData = {
-          command,
-          timestamp: new Date().toISOString(),
-          error: `Timed out after ${timeout}ms`,
-          exitCode: 'TIMEOUT'
+        return {
+          code: result.code,
+          stdout: cleanStdout,
+          stderr: cleanStderr,
+          duration: result.duration,
+          stdoutFile: result.stdoutFile,
+          stderrFile: result.stderrFile,
+          statusFile: result.statusFile
         };
-        
-        try {
-          fs.writeFileSync(logFile, JSON.stringify(timeoutData, null, 2));
-          console.error(`Command timed out. Details saved to: ${logFile}`);
-        } catch (writeError) {
-          console.error(`Failed to write timeout log: ${writeError.message}`);
-        }
-        
-        // Update statistics
+      } else {
+        throw new Error('Command must be a string');
+      }
+    } catch (error) {
+      // Handle errors from the command executor
+      console.error(`Command execution failed: ${error.message || 'Unknown error'}`);
         this.stats.failedRuns++;
         this.stats.networkErrors++;
         
@@ -870,13 +837,23 @@ class TestAutomationRunner {
   }
 
   /**
-   * Detects if an error is related to network or corporate proxy blocks
+   * Checks if a test failure is due to network connectivity issues
    * 
-   * @param {Error} errorObj - Error object to analyze
+   * @param {Object} errorObj - Error object to analyze
    * @returns {boolean} - True if the error is network-related
    */
   isNetworkBlockedError(errorObj) {
-    // Use NetworkErrorDetector to check for network errors
+    // If ResultAnalyzer is available, delegate to it
+    if (this.resultAnalyzer) {
+      try {
+        return this.resultAnalyzer.isNetworkBlockedError(errorObj);
+      } catch (error) {
+        console.warn('ResultAnalyzer.isNetworkBlockedError failed, falling back to built-in implementation:', error.message);
+        // Fall through to built-in implementation
+      }
+    }
+    
+    // Original implementation
     const detector = new NetworkErrorDetector();
     return detector.isNetworkError(errorObj.error) || detector.isCorporateProxyBlock(errorObj.error);
   }
@@ -888,6 +865,17 @@ class TestAutomationRunner {
    * @returns {Object|null} - Parsed test results or null if parsing failed
    */
   getParsedResults(testResult) {
+    // If ResultAnalyzer is available, delegate to it
+    if (this.resultAnalyzer) {
+      try {
+        return this.resultAnalyzer.getParsedResults(testResult, this.parser);
+      } catch (error) {
+        console.warn('ResultAnalyzer.getParsedResults failed, falling back to built-in implementation:', error.message);
+        // Fall through to built-in implementation
+      }
+    }
+    
+    // Original implementation
     if (!this.parser || !testResult || !testResult.stdout) {
       return null;
     }
@@ -907,6 +895,17 @@ class TestAutomationRunner {
    * @returns {Object} - Test summary information
    */
   getTestSummary(testResult) {
+    // If ResultAnalyzer is available, delegate to it
+    if (this.resultAnalyzer) {
+      try {
+        return this.resultAnalyzer.getTestSummary(testResult, this.parser);
+      } catch (error) {
+        console.warn('ResultAnalyzer.getTestSummary failed, falling back to built-in implementation:', error.message);
+        // Fall through to built-in implementation
+      }
+    }
+    
+    // Original implementation
     const parsedResults = this.getParsedResults(testResult);
     
     if (parsedResults && this.parser) {
@@ -931,6 +930,22 @@ class TestAutomationRunner {
    * @returns {AIFixEngine|EnhancedAIFixEngine} - AI fix engine instance
    */
   createAIFixEngine(logger) {
+    // If FixApplier is available, delegate to it
+    if (this.fixApplier) {
+      try {
+        return this.fixApplier.createAIFixEngine(logger, {
+          parser: this.parser,
+          aiServiceConnector: this.aiServiceConnector,
+          codebasePath: this.codebasePath,
+          dryRun: this.aiOptions?.dryRun || false
+        });
+      } catch (error) {
+        console.warn('FixApplier.createAIFixEngine failed, falling back to built-in implementation:', error.message);
+        // Fall through to built-in implementation
+      }
+    }
+    
+    // Original implementation
     // Use EnhancedAIFixEngine if available with AI service connector
     if (EnhancedAIFixEngine && this.aiServiceConnector) {
       logger.info('Using EnhancedAIFixEngine with Ollama integration');
@@ -959,6 +974,22 @@ class TestAutomationRunner {
    * @returns {Promise<Object>} - Analysis results with recommendations
    */
   async analyzeTestFailures(testResult, logger) {
+    // If FixApplier is available, delegate to it
+    if (this.fixApplier) {
+      try {
+        return await this.fixApplier.analyzeTestFailures(testResult, logger, {
+          aiFixEnabled: this.aiFixEnabled,
+          extractFailedTests: (result) => this.extractFailedTests(result),
+          getParsedResults: (result) => this.getParsedResults(result),
+          createAIFixEngine: (log) => this.createAIFixEngine(log)
+        });
+      } catch (error) {
+        console.warn('FixApplier.analyzeTestFailures failed, falling back to built-in implementation:', error.message);
+        // Fall through to built-in implementation
+      }
+    }
+    
+    // Original implementation
     if (!this.aiFixEnabled) {
       return { enabled: false };
     }
@@ -988,6 +1019,20 @@ class TestAutomationRunner {
    * @returns {Promise<Object>} - Results of fix application
    */
   async applyAIFixes(recommendations, logger, parsedResults = null) {
+    // If FixApplier is available, delegate to it
+    if (this.fixApplier) {
+      try {
+        return await this.fixApplier.applyAIFixes(recommendations, logger, parsedResults, {
+          aiFixEnabled: this.aiFixEnabled,
+          createAIFixEngine: (log) => this.createAIFixEngine(log)
+        });
+      } catch (error) {
+        console.warn('FixApplier.applyAIFixes failed, falling back to built-in implementation:', error.message);
+        // Fall through to built-in implementation
+      }
+    }
+    
+    // Original implementation
     if (!this.aiFixEnabled || !recommendations || recommendations.length === 0) {
       return { enabled: false };
     }
@@ -2087,7 +2132,7 @@ class TestAutomationRunner {
 }
 
 // Export the TestAutomationRunner class
-module.exports = { TestAutomationRunner };
+module.exports = TestAutomationRunner;
 
 // Run if called directly
 if (require.main === module) {

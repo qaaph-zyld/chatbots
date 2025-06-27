@@ -1,0 +1,13 @@
+Command: npx [jest tests/integration/command-executor.test.js --verbose ]
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-26-28.684Z
+
+PID: 16572
+
+npm error code EINVALIDTAGNAME
+npm error Invalid tag name "[jest" of package "[jest": Tags may not have any characters that encodeURIComponent encodes.
+npm error A complete log of this run can be found in: C:\Users\ajelacn\AppData\Local\npm-cache\_logs\2025-06-26T02_26_29_366Z-debug-0.log
+
+
+Command completed with exit code: 1
+Duration: 5213ms

@@ -1,0 +1,10 @@
+{
+  "command": "npm --version",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-24T22:36:47.484Z",
+  "currentTime": "2025-06-24T22:36:49.767Z",
+  "duration": 2283,
+  "status": "success",
+  "exitCode": null,
+  "pid": 20328
+}

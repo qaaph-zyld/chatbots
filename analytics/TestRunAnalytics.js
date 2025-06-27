@@ -27,6 +27,19 @@ class TestRunAnalytics {
     this.history = [];
     this.initialized = false;
   }
+  
+  /**
+   * Sets the logger instance for this analytics module
+   * 
+   * @param {Object} logger - Logger instance
+   */
+  setLogger(logger) {
+    if (logger && typeof logger === 'object') {
+      this.logger = logger;
+      return true;
+    }
+    return false;
+  }
 
   /**
    * Initializes the analytics module

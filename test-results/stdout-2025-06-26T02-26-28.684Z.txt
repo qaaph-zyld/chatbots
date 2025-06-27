@@ -1,0 +1,10 @@
+Command: npx [jest tests/integration/command-executor.test.js --verbose ]
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-26-28.684Z
+
+PID: 16572
+
+
+
+Command completed with exit code: 1
+Duration: 5213ms

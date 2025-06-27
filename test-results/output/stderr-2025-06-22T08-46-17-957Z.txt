@@ -1,0 +1,8 @@
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In C:\Users\ajelacn\Documents\chatbots
+  815 files checked.
+  testMatch: **/test-results/sample-tests/**/*.test.js - 3 matches
+  testPathIgnorePatterns: \\node_modules\\ - 815 matches
+  testRegex:  - 0 matches
+Pattern: C:\Users\ajelacn\Documents\chatbots\test-results\sample-tests\failing.test.js - 0 matches

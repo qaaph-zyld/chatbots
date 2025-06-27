@@ -1,0 +1,10 @@
+{
+  "command": "command-that-does-not-exist ",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-26T02:26:23.068Z",
+  "currentTime": "2025-06-26T02:26:23.068Z",
+  "duration": 0,
+  "status": "failed",
+  "exitCode": null,
+  "pid": 17384
+}

@@ -1,0 +1,10 @@
+{
+  "command": "echo Hello from integration test",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-26T02:26:20.944Z",
+  "currentTime": "2025-06-26T02:26:20.944Z",
+  "duration": 0,
+  "status": "success",
+  "exitCode": null,
+  "pid": 1652
+}

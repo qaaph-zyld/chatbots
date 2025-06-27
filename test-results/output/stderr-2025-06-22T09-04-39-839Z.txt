@@ -1,0 +1,12 @@
+PASS test-results/sample-tests/baseline.test.js (5.597 s)
+  Baseline Tests
+    √ should pass a simple test (12 ms)
+    √ should perform basic math (3 ms)
+    √ should handle string operations (2 ms)
+
+Test Suites: 1 passed, 1 total
+Tests:       3 passed, 3 total
+Snapshots:   0 total
+Time:        6.059 s
+Ran all test suites matching /.\\test-results\\sample-tests\\baseline.test.js/i.
+Test results written to: test-results\validation-baseline-tests-(should-pass)-2025-06-22T09-04-39-821Z.json
