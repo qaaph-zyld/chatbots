@@ -1,44 +1,151 @@
 {
   "fixes": [
     {
+      "id": "fix-001",
       "fixStrategy": "syntax-error",
+      "appliedStrategies": ["pattern-matching", "syntax-correction"],
       "fixCode": "\ndescribe('Syntax Error Test', () => {\n  test('should handle syntax errors', () => {\n    const obj = {\n      name: 'test',\n      value: 42\n    }; // Fixed: added closing brace\n    expect(obj.name).toBe('test');\n  });\n});\n",
-      "errorPattern": null,
+      "errorType": "SyntaxError",
+      "errorPattern": "Missing closing brace",
+      "errorContext": {
+        "file": "tests/syntax-error.test.js",
+        "line": 6,
+        "column": 5
+      },
       "attempts": 1,
       "successes": 1,
       "successRate": 1,
-      "timestamp": "2025-06-27T12:02:51.047Z"
+      "confidence": 0.95,
+      "executionTime": 120,
+      "source": "ai-generated",
+      "timestamp": "2025-06-27T12:02:51.047Z",
+      "feedback": {
+        "successful": true,
+        "validationMethod": "test-execution",
+        "notes": "Fixed missing closing brace in object literal"
+      },
+      "metadata": {
+        "testFramework": "jest",
+        "fixVersion": "1.0.0"
+      }
     },
     {
+      "id": "fix-002",
       "fixStrategy": "unknown",
+      "appliedStrategies": ["fallback"],
       "fixCode": "// Generated fix for unknown\n// TODO: Implement actual fix\n",
+      "errorType": "Unknown",
       "errorPattern": null,
+      "errorContext": {
+        "file": "tests/unknown-error.test.js",
+        "line": null,
+        "column": null
+      },
       "attempts": 1,
       "successes": 1,
       "successRate": 1,
-      "timestamp": "2025-06-27T12:02:51.330Z"
+      "confidence": 0.4,
+      "executionTime": 85,
+      "source": "ai-generated",
+      "timestamp": "2025-06-27T12:02:51.330Z",
+      "feedback": {
+        "successful": true,
+        "validationMethod": "manual-review",
+        "notes": "Generic placeholder fix applied"
+      },
+      "metadata": {
+        "testFramework": "jest",
+        "fixVersion": "1.0.0"
+      }
     },
     {
+      "id": "fix-003",
       "fixStrategy": "timeout",
+      "appliedStrategies": ["promise-resolution", "async-fix"],
       "fixCode": "\ndescribe('Timeout Test', () => {\n  test('should handle timeouts', async () => {\n    const fetchData = () => new Promise(resolve => {\n      // Fixed: added resolve call\n      resolve({ data: 'test' });\n    });\n    const data = await fetchData();\n    expect(data).toBeDefined();\n  });\n});\n",
-      "errorPattern": null,
+      "errorType": "TimeoutError",
+      "errorPattern": "Test timed out",
+      "errorContext": {
+        "file": "tests/timeout.test.js",
+        "line": 4,
+        "column": 7
+      },
       "attempts": 1,
       "successes": 1,
       "successRate": 1,
-      "timestamp": "2025-06-27T12:02:51.601Z"
+      "confidence": 0.85,
+      "executionTime": 150,
+      "source": "ai-generated",
+      "timestamp": "2025-06-27T12:02:51.601Z",
+      "feedback": {
+        "successful": true,
+        "validationMethod": "test-execution",
+        "notes": "Fixed promise that never resolved"
+      },
+      "metadata": {
+        "testFramework": "jest",
+        "fixVersion": "1.0.0"
+      }
     },
     {
+      "id": "fix-004",
       "fixStrategy": "dependency-error",
+      "appliedStrategies": ["module-substitution", "import-fix"],
       "fixCode": "\ndescribe('Dependency Error Test', () => {\n  test('should handle dependency errors', () => {\n    // Fixed: use built-in module instead of non-existent one\n    const fs = require('fs');\n    expect(fs).toBeDefined();\n  });\n});\n",
-      "errorPattern": null,
+      "errorType": "ModuleNotFoundError",
+      "errorPattern": "Cannot find module",
+      "errorContext": {
+        "file": "tests/dependency-error.test.js",
+        "line": 3,
+        "column": 22
+      },
       "attempts": 1,
       "successes": 1,
       "successRate": 1,
-      "timestamp": "2025-06-27T12:02:51.854Z"
+      "confidence": 0.9,
+      "executionTime": 95,
+      "source": "ai-generated",
+      "timestamp": "2025-06-27T12:02:51.854Z",
+      "feedback": {
+        "successful": true,
+        "validationMethod": "test-execution",
+        "notes": "Replaced non-existent module with built-in fs module"
+      },
+      "metadata": {
+        "testFramework": "jest",
+        "fixVersion": "1.0.0"
+      }
     }
   ],
   "statistics": {
-    "totalAttempts": 0,
-    "successfulFixes": 4
+    "totalAttempts": 4,
+    "successfulFixes": 4,
+    "byErrorType": {
+      "SyntaxError": { "attempts": 1, "successes": 1, "rate": 100 },
+      "TimeoutError": { "attempts": 1, "successes": 1, "rate": 100 },
+      "ModuleNotFoundError": { "attempts": 1, "successes": 1, "rate": 100 },
+      "Unknown": { "attempts": 1, "successes": 1, "rate": 100 }
+    },
+    "byFixStrategy": {
+      "syntax-error": { "attempts": 1, "successes": 1, "rate": 100 },
+      "timeout": { "attempts": 1, "successes": 1, "rate": 100 },
+      "dependency-error": { "attempts": 1, "successes": 1, "rate": 100 },
+      "unknown": { "attempts": 1, "successes": 1, "rate": 100 }
+    },
+    "byAppliedStrategy": {
+      "pattern-matching": { "attempts": 1, "successes": 1, "rate": 100 },
+      "syntax-correction": { "attempts": 1, "successes": 1, "rate": 100 },
+      "promise-resolution": { "attempts": 1, "successes": 1, "rate": 100 },
+      "async-fix": { "attempts": 1, "successes": 1, "rate": 100 },
+      "module-substitution": { "attempts": 1, "successes": 1, "rate": 100 },
+      "import-fix": { "attempts": 1, "successes": 1, "rate": 100 },
+      "fallback": { "attempts": 1, "successes": 1, "rate": 100 }
+    },
+    "averageConfidence": 0.775,
+    "averageExecutionTime": 112.5
+  },
+  "schema": {
+    "version": "1.1.0",
+    "lastUpdated": "2025-06-28T10:57:00+02:00"
   }
 }

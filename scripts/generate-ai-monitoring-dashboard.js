@@ -116,6 +116,8 @@ function calculateMetrics(knowledgeBase, feedbackData) {
     },
     byErrorType: {},
     byFixSource: {},
+    byFixStrategy: {},
+    byAppliedStrategies: {},
     byConfidence: {
       high: { total: 0, successful: 0, rate: 0 },
       medium: { total: 0, successful: 0, rate: 0 },
@@ -126,6 +128,7 @@ function calculateMetrics(knowledgeBase, feedbackData) {
       min: Infinity,
       max: 0
     },
+    strategyEffectiveness: {},
     history: []
   };
   
@@ -195,6 +198,45 @@ function calculateMetrics(knowledgeBase, feedbackData) {
         metrics.byFixSource[source].successful++;
       }
       
+      // By fix strategy - track which strategies are most effective
+      const fixStrategy = fix.fixStrategy || 'unknown';
+      if (!metrics.byFixStrategy[fixStrategy]) {
+        metrics.byFixStrategy[fixStrategy] = { total: 0, successful: 0, rate: 0 };
+      }
+      metrics.byFixStrategy[fixStrategy].total++;
+      
+      if (isSuccessful) {
+        metrics.byFixStrategy[fixStrategy].successful++;
+      }
+      
+      // By applied strategies - track combinations of strategies
+      if (Array.isArray(fix.appliedStrategies) && fix.appliedStrategies.length > 0) {
+        // Track each individual applied strategy
+        fix.appliedStrategies.forEach(strategy => {
+          if (!metrics.byAppliedStrategies[strategy]) {
+            metrics.byAppliedStrategies[strategy] = { total: 0, successful: 0, rate: 0 };
+          }
+          metrics.byAppliedStrategies[strategy].total++;
+          
+          if (isSuccessful) {
+            metrics.byAppliedStrategies[strategy].successful++;
+          }
+        });
+        
+        // Track strategy combinations (for multi-strategy approaches)
+        if (fix.appliedStrategies.length > 1) {
+          const strategyKey = fix.appliedStrategies.sort().join('+')
+          if (!metrics.strategyEffectiveness[strategyKey]) {
+            metrics.strategyEffectiveness[strategyKey] = { total: 0, successful: 0, rate: 0 };
+          }
+          metrics.strategyEffectiveness[strategyKey].total++;
+          
+          if (isSuccessful) {
+            metrics.strategyEffectiveness[strategyKey].successful++;
+          }
+        }
+      }
+      
       // By confidence
       // Use successRate as confidence if confidence is not available
       const confidence = fix.confidence || fix.successRate || 0;
@@ -230,6 +272,27 @@ function calculateMetrics(knowledgeBase, feedbackData) {
     
     Object.keys(metrics.byFixSource).forEach(source => {
       const data = metrics.byFixSource[source];
+      if (data.total > 0) {
+        data.rate = (data.successful / data.total) * 100;
+      }
+    });
+    
+    Object.keys(metrics.byFixStrategy).forEach(strategy => {
+      const data = metrics.byFixStrategy[strategy];
+      if (data.total > 0) {
+        data.rate = (data.successful / data.total) * 100;
+      }
+    });
+    
+    Object.keys(metrics.byAppliedStrategies).forEach(strategy => {
+      const data = metrics.byAppliedStrategies[strategy];
+      if (data.total > 0) {
+        data.rate = (data.successful / data.total) * 100;
+      }
+    });
+    
+    Object.keys(metrics.strategyEffectiveness).forEach(combo => {
+      const data = metrics.strategyEffectiveness[combo];
       if (data.total > 0) {
         data.rate = (data.successful / data.total) * 100;
       }
@@ -304,6 +367,21 @@ function generateDashboardHtml(metrics) {
   
   const sourceLabels = Object.keys(metrics.byFixSource);
   const sourceSuccessRates = sourceLabels.map(source => metrics.byFixSource[source].rate.toFixed(1));
+  
+  // Fix strategy data
+  const strategyLabels = Object.keys(metrics.byFixStrategy);
+  const strategySuccessRates = strategyLabels.map(strategy => metrics.byFixStrategy[strategy].rate.toFixed(1));
+  const strategyTotals = strategyLabels.map(strategy => metrics.byFixStrategy[strategy].total);
+  
+  // Applied strategies data
+  const appliedStrategyLabels = Object.keys(metrics.byAppliedStrategies);
+  const appliedStrategySuccessRates = appliedStrategyLabels.map(strategy => 
+    metrics.byAppliedStrategies[strategy].rate.toFixed(1));
+  
+  // Strategy combinations data
+  const strategyComboLabels = Object.keys(metrics.strategyEffectiveness);
+  const strategyComboRates = strategyComboLabels.map(combo => 
+    metrics.strategyEffectiveness[combo].rate.toFixed(1));
   
   const confidenceLabels = Object.keys(metrics.byConfidence);
   const confidenceSuccessRates = confidenceLabels.map(level => metrics.byConfidence[level].rate.toFixed(1));
@@ -430,6 +508,36 @@ function generateDashboardHtml(metrics) {
     <div class="chart-row">
       <div class="chart-col">
         <div class="chart-container">
+          <h2>Success Rate by Fix Strategy</h2>
+          <canvas id="fixStrategyChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-col">
+        <div class="chart-container">
+          <h2>Strategy Usage Count</h2>
+          <canvas id="strategyUsageChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-row">
+      <div class="chart-col">
+        <div class="chart-container">
+          <h2>Success Rate by Applied Strategy</h2>
+          <canvas id="appliedStrategyChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-col">
+        <div class="chart-container">
+          <h2>Strategy Combination Effectiveness</h2>
+          <canvas id="strategyComboChart"></canvas>
+        </div>
+      </div>
+    </div>
+    
+    <div class="chart-row">
+      <div class="chart-col">
+        <div class="chart-container">
           <h2>Success Rate by Confidence Level</h2>
           <canvas id="confidenceChart"></canvas>
         </div>
@@ -477,6 +585,97 @@ function generateDashboardHtml(metrics) {
           data: ${JSON.stringify(sourceSuccessRates)},
           backgroundColor: 'rgba(75, 192, 192, 0.6)',
           borderColor: 'rgba(75, 192, 192, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+    
+    // Fix Strategy Chart
+    new Chart(document.getElementById('fixStrategyChart'), {
+      type: 'bar',
+      data: {
+        labels: ${JSON.stringify(strategyLabels)},
+        datasets: [{
+          label: 'Success Rate (%)',
+          data: ${JSON.stringify(strategySuccessRates)},
+          backgroundColor: 'rgba(153, 102, 255, 0.6)',
+          borderColor: 'rgba(153, 102, 255, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+    
+    // Strategy Usage Chart
+    new Chart(document.getElementById('strategyUsageChart'), {
+      type: 'bar',
+      data: {
+        labels: ${JSON.stringify(strategyLabels)},
+        datasets: [{
+          label: 'Usage Count',
+          data: ${JSON.stringify(strategyTotals)},
+          backgroundColor: 'rgba(255, 159, 64, 0.6)',
+          borderColor: 'rgba(255, 159, 64, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true
+          }
+        }
+      }
+    });
+    
+    // Applied Strategy Chart
+    new Chart(document.getElementById('appliedStrategyChart'), {
+      type: 'bar',
+      data: {
+        labels: ${JSON.stringify(appliedStrategyLabels)},
+        datasets: [{
+          label: 'Success Rate (%)',
+          data: ${JSON.stringify(appliedStrategySuccessRates)},
+          backgroundColor: 'rgba(255, 99, 132, 0.6)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          y: {
+            beginAtZero: true,
+            max: 100
+          }
+        }
+      }
+    });
+    
+    // Strategy Combination Chart
+    new Chart(document.getElementById('strategyComboChart'), {
+      type: 'bar',
+      data: {
+        labels: ${JSON.stringify(strategyComboLabels)},
+        datasets: [{
+          label: 'Success Rate (%)',
+          data: ${JSON.stringify(strategyComboRates)},
+          backgroundColor: 'rgba(54, 162, 235, 0.6)',
+          borderColor: 'rgba(54, 162, 235, 1)',
           borderWidth: 1
         }]
       },
