@@ -1,174 +1,290 @@
 import React, { useState, useEffect } from 'react';
-import { Container, Row, Col, Nav, Tab, Alert, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Nav, Tab, Spinner, Alert } from 'react-bootstrap';
+import DateRangePicker from './DateRangePicker';
 import OverviewPanel from './panels/OverviewPanel';
 import ConversationsPanel from './panels/ConversationsPanel';
 import TemplatesPanel from './panels/TemplatesPanel';
 import UserEngagementPanel from './panels/UserEngagementPanel';
 import ResponseQualityPanel from './panels/ResponseQualityPanel';
-import DateRangePicker from './common/DateRangePicker';
-import analyticsDashboardService from '../../services/analytics-dashboard.service';
+import AnalyticsDashboardService from '../../services/analytics-dashboard.service';
 
 /**
- * Main Analytics Dashboard component
- * Provides tab navigation between different analytics panels
+ * Analytics Dashboard Component
+ * Main container for the analytics dashboard with tab navigation
  */
 const AnalyticsDashboard = () => {
   // State for date range
   const [dateRange, setDateRange] = useState({
-    startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000), // 30 days ago
-    endDate: new Date(),
-    period: 'daily'
+    startDate: new Date(Date.now() - 30 * 24 * 60 * 60 * 1000),
+    endDate: new Date()
   });
-
+  
   // State for analytics data
-  const [analyticsData, setAnalyticsData] = useState({
-    overview: null,
-    conversations: null,
-    templates: null,
-    userEngagement: null,
-    responseQuality: null
+  const [overviewData, setOverviewData] = useState(null);
+  const [conversationsData, setConversationsData] = useState(null);
+  const [templatesData, setTemplatesData] = useState(null);
+  const [userEngagementData, setUserEngagementData] = useState(null);
+  const [responseQualityData, setResponseQualityData] = useState(null);
+  
+  // State for loading and errors
+  const [loading, setLoading] = useState({
+    overview: false,
+    conversations: false,
+    templates: false,
+    userEngagement: false,
+    responseQuality: false
   });
-
-  // Loading and error states
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [activeTab, setActiveTab] = useState('overview');
-
-  // Fetch data when date range changes
-  useEffect(() => {
-    const fetchData = async () => {
-      setLoading(true);
-      setError(null);
-      
-      try {
-        // For development/testing, use mock data
-        const useMockData = process.env.REACT_APP_USE_MOCK_DATA === 'true';
-        
-        if (useMockData) {
-          // Fetch mock data for each panel
-          const overview = await analyticsDashboardService.getMockData('overview');
-          const conversations = await analyticsDashboardService.getMockData('conversations');
-          const templates = await analyticsDashboardService.getMockData('templates');
-          const userEngagement = await analyticsDashboardService.getMockData('user-engagement');
-          const responseQuality = await analyticsDashboardService.getMockData('response-quality');
-          
-          setAnalyticsData({
-            overview,
-            conversations,
-            templates,
-            userEngagement,
-            responseQuality
-          });
-        } else {
-          // Fetch real data from API
-          const params = {
-            startDate: dateRange.startDate,
-            endDate: dateRange.endDate,
-            period: dateRange.period
-          };
-          
-          const data = await analyticsDashboardService.getAllAnalytics(params);
-          setAnalyticsData(data);
-        }
-      } catch (err) {
-        console.error('Error fetching analytics data:', err);
-        setError('Failed to load analytics data. Please try again later.');
-      } finally {
-        setLoading(false);
-      }
-    };
-    
-    fetchData();
-  }, [dateRange]);
-
+  
   // Handle date range change
   const handleDateRangeChange = (newDateRange) => {
     setDateRange(newDateRange);
   };
-
-  // Handle tab change
-  const handleTabChange = (tab) => {
-    setActiveTab(tab);
+  
+  // Fetch overview data
+  const fetchOverviewData = async () => {
+    setLoading(prev => ({ ...prev, overview: true }));
+    try {
+      const startDateStr = dateRange.startDate.toISOString().split('T')[0];
+      const endDateStr = dateRange.endDate.toISOString().split('T')[0];
+      
+      const response = await AnalyticsDashboardService.getOverview(startDateStr, endDateStr);
+      
+      if (response.success) {
+        setOverviewData(response.data);
+      } else {
+        setError(`Failed to load overview data: ${response.error}`);
+      }
+    } catch (err) {
+      setError(`Error fetching overview data: ${err.message}`);
+    } finally {
+      setLoading(prev => ({ ...prev, overview: false }));
+    }
   };
-
+  
+  // Fetch conversations data
+  const fetchConversationsData = async () => {
+    setLoading(prev => ({ ...prev, conversations: true }));
+    try {
+      const startDateStr = dateRange.startDate.toISOString().split('T')[0];
+      const endDateStr = dateRange.endDate.toISOString().split('T')[0];
+      
+      const response = await AnalyticsDashboardService.getConversations(startDateStr, endDateStr);
+      
+      if (response.success) {
+        setConversationsData(response.data);
+      } else {
+        setError(`Failed to load conversations data: ${response.error}`);
+      }
+    } catch (err) {
+      setError(`Error fetching conversations data: ${err.message}`);
+    } finally {
+      setLoading(prev => ({ ...prev, conversations: false }));
+    }
+  };
+  
+  // Fetch templates data
+  const fetchTemplatesData = async () => {
+    setLoading(prev => ({ ...prev, templates: true }));
+    try {
+      const startDateStr = dateRange.startDate.toISOString().split('T')[0];
+      const endDateStr = dateRange.endDate.toISOString().split('T')[0];
+      
+      const response = await AnalyticsDashboardService.getTemplates(startDateStr, endDateStr);
+      
+      if (response.success) {
+        setTemplatesData(response.data);
+      } else {
+        setError(`Failed to load templates data: ${response.error}`);
+      }
+    } catch (err) {
+      setError(`Error fetching templates data: ${err.message}`);
+    } finally {
+      setLoading(prev => ({ ...prev, templates: false }));
+    }
+  };
+  
+  // Fetch user engagement data
+  const fetchUserEngagementData = async () => {
+    setLoading(prev => ({ ...prev, userEngagement: true }));
+    try {
+      const startDateStr = dateRange.startDate.toISOString().split('T')[0];
+      const endDateStr = dateRange.endDate.toISOString().split('T')[0];
+      
+      const response = await AnalyticsDashboardService.getUserEngagement(startDateStr, endDateStr);
+      
+      if (response.success) {
+        setUserEngagementData(response.data);
+      } else {
+        setError(`Failed to load user engagement data: ${response.error}`);
+      }
+    } catch (err) {
+      setError(`Error fetching user engagement data: ${err.message}`);
+    } finally {
+      setLoading(prev => ({ ...prev, userEngagement: false }));
+    }
+  };
+  
+  // Fetch response quality data
+  const fetchResponseQualityData = async () => {
+    setLoading(prev => ({ ...prev, responseQuality: true }));
+    try {
+      const startDateStr = dateRange.startDate.toISOString().split('T')[0];
+      const endDateStr = dateRange.endDate.toISOString().split('T')[0];
+      
+      const response = await AnalyticsDashboardService.getResponseQuality(startDateStr, endDateStr);
+      
+      if (response.success) {
+        setResponseQualityData(response.data);
+      } else {
+        setError(`Failed to load response quality data: ${response.error}`);
+      }
+    } catch (err) {
+      setError(`Error fetching response quality data: ${err.message}`);
+    } finally {
+      setLoading(prev => ({ ...prev, responseQuality: false }));
+    }
+  };
+  
+  // Fetch all data when date range changes
+  useEffect(() => {
+    fetchOverviewData();
+    fetchConversationsData();
+    fetchTemplatesData();
+    fetchUserEngagementData();
+    fetchResponseQualityData();
+  }, [dateRange]);
+  
+  // Handle tab selection to fetch data on demand
+  const handleTabSelect = (key) => {
+    switch (key) {
+      case 'overview':
+        if (!overviewData) fetchOverviewData();
+        break;
+      case 'conversations':
+        if (!conversationsData) fetchConversationsData();
+        break;
+      case 'templates':
+        if (!templatesData) fetchTemplatesData();
+        break;
+      case 'userEngagement':
+        if (!userEngagementData) fetchUserEngagementData();
+        break;
+      case 'responseQuality':
+        if (!responseQualityData) fetchResponseQualityData();
+        break;
+      default:
+        break;
+    }
+  };
+  
   return (
-    <Container fluid className="analytics-dashboard py-4">
+    <Container fluid className="analytics-dashboard p-4">
       <Row className="mb-4">
         <Col>
           <h1>Analytics Dashboard</h1>
           <p className="text-muted">
-            Comprehensive insights into your chatbot performance and user engagement
+            Monitor and analyze chatbot performance, user engagement, and conversation metrics
           </p>
         </Col>
-        <Col md="auto">
+        <Col md={4} className="d-flex justify-content-end align-items-center">
           <DateRangePicker 
-            dateRange={dateRange} 
+            startDate={dateRange.startDate} 
+            endDate={dateRange.endDate} 
             onChange={handleDateRangeChange} 
           />
         </Col>
       </Row>
       
+      {/* Display any errors */}
       {error && (
-        <Row className="mb-4">
-          <Col>
-            <Alert variant="danger">
-              {error}
-            </Alert>
-          </Col>
-        </Row>
+        <Alert variant="danger" onClose={() => setError(null)} dismissible>
+          {error}
+        </Alert>
       )}
       
-      {loading ? (
-        <div className="text-center py-5">
-          <Spinner animation="border" role="status" variant="primary">
-            <span className="visually-hidden">Loading...</span>
-          </Spinner>
-          <p className="mt-2">Loading analytics data...</p>
-        </div>
-      ) : (
-        <Tab.Container id="analytics-tabs" activeKey={activeTab} onSelect={handleTabChange}>
-          <Row>
-            <Col md={2}>
-              <Nav variant="pills" className="flex-column">
-                <Nav.Item>
-                  <Nav.Link eventKey="overview">Overview</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="conversations">Conversations</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="templates">Templates</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="userEngagement">User Engagement</Nav.Link>
-                </Nav.Item>
-                <Nav.Item>
-                  <Nav.Link eventKey="responseQuality">Response Quality</Nav.Link>
-                </Nav.Item>
-              </Nav>
-            </Col>
-            <Col md={10}>
-              <Tab.Content>
-                <Tab.Pane eventKey="overview">
-                  <OverviewPanel data={analyticsData.overview} />
-                </Tab.Pane>
-                <Tab.Pane eventKey="conversations">
-                  <ConversationsPanel data={analyticsData.conversations} />
-                </Tab.Pane>
-                <Tab.Pane eventKey="templates">
-                  <TemplatesPanel data={analyticsData.templates} />
-                </Tab.Pane>
-                <Tab.Pane eventKey="userEngagement">
-                  <UserEngagementPanel data={analyticsData.userEngagement} />
-                </Tab.Pane>
-                <Tab.Pane eventKey="responseQuality">
-                  <ResponseQualityPanel data={analyticsData.responseQuality} />
-                </Tab.Pane>
-              </Tab.Content>
-            </Col>
-          </Row>
-        </Tab.Container>
-      )}
+      <Tab.Container defaultActiveKey="overview" onSelect={handleTabSelect}>
+        <Row>
+          <Col md={2}>
+            <Nav variant="pills" className="flex-column">
+              <Nav.Item>
+                <Nav.Link eventKey="overview">Overview</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="conversations">Conversations</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="templates">Templates</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="userEngagement">User Engagement</Nav.Link>
+              </Nav.Item>
+              <Nav.Item>
+                <Nav.Link eventKey="responseQuality">Response Quality</Nav.Link>
+              </Nav.Item>
+            </Nav>
+          </Col>
+          <Col md={10}>
+            <Tab.Content>
+              <Tab.Pane eventKey="overview">
+                {loading.overview ? (
+                  <div className="text-center p-5">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <OverviewPanel data={overviewData} />
+                )}
+              </Tab.Pane>
+              <Tab.Pane eventKey="conversations">
+                {loading.conversations ? (
+                  <div className="text-center p-5">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <ConversationsPanel data={conversationsData} />
+                )}
+              </Tab.Pane>
+              <Tab.Pane eventKey="templates">
+                {loading.templates ? (
+                  <div className="text-center p-5">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <TemplatesPanel data={templatesData} />
+                )}
+              </Tab.Pane>
+              <Tab.Pane eventKey="userEngagement">
+                {loading.userEngagement ? (
+                  <div className="text-center p-5">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <UserEngagementPanel data={userEngagementData} />
+                )}
+              </Tab.Pane>
+              <Tab.Pane eventKey="responseQuality">
+                {loading.responseQuality ? (
+                  <div className="text-center p-5">
+                    <Spinner animation="border" role="status">
+                      <span className="visually-hidden">Loading...</span>
+                    </Spinner>
+                  </div>
+                ) : (
+                  <ResponseQualityPanel data={responseQualityData} />
+                )}
+              </Tab.Pane>
+            </Tab.Content>
+          </Col>
+        </Row>
+      </Tab.Container>
     </Container>
   );
 };
