@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Important: Final Payment Notice</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            text-align: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .logo {
+            max-height: 60px;
+        }
+        .content {
+            padding: 20px 0;
+        }
+        .footer {
+            text-align: center;
+            font-size: 12px;
+            color: #777;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #dc3545;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            margin: 20px 0;
+        }
+        .info-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid #dc3545;
+            padding: 15px;
+            margin: 20px 0;
+        }
+        .urgent {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-left-color: #dc3545;
+        }
+        .countdown {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background-color: #f8d7da;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="{{logoUrl}}" alt="Company Logo" class="logo">
+        <h2>Important: Final Payment Notice</h2>
+    </div>
+    
+    <div class="content">
+        <p>Hello,</p>
+        
+        <p>Despite multiple attempts, we've been unable to process your payment for the <strong>{{planName}}</strong> subscription.</p>
+        
+        <div class="countdown">
+            Your subscription will be suspended in <strong>{{daysRemaining}} days</strong>
+            <br>
+            (on {{gracePeriodEnd}})
+        </div>
+        
+        <div class="info-box urgent">
+            <p><strong>What this means:</strong></p>
+            <ul>
+                <li>Your subscription is currently in the grace period</li>
+                <li>You still have access to all features until the grace period ends</li>
+                <li>After the grace period, your subscription will be suspended and access to premium features will be restricted</li>
+            </ul>
+        </div>
+        
+        <p>To avoid service interruption, please update your payment information immediately:</p>
+        
+        <div style="text-align: center;">
+            <a href="{{paymentUpdateUrl}}" class="button">Update Payment Method Now</a>
+        </div>
+        
+        <p>If you've already updated your payment information, please disregard this notice.</p>
+        
+        <p>If you're experiencing difficulties with your payment method or have any questions, our support team is ready to assist you.</p>
+        
+        <p>Thank you for your prompt attention to this matter.</p>
+        
+        <p>Best regards,<br>
+        The Team</p>
+    </div>
+    
+    <div class="footer">
+        <p>&copy; {{currentYear}} Your Company. All rights reserved.</p>
+        <p>
+            <a href="{{privacyUrl}}">Privacy Policy</a> | 
+            <a href="{{termsUrl}}">Terms of Service</a> | 
+            <a href="{{unsubscribeUrl}}">Unsubscribe</a>
+        </p>
+    </div>
+</body>
+</html>

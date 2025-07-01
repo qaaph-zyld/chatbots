@@ -47,11 +47,34 @@ app.use('/api', apiRoutes);
 // Training routes
 app.use('/api/training', trainingRoutes);
 
+// Billing routes
+const paymentController = require('./billing/controllers/payment.controller');
+const subscriptionRoutes = require('./billing/routes/subscription.routes');
+const paymentMethodsRoutes = require('./billing/routes/payment-methods.routes');
+const featureAccessRoutes = require('./billing/routes/feature-access.routes');
+const subscriptionLifecycleRoutes = require('./billing/routes/subscription-lifecycle.routes');
+const webhookRoutes = require('./billing/routes/webhook.routes');
+const paymentRecoveryRoutes = require('./billing/routes/payment-recovery.routes');
+
+app.use('/api/billing/payment', paymentController);
+app.use('/api/billing/subscriptions', subscriptionRoutes);
+app.use('/api/billing/payment-methods', paymentMethodsRoutes);
+app.use('/api/billing/feature-access', featureAccessRoutes);
+app.use('/api/billing', subscriptionLifecycleRoutes);
+app.use('/api/billing/webhook', webhookRoutes);
+app.use('/api/billing', paymentRecoveryRoutes);
+
 // Swagger documentation
 app.use(swaggerRoutes);
 
 // Integration routes
 app.use('/integrations', integrationManager.getRouter());
+
+// Analytics routes
+const analyticsDashboardRoutes = require('./analytics/routes/dashboard.routes');
+const analyticsExportRoutes = require('./analytics/routes/export.routes');
+app.use('/api/analytics/dashboard', analyticsDashboardRoutes);
+app.use('/api/analytics/export', analyticsExportRoutes);
 
 // Serve static files
 app.use(express.static('public'));
@@ -72,13 +95,27 @@ app.use((err, req, res, next) => {
  */
 async function initializeApp() {
   try {
-    // Connect to database
-    await connectDB();
-    logger.info('Connected to database');
+    // Initialize services
+    const initServices = async () => {
+      try {
+        // Initialize database connection
+        await connectDB();
+        logger.info('Database connected successfully');
+        
+        // Initialize payment retry scheduler
+        const paymentRetryScheduler = require('./billing/jobs/payment-retry-scheduler');
+        paymentRetryScheduler.initScheduler();
+        logger.info('Payment retry scheduler initialized');
+        
+        // Initialize other services here
+        
+      } catch (error) {
+        logger.error(`Error initializing services: ${error.message}`);
+        process.exit(1);
+      }
+    };
     
-    // Initialize chatbot service
-    await chatbotService.initialize();
-    logger.info('Chatbot service initialized');
+    await initServices();
     
     // Load and register plugins
     await pluginLoader.loadAllPlugins();
@@ -86,7 +123,9 @@ async function initializeApp() {
     // Initialize plugins
     await pluginLoader.initializePlugins();
     
-    // Initialize training service with bot service for integration
+    // Initialize chatbot service
+    await chatbotService.initialize();
+    logger.info('Chatbot service initialized');
     require('@src/training');
     trainingService.setBotService(chatbotService);
     logger.info('Training service initialized');

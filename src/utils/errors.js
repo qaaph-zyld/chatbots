@@ -68,6 +68,15 @@ class ValidationError extends AppError {
 }
 
 /**
+ * Tenant access error
+ */
+class TenantAccessError extends AppError {
+  constructor(message = 'Tenant access violation') {
+    super(message, 403, 'TENANT_ACCESS_VIOLATION');
+  }
+}
+
+/**
  * Global error handler for Express
  * @param {Error} err - Error object
  * @param {Object} req - Express request object
@@ -109,6 +118,7 @@ module.exports = {
   AppError,
   NotFoundError,
   BadRequestError,
+  TenantAccessError,
   UnauthorizedError,
   ForbiddenError,
   ValidationError,
