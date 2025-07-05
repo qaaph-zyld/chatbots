@@ -77,6 +77,18 @@ class TenantAccessError extends AppError {
 }
 
 /**
+ * Security violation error
+ * Used for security-related violations that require immediate attention
+ */
+class SecurityViolationError extends AppError {
+  constructor(message = 'Security violation detected', details = {}) {
+    super(message, 403, 'SECURITY_VIOLATION');
+    this.details = details;
+    this.severity = 'HIGH';
+  }
+}
+
+/**
  * Global error handler for Express
  * @param {Error} err - Error object
  * @param {Object} req - Express request object
@@ -118,10 +130,11 @@ module.exports = {
   AppError,
   NotFoundError,
   BadRequestError,
-  TenantAccessError,
   UnauthorizedError,
   ForbiddenError,
   ValidationError,
+  TenantAccessError,
+  SecurityViolationError,
   globalErrorHandler,
   catchAsync
 };

@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbot-platform
+  namespace: chatbot-platform-prod
+  labels:
+    app: chatbot-platform
+spec:
+  selector:
+    app: chatbot-platform
+    color: blue  # Initially points to blue deployment
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  type: ClusterIP
+---
+# Service for direct access to blue deployment (for testing)
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbot-platform-blue
+  namespace: chatbot-platform-prod
+  labels:
+    app: chatbot-platform
+    color: blue
+spec:
+  selector:
+    app: chatbot-platform
+    color: blue
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  type: ClusterIP
+---
+# Service for direct access to green deployment (for testing)
+apiVersion: v1
+kind: Service
+metadata:
+  name: chatbot-platform-green
+  namespace: chatbot-platform-prod
+  labels:
+    app: chatbot-platform
+    color: green
+spec:
+  selector:
+    app: chatbot-platform
+    color: green
+  ports:
+  - port: 80
+    targetPort: 3000
+    protocol: TCP
+    name: http
+  type: ClusterIP

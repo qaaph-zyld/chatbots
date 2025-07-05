@@ -55,6 +55,7 @@ const featureAccessRoutes = require('./billing/routes/feature-access.routes');
 const subscriptionLifecycleRoutes = require('./billing/routes/subscription-lifecycle.routes');
 const webhookRoutes = require('./billing/routes/webhook.routes');
 const paymentRecoveryRoutes = require('./billing/routes/payment-recovery.routes');
+const paymentMonitoringRoutes = require('./billing/routes/payment-monitoring.routes');
 
 app.use('/api/billing/payment', paymentController);
 app.use('/api/billing/subscriptions', subscriptionRoutes);
@@ -63,6 +64,7 @@ app.use('/api/billing/feature-access', featureAccessRoutes);
 app.use('/api/billing', subscriptionLifecycleRoutes);
 app.use('/api/billing/webhook', webhookRoutes);
 app.use('/api/billing', paymentRecoveryRoutes);
+app.use('/api/billing/monitoring', paymentMonitoringRoutes);
 
 // Swagger documentation
 app.use(swaggerRoutes);
@@ -75,6 +77,18 @@ const analyticsDashboardRoutes = require('./analytics/routes/dashboard.routes');
 const analyticsExportRoutes = require('./analytics/routes/export.routes');
 app.use('/api/analytics/dashboard', analyticsDashboardRoutes);
 app.use('/api/analytics/export', analyticsExportRoutes);
+
+// Health check routes
+const healthCheckRoutes = require('./routes/health-check.routes');
+app.use('/health', healthCheckRoutes);
+
+// Monitoring routes
+const monitoringRoutes = require('./routes/monitoring.routes');
+app.use('/api/monitoring', monitoringRoutes);
+
+// Alert routes
+const alertRoutes = require('./routes/alert.routes');
+app.use('/api/alerts', alertRoutes);
 
 // Serve static files
 app.use(express.static('public'));
@@ -141,6 +155,28 @@ async function initializeApp() {
     // Initialize scaling service
     await scalingService.initialize();
     logger.info('Scaling service initialized');
+    
+    // Initialize monitoring service
+    const monitoringService = require('./services/monitoring.service');
+    await monitoringService.initialize();
+    logger.info('Monitoring service initialized');
+    
+    // Initialize alert service
+    const alertService = require('./services/alert.service');
+    await alertService.initialize();
+    logger.info('Alert service initialized');
+    
+    // Initialize health check service
+    const healthCheckService = require('./services/health-check.service');
+    await healthCheckService.initialize({
+      enablePeriodicChecks: true,
+      checkIntervalMs: 60000, // 1 minute
+      externalServices: [
+        { name: 'payment-gateway', url: config.services?.paymentGateway?.url || 'https://api.stripe.com/v1/health' },
+        { name: 'email-service', url: config.services?.emailService?.url || 'https://api.sendgrid.com/v3/health' }
+      ]
+    });
+    logger.info('Health check service initialized');
     
     logger.info('Application initialized successfully');
     return true;

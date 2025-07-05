@@ -1,0 +1,139 @@
+/* System Health Dashboard Styles */
+
+.health-dashboard {
+  padding: 20px;
+}
+
+.health-dashboard__header {
+  margin-bottom: 24px;
+}
+
+.health-dashboard__card {
+  height: 100%;
+  transition: all 0.3s ease;
+}
+
+.health-dashboard__card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}
+
+.health-dashboard__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.health-dashboard__status-healthy {
+  color: #4caf50;
+}
+
+.health-dashboard__status-unhealthy {
+  color: #f44336;
+}
+
+.health-dashboard__status-warning {
+  color: #ff9800;
+}
+
+.health-dashboard__metric-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.health-dashboard__metric-icon {
+  margin-right: 8px;
+}
+
+.health-dashboard__chart-container {
+  height: 400px;
+  width: 100%;
+}
+
+.health-dashboard__alert-item {
+  border-left: 4px solid transparent;
+  padding-left: 16px;
+  margin-bottom: 12px;
+}
+
+.health-dashboard__alert-item--info {
+  border-left-color: #2196f3;
+}
+
+.health-dashboard__alert-item--warning {
+  border-left-color: #ff9800;
+}
+
+.health-dashboard__alert-item--critical {
+  border-left-color: #f44336;
+}
+
+.health-dashboard__alert-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.health-dashboard__alert-message {
+  font-weight: 500;
+}
+
+.health-dashboard__alert-time {
+  font-size: 0.8rem;
+  color: rgba(0, 0, 0, 0.6);
+}
+
+.health-dashboard__alert-source {
+  font-size: 0.9rem;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.health-dashboard__alert-status {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 0.8rem;
+  margin-top: 4px;
+}
+
+.health-dashboard__alert-status--active {
+  background-color: #f44336;
+  color: white;
+}
+
+.health-dashboard__alert-status--resolved {
+  background-color: #4caf50;
+  color: white;
+}
+
+.health-dashboard__alert-status--acknowledged {
+  background-color: #ff9800;
+  color: white;
+}
+
+.health-dashboard__refresh-button {
+  margin-left: 16px;
+}
+
+.health-dashboard__tabs {
+  margin-bottom: 24px;
+}
+
+.health-dashboard__loading {
+  display: flex;
+  justify-content: center;
+  padding: 40px;
+}
+
+.health-dashboard__error {
+  margin-bottom: 24px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 960px) {
+  .health-dashboard__card {
+    margin-bottom: 16px;
+  }
+}

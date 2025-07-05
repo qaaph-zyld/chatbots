@@ -20,6 +20,9 @@ import '@src/client\pages\LanguageSettingsPage';
 import '@src/client\pages\DocumentationPage';
 import '@src/client\pages\CommunityPage';
 import '@src/client\pages\admin\CacheMetricsDashboard';
+import '@src/client\pages\admin\SubscriptionManagementAdmin';
+import '@src/client\pages\admin\TenantControlsAdmin';
+import '@src/client\pages\admin\AdminReportingDashboard';
 
 // Import layouts
 import AdminLayout from '@src/client\components\admin\AdminLayout';
@@ -51,9 +54,14 @@ const AppRoutes = () => {
       
       {/* Admin routes */}
       <Route path="/admin" element={<AdminLayout />}>
-        <Route index element={<Navigate to="/admin/cache-metrics" replace />} />
+        <Route index element={<Navigate to="/admin/dashboard" replace />} />
+        <Route path="dashboard" element={<AdminReportingDashboard />} />
+        <Route path="subscriptions" element={<SubscriptionManagementAdmin />} />
+        <Route path="tenants" element={<TenantControlsAdmin />} />
+        <Route path="reporting" element={<AdminReportingDashboard />} />
         <Route path="cache-metrics" element={<CacheMetricsDashboard />} />
         <Route path="performance" element={<div>Performance Dashboard (Coming Soon)</div>} />
+        <Route path="security" element={<div>Security Dashboard (Coming Soon)</div>} />
         <Route path="settings" element={<div>Admin Settings (Coming Soon)</div>} />
       </Route>
       

@@ -25,7 +25,11 @@ import {
   Storage as StorageIcon,
   Speed as SpeedIcon,
   Settings as SettingsIcon,
-  Menu as MenuIcon
+  Menu as MenuIcon,
+  Payment as PaymentIcon,
+  People as PeopleIcon,
+  BarChart as ReportingIcon,
+  Security as SecurityIcon
 } from '@mui/icons-material';
 import './AdminLayout.css';
 
@@ -46,8 +50,12 @@ const AdminLayout = () => {
 
   const menuItems = [
     { text: 'Dashboard', icon: <DashboardIcon />, path: '/admin' },
+    { text: 'Subscriptions', icon: <PaymentIcon />, path: '/admin/subscriptions' },
+    { text: 'Tenant Controls', icon: <PeopleIcon />, path: '/admin/tenants' },
+    { text: 'Reporting', icon: <ReportingIcon />, path: '/admin/reporting' },
     { text: 'Cache Metrics', icon: <StorageIcon />, path: '/admin/cache-metrics' },
     { text: 'Performance', icon: <SpeedIcon />, path: '/admin/performance' },
+    { text: 'Security', icon: <SecurityIcon />, path: '/admin/security' },
     { text: 'Settings', icon: <SettingsIcon />, path: '/admin/settings' }
   ];
 

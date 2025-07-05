@@ -16,6 +16,15 @@ on:
           - development
           - staging
           - production
+      force_color:
+        description: 'Force deployment color (blue/green)'
+        required: false
+        type: choice
+        options:
+          - auto
+          - blue
+          - green
+        default: 'auto'
 
 jobs:
   lint:
@@ -198,9 +207,9 @@ jobs:
           kubectl rollout status deployment/chatbot-platform
           
   deploy-production:
-    name: Deploy to Production
+    name: Deploy to Production (Blue/Green)
     runs-on: ubuntu-latest
-    needs: deploy-staging
+    needs: docker-build
     if: github.ref == 'refs/heads/master' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production')
     environment:
       name: production
@@ -208,21 +217,130 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       
-      - name: Set Kubernetes context
-        uses: azure/k8s-set-context@v3
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
         with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG_PROD }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1
           
-      - name: Deploy to Kubernetes
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+        
+      - name: Update kubeconfig
+        run: aws eks update-kubeconfig --name chatbot-platform-cluster --region us-east-1
+        
+      - name: Determine active deployment color
+        id: get-active-color
         run: |
-          kubectl apply -f k8s/production/
-          kubectl set image deployment/chatbot-platform chatbot-platform=ghcr.io/${{ github.repository }}:sha-${{ github.sha }}
-          kubectl rollout status deployment/chatbot-platform
+          if [[ "${{ github.event.inputs.force_color }}" != "auto" && "${{ github.event.inputs.force_color }}" != "" ]]; then
+            echo "Using forced deployment color: ${{ github.event.inputs.force_color }}"
+            echo "inactive_color=${{ github.event.inputs.force_color }}" >> $GITHUB_OUTPUT
+          else
+            CURRENT_COLOR=$(kubectl get service chatbot-platform -n chatbot-platform-prod -o jsonpath='{.spec.selector.color}')
+            if [[ "$CURRENT_COLOR" == "blue" ]]; then
+              echo "Current deployment is blue, deploying to green"
+              echo "inactive_color=green" >> $GITHUB_OUTPUT
+            else
+              echo "Current deployment is green or not found, deploying to blue"
+              echo "inactive_color=blue" >> $GITHUB_OUTPUT
+            fi
+          fi
+        
+      - name: Deploy to inactive environment
+        run: |
+          DEPLOY_COLOR=${{ steps.get-active-color.outputs.inactive_color }}
+          echo "Deploying to $DEPLOY_COLOR environment"
           
-      - name: Run smoke tests
+          # Update image tag in deployment file
+          sed -i "s|image: ghcr.io/qaaph-zyld/chatbots:latest|image: ghcr.io/qaaph-zyld/chatbots:${{ github.sha }}|g" k8s/production/deployment-$DEPLOY_COLOR.yaml
+          
+          # Apply deployment
+          kubectl apply -f k8s/production/deployment-$DEPLOY_COLOR.yaml
+          kubectl rollout status deployment/chatbot-platform-$DEPLOY_COLOR -n chatbot-platform-prod
+          
+          # Run blue-green deployment script
+          node scripts/deployment/blue-green.js
+        env:
+          NAMESPACE: chatbot-platform-prod
+          BLUE_DEPLOYMENT: chatbot-platform-blue
+          GREEN_DEPLOYMENT: chatbot-platform-green
+          SERVICE_NAME: chatbot-platform
+          IMAGE: ghcr.io/qaaph-zyld/chatbots
+          VERSION: ${{ github.sha }}
+          DEPLOYMENT_ID: ${{ github.run_id }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      
+      - name: Run smoke tests against new deployment
+        id: smoke-tests
         run: |
-          npm ci
-          npm run test:smoke
+          DEPLOY_COLOR=${{ steps.get-active-color.outputs.inactive_color }}
+          
+          # Set test URL to the specific color service
+          export TEST_URL=http://chatbot-platform-$DEPLOY_COLOR.chatbot-platform-prod.svc.cluster.local
+          
+          # Run smoke tests
+          node tests/smoke/smoke-tests.js
+        env:
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+          
+      - name: Run deployment verification tests
+        id: verification-tests
+        run: |
+          DEPLOY_COLOR=${{ steps.get-active-color.outputs.inactive_color }}
+          
+          # Set test URL to the specific color service
+          export TEST_URL=http://chatbot-platform-$DEPLOY_COLOR.chatbot-platform-prod.svc.cluster.local
+          
+          # Run UI verification tests
+          npx playwright install --with-deps
+          node tests/verification/ui-verification.js
+          
+          # Run performance tests
+          node tests/performance/performance-tests.js
+          
+          # Run security tests
+          node tests/security/security-tests.js
+        env:
+          TEST_USER_EMAIL: ${{ secrets.TEST_USER_EMAIL }}
+          TEST_USER_PASSWORD: ${{ secrets.TEST_USER_PASSWORD }}
+      
+      - name: Switch traffic to new deployment
+        if: steps.smoke-tests.outcome == 'success' && steps.verification-tests.outcome == 'success'
+        run: |
+          DEPLOY_COLOR=${{ steps.get-active-color.outputs.inactive_color }}
+          
+          # Update the main service to point to the new deployment
+          kubectl patch service chatbot-platform -n chatbot-platform-prod -p '{"spec":{"selector":{"color":"'"$DEPLOY_COLOR"'"}}}'          
+          
+          echo "Traffic switched to $DEPLOY_COLOR deployment"
+      
+      - name: Verify production health
+        run: |
+          # Wait for DNS propagation
+          sleep 30
+          
+          # Check health endpoint
+          curl -f https://chatbot-platform.example.com/health || exit 1
+          
+          echo "Production deployment verified successfully"
+      
+      - name: Rollback on failure
+        if: failure()
+        run: |
+          echo "Deployment failed, rolling back"
+          
+          # Run rollback script
+          node scripts/deployment/rollback.js "Deployment verification failed"
+        env:
+          NAMESPACE: chatbot-platform-prod
+          DEPLOYMENT_NAME: chatbot-platform
+          SERVICE_NAME: chatbot-platform
+          DEPLOYMENT_ID: ${{ github.run_id }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          PAGERDUTY_ROUTING_KEY: ${{ secrets.PAGERDUTY_ROUTING_KEY }}
           
   notify:
     name: Send Notifications
@@ -237,4 +355,41 @@ jobs:
           fields: repo,message,commit,author,action,eventName,ref,workflow,job,took
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          
+  deployment-report:
+    name: Generate Deployment Report
+    runs-on: ubuntu-latest
+    needs: [deploy-production]
+    if: always() && (github.ref == 'refs/heads/master' || (github.event_name == 'workflow_dispatch' && github.event.inputs.environment == 'production'))
+    steps:
+      - uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+          
+      - name: Install dependencies
+        run: npm ci
+        
+      - name: Download test artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: test-results
+          path: test-results/
+          
+      - name: Generate deployment report
+        run: node scripts/generate-deployment-report.js
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          DEPLOYMENT_SHA: ${{ github.sha }}
+          DEPLOYMENT_REF: ${{ github.ref }}
+          DEPLOYMENT_ENVIRONMENT: production
+          
+      - name: Upload deployment report
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-report
+          path: reports/deployment-report.html
         if: always()

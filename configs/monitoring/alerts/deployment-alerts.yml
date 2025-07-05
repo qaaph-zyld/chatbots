@@ -1,0 +1,47 @@
+groups:
+- name: deployment-alerts
+  rules:
+  - alert: DeploymentInProgress
+    expr: deployment_status{status="in_progress"} == 1
+    for: 30m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Deployment in progress for more than 30 minutes"
+      description: "The deployment to {{ $labels.environment }} has been in progress for more than 30 minutes. This may indicate a stuck deployment."
+
+  - alert: DeploymentFailed
+    expr: deployment_status{status="failed"} == 1
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Deployment failed"
+      description: "The deployment to {{ $labels.environment }} has failed. Check the deployment logs for more information."
+
+  - alert: HighErrorRateAfterDeployment
+    expr: sum(rate(http_requests_total{status=~"5.."}[5m])) by (job) / sum(rate(http_requests_total[5m])) by (job) > 0.05 and deployment_status{status="completed"} == 1 and time() - deployment_status{status="completed"} < 3600
+    for: 2m
+    labels:
+      severity: critical
+    annotations:
+      summary: "High error rate after deployment"
+      description: "The error rate is above 5% after a recent deployment. Consider rolling back the deployment."
+
+  - alert: ServiceUnavailableAfterDeployment
+    expr: up == 0 and deployment_status{status="completed"} == 1 and time() - deployment_status{status="completed"} < 3600
+    for: 1m
+    labels:
+      severity: critical
+    annotations:
+      summary: "Service unavailable after deployment"
+      description: "The service is unavailable after a recent deployment. Consider rolling back the deployment."
+
+  - alert: SlowResponseTimeAfterDeployment
+    expr: http_request_duration_seconds{quantile="0.9"} > 2 and deployment_status{status="completed"} == 1 and time() - deployment_status{status="completed"} < 3600
+    for: 5m
+    labels:
+      severity: warning
+    annotations:
+      summary: "Slow response time after deployment"
+      description: "The 90th percentile response time is above 2 seconds after a recent deployment. Consider optimizing or rolling back the deployment."

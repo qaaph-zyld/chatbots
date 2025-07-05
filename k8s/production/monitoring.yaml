@@ -1,0 +1,524 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: chatbot-platform-monitor
+  namespace: chatbot-platform-prod
+  labels:
+    app: chatbot-platform
+    release: prometheus
+spec:
+  selector:
+    matchLabels:
+      app: chatbot-platform
+  endpoints:
+  - port: http
+    path: /metrics
+    interval: 15s
+    scrapeTimeout: 10s
+  namespaceSelector:
+    matchNames:
+    - chatbot-platform-prod
+---
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: chatbot-platform-alerts
+  namespace: chatbot-platform-prod
+  labels:
+    app: chatbot-platform
+    prometheus: prometheus
+    role: alert-rules
+spec:
+  groups:
+  - name: chatbot-platform.rules
+    rules:
+    - alert: HighErrorRate
+      expr: sum(rate(http_requests_total{job="chatbot-platform",status=~"5.."}[5m])) / sum(rate(http_requests_total{job="chatbot-platform"}[5m])) > 0.05
+      for: 2m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "High HTTP error rate"
+        description: "Error rate is {{ $value | humanizePercentage }} for the last 5 minutes (threshold: 5%)"
+    
+    - alert: HighLatency
+      expr: histogram_quantile(0.9, sum(rate(http_request_duration_seconds_bucket{job="chatbot-platform"}[5m])) by (le)) > 1
+      for: 5m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "High HTTP latency"
+        description: "P90 latency is {{ $value | humanizeDuration }} for the last 5 minutes (threshold: 1s)"
+    
+    - alert: HighCPUUsage
+      expr: sum(rate(container_cpu_usage_seconds_total{pod=~"chatbot-platform-.*"}[5m])) / sum(kube_pod_container_resource_limits_cpu_cores{pod=~"chatbot-platform-.*"}) > 0.8
+      for: 10m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "High CPU usage"
+        description: "CPU usage is {{ $value | humanizePercentage }} for the last 10 minutes (threshold: 80%)"
+    
+    - alert: HighMemoryUsage
+      expr: sum(container_memory_usage_bytes{pod=~"chatbot-platform-.*"}) / sum(kube_pod_container_resource_limits_memory_bytes{pod=~"chatbot-platform-.*"}) > 0.8
+      for: 10m
+      labels:
+        severity: warning
+        team: platform
+      annotations:
+        summary: "High memory usage"
+        description: "Memory usage is {{ $value | humanizePercentage }} for the last 10 minutes (threshold: 80%)"
+    
+    - alert: PodCrashLooping
+      expr: increase(kube_pod_container_status_restarts_total{pod=~"chatbot-platform-.*"}[15m]) > 3
+      for: 5m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "Pod crash looping"
+        description: "Pod {{ $labels.pod }} has restarted {{ $value }} times in the last 15 minutes"
+    
+    - alert: PodNotReady
+      expr: sum by (pod) (kube_pod_status_ready{condition="true", pod=~"chatbot-platform-.*"}) == 0
+      for: 5m
+      labels:
+        severity: critical
+        team: platform
+      annotations:
+        summary: "Pod not ready"
+        description: "Pod {{ $labels.pod }} has been in a non-ready state for more than 5 minutes"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chatbot-platform-grafana-dashboard
+  namespace: chatbot-platform-prod
+  labels:
+    grafana_dashboard: "1"
+data:
+  chatbot-platform-dashboard.json: |-
+    {
+      "annotations": {
+        "list": [
+          {
+            "builtIn": 1,
+            "datasource": "-- Grafana --",
+            "enable": true,
+            "hide": true,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Annotations & Alerts",
+            "type": "dashboard"
+          },
+          {
+            "datasource": "Prometheus",
+            "enable": true,
+            "expr": "changes(kube_pod_container_status_restarts_total{pod=~\"chatbot-platform-.*\"}[1m]) > 0",
+            "hide": false,
+            "iconColor": "rgba(255, 96, 96, 1)",
+            "name": "Pod Restarts",
+            "showIn": 0,
+            "step": "1m",
+            "tagKeys": "kubernetes_pod_name",
+            "textFormat": "Pod {{kubernetes_pod_name}} restarted",
+            "titleFormat": "Pod Restart"
+          },
+          {
+            "datasource": "Prometheus",
+            "enable": true,
+            "expr": "sum(changes(kube_deployment_status_replicas_updated{deployment=~\"chatbot-platform-.*\"}[1m])) by (deployment) > 0",
+            "hide": false,
+            "iconColor": "rgba(0, 211, 255, 1)",
+            "name": "Deployments",
+            "showIn": 0,
+            "step": "1m",
+            "tagKeys": "deployment",
+            "textFormat": "Deployment {{deployment}} updated",
+            "titleFormat": "Deployment Update"
+          }
+        ]
+      },
+      "editable": true,
+      "gnetId": null,
+      "graphTooltip": 0,
+      "id": 1,
+      "links": [],
+      "panels": [
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 0
+          },
+          "id": 2,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(rate(http_requests_total{job=\"chatbot-platform\"}[5m])) by (status)",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "{{status}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "HTTP Request Rate",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "Requests / sec",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 0
+          },
+          "id": 3,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "histogram_quantile(0.5, sum(rate(http_request_duration_seconds_bucket{job=\"chatbot-platform\"}[5m])) by (le))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "P50",
+              "refId": "A"
+            },
+            {
+              "expr": "histogram_quantile(0.9, sum(rate(http_request_duration_seconds_bucket{job=\"chatbot-platform\"}[5m])) by (le))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "P90",
+              "refId": "B"
+            },
+            {
+              "expr": "histogram_quantile(0.99, sum(rate(http_request_duration_seconds_bucket{job=\"chatbot-platform\"}[5m])) by (le))",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "P99",
+              "refId": "C"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "HTTP Latency",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "s",
+              "label": "Latency",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 0,
+            "y": 8
+          },
+          "id": 4,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(rate(container_cpu_usage_seconds_total{pod=~\"chatbot-platform-.*\"}[5m])) by (pod)",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "CPU Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "short",
+              "label": "CPU Cores",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        },
+        {
+          "aliasColors": {},
+          "bars": false,
+          "dashLength": 10,
+          "dashes": false,
+          "datasource": "Prometheus",
+          "fill": 1,
+          "gridPos": {
+            "h": 8,
+            "w": 12,
+            "x": 12,
+            "y": 8
+          },
+          "id": 5,
+          "legend": {
+            "avg": false,
+            "current": false,
+            "max": false,
+            "min": false,
+            "show": true,
+            "total": false,
+            "values": false
+          },
+          "lines": true,
+          "linewidth": 1,
+          "links": [],
+          "nullPointMode": "null",
+          "percentage": false,
+          "pointradius": 5,
+          "points": false,
+          "renderer": "flot",
+          "seriesOverrides": [],
+          "spaceLength": 10,
+          "stack": false,
+          "steppedLine": false,
+          "targets": [
+            {
+              "expr": "sum(container_memory_usage_bytes{pod=~\"chatbot-platform-.*\"}) by (pod)",
+              "format": "time_series",
+              "intervalFactor": 1,
+              "legendFormat": "{{pod}}",
+              "refId": "A"
+            }
+          ],
+          "thresholds": [],
+          "timeFrom": null,
+          "timeShift": null,
+          "title": "Memory Usage",
+          "tooltip": {
+            "shared": true,
+            "sort": 0,
+            "value_type": "individual"
+          },
+          "type": "graph",
+          "xaxis": {
+            "buckets": null,
+            "mode": "time",
+            "name": null,
+            "show": true,
+            "values": []
+          },
+          "yaxes": [
+            {
+              "format": "bytes",
+              "label": "Memory",
+              "logBase": 1,
+              "max": null,
+              "min": "0",
+              "show": true
+            },
+            {
+              "format": "short",
+              "label": null,
+              "logBase": 1,
+              "max": null,
+              "min": null,
+              "show": true
+            }
+          ]
+        }
+      ],
+      "refresh": "10s",
+      "schemaVersion": 16,
+      "style": "dark",
+      "tags": [
+        "chatbot-platform"
+      ],
+      "time": {
+        "from": "now-1h",
+        "to": "now"
+      },
+      "timepicker": {
+        "refresh_intervals": [
+          "5s",
+          "10s",
+          "30s",
+          "1m",
+          "5m",
+          "15m",
+          "30m",
+          "1h",
+          "2h",
+          "1d"
+        ],
+        "time_options": [
+          "5m",
+          "15m",
+          "1h",
+          "6h",
+          "12h",
+          "24h",
+          "2d",
+          "7d",
+          "30d"
+        ]
+      },
+      "timezone": "",
+      "title": "Chatbot Platform Dashboard",
+      "uid": "chatbot-platform",
+      "version": 1
+    }

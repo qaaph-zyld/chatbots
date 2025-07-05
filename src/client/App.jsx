@@ -2,8 +2,8 @@ import React from 'react';
 import { BrowserRouter } from 'react-router-dom';
 import axios from 'axios';
 import { useTranslation } from 'react-i18next';
-import '@src/client\routes';
-import '@src/client\components\LanguageSelector';
+import AppRoutes from './routes';
+import LanguageSelector from './components/LanguageSelector';
 
 // Configure axios with proxy as specified in user requirements
 axios.defaults.proxy = {
