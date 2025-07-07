@@ -1,7 +1,7 @@
 {
   "history": [
     {
-      "id": "echo-1750904781741",
+      "id": "echo-1751726790973",
       "command": "echo",
       "args": [
         "Save history test"
@@ -17,16 +17,16 @@
         "stdout": "Save history test\r\n",
         "stderr": "",
         "duration": 0,
-        "stdoutFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stdout-2025-06-26T02-26-21.741Z.txt",
-        "stderrFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stderr-2025-06-26T02-26-21.741Z.txt",
-        "statusFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\status-2025-06-26T02-26-21.741Z.json"
+        "stdoutFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stdout-2025-07-05T14-46-30.973Z.txt",
+        "stderrFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stderr-2025-07-05T14-46-30.973Z.txt",
+        "statusFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\status-2025-07-05T14-46-30.973Z.json"
       },
-      "startTime": "2025-06-26T02:26:21.741Z",
-      "endTime": "2025-06-26T02:26:21.741Z",
+      "startTime": "2025-07-05T14:46:30.973Z",
+      "endTime": "2025-07-05T14:46:30.973Z",
       "duration": 0,
       "success": true
     }
   ],
-  "timestamp": "2025-06-26T02:26:21.741Z",
+  "timestamp": "2025-07-05T14:46:30.973Z",
   "count": 1
 }

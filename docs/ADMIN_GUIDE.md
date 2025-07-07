@@ -356,6 +356,101 @@ Monitor all chatbots in the system:
 
 ## Monitoring and Maintenance
 
+### Performance Optimization
+
+The platform includes several performance optimization features that administrators can configure and monitor.
+
+#### Distributed Cache Configuration
+
+The distributed caching system improves response times and reduces database load by caching frequently accessed data across multiple server instances.
+
+1. **Redis Configuration**:
+   ```bash
+   # /etc/redis/redis.conf
+   maxmemory 2gb
+   maxmemory-policy allkeys-lru
+   ```
+
+2. **Cache Settings** (in `.env`):
+   ```
+   REDIS_URI=redis://localhost:6379
+   CACHE_TTL=3600
+   CACHE_MAX_SIZE=1000
+   CACHE_LOCAL_FALLBACK=true
+   ```
+
+3. **Cache Invalidation**:
+   - Automatic invalidation occurs when data is updated
+   - Manual invalidation can be performed through the admin dashboard:
+     - Navigate to Admin > Cache Management
+     - Select cache keys or patterns to invalidate
+     - Click "Invalidate Selected" or "Invalidate All"
+
+4. **Cache Monitoring**:
+   - View cache statistics in the admin dashboard under Monitoring > Cache
+   - Key metrics include hit rate, miss rate, and memory usage
+   - Set up alerts for low hit rates or high memory usage
+
+#### Database Query Profiling
+
+The database query profiler helps identify and optimize slow or inefficient queries.
+
+1. **Enabling Query Profiling**:
+   ```bash
+   # MongoDB
+   db.setProfilingLevel(1, { slowms: 100 })
+   
+   # MySQL
+   SET GLOBAL slow_query_log = 'ON';
+   SET GLOBAL long_query_time = 0.1;
+   ```
+
+2. **Profiler Configuration** (in `.env`):
+   ```
+   DB_PROFILER_ENABLED=true
+   DB_PROFILER_SLOW_THRESHOLD_MS=100
+   DB_PROFILER_LOG_PATH=/var/log/chatbots/db-profiler
+   DB_PROFILER_SAMPLE_RATE=0.1
+   ```
+
+3. **Viewing Profiler Results**:
+   - Access the profiler dashboard at `/admin/db-profiler`
+   - Review slow queries, query patterns, and optimization suggestions
+   - Export profiler data for offline analysis
+
+4. **Query Optimization**:
+   - The system provides automatic optimization suggestions
+   - Apply suggested indexes through the admin interface
+   - Monitor query performance improvements over time
+
+#### Frontend Performance Monitoring
+
+The frontend performance monitoring system tracks client-side metrics to identify user experience issues.
+
+1. **Configuration** (in `.env`):
+   ```
+   FRONTEND_METRICS_ENABLED=true
+   FRONTEND_METRICS_SAMPLE_RATE=0.1
+   FRONTEND_METRICS_ENDPOINT=/api/metrics/frontend
+   ```
+
+2. **Metrics Collection**:
+   - Core Web Vitals (LCP, FID, CLS)
+   - Resource timing
+   - JavaScript errors
+   - Network information
+   - Memory usage
+
+3. **Monitoring Dashboard**:
+   - Access the frontend performance dashboard at `/admin/frontend-performance`
+   - View metrics by device type, browser, and geographic location
+   - Identify performance bottlenecks and areas for improvement
+
+4. **Performance Alerts**:
+   - Configure alerts for poor Core Web Vitals scores
+   - Set thresholds for JavaScript errors
+   - Receive notifications when metrics exceed thresholds
+
 ### System Monitoring
 
 1. Access system metrics:

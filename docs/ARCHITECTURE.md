@@ -26,6 +26,10 @@ The platform is built using a layered architecture with the following components
 └───────────────────────────────┬─────────────────────────────┘
                                 │
 ┌───────────────────────────────▼─────────────────────────────┐
+│                    Performance Optimization                   │
+└───────────────────────────────┬─────────────────────────────┘
+                                │
+┌───────────────────────────────▼─────────────────────────────┐
 │                        Service Layer                         │
 └───────────────────────────────┬─────────────────────────────┘
                                 │
@@ -76,9 +80,47 @@ The service layer contains business logic and coordinates between components:
 - Plugin service
 - Integration service
 
-### 4. Core Engine
+### 4. Performance Optimization Layer
 
-The core engine handles the processing of messages and generation of responses:
+The Performance Optimization layer sits between the API and Service layers, providing various optimizations to improve system responsiveness, scalability, and resource utilization:
+
+#### Distributed Cache System
+
+- **Multi-level Caching**: Combines Redis-based distributed cache with local in-memory cache
+- **Automatic Cache Invalidation**: Uses Redis Pub/Sub for cross-instance cache synchronization
+- **Configurable TTL**: Different cache durations for different types of data
+- **Cache Warming**: Preloads frequently accessed data during startup or low-traffic periods
+- **HTTP Cache Headers**: Optimizes client-side caching with appropriate ETag and Cache-Control headers
+
+#### Database Query Profiling
+
+- **Query Analysis**: Monitors and logs slow queries across MongoDB and SQL databases
+- **Automatic Indexing**: Suggests and can automatically apply indexes based on query patterns
+- **Query Optimization**: Provides recommendations for query structure improvements
+- **Query Statistics**: Tracks query frequency, duration, and resource consumption
+- **Sampling System**: Configurable sampling rate to minimize overhead in production
+
+#### Frontend Performance Monitoring
+
+- **Core Web Vitals**: Tracks LCP, FID, CLS, and other performance metrics
+- **Resource Timing**: Monitors loading performance of JavaScript, CSS, images, and other assets
+- **Error Tracking**: Captures and reports JavaScript errors and exceptions
+- **Network Information**: Monitors connection quality and bandwidth utilization
+- **Performance Dashboard**: Real-time visualization of frontend performance metrics
+
+#### Additional Optimization Components
+
+- **Response Compression**: Automatically compresses HTTP responses using gzip/brotli
+- **Rate Limiting**: Protects against abuse and ensures fair resource allocation
+- **Worker Thread Pool**: Offloads CPU-intensive operations to separate threads
+- **Background Job Queue**: Processes time-consuming tasks asynchronously
+- **Request Timeout Management**: Prevents long-running requests from consuming resources
+- **Static Asset Optimization**: Minifies and optimizes frontend assets
+- **Content Preloading**: Implements resource hints for improved perceived performance
+
+### 5. Core Engine
+
+The Core Engine is responsible for processing user inputs, generating responses, and managing conversation context:
 
 - Message processor
 - Context manager
@@ -87,7 +129,7 @@ The core engine handles the processing of messages and generation of responses:
 - Response generator
 - Conversation flow manager
 
-### 5. Data Access Layer
+### 6. Data Access Layer
 
 The data access layer provides an abstraction over the database:
 

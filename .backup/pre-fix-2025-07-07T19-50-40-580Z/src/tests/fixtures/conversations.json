@@ -1,0 +1,68 @@
+[
+  {
+    "id": "conv1",
+    "botId": "bot1",
+    "userId": "user1",
+    "messages": [
+      {
+        "id": "msg1",
+        "role": "bot",
+        "content": "Hello! How can I help you today?",
+        "timestamp": "2025-01-01T12:00:00.000Z"
+      },
+      {
+        "id": "msg2",
+        "role": "user",
+        "content": "I need help with my order",
+        "timestamp": "2025-01-01T12:01:00.000Z"
+      },
+      {
+        "id": "msg3",
+        "role": "bot",
+        "content": "I'd be happy to help with your order. Could you provide your order number?",
+        "timestamp": "2025-01-01T12:01:30.000Z"
+      }
+    ],
+    "metadata": {
+      "channel": "web",
+      "userAgent": "Mozilla/5.0",
+      "ip": "127.0.0.1"
+    },
+    "status": "active",
+    "createdAt": "2025-01-01T12:00:00.000Z",
+    "updatedAt": "2025-01-01T12:01:30.000Z"
+  },
+  {
+    "id": "conv2",
+    "botId": "bot2",
+    "userId": "user1",
+    "messages": [
+      {
+        "id": "msg1",
+        "role": "bot",
+        "content": "Welcome! I can help you find the perfect product.",
+        "timestamp": "2025-01-02T10:00:00.000Z"
+      },
+      {
+        "id": "msg2",
+        "role": "user",
+        "content": "I'm looking for a new laptop",
+        "timestamp": "2025-01-02T10:01:00.000Z"
+      },
+      {
+        "id": "msg3",
+        "role": "bot",
+        "content": "Great! I can help you find the perfect laptop. What's your budget range?",
+        "timestamp": "2025-01-02T10:01:30.000Z"
+      }
+    ],
+    "metadata": {
+      "channel": "mobile",
+      "userAgent": "Mobile App 1.0",
+      "ip": "127.0.0.1"
+    },
+    "status": "active",
+    "createdAt": "2025-01-02T10:00:00.000Z",
+    "updatedAt": "2025-01-02T10:01:30.000Z"
+  }
+]

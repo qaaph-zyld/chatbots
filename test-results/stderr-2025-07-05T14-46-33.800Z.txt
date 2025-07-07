@@ -1,0 +1,12 @@
+Command: command-that-does-not-exist 
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-07-05T14-46-33.800Z
+
+PID: 4220
+
+'command-that-does-not-exist' is not recognized as an internal or external command,
+operable program or batch file.
+
+
+Command completed with exit code: 1
+Duration: 0ms

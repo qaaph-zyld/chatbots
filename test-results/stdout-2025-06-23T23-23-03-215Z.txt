@@ -1,1 +1,0 @@
-✓ Syntax validation passed for: auto-test-runner.js

@@ -2,20 +2,22 @@
  * Jest Configuration
  * 
  * Base configuration for all Jest tests in the project.
- * Specialized configurations in configs/jest/ extend this base config.
+ * Cross-platform path resolution to handle Windows/Unix path differences.
  */
+
+const path = require('path');
 
 module.exports = {
   // The root directory for the test suite
-  rootDir: '.',
+  rootDir: path.resolve(__dirname),
   
   // The test environment to use
   testEnvironment: 'node',
   
   // The glob patterns Jest uses to detect test files
   testMatch: [
-    '**/tests/**/*.test.js',
-    '**/tests/**/*.spec.js'
+    '**/__tests__/**/*.js',
+    '**/?(*.)+(spec|test).js'
   ],
   
   // Exclude Playwright tests and problematic test files
@@ -33,14 +35,39 @@ module.exports = {
   // A list of paths to directories that Jest should use to search for files in
   roots: ['<rootDir>'],
   
+  // Module name mapping - Cross-platform path resolution
+  moduleNameMapper: {
+    '^@src/(.*)$': '<rootDir>/src/$1',
+    '^@tests/(.*)$': '<rootDir>/tests/$1',
+    '^@config/(.*)$': '<rootDir>/config/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@models/(.*)$': '<rootDir>/src/models/$1',
+    '^@controllers/(.*)$': '<rootDir>/src/api/external/v1/controllers/$1',
+    '^@services/(.*)$': '<rootDir>/src/services/$1',
+    '^@middleware/(.*)$': '<rootDir>/src/middleware/$1'
+  },
+  
   // The directory where Jest should output its coverage files
   coverageDirectory: '<rootDir>/coverage',
   
   // A list of paths to modules that run some code to configure or set up the testing framework
-  setupFilesAfterEnv: ['<rootDir>/tests/unit/setup/jest-setup.js'],
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
+  
+  // Increase test timeout for Mongoose operations
+  testTimeout: 10000,
   
   // Indicates whether each individual test should be reported during the run
   verbose: true,
+  
+  // Configure coverage collection
+  collectCoverageFrom: [
+    'src/**/*.js',
+    '!src/server.js',
+    '!src/config/**',
+    '!**/node_modules/**'
+  ],
+  coverageDirectory: 'coverage',
+  coverageReporters: ['text', 'lcov', 'html'],
   
   // Automatically clear mock calls and instances between every test
   clearMocks: true,
@@ -61,12 +88,12 @@ module.exports = {
   
   // Module name mapper for module aliases
   moduleNameMapper: {
-    '^@src/(.*)$': '<rootDir>/src/$1',
-    '^@data/(.*)$': '<rootDir>/src/data/$1',
-    '^@core/(.*)$': '<rootDir>/src/core/$1',
-    '^@modules/(.*)$': '<rootDir>/src/modules/$1',
-    '^@api/(.*)$': '<rootDir>/src/api/$1',
-    '^@tests/(.*)$': '<rootDir>/tests/$1'
+    '^@src[\\/](.*)$': '<rootDir>/src/$1',
+    '^@data[\\/](.*)$': '<rootDir>/src/data/$1',
+    '^@core[\\/](.*)$': '<rootDir>/src/core/$1',
+    '^@modules[\\/](.*)$': '<rootDir>/src/modules/$1',
+    '^@api[\\/](.*)$': '<rootDir>/src/api/$1',
+    '^@tests[\\/](.*)$': '<rootDir>/tests/$1'
   },
   
   // Set timeout for tests

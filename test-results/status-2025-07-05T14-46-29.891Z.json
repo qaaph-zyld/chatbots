@@ -1,0 +1,10 @@
+{
+  "command": "node -e console.error(\"This is an error message\"); process.exit(0);",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-07-05T14:46:29.891Z",
+  "currentTime": "2025-07-05T14:46:29.891Z",
+  "duration": 0,
+  "status": "failed",
+  "exitCode": null,
+  "pid": 11500
+}

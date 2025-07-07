@@ -1,0 +1,75 @@
+FAIL tests/unit/api/controllers/analytics.controller.test.js (10.989 s)
+  Analytics Controller
+    getAnalytics
+      √ should return analytics for a chatbot with 200 status code (66 ms)
+      √ should use default period and current date when not provided (50 ms)
+      √ should handle errors with 500 status code (22 ms)
+    getAllAnalytics
+      √ should return analytics for all chatbots with 200 status code (14 ms)
+      √ should handle errors with 500 status code (12 ms)
+    trackResponseRating
+      √ should track response rating and return success with 200 status code (12 ms)
+      √ should return 400 when required fields are missing (13 ms)
+      √ should handle errors with 500 status code (16 ms)
+    getInsights
+      √ should return insights for a chatbot with 200 status code (16 ms)
+      √ should handle errors with 500 status code (23 ms)
+    submitFeedback
+      √ should submit feedback and return success with 201 status code (15 ms)
+      √ should return 400 when required fields are missing (20 ms)
+      × should handle errors with 500 status code (27 ms)
+    getLearningItems
+      × should return learning items for a chatbot with 200 status code (19 ms)
+      √ should handle errors with 500 status code (20 ms)
+
+  ● Analytics Controller › submitFeedback › should handle errors with 500 status code
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 500
+    Received: 400
+
+    [0m [90m 524 |[39m       
+     [90m 525 |[39m       [90m// Assert[39m
+    [31m[1m>[22m[39m[90m 526 |[39m       expect(res[33m.[39m_getStatusCode())[33m.[39mtoBe([35m500[39m)[33m;[39m
+     [90m     |[39m                                    [31m[1m^[22m[39m
+     [90m 527 |[39m       expect(responseData[33m.[39msuccess)[33m.[39mtoBe([36mfalse[39m)[33m;[39m
+     [90m 528 |[39m       expect(responseData[33m.[39merror)[33m.[39mtoBeDefined()[33m;[39m
+     [90m 529 |[39m     })[33m;[39m[0m
+
+      at toBe (tests/unit/api/controllers/analytics.controller.test.js:526:36)
+      at s (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:75:16)
+      at Generator.<anonymous> (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:58:19)
+      at Generator.next (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:100:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Analytics Controller › getLearningItems › should return learning items for a chatbot with 200 status code
+
+    expect(jest.fn()).toHaveBeenCalledWith(...expected)
+
+    Expected: "bot123", "all", 10
+    Received: "bot123", {"status": "all"}
+
+    Number of calls: 1
+
+    [0m [90m 575 |[39m       expect(responseData)[33m.[39mtoEqual(mockLearningItems)[33m;[39m
+     [90m 576 |[39m       
+    [31m[1m>[22m[39m[90m 577 |[39m       expect(learningServiceMock[33m.[39mgetLearningItems)[33m.[39mtoHaveBeenCalledWith(
+     [90m     |[39m                                                    [31m[1m^[22m[39m
+     [90m 578 |[39m         [32m'bot123'[39m[33m,[39m
+     [90m 579 |[39m         [32m'all'[39m[33m,[39m
+     [90m 580 |[39m         [35m10[39m[0m
+
+      at toHaveBeenCalledWith (tests/unit/api/controllers/analytics.controller.test.js:577:52)
+      at s (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:75:16)
+      at Generator.<anonymous> (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:58:19)
+      at Generator.next (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:100:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+Test Suites: 1 failed, 1 total
+Tests:       2 failed, 13 passed, 15 total
+Snapshots:   0 total
+Time:        11.655 s
+Ran all test suites matching /tests\\unit\\api\\controllers\\analytics.controller.test.js/i.

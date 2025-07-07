@@ -1,8 +1,15 @@
 # Security Test Report
 
-Generated: 2025-05-29T06:38:29.427Z
+Generated: 2025-07-05T14:46:02.965Z
 
 ## Dependency Vulnerabilities
+
+⚠️ Found 2 vulnerable dependencies
+
+| Package | Severity | Vulnerability | Recommendation |
+|---------|----------|---------------|----------------|
+| brace-expansion | low | N/A | Update package |
+| multer | high | N/A | Update package |
 
 ## Static Analysis
 

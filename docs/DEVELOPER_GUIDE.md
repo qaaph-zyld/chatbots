@@ -606,6 +606,176 @@ jobs:
           DEPLOY_TOKEN: ${{ secrets.DEPLOY_TOKEN }}
 ```
 
+## Performance Optimization
+
+The platform provides several performance optimization utilities that you can leverage in your custom code and extensions.
+
+### Distributed Cache Utility
+
+The distributed cache utility provides a consistent caching layer across multiple server instances using Redis, with a local in-memory fallback.
+
+#### Basic Usage
+
+```javascript
+const { DistributedCache } = require('../utils/distributed-cache');
+
+// Initialize cache with default options
+const cache = new DistributedCache();
+
+// Set a value with TTL (Time To Live) in seconds
+await cache.set('user:123', userData, 3600);
+
+// Get a value
+const data = await cache.get('user:123');
+
+// Delete a value
+await cache.delete('user:123');
+
+// Clear all cache
+await cache.clear();
+```
+
+#### Advanced Configuration
+
+```javascript
+const cache = new DistributedCache({
+  redisUri: 'redis://localhost:6379',
+  prefix: 'my-app:',
+  defaultTtl: 3600,
+  localMaxSize: 1000,
+  useLocalFallback: true,
+  enablePubSub: true
+});
+```
+
+#### Express Middleware
+
+```javascript
+const { cacheMiddleware } = require('../utils/distributed-cache');
+
+// Cache responses for 1 hour
+app.get('/api/resources', cacheMiddleware(3600), resourceController.getAll);
+
+// Cache with custom key generator
+app.get('/api/users/:id', cacheMiddleware(3600, req => `user:${req.params.id}`), userController.getById);
+```
+
+### Database Query Profiler
+
+The database query profiler helps identify and optimize slow or inefficient queries in your application.
+
+#### MongoDB Integration
+
+```javascript
+const { MongoQueryProfiler } = require('../utils/db-query-profiler');
+const mongoose = require('mongoose');
+
+// Initialize profiler
+const profiler = new MongoQueryProfiler({
+  slowThresholdMs: 100,
+  logPath: './logs/db-profiler',
+  sampleRate: 0.1
+});
+
+// Apply to all mongoose queries
+profiler.instrumentMongoose(mongoose);
+
+// Get profiling statistics
+const stats = profiler.getStats();
+console.log(stats);
+```
+
+#### SQL Integration
+
+```javascript
+const { SqlQueryProfiler } = require('../utils/db-query-profiler');
+const knex = require('knex');
+
+// Initialize database connection
+const db = knex({
+  client: 'mysql',
+  connection: { /* ... */ }
+});
+
+// Initialize profiler
+const profiler = new SqlQueryProfiler({
+  slowThresholdMs: 100,
+  logPath: './logs/db-profiler',
+  sampleRate: 0.1
+});
+
+// Apply to knex instance
+profiler.instrumentKnex(db);
+```
+
+#### Express Middleware
+
+```javascript
+const { queryProfilerMiddleware } = require('../utils/db-query-profiler');
+
+// Add profiling information to response headers
+app.use(queryProfilerMiddleware());
+```
+
+### Frontend Performance Monitoring
+
+The frontend performance monitoring utility helps track and analyze client-side performance metrics.
+
+#### Basic Integration
+
+```javascript
+import { PerformanceMonitor } from '../utils/frontend-performance';
+
+// Initialize with default options
+const monitor = new PerformanceMonitor();
+
+// Start monitoring
+monitor.start();
+```
+
+#### React Integration
+
+```javascript
+import { usePerformanceMonitoring } from '../utils/frontend-performance/react';
+
+function MyComponent() {
+  // Automatically tracks component render performance
+  usePerformanceMonitoring('MyComponent');
+  
+  return <div>My Component</div>;
+}
+```
+
+#### Custom Metrics
+
+```javascript
+import { PerformanceMonitor } from '../utils/frontend-performance';
+
+const monitor = new PerformanceMonitor();
+
+// Track custom timing
+monitor.trackTiming('data-fetch', 350);
+
+// Track custom event
+monitor.trackEvent('button-click', { buttonId: 'submit' });
+
+// Track error
+monitor.trackError(new Error('Something went wrong'));
+```
+
+#### Configuration Options
+
+```javascript
+const monitor = new PerformanceMonitor({
+  endpoint: '/api/metrics/frontend',
+  sampleRate: 0.1,
+  includeResourceTimings: true,
+  includeNetworkInfo: true,
+  bufferSize: 10,
+  bufferTimeout: 5000
+});
+```
+
 ## Best Practices
 
 ### Code Style

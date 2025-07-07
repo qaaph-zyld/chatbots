@@ -10,10 +10,11 @@ This document provides comprehensive documentation for the Chatbots Platform API
 4. [Common Response Formats](#common-response-formats)
 5. [Error Handling](#error-handling)
 6. [Rate Limiting](#rate-limiting)
-7. [API Endpoints](#api-endpoints)
-8. [Webhooks](#webhooks)
-9. [SDKs and Client Libraries](#sdks-and-client-libraries)
-10. [Best Practices](#best-practices)
+7. [Performance Optimization](#performance-optimization)
+8. [API Endpoints](#api-endpoints)
+9. [Webhooks](#webhooks)
+10. [SDKs and Client Libraries](#sdks-and-client-libraries)
+11. [Best Practices](#best-practices)
 
 ## Introduction
 
@@ -171,6 +172,133 @@ The API uses standard HTTP status codes to indicate the success or failure of re
 ## Rate Limiting
 
 To ensure fair usage and system stability, the API implements rate limiting:
+
+| Plan | Rate Limit | Burst Limit |
+|------|------------|-------------|
+| Free | 60 req/min | 100 req/min |
+| Pro  | 300 req/min | 500 req/min |
+| Enterprise | Custom | Custom |
+
+## Performance Optimization
+
+The API provides several endpoints and features for optimizing performance in your applications.
+
+### Distributed Cache
+
+The platform implements a distributed caching system to improve response times and reduce database load.
+
+#### Cache Control Headers
+
+All API responses include appropriate cache control headers:
+
+```http
+Cache-Control: public, max-age=3600
+ETag: "33a64df551425fcc55e4d42a148795d9f25f89d4"
+```
+
+You can use these headers to implement client-side caching:
+
+```http
+GET /api/resources/123
+If-None-Match: "33a64df551425fcc55e4d42a148795d9f25f89d4"
+```
+
+#### Cache API
+
+```http
+GET /api/cache/status
+```
+
+Returns cache statistics including hit rate, miss rate, and memory usage.
+
+```json
+{
+  "status": "healthy",
+  "stats": {
+    "hitRate": 0.87,
+    "missRate": 0.13,
+    "memoryUsage": 256000000,
+    "itemCount": 15420
+  }
+}
+```
+
+### Database Query Profiling
+
+The platform provides endpoints to monitor and optimize database performance.
+
+```http
+GET /api/db/profiler/stats
+```
+
+Returns database query performance statistics:
+
+```json
+{
+  "totalQueries": 15240,
+  "averageQueryTime": 45.3,
+  "slowQueries": 23,
+  "queryTypes": {
+    "find": 10500,
+    "aggregate": 3200,
+    "insert": 1020,
+    "update": 520
+  },
+  "slowestQueries": [
+    {
+      "operation": "aggregate",
+      "collection": "conversations",
+      "duration": 1250,
+      "timestamp": "2025-07-05T14:23:45.123Z"
+    }
+  ]
+}
+```
+
+### Frontend Performance Monitoring
+
+The API provides endpoints to collect and analyze frontend performance metrics.
+
+```http
+POST /api/metrics/frontend
+Content-Type: application/json
+
+{
+  "sessionId": "user-session-123",
+  "metrics": {
+    "LCP": 1250,
+    "FID": 15,
+    "CLS": 0.05,
+    "TTFB": 320,
+    "resourceLoading": [
+      {
+        "name": "main.js",
+        "duration": 350
+      }
+    ],
+    "memoryUsage": 45000000,
+    "errors": []
+  }
+}
+```
+
+Returns a confirmation of metrics received:
+
+```json
+{
+  "success": true,
+  "timestamp": "2025-07-05T14:30:12.456Z",
+  "recommendations": [
+    "Consider implementing code splitting to reduce main.js size"
+  ]
+}
+```
+
+```http
+GET /api/metrics/frontend/dashboard
+```
+
+Returns aggregated frontend performance metrics for visualization in dashboards.
 
 - Standard tier: 100 requests per minute
 - Enterprise tier: 1000 requests per minute

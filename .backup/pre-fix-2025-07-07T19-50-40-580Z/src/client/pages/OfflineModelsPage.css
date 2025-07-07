@@ -1,0 +1,239 @@
+.offline-models-page {
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 1rem;
+}
+
+.page-header {
+  background-color: var(--background-secondary-color);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-content h1 {
+  margin: 0 0 0.5rem 0;
+  font-size: 2rem;
+  color: var(--text-color);
+}
+
+.page-description {
+  font-size: 1.1rem;
+  color: var(--text-secondary-color);
+  margin-bottom: 1.5rem;
+  max-width: 800px;
+}
+
+.connection-banner {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.connection-status {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.connection-status.online {
+  background-color: rgba(76, 175, 80, 0.1);
+  color: #4CAF50;
+}
+
+.connection-status.offline {
+  background-color: rgba(244, 67, 54, 0.1);
+  color: #F44336;
+}
+
+.status-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.connection-status.online .status-dot {
+  background-color: #4CAF50;
+}
+
+.connection-status.offline .status-dot {
+  background-color: #F44336;
+}
+
+.offline-message {
+  font-size: 0.9rem;
+  color: #F44336;
+}
+
+.storage-info {
+  margin-top: 1rem;
+}
+
+.storage-label {
+  font-size: 0.9rem;
+  color: var(--text-secondary-color);
+  margin-bottom: 0.25rem;
+}
+
+.storage-bar {
+  height: 8px;
+  background-color: var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+  margin-bottom: 0.5rem;
+}
+
+.storage-used {
+  height: 100%;
+  background-color: var(--primary-color);
+  border-radius: 4px;
+  transition: width 0.3s ease;
+}
+
+.storage-details {
+  font-size: 0.8rem;
+  color: var(--text-secondary-color);
+}
+
+.page-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.info-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+.info-card {
+  background-color: var(--background-secondary-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.info-card h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.2rem;
+  color: var(--text-color);
+}
+
+.info-card p {
+  margin: 0;
+  color: var(--text-secondary-color);
+  line-height: 1.5;
+}
+
+.model-manager-container {
+  margin-bottom: 2rem;
+}
+
+.related-features {
+  margin-top: 2rem;
+}
+
+.related-features h2 {
+  margin: 0 0 1.5rem 0;
+  font-size: 1.5rem;
+  color: var(--text-color);
+}
+
+.feature-links {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.feature-link {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.5rem;
+  background-color: var(--background-secondary-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--text-color);
+  transition: all 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.feature-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.feature-icon {
+  font-size: 2rem;
+  width: 50px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--background-color);
+  border-radius: 12px;
+}
+
+.feature-info h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.feature-info p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--text-secondary-color);
+}
+
+/* RTL Support */
+[dir="rtl"] .connection-status,
+[dir="rtl"] .feature-link {
+  flex-direction: row-reverse;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .page-header {
+    padding: 1.5rem;
+  }
+  
+  .header-content h1 {
+    font-size: 1.5rem;
+  }
+  
+  .page-description {
+    font-size: 1rem;
+  }
+  
+  .info-cards {
+    grid-template-columns: 1fr;
+  }
+  
+  .feature-links {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Dark mode adjustments */
+@media (prefers-color-scheme: dark) {
+  .connection-status.online {
+    background-color: rgba(76, 175, 80, 0.2);
+  }
+  
+  .connection-status.offline {
+    background-color: rgba(244, 67, 54, 0.2);
+  }
+  
+  .feature-icon {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+}

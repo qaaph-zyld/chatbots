@@ -1,0 +1,10 @@
+Command: node -e console.log("About to exit with code 2"); process.exit(2);
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-07-05T14-46-30.243Z
+
+PID: 1368
+
+
+
+Command completed with exit code: 1
+Duration: 0ms

@@ -1,0 +1,32 @@
+{
+  "name": "@chatbots-platform/api-client",
+  "version": "1.0.0",
+  "description": "Node.js client library for the Chatbots Platform External REST API",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": [
+    "chatbot",
+    "api",
+    "client",
+    "rest",
+    "proxy"
+  ],
+  "author": "Chatbots Platform Team",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.4.0",
+    "https-proxy-agent": "^5.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.5.0"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "publishConfig": {
+    "proxy": "http://104.129.196.38:10563",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

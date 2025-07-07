@@ -1,0 +1,10 @@
+{
+  "command": "dir /b",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-07-05T14:46:33.558Z",
+  "currentTime": "2025-07-05T14:46:33.558Z",
+  "duration": 0,
+  "status": "success",
+  "exitCode": null,
+  "pid": 1308
+}

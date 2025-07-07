@@ -1,23 +1,29 @@
 # Test Coverage Gap Analysis
 
-Generated: 2025-06-01T03:51:27.898Z
+Generated: 2025-07-05T14:28:10.657Z
 
 ## Summary
 
-- Total source files: 398
+- Total source files: 641
 - Total test files: 43
-- Files without tests: 308
-- Files with tests: 90
+- Files without tests: 530
+- Files with tests: 111
 - Exported items without tests: 1
 
 ## Files Without Tests
 
 | File | Exported Items |
 |------|---------------|
+| src\analytics\analytics.service.fixed.js | None |
+| src\analytics\analytics.service.new.js | None |
 | src\analytics\behavior\test-user-behavior-insights.js | None |
 | src\analytics\behavior\user-behavior-insights.service.js | None |
 | src\analytics\benchmarking\performance-benchmark.service.js | None |
 | src\analytics\benchmarking\test-performance-benchmark.js | None |
+| src\analytics\controllers\analytics.controller.js | None |
+| src\analytics\controllers\dashboard.controller.js | None |
+| src\analytics\controllers\export.controller.js | None |
+| src\analytics\controllers\revenue-analytics.controller.js | None |
 | src\analytics\conversation\dashboard.service.js | None |
 | src\analytics\conversation\feedback.service.js | None |
 | src\analytics\conversation\index.js | None |
@@ -34,6 +40,7 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\analytics\learning\continuous.service.js | None |
 | src\analytics\learning\finetune.service.js | None |
 | src\analytics\learning\index.js | None |
+| src\analytics\models\analytics-event.model.js | None |
 | src\analytics\optimization\performance-optimizer.service.js | None |
 | src\analytics\optimization\test-performance-optimizer.js | None |
 | src\analytics\predictive\predictive-analytics.service.js | None |
@@ -43,9 +50,14 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\analytics\reporting\test-report-builder.js | None |
 | src\analytics\reporting\test-report-generator.js | None |
 | src\analytics\reporting\test-utils.js | None |
+| src\analytics\routes\dashboard.routes.js | None |
+| src\analytics\routes\export.routes.js | None |
+| src\analytics\services\revenue-analytics.service.js | None |
 | src\analytics\testing\ab-testing.service.js | None |
 | src\analytics\testing\test-ab-testing-simple.js | None |
 | src\analytics\testing\test-ab-testing.js | None |
+| src\analytics\utils\data-exporter.js | None |
+| src\analytics\utils\demo-data-generator.js | None |
 | src\api\controllers\advanced-context.controller.js | None |
 | src\api\controllers\advanced-template.controller.js | None |
 | src\api\controllers\analytics.controller.js | None |
@@ -75,6 +87,8 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\api\external\v1\controllers\knowledgeBase.controller.js | None |
 | src\api\external\v1\controllers\message.controller.js | None |
 | src\api\external\v1\index.js | None |
+| src\api\external\v1\routes\conversation.routes.js | None |
+| src\api\external\v1\routes\sentiment.routes.js | None |
 | src\api\health\health.routes.js | None |
 | src\api\health\index.js | None |
 | src\api\models\index.js | None |
@@ -84,6 +98,7 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\api\routes\chatbot.routes.js | None |
 | src\api\routes\component.routes.js | None |
 | src\api\routes\documentation.routes.js | None |
+| src\api\routes\health.routes.js | None |
 | src\api\routes\index.js | None |
 | src\api\routes\marketplace.routes.js | None |
 | src\api\routes\model.routes.js | None |
@@ -100,6 +115,57 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\api\webhooks\webhook.model.js | None |
 | src\api\webhooks\webhook.routes.js | None |
 | src\api\webhooks\webhook.service.js | None |
+| src\backend\controllers\analytics-dashboard.controller.js | None |
+| src\backend\routes\analytics-dashboard.routes.js | None |
+| src\backend\services\analytics.service.optimized.js | None |
+| src\billing\config\currency.config.js | None |
+| src\billing\controllers\analytics.controller.js | None |
+| src\billing\controllers\coupon.controller.js | None |
+| src\billing\controllers\currency.controller.js | None |
+| src\billing\controllers\dunning.controller.js | None |
+| src\billing\controllers\feature-access.controller.js | None |
+| src\billing\controllers\payment-methods.controller.js | None |
+| src\billing\controllers\payment-monitoring.controller.js | None |
+| src\billing\controllers\payment-recovery.controller.js | None |
+| src\billing\controllers\payment.controller.js | None |
+| src\billing\controllers\pricing.controller.js | None |
+| src\billing\controllers\subscription-controller.js | None |
+| src\billing\controllers\subscription-lifecycle.controller.js | None |
+| src\billing\controllers\subscription.controller.js | None |
+| src\billing\controllers\tax.controller.js | None |
+| src\billing\controllers\trial.controller.js | None |
+| src\billing\controllers\webhook.controller.js | None |
+| src\billing\jobs\payment-retry-scheduler.js | None |
+| src\billing\middleware\payment-error.middleware.js | None |
+| src\billing\models\coupon.model.js | None |
+| src\billing\models\payment-attempt.model.js | None |
+| src\billing\models\payment-method.model.js | None |
+| src\billing\models\payment.model.js | None |
+| src\billing\models\pricing.model.js | None |
+| src\billing\models\subscription.js | None |
+| src\billing\models\subscription.model.js | None |
+| src\billing\routes\feature-access.routes.js | None |
+| src\billing\routes\payment-methods.routes.js | None |
+| src\billing\routes\payment-monitoring.routes.js | None |
+| src\billing\routes\payment-recovery.routes.js | None |
+| src\billing\routes\subscription-lifecycle.routes.js | None |
+| src\billing\routes\webhook.routes.js | None |
+| src\billing\services\billing.service.js | None |
+| src\billing\services\coupon.service.js | None |
+| src\billing\services\currency.service.js | None |
+| src\billing\services\dunning.service.js | None |
+| src\billing\services\feature-access.service.js | None |
+| src\billing\services\payment-monitoring.service.js | None |
+| src\billing\services\payment-recovery-analytics.js | None |
+| src\billing\services\payment-recovery.service.js | None |
+| src\billing\services\payment.service.js | None |
+| src\billing\services\pricing.service.js | None |
+| src\billing\services\subscription-lifecycle.service.js | None |
+| src\billing\services\subscription-service.js | None |
+| src\billing\services\subscription.service.js | None |
+| src\billing\services\tax.service.js | None |
+| src\billing\services\trial.service.js | None |
+| src\billing\utils\payment-error-handler.js | None |
 | src\bot\core.js | None |
 | src\bot\engines\botpress.engine.js | None |
 | src\bot\engines\huggingface.engine.js | None |
@@ -112,6 +178,7 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\bot\templates\base.template.js | None |
 | src\bot\templates\index.js | None |
 | src\bot\templates\simple.template.js | None |
+| src\cache\redis-cache.js | None |
 | src\client\hooks\useComponent.js | useComponent, useComponentsByType, useAllComponents, useComponent |
 | src\client\routes.js | AppRoutes |
 | src\clients\node\example.js | None |
@@ -120,9 +187,14 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\components\custom\ComponentRegistry.js | None |
 | src\components\custom\ComponentScaffolder.js | None |
 | src\config.js | None |
+| src\config\cache.config.js | None |
+| src\config\environment.js | None |
 | src\config\index.js | None |
+| src\config\mongodb.js | None |
 | src\config\open-voice.config.js | None |
+| src\config\rate-limit.config.js | None |
 | src\config\swagger.js | None |
+| src\config\weaviate.config.js | None |
 | src\context\advanced-context.service.js | None |
 | src\context\context.service.js | None |
 | src\context\entity-tracking.service.js | None |
@@ -130,16 +202,40 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\context\preference-learning.service.js | None |
 | src\context\reference.service.js | None |
 | src\context\topic-detection.service.js | None |
+| src\controllers\alert.controller.js | None |
 | src\controllers\audio-processor.controller.js | None |
+| src\controllers\health-check.controller.js | None |
+| src\controllers\health.controller.js | None |
+| src\controllers\knowledge-base.controller.js | None |
 | src\controllers\language-detector.controller.js | None |
+| src\controllers\metrics.controller.js | None |
 | src\controllers\model-manager.controller.js | None |
+| src\controllers\monitoring.controller.js | None |
 | src\controllers\open-voice.controller.js | None |
 | src\controllers\template.controller.js | None |
 | src\controllers\voice-recognition.controller.js | None |
 | src\controllers\voice.controller.js | None |
+| src\core\module-alias.js | None |
+| src\core\redis-client.js | None |
+| src\data\analytics.repository.js | None |
+| src\data\base.repository.js | None |
+| src\data\chatbot.repository.js | None |
+| src\data\conversation.repository.js | None |
+| src\data\database.service.js | None |
+| src\data\database\mongodb.js | None |
+| src\data\entity.repository.js | None |
+| src\data\index.js | None |
+| src\data\preference.repository.js | None |
+| src\data\topic.repository.js | None |
+| src\database\connection-health-checker.js | None |
+| src\database\connection-optimizer.js | None |
+| src\database\connection-pool.js | None |
 | src\database\connection.js | None |
 | src\database\db.connection.js | None |
+| src\database\indexes.js | None |
 | src\database\models.js | None |
+| src\database\query-analyzer.js | None |
+| src\database\query-optimizer.js | None |
 | src\database\schemas\chatbot.schema.js | None |
 | src\database\schemas\conversation.schema.js | None |
 | src\database\schemas\index.js | None |
@@ -150,6 +246,18 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\database\schemas\pluginInstance.schema.js | None |
 | src\database\schemas\template.schema.js | None |
 | src\database\schemas\training.schema.js | None |
+| src\domain\entity-reference.model.js | None |
+| src\domain\entity-relation.model.js | None |
+| src\domain\entity.model.js | None |
+| src\domain\integration.model.js | None |
+| src\domain\preference.model.js | None |
+| src\domain\template.model.js | None |
+| src\domain\topic-reference.model.js | None |
+| src\domain\topic.model.js | None |
+| src\domain\usage.model.js | None |
+| src\domain\usageMetric.model.js | None |
+| src\domain\workflow-execution.model.js | None |
+| src\domain\workflow.model.js | None |
 | src\enterprise\collaboration\team-collaboration.service.js | None |
 | src\enterprise\collaboration\test-team-collaboration.js | None |
 | src\enterprise\index.js | None |
@@ -165,6 +273,12 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\enterprise\security\test-enterprise-security.js | None |
 | src\enterprise\security\test-rbac.js | None |
 | src\enterprise\security\test-security-features.js | None |
+| src\frontend\services\analytics-dashboard.service.js | AnalyticsDashboardService |
+| src\frontend\utils\asset-optimizer.js | None |
+| src\frontend\utils\error-tracker.js | None |
+| src\frontend\utils\lazyLoad.js | lazyLoad, lazyLoadRoute, preloadComponents, lazyLoadOnVisible |
+| src\frontend\utils\performance-optimizer.js | None |
+| src\frontend\webpack.config.js | None |
 | src\i18n\i18n.js | i18n |
 | src\i18n\index.js | i18n |
 | src\i18n\languageDetector.js | detectUserLanguage, setLanguagePreference, getSupportedLanguages, isLanguageSupported, getLanguageInfo, default |
@@ -175,9 +289,26 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\integrations\integration.manager.js | None |
 | src\integrations\slack.service.js | None |
 | src\integrations\web.service.js | None |
+| src\jobs\job-queue.js | None |
+| src\middleware\cache\adaptive-ttl.js | None |
+| src\middleware\cache\cache-monitor.js | None |
+| src\middleware\cache\cache-warmer.js | None |
+| src\middleware\cache\cache.middleware.js | None |
+| src\middleware\cache\index.js | None |
 | src\middleware\error.middleware.js | None |
+| src\middleware\feature-access.middleware.js | None |
 | src\middleware\index.js | None |
 | src\middleware\logger.middleware.js | None |
+| src\middleware\payment-error.middleware.js | None |
+| src\middleware\performance.js | None |
+| src\middleware\rate-limit\index.js | None |
+| src\middleware\rate-limit\rate-limit.middleware.js | None |
+| src\middleware\rate-limiter.js | None |
+| src\middleware\raw-body.middleware.js | None |
+| src\middleware\request-timeout.js | None |
+| src\middleware\security\index.js | None |
+| src\middleware\stripe-webhook.js | None |
+| src\middleware\tenant-isolation.middleware.js | None |
 | src\models\entity-reference.model.js | None |
 | src\models\entity-relation.model.js | None |
 | src\models\entity.model.js | None |
@@ -190,11 +321,46 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\models\usageMetric.model.js | None |
 | src\models\workflow-execution.model.js | None |
 | src\models\workflow.model.js | None |
+| src\modules\analytics\analytics-service.js | None |
+| src\modules\chatbot\chatbot.service.js | None |
+| src\modules\context\context-manager.js | None |
+| src\modules\conversation\controllers\conversation.controller.js | None |
+| src\modules\conversation\repositories\conversation.repository.js | None |
+| src\modules\sentiment\controllers\sentiment.controller.js | None |
+| src\modules\sentiment\repositories\sentiment.repository.js | None |
+| src\modules\sentiment\services\sentiment.service.js | None |
+| src\modules\tenant\tenant-service.js | None |
+| src\modules\topic\advanced-context.service.js | None |
+| src\modules\topic\advanced-template.service.js | None |
+| src\modules\topic\chatbot-data.service.js | None |
+| src\modules\topic\chatbot.service.js | None |
+| src\modules\topic\component.service.js | None |
+| src\modules\topic\documentation.service.js | None |
+| src\modules\topic\entity-tracking.service.js | None |
+| src\modules\topic\knowledgeBase.service.js | None |
+| src\modules\topic\marketplace.service.js | None |
+| src\modules\topic\multilingual-kb.service.js | None |
+| src\modules\topic\offline-sync.service.js | None |
+| src\modules\topic\open-voice.service.js | None |
+| src\modules\topic\personality.service.js | None |
+| src\modules\topic\plugin.service.js | None |
+| src\modules\topic\preference-learning.service.js | None |
+| src\modules\topic\theme.service.js | None |
+| src\modules\topic\topic-detection.service.js | None |
+| src\modules\topic\translation.service.js | None |
+| src\modules\topic\voice-recognition.service.js | None |
+| src\modules\topic\voice.service.js | None |
+| src\modules\topic\workflow-template.service.js | None |
 | src\monitoring\index.js | None |
+| src\monitoring\memory-monitor.js | None |
 | src\monitoring\metrics-server.js | None |
+| src\monitoring\metrics.js | None |
+| src\monitoring\performance-dashboard.js | None |
 | src\monitoring\prometheus-exporter.service.js | None |
 | src\monitoring\rate-limiter.service.js | None |
 | src\monitoring\resource-monitor.service.js | None |
+| src\monitoring\service-health.js | None |
+| src\monitoring\services\monitoring.service.js | None |
 | src\monitoring\test-prometheus-integration.js | None |
 | src\monitoring\test-rate-limiter.js | None |
 | src\monitoring\test-resource-monitor.js | None |
@@ -221,6 +387,7 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\nlp\sentiment\index.js | None |
 | src\nlp\sentiment\sentiment.service.js | None |
 | src\nlp\sentiment\test-sentiment-analysis.js | None |
+| src\notifications\services\email.service.js | None |
 | src\personality\index.js | None |
 | src\personality\message-processor.js | None |
 | src\personality\personality.schema.js | None |
@@ -230,14 +397,23 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\plugins\translator\index.js | None |
 | src\plugins\weather-integration\index.js | None |
 | src\public\js\main.js | None |
+| src\routes\alert.routes.js | None |
 | src\routes\api.js | None |
+| src\routes\api\cache-efficiency.js | None |
 | src\routes\audio-processor.routes.js | None |
+| src\routes\billing.routes.js | None |
+| src\routes\health-check.routes.js | None |
+| src\routes\health.routes.js | None |
 | src\routes\language-detector.routes.js | None |
+| src\routes\metrics.routes.js | None |
 | src\routes\model-manager.routes.js | None |
+| src\routes\monitoring.routes.js | None |
 | src\routes\open-voice.routes.js | None |
 | src\routes\template.routes.js | None |
 | src\routes\voice-recognition.routes.js | None |
 | src\routes\voice.routes.js | None |
+| src\sales\models\lead.model.js | None |
+| src\sales\services\sales.service.js | None |
 | src\scaling\cluster.js | None |
 | src\scaling\scaling.middleware.js | None |
 | src\scripts\run-bug-sweep.js | None |
@@ -248,28 +424,42 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\server.js | None |
 | src\services\advanced-context.service.js | None |
 | src\services\advanced-template.service.js | None |
+| src\services\alert.service.js | None |
+| src\services\chatbot-data.service.js | None |
 | src\services\chatbot.service.js | None |
 | src\services\component.service.js | None |
 | src\services\documentation.service.js | None |
 | src\services\entity-tracking.service.js | None |
+| src\services\health-check.service.js | None |
+| src\services\health.service.js | None |
 | src\services\knowledgeBase.service.js | None |
 | src\services\marketplace.service.js | None |
+| src\services\monitoring.service.js | None |
+| src\services\monitoring\cache-efficiency.js | None |
 | src\services\multilingual-kb.service.js | None |
 | src\services\offline-sync.service.js | None |
 | src\services\open-voice.service.js | None |
 | src\services\personality.service.js | None |
 | src\services\plugin.service.js | None |
 | src\services\preference-learning.service.js | None |
+| src\services\tenant-activity.service.js | None |
 | src\services\theme.service.js | None |
 | src\services\topic-detection.service.js | None |
 | src\services\translation.service.js | None |
+| src\services\vector-db.service.js | None |
 | src\services\voice-recognition.service.js | None |
+| src\services\voice.service.js | None |
 | src\services\workflow-template.service.js | None |
 | src\storage\index.js | None |
 | src\storage\local-storage.service.js | None |
 | src\templates\index.js | None |
 | src\templates\template.controller.js | None |
 | src\templates\template.routes.js | None |
+| src\tenancy\models\tenant.model.js | None |
+| src\tenancy\services\tenant.service.js | None |
+| src\testing\load-tester-worker.js | None |
+| src\testing\load-tester.js | None |
+| src\tests\analytics-dashboard-integration.test.js | None |
 | src\tests\e2e\global-setup.js | None |
 | src\tests\e2e\global-teardown.js | None |
 | src\tests\e2e\setup.js | None |
@@ -282,7 +472,22 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\tests\performance\run-performance-tests.js | None |
 | src\tests\performance\setup.js | None |
 | src\tests\run-test-report.js | None |
+| src\tests\scripts\analytics-demo.js | None |
+| src\tests\scripts\chatbot-data-service-test.js | None |
+| src\tests\scripts\chatbot-repository-demo.js | None |
+| src\tests\scripts\conversation-service-test.js | None |
+| src\tests\scripts\data-layer-test.js | None |
+| src\tests\scripts\entity-service-test.js | None |
+| src\tests\scripts\mongodb-abstraction-test.js | None |
+| src\tests\scripts\mongodb-connection-test.js | None |
+| src\tests\scripts\preference-service-test.js | None |
+| src\tests\scripts\proxy-config-test.js | None |
+| src\tests\scripts\simple-topic-test.js | None |
+| src\tests\scripts\test-topic-repo.js | None |
+| src\tests\scripts\topic-service-test.js | None |
 | src\tests\setup\jest-setup.js | None |
+| src\tests\setup\mock-factory.js | None |
+| src\tests\setup\mongoose-model-helper.js | None |
 | src\tests\setup\mongoose-test-setup.js | None |
 | src\tests\setup\test-config.js | None |
 | src\tests\uat\setup.js | None |
@@ -295,26 +500,43 @@ Generated: 2025-06-01T03:51:27.898Z
 | src\ui\js\chat-interface.js | None |
 | src\ui\js\response-rating.js | None |
 | src\ui\server.js | None |
+| src\utils\api-response-optimizer.js | None |
 | src\utils\audio-processor.js | None |
 | src\utils\bug-sweep.js | None |
+| src\utils\cache-warmer.js | None |
+| src\utils\cache.js | None |
+| src\utils\cdn-integration.js | None |
+| src\utils\content-preloader.js | None |
+| src\utils\db-query-profiler.js | None |
+| src\utils\default-worker.js | None |
+| src\utils\distributed-cache.js | None |
+| src\utils\document-processor.js | None |
 | src\utils\edge-case-handler.js | None |
 | src\utils\error-handler.js | None |
 | src\utils\errors.js | None |
+| src\utils\formatters.js | None |
+| src\utils\frontend-performance-monitor.js | None |
+| src\utils\graphql-batch.js | None |
 | src\utils\index.js | None |
 | src\utils\indexedDB.js | initDB, getDB, addItem, getItem, updateItem, deleteItem, getAllItems, getItemsByIndex, clearStore, storePendingRequest, getPendingRequests, updatePendingRequestStatus, syncPendingRequests, storeSettings, getSettings, storeModel, getModel, getModelsByType, deleteModel, getStorageUsage, stores |
 | src\utils\language-detector.js | None |
 | src\utils\loadSampleTrainingData.js | None |
 | src\utils\mock-utils.js | None |
 | src\utils\model-manager.js | None |
+| src\utils\mongo-connection-helper.js | None |
 | src\utils\performance-optimizer.js | None |
+| src\utils\performance\index.js | None |
 | src\utils\pluginLoader.js | None |
+| src\utils\pwa-enabler.js | None |
 | src\utils\security-audit.js | None |
+| src\utils\ssr-optimizer.js | None |
 | src\utils\uat-feedback-collector.js | None |
 | src\utils\uuid-mock.js | None |
 | src\utils\validation.js | None |
+| src\utils\worker-pool.js | None |
 | src\web-widget\build.js | None |
 | src\web-widget\src\api\ApiClient.js | ApiClient |
-| src\web-widget\src\ChatbotWidget.js | ChatbotWidget |
+| src\web-widget\src\ChatbotWidget.js | None |
 | src\web-widget\src\index.js | ChatbotWidget |
 | src\web-widget\src\ui\WidgetUI.js | WidgetUI |
 | src\web-widget\src\utils\ApiClient.js | ApiClient |
@@ -335,17 +557,17 @@ Generated: 2025-06-01T03:51:27.898Z
 
 Create tests for these files that have no test coverage:
 
+1. **src\analytics\analytics.service.fixed.js** - Test all functionality
+1. **src\analytics\analytics.service.new.js** - Test all functionality
 1. **src\analytics\behavior\test-user-behavior-insights.js** - Test all functionality
 1. **src\analytics\behavior\user-behavior-insights.service.js** - Test all functionality
 1. **src\analytics\benchmarking\performance-benchmark.service.js** - Test all functionality
 1. **src\analytics\benchmarking\test-performance-benchmark.js** - Test all functionality
-1. **src\analytics\conversation\dashboard.service.js** - Test all functionality
-1. **src\analytics\conversation\feedback.service.js** - Test all functionality
-1. **src\analytics\conversation\index.js** - Test all functionality
-1. **src\analytics\conversation\insights.service.js** - Test all functionality
-1. **src\analytics\conversation\test-analytics.js** - Test all functionality
-1. **src\analytics\conversation\test-conversation-tracking.js** - Test all functionality
-... and 298 more files
+1. **src\analytics\controllers\analytics.controller.js** - Test all functionality
+1. **src\analytics\controllers\dashboard.controller.js** - Test all functionality
+1. **src\analytics\controllers\export.controller.js** - Test all functionality
+1. **src\analytics\controllers\revenue-analytics.controller.js** - Test all functionality
+... and 520 more files
 
 ### Medium Priority
 

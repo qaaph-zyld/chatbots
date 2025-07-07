@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Subscription Canceled</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+    .header {
+      background-color: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      border-bottom: 3px solid #6c757d;
+    }
+    .logo {
+      max-height: 60px;
+    }
+    .content {
+      padding: 20px;
+      background-color: #ffffff;
+    }
+    .footer {
+      background-color: #f8f9fa;
+      padding: 20px;
+      text-align: center;
+      font-size: 12px;
+      color: #6c757d;
+    }
+    .button {
+      display: inline-block;
+      background-color: #007bff;
+      color: #ffffff !important;
+      text-decoration: none;
+      padding: 12px 24px;
+      border-radius: 4px;
+      margin: 20px 0;
+      font-weight: bold;
+    }
+    .details {
+      background-color: #f8f9fa;
+      padding: 15px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+    .notice {
+      color: #1b1e21;
+      background-color: #d6d8d9;
+      border: 1px solid #c6c8ca;
+      padding: 10px;
+      border-radius: 4px;
+      margin: 20px 0;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <img src="{{logoUrl}}" alt="Company Logo" class="logo">
+      <h1>Subscription Canceled</h1>
+    </div>
+    
+    <div class="content">
+      <p>Hello {{companyName}},</p>
+      
+      <div class="notice">
+        <p>Your <strong>{{planName}}</strong> subscription has been canceled due to failed payment attempts.</p>
+      </div>
+      
+      <div class="details">
+        <p><strong>Subscription:</strong> {{planName}}</p>
+        <p><strong>Canceled Date:</strong> {{canceledDate}}</p>
+        <p><strong>Reason:</strong> Multiple failed payment attempts</p>
+      </div>
+      
+      <p>As a result of this cancellation, you may lose access to certain features and services. To restore your access, you can reactivate your subscription by updating your payment information and selecting a plan.</p>
+      
+      <div style="text-align: center;">
+        <a href="{{reactivateUrl}}" class="button">Reactivate Subscription</a>
+      </div>
+      
+      <p>If you believe this cancellation was made in error or need assistance, please contact our support team immediately.</p>
+      
+      <p>We value your business and hope to see you back soon.</p>
+      
+      <p>Best regards,<br>
+      The Support Team</p>
+    </div>
+    
+    <div class="footer">
+      <p>&copy; {{currentYear}} Your Company. All rights reserved.</p>
+      <p>This email was sent to {{email}}. If you prefer not to receive these emails, you can <a href="{{unsubscribeUrl}}">unsubscribe</a>.</p>
+    </div>
+  </div>
+</body>
+</html>
