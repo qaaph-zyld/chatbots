@@ -1,0 +1,100 @@
+{
+  "startTime": "2025-06-19T16:48:18.144Z",
+  "endTime": "2025-06-19T16:48:26.912Z",
+  "duration": 8768,
+  "entries": [
+    {
+      "timestamp": "2025-06-19T16:48:18.181Z",
+      "level": "info",
+      "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-19T16-48-18-144Z.log",
+      "data": null,
+      "elapsedMs": 37
+    },
+    {
+      "timestamp": "2025-06-19T16:48:18.182Z",
+      "level": "info",
+      "message": "Starting test execution with auto-fix",
+      "data": {
+        "runId": "4cf915fe-233e-4cda-b754-27822fe25593",
+        "testCommand": "npx jest --json --outputFile=test-results/jest-results.json test-results/sample-tests/calculator.test.js",
+        "maxRetries": 2,
+        "aiFixEnabled": true
+      },
+      "elapsedMs": 38
+    },
+    {
+      "timestamp": "2025-06-19T16:48:18.183Z",
+      "level": "warn",
+      "message": "Analytics module does not have a setLogger method",
+      "data": null,
+      "elapsedMs": 39
+    },
+    {
+      "timestamp": "2025-06-19T16:48:18.183Z",
+      "level": "info",
+      "message": "Test attempt 1/2",
+      "data": null,
+      "elapsedMs": 39
+    },
+    {
+      "timestamp": "2025-06-19T16:48:23.292Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 5148
+    },
+    {
+      "timestamp": "2025-06-19T16:48:23.293Z",
+      "level": "info",
+      "message": "Test attempt 2/2",
+      "data": null,
+      "elapsedMs": 5149
+    },
+    {
+      "timestamp": "2025-06-19T16:48:26.908Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 8764
+    },
+    {
+      "timestamp": "2025-06-19T16:48:26.909Z",
+      "level": "info",
+      "message": "Test execution completed",
+      "data": {
+        "success": false,
+        "attempts": 3,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "duration": 8727,
+        "stats": {
+          "totalRuns": 2,
+          "successfulRuns": 0,
+          "failedRuns": 2,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-19T16:48:26.905Z"
+        }
+      },
+      "elapsedMs": 8765
+    },
+    {
+      "timestamp": "2025-06-19T16:48:26.911Z",
+      "level": "error",
+      "message": "Failed to record analytics",
+      "data": {
+        "error": "Error: Missing required field: stats"
+      },
+      "elapsedMs": 8767
+    }
+  ],
+  "stats": {
+    "errors": 3,
+    "warnings": 1,
+    "totalEntries": 9,
+    "successRate": "66.67"
+  }
+}

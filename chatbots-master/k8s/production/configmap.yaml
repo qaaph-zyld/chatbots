@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: chatbot-platform-config
+  namespace: chatbot-platform-prod
+data:
+  NODE_ENV: "production"
+  LOG_LEVEL: "info"
+  API_VERSION: "v1"
+  CORS_ORIGINS: "https://chatbot-platform.example.com"
+  MAX_REQUEST_SIZE: "50mb"
+  RATE_LIMIT_WINDOW_MS: "900000"  # 15 minutes
+  RATE_LIMIT_MAX: "1000"
+  SESSION_TTL: "86400"  # 24 hours
+  CACHE_TTL: "3600"  # 1 hour
+  METRICS_ENABLED: "true"
+  TRACING_ENABLED: "true"

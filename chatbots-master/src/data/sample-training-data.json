@@ -1,0 +1,87 @@
+{
+  "name": "Customer Support Training",
+  "description": "Training dataset for customer support domain",
+  "domain": "customer_support",
+  "examples": [
+    {
+      "input": "How do I reset my password?",
+      "output": "To reset your password, please click on the 'Forgot Password' link on the login page. You will receive an email with instructions to create a new password.",
+      "metadata": {
+        "category": "account",
+        "priority": "high"
+      }
+    },
+    {
+      "input": "Where can I find my order history?",
+      "output": "Your order history can be found in the 'My Account' section. After logging in, click on 'Order History' to view all your past orders.",
+      "metadata": {
+        "category": "orders",
+        "priority": "medium"
+      }
+    },
+    {
+      "input": "How long does shipping take?",
+      "output": "Standard shipping typically takes 3-5 business days. Express shipping is available for an additional fee and takes 1-2 business days. International shipping may take 7-14 business days depending on the destination.",
+      "metadata": {
+        "category": "shipping",
+        "priority": "medium"
+      }
+    },
+    {
+      "input": "Can I cancel my order?",
+      "output": "Yes, you can cancel your order if it hasn't been shipped yet. Please go to 'Order History' in your account and select the order you wish to cancel. If the cancel button is not available, please contact our support team immediately.",
+      "metadata": {
+        "category": "orders",
+        "priority": "high"
+      }
+    },
+    {
+      "input": "Do you offer refunds?",
+      "output": "Yes, we offer full refunds for products returned within 30 days of purchase. The product must be in its original condition and packaging. Please visit our Returns page for more information on how to initiate a return.",
+      "metadata": {
+        "category": "returns",
+        "priority": "high"
+      }
+    },
+    {
+      "input": "How do I track my order?",
+      "output": "You can track your order by logging into your account and going to 'Order History'. Click on the order you want to track and select 'Track Package'. You will also receive tracking information via email once your order ships.",
+      "metadata": {
+        "category": "orders",
+        "priority": "high"
+      }
+    },
+    {
+      "input": "What payment methods do you accept?",
+      "output": "We accept all major credit cards (Visa, MasterCard, American Express, Discover), PayPal, and Apple Pay. For orders over $1000, we also offer financing options through Affirm.",
+      "metadata": {
+        "category": "payment",
+        "priority": "medium"
+      }
+    },
+    {
+      "input": "How do I contact customer support?",
+      "output": "You can contact our customer support team via email at support@example.com, by phone at 1-800-123-4567 (Monday-Friday, 9am-5pm EST), or through the live chat feature on our website.",
+      "metadata": {
+        "category": "support",
+        "priority": "high"
+      }
+    },
+    {
+      "input": "Is my personal information secure?",
+      "output": "Yes, we take data security very seriously. All personal information is encrypted using industry-standard protocols. We never share your information with third parties without your consent. Please see our Privacy Policy for more details.",
+      "metadata": {
+        "category": "privacy",
+        "priority": "high"
+      }
+    },
+    {
+      "input": "Do you ship internationally?",
+      "output": "Yes, we ship to most countries worldwide. International shipping rates and delivery times vary by location. Please note that customers are responsible for any customs fees or import taxes that may apply.",
+      "metadata": {
+        "category": "shipping",
+        "priority": "medium"
+      }
+    }
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "history": [
+    {
+      "id": "echo-1750904781741",
+      "command": "echo",
+      "args": [
+        "Save history test"
+      ],
+      "options": {
+        "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+        "timeout": 10000,
+        "progressTimeout": 2000
+      },
+      "result": {
+        "code": 0,
+        "signal": null,
+        "stdout": "Save history test\r\n",
+        "stderr": "",
+        "duration": 0,
+        "stdoutFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stdout-2025-06-26T02-26-21.741Z.txt",
+        "stderrFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stderr-2025-06-26T02-26-21.741Z.txt",
+        "statusFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\status-2025-06-26T02-26-21.741Z.json"
+      },
+      "startTime": "2025-06-26T02:26:21.741Z",
+      "endTime": "2025-06-26T02:26:21.741Z",
+      "duration": 0,
+      "success": true
+    }
+  ],
+  "timestamp": "2025-06-26T02:26:21.741Z",
+  "count": 1
+}

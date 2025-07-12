@@ -1,0 +1,140 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "chatbots-platform.fullname" . }}
+  labels:
+    {{- include "chatbots-platform.labels" . | nindent 4 }}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      {{- include "chatbots-platform.selectorLabels" . | nindent 6 }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 0
+  template:
+    metadata:
+      labels:
+        {{- include "chatbots-platform.selectorLabels" . | nindent 8 }}
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "3000"
+        prometheus.io/path: "/metrics"
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "chatbots-platform.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: {{ .Values.config.port }}
+              protocol: TCP
+          env:
+            - name: NODE_ENV
+              value: {{ .Values.config.nodeEnv | quote }}
+            - name: PORT
+              value: {{ .Values.config.port | quote }}
+            - name: MONGODB_URI
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "chatbots-platform.fullname" . }}-secrets
+                  key: mongodb-uri
+            - name: REDIS_HOST
+              value: {{ .Values.config.redis.host | quote }}
+            - name: REDIS_PORT
+              value: {{ .Values.config.redis.port | quote }}
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "chatbots-platform.fullname" . }}-secrets
+                  key: jwt-secret
+            - name: REFRESH_TOKEN_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "chatbots-platform.fullname" . }}-secrets
+                  key: refresh-token-secret
+            - name: TOKEN_EXPIRATION
+              value: {{ .Values.config.jwt.expiresIn | quote }}
+            - name: REFRESH_TOKEN_EXPIRATION
+              value: {{ .Values.config.refreshToken.expiresIn | quote }}
+            - name: MFA_ENABLED
+              value: {{ .Values.config.security.mfaEnabled | quote }}
+            - name: PASSWORD_POLICY_MIN_LENGTH
+              value: {{ .Values.config.security.passwordPolicyMinLength | quote }}
+            - name: ENCRYPTION_ALGORITHM
+              value: {{ .Values.config.dataProtection.encryptionAlgorithm | quote }}
+            - name: HASH_ALGORITHM
+              value: {{ .Values.config.dataProtection.hashAlgorithm | quote }}
+            - name: AUDIT_RETENTION_DAYS
+              value: {{ .Values.config.auditLogging.retentionPeriod | quote }}
+            - name: AUDIT_LOG_LEVEL
+              value: {{ .Values.config.logging.level | quote }}
+            - name: AUDIT_ENABLED_CATEGORIES
+              value: {{ .Values.config.auditLogging.enabledCategories | quote }}
+            - name: DEFAULT_RETENTION_DAYS
+              value: {{ .Values.config.dataRetention.defaultRetentionPeriod | quote }}
+            - name: ENABLE_AUTOMATIC_PURGE
+              value: {{ .Values.config.dataRetention.enableAutomaticPurge | quote }}
+            - name: PURGE_FREQUENCY
+              value: {{ .Values.config.dataRetention.purgeFrequency | quote }}
+          volumeMounts:
+            {{- if .Values.persistence.uploads.enabled }}
+            - name: uploads
+              mountPath: /usr/src/app/uploads
+            {{- end }}
+            {{- if .Values.persistence.logs.enabled }}
+            - name: logs
+              mountPath: /usr/src/app/logs
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          livenessProbe:
+            httpGet:
+              path: /api/health/liveness
+              port: http
+            initialDelaySeconds: 30
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          readinessProbe:
+            httpGet:
+              path: /api/health/readiness
+              port: http
+            initialDelaySeconds: 5
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+      volumes:
+        {{- if .Values.persistence.uploads.enabled }}
+        - name: uploads
+          persistentVolumeClaim:
+            claimName: {{ include "chatbots-platform.fullname" . }}-uploads
+        {{- end }}
+        {{- if .Values.persistence.logs.enabled }}
+        - name: logs
+          persistentVolumeClaim:
+            claimName: {{ include "chatbots-platform.fullname" . }}-logs
+        {{- end }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}

@@ -1,0 +1,10 @@
+Command: npm --version
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-26-21.803Z
+
+PID: 12892
+
+
+
+Command completed with exit code: 0
+Duration: 0ms

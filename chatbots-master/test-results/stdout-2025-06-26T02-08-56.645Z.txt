@@ -1,0 +1,11 @@
+Command: node --version
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-08-56.645Z
+
+PID: 6472
+
+v22.11.0
+
+
+Command completed with exit code: 0
+Duration: 122ms

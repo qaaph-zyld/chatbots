@@ -1,0 +1,4 @@
+Starting debug log
+Output directory: C:\Users\ajelacn\Documents\chatbots\test-results\output
+Current working directory: C:\Users\ajelacn\Documents\chatbots
+Using configured test command: npx jest C:\Users\ajelacn\Documents\chatbots\test-results\sample-tests\failing.test.js --config=C:\Users\ajelacn\Documents\chatbots\test-results\baseline-jest.config.js --json --outputFile="C:\Users\ajelacn\Documents\chatbots\test-results\validation-failing-tests-(should-fail)-2025-06-22T08-46-01-313Z.json"

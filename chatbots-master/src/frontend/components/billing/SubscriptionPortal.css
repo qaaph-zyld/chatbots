@@ -1,0 +1,215 @@
+/* Subscription Portal Styles */
+
+.subscription-portal {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.subscription-portal-loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 50px 0;
+}
+
+.subscription-portal-loading .spinner-border {
+  margin-bottom: 15px;
+}
+
+.subscription-portal-no-subscription {
+  text-align: center;
+  padding: 40px 20px;
+  margin: 20px 0;
+}
+
+.subscription-summary {
+  margin-bottom: 30px;
+}
+
+.subscription-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 20px;
+}
+
+.subscription-header h3 {
+  margin-top: 5px;
+  margin-bottom: 0;
+  font-weight: 600;
+}
+
+.subscription-header .badge {
+  font-size: 1rem;
+  padding: 8px 12px;
+}
+
+.subscription-details {
+  margin-bottom: 25px;
+}
+
+.detail-item {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+.detail-item:last-child {
+  border-bottom: none;
+}
+
+.detail-label {
+  font-weight: 500;
+  color: #666;
+}
+
+.detail-value {
+  font-weight: 600;
+}
+
+.subscription-actions {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.subscription-tabs {
+  margin-top: 30px;
+}
+
+.feature-list {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 30px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.feature-item i {
+  color: #28a745;
+  margin-right: 10px;
+}
+
+.feature-limit {
+  margin-left: auto;
+}
+
+.limit-badge {
+  margin-left: 5px;
+}
+
+.payment-method {
+  margin-bottom: 20px;
+}
+
+.payment-method-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.card-info {
+  display: flex;
+  align-items: center;
+}
+
+.card-info i {
+  font-size: 1.5rem;
+  margin-right: 10px;
+}
+
+.expiry {
+  margin-left: 15px;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.no-payment-method {
+  padding: 15px;
+  border: 1px dashed #ddd;
+  border-radius: 5px;
+  text-align: center;
+}
+
+.plans-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.plan-card {
+  transition: all 0.3s ease;
+}
+
+.plan-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.plan-card.current-plan {
+  border-color: #28a745;
+  box-shadow: 0 0 0 1px #28a745;
+}
+
+.plan-price {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.plan-price .price {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.plan-price .period {
+  font-size: 1rem;
+  color: #666;
+}
+
+.plan-features {
+  list-style-type: none;
+  padding-left: 0;
+  margin-bottom: 20px;
+}
+
+.plan-features li {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.plan-features li i {
+  color: #28a745;
+  margin-right: 10px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .subscription-header {
+    flex-direction: column;
+  }
+  
+  .subscription-header .badge {
+    margin-top: 10px;
+  }
+  
+  .subscription-actions {
+    flex-direction: column;
+  }
+  
+  .plans-grid {
+    grid-template-columns: 1fr;
+  }
+}

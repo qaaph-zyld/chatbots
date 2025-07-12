@@ -1,0 +1,326 @@
+name: Deployment Pipeline
+
+on:
+  push:
+    branches: [main, develop]
+    paths-ignore:
+      - 'docs/**'
+      - '*.md'
+      - '.github/**/*.md'
+  pull_request:
+    types: [closed]
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        required: true
+        default: 'staging'
+        type: choice
+        options:
+          - development
+          - staging
+          - production
+      force:
+        description: 'Force deployment (skip tests)'
+        required: false
+        type: boolean
+        default: false
+
+jobs:
+  validate:
+    name: Validate
+    runs-on: ubuntu-latest
+    if: github.event.inputs.force != 'true'
+    
+    services:
+      mongodb:
+        image: mongo:6.0
+        ports:
+          - 27017:27017
+        env:
+          MONGO_INITDB_ROOT_USERNAME: test
+          MONGO_INITDB_ROOT_PASSWORD: test
+      
+      redis:
+        image: redis:7.0
+        ports:
+          - 6379:6379
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Run linting and type checking
+        run: |
+          npm run lint
+          npm run type-check
+      
+      - name: Run unit tests with coverage
+        run: npm run test:unit:coverage
+      
+      - name: Run integration tests
+        run: npm run test:integration
+        env:
+          NODE_ENV: test
+          MONGODB_URI: mongodb://test:test@localhost:27017/test?authSource=admin
+          REDIS_URL: redis://localhost:6379
+      
+      - name: Upload test coverage
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          file: coverage/coverage-final.json
+          fail_ci_if_error: false
+  
+  build:
+    name: Build and Package
+    needs: validate
+    runs-on: ubuntu-latest
+    
+    outputs:
+      image-tag: ${{ steps.tag.outputs.tag }}
+      
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: 'npm'
+      
+      - name: Generate version tag
+        id: tag
+        run: |
+          echo "tag=$(node -p "require('./package.json').version")-$(git rev-parse --short HEAD)" >> $GITHUB_OUTPUT
+      
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v2
+      
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v2
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v4
+        with:
+          context: .
+          push: true
+          tags: |
+            ghcr.io/${{ github.repository }}:${{ steps.tag.outputs.tag }}
+            ghcr.io/${{ github.repository }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+      
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: build-artifacts
+          path: |
+            dist/
+            package*.json
+            Dockerfile
+  
+  deploy-staging:
+    name: Deploy to Staging
+    needs: build
+    if: (github.event.inputs.environment == 'staging' || github.event_name == 'push') && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/main')
+    runs-on: ubuntu-latest
+    environment: staging
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: .
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Deploy to ECS (Blue/Green)
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: task-definition-staging.json
+          service: chatbot-service-staging
+          cluster: chatbot-cluster-staging
+          wait-for-service-stability: true
+          force-new-deployment: true
+      
+      - name: Run smoke tests
+        run: |
+          echo "Running smoke tests against staging environment"
+          # Add your smoke test commands here
+          # Example: npm run test:smoke:staging
+      
+      - name: Notify deployment status
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: deployments
+          SLACK_TITLE: Staging Deployment ${{ job.status == 'success' && '✅' || '❌' }}
+          SLACK_MESSAGE: "${{ github.workflow }} #${{ github.run_number }} (${{ github.sha }}): ${{ job.status }}"
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+          SLACK_USERNAME: GitHub Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+  
+  deploy-production:
+    name: Deploy to Production (Blue/Green)
+    needs: [build, deploy-staging]
+    if: github.event.inputs.environment == 'production' && github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    environment: production
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      
+      - name: Download build artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: build-artifacts
+          path: .
+      
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v2
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      
+      - name: Login to Amazon ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+      
+      - name: Check for manual approval
+        if: github.event.inputs.environment == 'production' && github.event_name == 'workflow_dispatch'
+        uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.token }}
+          approvers: ${{ secrets.PROD_APPROVERS }}
+          minimum-approvals: 1
+          issue-title: "Production Deployment Approval Required"
+          issue-body: |
+            A production deployment has been requested. Please review the changes and approve or reject this deployment.
+            
+            **Commit:** ${{ github.sha }}
+            **Deployed by:** @${{ github.actor }}
+            **Environment:** production
+            
+            Changes:
+            ${{ github.event.commits[0].message }}
+      
+      - name: Deploy to ECS (Blue/Green)
+        uses: aws-actions/amazon-ecs-deploy-task-definition@v1
+        with:
+          task-definition: task-definition-prod.json
+          service: chatbot-service-prod
+          cluster: chatbot-cluster-prod
+          wait-for-service-stability: true
+          force-new-deployment: true
+          enable-circuit-breaker: true
+      
+      - name: Run smoke tests
+        run: |
+          echo "Running smoke tests against production environment"
+          # Add your smoke test commands here
+          # Example: npm run test:smoke:production
+      
+      - name: Notify deployment status
+        if: always()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: deployments
+          SLACK_TITLE: Production Deployment ${{ job.status == 'success' && '✅' || '❌' }}
+          SLACK_MESSAGE: "${{ github.workflow }} #${{ github.run_number }} (${{ github.sha }}): ${{ job.status }}"
+          SLACK_COLOR: ${{ job.status == 'success' && 'good' || 'danger' }}
+          SLACK_USERNAME: GitHub Actions
+          SLACK_ICON: https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png
+  
+  post-deploy-monitoring:
+    name: Post-Deploy Monitoring
+    needs: [deploy-staging, deploy-production]
+    if: always() && (needs.deploy-staging.result == 'success' || needs.deploy-production.result == 'success')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Check deployment health
+        run: |
+          echo "Monitoring deployment health..."
+          # Add your monitoring checks here
+          # Example: npm run monitor:deployment
+      
+      - name: Check error rates
+        run: |
+          echo "Checking error rates..."
+          # Add error rate checks here
+      
+      - name: Alert on issues
+        if: failure()
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_ALERTS_WEBHOOK }}
+          SLACK_CHANNEL: alerts
+          SLACK_TITLE: "🚨 Deployment Monitoring Alert"
+          SLACK_MESSAGE: "Issues detected in ${{ needs.deploy-staging.result == 'success' && 'staging' || 'production' }} deployment!"
+          SLACK_COLOR: danger
+        with:
+          node-version: '16'
+      
+      - name: Install dependencies
+        run: npm ci
+      
+      - name: Verify staging deployment
+        if: needs.deploy-staging.result == 'success'
+        run: |
+          npm run verify:staging
+      
+      - name: Verify production deployment
+        if: needs.deploy-production.result == 'success'
+        run: |
+          npm run verify:production
+      
+      - name: Generate deployment report
+        run: |
+          npm run generate-deployment-report
+      
+      - name: Upload deployment report
+        uses: actions/upload-artifact@v3
+        with:
+          name: deployment-report
+          path: reports/deployment/
+      
+      - name: Notify verification status
+        uses: rtCamp/action-slack-notify@v2
+        env:
+          SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
+          SLACK_CHANNEL: deployments
+          SLACK_TITLE: Deployment Verification
+          SLACK_MESSAGE: 'Post-deployment verification completed'
+          SLACK_COLOR: ${{ job.status }}

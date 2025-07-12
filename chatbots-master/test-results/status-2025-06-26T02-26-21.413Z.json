@@ -1,0 +1,10 @@
+{
+  "command": "node -e console.log(\"About to exit with code 2\"); process.exit(2);",
+  "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+  "startTime": "2025-06-26T02:26:21.413Z",
+  "currentTime": "2025-06-26T02:26:21.413Z",
+  "duration": 0,
+  "status": "failed",
+  "exitCode": null,
+  "pid": 17052
+}

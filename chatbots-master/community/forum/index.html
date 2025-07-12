@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open-Source Chatbots Community Forum</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="../website/img/logo.svg" alt="Open-Source Chatbots Platform Logo">
+                <h1>Community Forum</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="../website/index.html">Home</a></li>
+                    <li><a href="#categories">Categories</a></li>
+                    <li><a href="#recent">Recent Discussions</a></li>
+                    <li><a href="#members">Members</a></li>
+                    <li><a href="https://github.com/Pavleee23/chatbots/discussions" class="github-link"><i class="fab fa-github"></i> GitHub Discussions</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Welcome to Our Community</h1>
+                <p>Join discussions, share your projects, ask questions, and connect with other developers building with the Open-Source Chatbots Platform.</p>
+                <div class="hero-buttons">
+                    <a href="#join" class="btn btn-primary">Join the Community</a>
+                    <a href="#browse" class="btn btn-secondary">Browse Discussions</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="categories" class="categories">
+        <div class="container">
+            <h2>Discussion Categories</h2>
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Announcements</h3>
+                    <p>Official announcements about the platform, releases, and events</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-comment"></i> 24 topics</span>
+                        <span><i class="fas fa-user"></i> 156 participants</span>
+                    </div>
+                    <a href="categories/announcements.html" class="category-link">View Category</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-question-circle"></i>
+                    </div>
+                    <h3>Help & Support</h3>
+                    <p>Ask questions and get help with installation, configuration, and usage</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-comment"></i> 87 topics</span>
+                        <span><i class="fas fa-user"></i> 243 participants</span>
+                    </div>
+                    <a href="categories/help.html" class="category-link">View Category</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-lightbulb"></i>
+                    </div>
+                    <h3>Ideas & Feature Requests</h3>
+                    <p>Share your ideas and suggestions for improving the platform</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-comment"></i> 52 topics</span>
+                        <span><i class="fas fa-user"></i> 128 participants</span>
+                    </div>
+                    <a href="categories/ideas.html" class="category-link">View Category</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Development</h3>
+                    <p>Discussions about development, code, and technical implementation</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-comment"></i> 63 topics</span>
+                        <span><i class="fas fa-user"></i> 175 participants</span>
+                    </div>
+                    <a href="categories/development.html" class="category-link">View Category</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Voice Interface</h3>
+                    <p>Discussions specific to the open-source voice interface components</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-comment"></i> 41 topics</span>
+                        <span><i class="fas fa-user"></i> 112 participants</span>
+                    </div>
+                    <a href="categories/voice.html" class="category-link">View Category</a>
+                </div>
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-project-diagram"></i>
+                    </div>
+                    <h3>Showcase</h3>
+                    <p>Share your projects built with the Open-Source Chatbots Platform</p>
+                    <div class="category-stats">
+                        <span><i class="fas fa-comment"></i> 35 topics</span>
+                        <span><i class="fas fa-user"></i> 98 participants</span>
+                    </div>
+                    <a href="categories/showcase.html" class="category-link">View Category</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="recent" class="recent-discussions">
+        <div class="container">
+            <div class="section-header">
+                <h2>Recent Discussions</h2>
+                <a href="discussions/all.html" class="view-all">View All <i class="fas fa-arrow-right"></i></a>
+            </div>
+            <div class="discussion-list">
+                <div class="discussion-item">
+                    <div class="discussion-avatar">
+                        <img src="img/avatars/user1.jpg" alt="User Avatar">
+                    </div>
+                    <div class="discussion-content">
+                        <div class="discussion-meta">
+                            <span class="discussion-category">Voice Interface</span>
+                            <span class="discussion-date">2 hours ago</span>
+                        </div>
+                        <h3 class="discussion-title"><a href="discussions/voice-performance-optimization.html">Voice Recognition Performance Optimization Tips</a></h3>
+                        <p class="discussion-excerpt">I've been working on optimizing the voice recognition component for low-resource environments and wanted to share some techniques that improved performance by 40%...</p>
+                        <div class="discussion-stats">
+                            <span><i class="fas fa-comment"></i> 12 replies</span>
+                            <span><i class="fas fa-eye"></i> 87 views</span>
+                            <span><i class="fas fa-heart"></i> 23 likes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-item">
+                    <div class="discussion-avatar">
+                        <img src="img/avatars/user2.jpg" alt="User Avatar">
+                    </div>
+                    <div class="discussion-content">
+                        <div class="discussion-meta">
+                            <span class="discussion-category">Development</span>
+                            <span class="discussion-date">5 hours ago</span>
+                        </div>
+                        <h3 class="discussion-title"><a href="discussions/plugin-architecture.html">Question about Plugin Architecture Implementation</a></h3>
+                        <p class="discussion-excerpt">I'm trying to understand how the plugin hooks system works. Specifically, how do I register a custom hook for pre-processing messages before they reach the NLP engine?</p>
+                        <div class="discussion-stats">
+                            <span><i class="fas fa-comment"></i> 8 replies</span>
+                            <span><i class="fas fa-eye"></i> 42 views</span>
+                            <span><i class="fas fa-heart"></i> 5 likes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-item">
+                    <div class="discussion-avatar">
+                        <img src="img/avatars/user3.jpg" alt="User Avatar">
+                    </div>
+                    <div class="discussion-content">
+                        <div class="discussion-meta">
+                            <span class="discussion-category">Announcements</span>
+                            <span class="discussion-date">1 day ago</span>
+                        </div>
+                        <h3 class="discussion-title"><a href="discussions/voice-interface-release.html">[ANNOUNCEMENT] Voice Interface MVP Release</a></h3>
+                        <p class="discussion-excerpt">We're excited to announce the MVP release of our open-source voice interface! This release includes speech-to-text, text-to-speech, voice recognition, and comprehensive documentation...</p>
+                        <div class="discussion-stats">
+                            <span><i class="fas fa-comment"></i> 34 replies</span>
+                            <span><i class="fas fa-eye"></i> 256 views</span>
+                            <span><i class="fas fa-heart"></i> 78 likes</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="discussion-item">
+                    <div class="discussion-avatar">
+                        <img src="img/avatars/user4.jpg" alt="User Avatar">
+                    </div>
+                    <div class="discussion-content">
+                        <div class="discussion-meta">
+                            <span class="discussion-category">Showcase</span>
+                            <span class="discussion-date">2 days ago</span>
+                        </div>
+                        <h3 class="discussion-title"><a href="discussions/multilingual-assistant.html">Multilingual Voice Assistant using the Platform</a></h3>
+                        <p class="discussion-excerpt">I've built a multilingual voice assistant that supports 8 languages using the open-source voice interface. Here's how I integrated it and some challenges I faced...</p>
+                        <div class="discussion-stats">
+                            <span><i class="fas fa-comment"></i> 19 replies</span>
+                            <span><i class="fas fa-eye"></i> 143 views</span>
+                            <span><i class="fas fa-heart"></i> 45 likes</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="members" class="active-members">
+        <div class="container">
+            <h2>Active Community Members</h2>
+            <div class="members-grid">
+                <div class="member-card">
+                    <img src="img/avatars/user1.jpg" alt="Member Avatar" class="member-avatar">
+                    <h3>Alex Johnson</h3>
+                    <p class="member-role">Core Contributor</p>
+                    <div class="member-stats">
+                        <span><i class="fas fa-comment"></i> 87 posts</span>
+                        <span><i class="fas fa-code"></i> 34 contributions</span>
+                    </div>
+                    <a href="members/alex-johnson.html" class="member-profile">View Profile</a>
+                </div>
+                <div class="member-card">
+                    <img src="img/avatars/user2.jpg" alt="Member Avatar" class="member-avatar">
+                    <h3>Samantha Lee</h3>
+                    <p class="member-role">Voice Interface Expert</p>
+                    <div class="member-stats">
+                        <span><i class="fas fa-comment"></i> 63 posts</span>
+                        <span><i class="fas fa-code"></i> 28 contributions</span>
+                    </div>
+                    <a href="members/samantha-lee.html" class="member-profile">View Profile</a>
+                </div>
+                <div class="member-card">
+                    <img src="img/avatars/user3.jpg" alt="Member Avatar" class="member-avatar">
+                    <h3>David Chen</h3>
+                    <p class="member-role">Documentation Lead</p>
+                    <div class="member-stats">
+                        <span><i class="fas fa-comment"></i> 52 posts</span>
+                        <span><i class="fas fa-code"></i> 19 contributions</span>
+                    </div>
+                    <a href="members/david-chen.html" class="member-profile">View Profile</a>
+                </div>
+                <div class="member-card">
+                    <img src="img/avatars/user4.jpg" alt="Member Avatar" class="member-avatar">
+                    <h3>Maria Rodriguez</h3>
+                    <p class="member-role">Community Moderator</p>
+                    <div class="member-stats">
+                        <span><i class="fas fa-comment"></i> 112 posts</span>
+                        <span><i class="fas fa-code"></i> 15 contributions</span>
+                    </div>
+                    <a href="members/maria-rodriguez.html" class="member-profile">View Profile</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="join" class="join-community">
+        <div class="container">
+            <div class="join-content">
+                <h2>Join Our Community</h2>
+                <p>Become part of our growing community of developers, contributors, and users building the future of open-source chatbots.</p>
+                <form class="join-form">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" id="username" name="username" placeholder="Choose a username" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" name="email" placeholder="Your email address" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" placeholder="Create a password" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="interests">Interests</label>
+                        <select id="interests" name="interests" multiple>
+                            <option value="development">Development</option>
+                            <option value="voice">Voice Interface</option>
+                            <option value="nlp">NLP & AI</option>
+                            <option value="documentation">Documentation</option>
+                            <option value="design">UI/UX Design</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" name="terms" required>
+                            I agree to the <a href="../website/terms.html">Terms of Service</a> and <a href="../website/privacy.html">Privacy Policy</a>
+                        </label>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Create Account</button>
+                </form>
+                <div class="join-options">
+                    <p>Or join with:</p>
+                    <div class="social-buttons">
+                        <a href="#" class="social-button github"><i class="fab fa-github"></i> GitHub</a>
+                        <a href="#" class="social-button google"><i class="fab fa-google"></i> Google</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="../website/img/logo.svg" alt="Open-Source Chatbots Platform Logo">
+                    <h2>Open-Source Chatbots</h2>
+                    <p>Building the future of conversational AI, together.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h3>Community</h3>
+                        <ul>
+                            <li><a href="#categories">Categories</a></li>
+                            <li><a href="#recent">Recent Discussions</a></li>
+                            <li><a href="#members">Members</a></li>
+                            <li><a href="guidelines.html">Community Guidelines</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="../website/index.html">Main Website</a></li>
+                            <li><a href="../docs/index.html">Documentation</a></li>
+                            <li><a href="https://github.com/Pavleee23/chatbots">GitHub Repository</a></li>
+                            <li><a href="../website/blog.html">Blog</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Legal</h3>
+                        <ul>
+                            <li><a href="../website/terms.html">Terms of Service</a></li>
+                            <li><a href="../website/privacy.html">Privacy Policy</a></li>
+                            <li><a href="../website/code-of-conduct.html">Code of Conduct</a></li>
+                            <li><a href="../LICENSE">License</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Open-Source Chatbots Platform. Released under the MIT License.</p>
+                <div class="footer-social">
+                    <a href="https://github.com/Pavleee23/chatbots"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/OSChatbots"><i class="fab fa-twitter"></i></a>
+                    <a href="https://discord.gg/opensource-chatbots"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/forum.js"></script>
+</body>
+</html>

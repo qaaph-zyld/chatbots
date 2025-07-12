@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dev Framework Audit with Claude Sonnet 4</title>
+    <script src="https://js.puter.com/v2/"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        .container {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 10px 15px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            margin: 4px 2px;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        button:disabled {
+            background-color: #cccccc;
+            cursor: not-allowed;
+        }
+        #response {
+            white-space: pre-wrap;
+            background-color: #f9f9f9;
+            padding: 15px;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+            margin-top: 20px;
+            min-height: 200px;
+        }
+        .model-info {
+            font-style: italic;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .loading {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(0,0,0,.3);
+            border-radius: 50%;
+            border-top-color: #4CAF50;
+            animation: spin 1s ease-in-out infinite;
+            margin-left: 10px;
+            vertical-align: middle;
+        }
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <h1>Dev Framework Compliance Audit using Claude Sonnet 4</h1>
+    
+    <div class="container">
+        <h2>Project Structure Analysis</h2>
+        <p>This tool uses Claude Sonnet 4 via puter.js to analyze your project structure for compliance with dev_framework standards.</p>
+        <div class="model-info">Model: claude-sonnet-4</div>
+        
+        <button id="auditBtn">Run Compliance Audit</button>
+        <span id="loading" class="loading" style="display: none;"></span>
+        
+        <div id="response">Results will appear here...</div>
+    </div>
+    
+    <script>
+        document.getElementById('auditBtn').addEventListener('click', async function() {
+            const button = this;
+            const loadingIndicator = document.getElementById('loading');
+            const responseElement = document.getElementById('response');
+            
+            // Disable button and show loading indicator
+            button.disabled = true;
+            loadingIndicator.style.display = 'inline-block';
+            responseElement.textContent = "Requesting analysis from Claude Sonnet 4...";
+            
+            try {
+                // Project data to analyze - this is a simplified version of what we've gathered so far
+                const projectData = {
+                    structure: {
+                        directories: [
+                            "src/core",
+                            "src/middleware",
+                            "src/services",
+                            "configs",
+                            "tests/unit",
+                            "tests/integration",
+                            "tests/e2e",
+                            "docs"
+                        ],
+                        criticalFiles: {
+                            "mongoose-test-setup.js": true,
+                            "jest.config.js": true,
+                            "configs/jest/jest.memory.config.js": true,
+                            "docs/onboarding-guide.md": true,
+                            ".eslintrc": false
+                        },
+                        testCounts: {
+                            unit: 39,
+                            integration: 16,
+                            e2e: 1
+                        }
+                    },
+                    moduleAliases: ["@src", "@core", "@services", "@tests"],
+                    dependencies: {
+                        "mongodb-memory-server": true
+                    }
+                };
+                
+                // Prompt for Claude Sonnet 4
+                const prompt = `
+                I need you to analyze this Node.js project for compliance with dev_framework standards (v1.3+).
+                
+                Project structure information:
+                ${JSON.stringify(projectData, null, 2)}
+                
+                Please provide:
+                1. An analysis of modular boundaries and conventions
+                2. Identification of any deviations from standard practices
+                3. Recommendations for improving compliance
+                4. A compliance score (0-100%)
+                
+                Also, please start your response with "Analysis by Claude Sonnet 4:" to confirm the model being used.
+                `;
+                
+                // Call Claude Sonnet 4 using puter.js
+                const response = await puter.ai.chat(prompt, {
+                    model: "claude-sonnet-4"
+                });
+                
+                // Display the response
+                responseElement.textContent = response.text || "No response text received";
+                
+            } catch (error) {
+                responseElement.textContent = "Error using Claude Sonnet 4: " + error.message;
+                console.error("Error:", error);
+            } finally {
+                // Re-enable button and hide loading indicator
+                button.disabled = false;
+                loadingIndicator.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,240 @@
+{
+  "overall": {
+    "totalFixes": 4,
+    "successfulFixes": 4,
+    "successRate": 100
+  },
+  "byErrorType": {
+    "syntax-error": {
+      "total": 1,
+      "successful": 1,
+      "rate": 100
+    },
+    "unknown": {
+      "total": 1,
+      "successful": 1,
+      "rate": 100
+    },
+    "timeout": {
+      "total": 1,
+      "successful": 1,
+      "rate": 100
+    },
+    "dependency-error": {
+      "total": 1,
+      "successful": 1,
+      "rate": 100
+    }
+  },
+  "byFixSource": {
+    "ai-generated": {
+      "total": 4,
+      "successful": 4,
+      "rate": 100
+    }
+  },
+  "byConfidence": {
+    "high": {
+      "total": 4,
+      "successful": 4,
+      "rate": 100
+    },
+    "medium": {
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    "low": {
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    }
+  },
+  "timeToFix": {
+    "average": 0,
+    "min": null,
+    "max": 0
+  },
+  "history": [
+    {
+      "date": "2025-05-29",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-05-30",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-05-31",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-01",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-02",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-03",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-04",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-05",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-06",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-07",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-08",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-09",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-10",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-11",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-12",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-13",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-14",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-15",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-16",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-17",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-18",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-19",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-20",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-21",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-22",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-23",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-24",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-25",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-26",
+      "total": 0,
+      "successful": 0,
+      "rate": 0
+    },
+    {
+      "date": "2025-06-27",
+      "total": 4,
+      "successful": 0,
+      "rate": 0
+    }
+  ]
+}

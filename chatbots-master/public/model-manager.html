@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Voice Model Manager - Open-Source Chatbots Platform</title>
+  
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+  
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="/css/model-manager.css">
+  <link rel="stylesheet" href="/css/styles.css">
+  
+  <!-- React and ReactDOM -->
+  <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  
+  <!-- Components -->
+  <script src="/js/components/ModelManager.js"></script>
+</head>
+<body>
+  <header class="navbar navbar-expand-lg navbar-dark bg-primary">
+    <div class="container">
+      <a class="navbar-brand" href="/">Open-Source Chatbots Platform</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="/">Home</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/chatbots.html">Chatbots</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/open-voice-demo.html">Voice Demo</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link active" href="/model-manager.html">Model Manager</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/docs">Documentation</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </header>
+
+  <main class="container my-4">
+    <div id="model-manager-container"></div>
+  </main>
+
+  <footer class="bg-light py-4 mt-5">
+    <div class="container text-center">
+      <p>Open-Source Chatbots Platform - Built with 100% open-source components</p>
+      <p><small>No commercial APIs or services required</small></p>
+    </div>
+  </footer>
+
+  <!-- Bootstrap JS -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+  
+  <!-- Render Components -->
+  <script type="text/babel">
+    // Render Model Manager
+    ReactDOM.render(
+      <ModelManager />,
+      document.getElementById('model-manager-container')
+    );
+  </script>
+</body>
+</html>

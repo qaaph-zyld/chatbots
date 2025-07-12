@@ -1,0 +1,132 @@
+{
+  "startTime": "2025-06-19T21:42:25.886Z",
+  "endTime": "2025-06-19T21:42:26.001Z",
+  "duration": 115,
+  "entries": [
+    {
+      "timestamp": "2025-06-19T21:42:25.891Z",
+      "level": "info",
+      "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\test-run-2025-06-19T21-42-25-887Z.log",
+      "data": null,
+      "elapsedMs": 5
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.893Z",
+      "level": "info",
+      "message": "DEBUG: Entered runTestsWithAutoFix method.",
+      "data": null,
+      "elapsedMs": 7
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.895Z",
+      "level": "info",
+      "message": "Starting test execution with auto-fix",
+      "data": {
+        "runId": "de4bf8f2-5489-4842-846b-b22776d041f4",
+        "testCommand": "npm test",
+        "maxRetries": 3,
+        "aiFixEnabled": true
+      },
+      "elapsedMs": 9
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.896Z",
+      "level": "warn",
+      "message": "Analytics module does not have a setLogger method",
+      "data": null,
+      "elapsedMs": 10
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.897Z",
+      "level": "info",
+      "message": "Using enhanced test command: npx jest --verbose",
+      "data": {
+        "runId": "de4bf8f2-5489-4842-846b-b22776d041f4"
+      },
+      "elapsedMs": 11
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.907Z",
+      "level": "info",
+      "message": "Test attempt 1/3",
+      "data": null,
+      "elapsedMs": 21
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.945Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 59
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.946Z",
+      "level": "info",
+      "message": "Test attempt 2/3",
+      "data": null,
+      "elapsedMs": 60
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.963Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 77
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.964Z",
+      "level": "info",
+      "message": "Test attempt 3/3",
+      "data": null,
+      "elapsedMs": 78
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.973Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 87
+    },
+    {
+      "timestamp": "2025-06-19T21:42:25.974Z",
+      "level": "info",
+      "message": "Test execution completed",
+      "data": {
+        "success": false,
+        "attempts": 4,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "duration": 79,
+        "stats": {
+          "totalRuns": 6,
+          "successfulRuns": 0,
+          "failedRuns": 6,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-19T21:42:25.989Z"
+        }
+      },
+      "elapsedMs": 88
+    },
+    {
+      "timestamp": "2025-06-19T21:42:26.000Z",
+      "level": "info",
+      "message": "Recorded test run analytics",
+      "data": {
+        "runId": "de4bf8f2-5489-4842-846b-b22776d041f4"
+      },
+      "elapsedMs": 114
+    }
+  ],
+  "stats": {
+    "errors": 3,
+    "warnings": 1,
+    "totalEntries": 13,
+    "successRate": "76.92"
+  }
+}

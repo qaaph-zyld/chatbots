@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Open-Source Chatbots Platform</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="logo">
+                <img src="img/logo.svg" alt="Open-Source Chatbots Platform Logo">
+                <h1>Open-Source Chatbots</h1>
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#features">Features</a></li>
+                    <li><a href="#voice">Voice Interface</a></li>
+                    <li><a href="#docs">Documentation</a></li>
+                    <li><a href="#community">Community</a></li>
+                    <li><a href="#contribute">Contribute</a></li>
+                    <li><a href="https://github.com/Pavleee23/chatbots" class="github-link"><i class="fab fa-github"></i> GitHub</a></li>
+                </ul>
+            </nav>
+            <div class="mobile-menu-toggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>Build Powerful Chatbots with Freedom</h1>
+                <p>A fully open-source platform for creating customizable chatbots with advanced AI capabilities, including voice interface - all without relying on proprietary services.</p>
+                <div class="hero-buttons">
+                    <a href="#get-started" class="btn btn-primary">Get Started</a>
+                    <a href="https://github.com/Pavleee23/chatbots" class="btn btn-secondary"><i class="fab fa-github"></i> Star on GitHub</a>
+                </div>
+            </div>
+            <div class="hero-image">
+                <img src="img/hero-illustration.svg" alt="Chatbot Platform Illustration">
+            </div>
+        </div>
+    </section>
+
+    <section id="features" class="features">
+        <div class="container">
+            <h2>Key Features</h2>
+            <div class="feature-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-robot"></i>
+                    </div>
+                    <h3>Customizable Personalities</h3>
+                    <p>Create chatbots with distinct personalities, tones, and language styles to match your brand or use case.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Knowledge Base Integration</h3>
+                    <p>Connect your chatbots to custom knowledge bases using open-source vector databases.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-plug"></i>
+                    </div>
+                    <h3>Plugin Architecture</h3>
+                    <p>Extend functionality with plugins for sentiment analysis, data processing, and more.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <h3>Voice Interface</h3>
+                    <p>Add voice capabilities with local speech-to-text and text-to-speech processing.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-lock"></i>
+                    </div>
+                    <h3>Privacy-Focused</h3>
+                    <p>Process all data locally without sending sensitive information to external services.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">
+                        <i class="fas fa-code-branch"></i>
+                    </div>
+                    <h3>Fully Open Source</h3>
+                    <p>Built entirely with open-source components, giving you complete freedom and control.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="voice" class="voice-interface">
+        <div class="container">
+            <div class="voice-content">
+                <h2>Advanced Voice Interface</h2>
+                <p>Our platform includes a comprehensive open-source voice interface with local processing capabilities:</p>
+                <ul class="voice-features">
+                    <li><i class="fas fa-check-circle"></i> Local speech-to-text with Mozilla DeepSpeech and Kaldi</li>
+                    <li><i class="fas fa-check-circle"></i> High-quality text-to-speech with Coqui TTS</li>
+                    <li><i class="fas fa-check-circle"></i> Speaker identification and verification</li>
+                    <li><i class="fas fa-check-circle"></i> Multi-language support</li>
+                    <li><i class="fas fa-check-circle"></i> Voice activity detection and noise filtering</li>
+                    <li><i class="fas fa-check-circle"></i> Optimized for various hardware configurations</li>
+                </ul>
+                <a href="docs/VOICE_FEATURES.html" class="btn btn-secondary">Explore Voice Features</a>
+            </div>
+            <div class="voice-image">
+                <img src="img/voice-interface.svg" alt="Voice Interface Illustration">
+            </div>
+        </div>
+    </section>
+
+    <section id="get-started" class="get-started">
+        <div class="container">
+            <h2>Get Started in Minutes</h2>
+            <div class="code-block">
+                <pre><code># Clone the repository
+git clone https://github.com/Pavleee23/chatbots.git
+
+# Install dependencies
+cd chatbots
+npm install
+
+# Start the development server
+npm run dev</code></pre>
+                <button class="copy-button" data-clipboard-target="#installation-code">
+                    <i class="far fa-copy"></i>
+                </button>
+            </div>
+            <div class="installation-steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Clone & Install</h3>
+                        <p>Clone the repository and install dependencies</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Configure</h3>
+                        <p>Set up your environment variables</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Customize</h3>
+                        <p>Create your first chatbot with the UI</p>
+                    </div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Deploy</h3>
+                        <p>Deploy to your preferred hosting</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="docs" class="documentation">
+        <div class="container">
+            <h2>Comprehensive Documentation</h2>
+            <div class="doc-cards">
+                <a href="docs/user-guide.html" class="doc-card">
+                    <div class="doc-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <h3>User Guide</h3>
+                    <p>Learn how to use the platform to create and manage chatbots</p>
+                </a>
+                <a href="docs/admin-guide.html" class="doc-card">
+                    <div class="doc-icon">
+                        <i class="fas fa-cogs"></i>
+                    </div>
+                    <h3>Administrator Guide</h3>
+                    <p>Setup, configuration, and maintenance instructions</p>
+                </a>
+                <a href="docs/developer-guide.html" class="doc-card">
+                    <div class="doc-icon">
+                        <i class="fas fa-code"></i>
+                    </div>
+                    <h3>Developer Guide</h3>
+                    <p>API references and integration guides</p>
+                </a>
+                <a href="docs/deployment-guide.html" class="doc-card">
+                    <div class="doc-icon">
+                        <i class="fas fa-server"></i>
+                    </div>
+                    <h3>Deployment Guide</h3>
+                    <p>Instructions for deploying in various environments</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="community" class="community">
+        <div class="container">
+            <h2>Join Our Community</h2>
+            <p class="section-intro">Connect with other developers, share your projects, and contribute to the platform.</p>
+            <div class="community-links">
+                <a href="https://github.com/Pavleee23/chatbots/discussions" class="community-link">
+                    <i class="fab fa-github"></i>
+                    <h3>GitHub Discussions</h3>
+                    <p>Ask questions and share ideas</p>
+                </a>
+                <a href="https://discord.gg/opensource-chatbots" class="community-link">
+                    <i class="fab fa-discord"></i>
+                    <h3>Discord Server</h3>
+                    <p>Chat with the community in real-time</p>
+                </a>
+                <a href="https://forum.opensource-chatbots.org" class="community-link">
+                    <i class="fas fa-comments"></i>
+                    <h3>Community Forum</h3>
+                    <p>Discuss features and use cases</p>
+                </a>
+                <a href="https://twitter.com/OSChatbots" class="community-link">
+                    <i class="fab fa-twitter"></i>
+                    <h3>Twitter</h3>
+                    <p>Follow for updates and news</p>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="contribute" class="contribute">
+        <div class="container">
+            <div class="contribute-content">
+                <h2>Contribute to the Project</h2>
+                <p>We welcome contributions of all kinds from the community. Whether you're fixing bugs, adding features, improving documentation, or spreading the word, your help makes this project better for everyone.</p>
+                <div class="contribution-ways">
+                    <div class="contribution-way">
+                        <i class="fas fa-bug"></i>
+                        <h3>Report Bugs</h3>
+                        <p>Help us identify and fix issues</p>
+                    </div>
+                    <div class="contribution-way">
+                        <i class="fas fa-code"></i>
+                        <h3>Submit PRs</h3>
+                        <p>Contribute code improvements</p>
+                    </div>
+                    <div class="contribution-way">
+                        <i class="fas fa-book"></i>
+                        <h3>Improve Docs</h3>
+                        <p>Help make our documentation better</p>
+                    </div>
+                    <div class="contribution-way">
+                        <i class="fas fa-star"></i>
+                        <h3>Star the Repo</h3>
+                        <p>Show your support for the project</p>
+                    </div>
+                </div>
+                <a href="https://github.com/Pavleee23/chatbots/blob/main/CONTRIBUTING.md" class="btn btn-primary">Contribution Guidelines</a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="img/logo.svg" alt="Open-Source Chatbots Platform Logo">
+                    <h2>Open-Source Chatbots</h2>
+                    <p>Building the future of conversational AI, together.</p>
+                </div>
+                <div class="footer-links">
+                    <div class="footer-links-column">
+                        <h3>Platform</h3>
+                        <ul>
+                            <li><a href="#features">Features</a></li>
+                            <li><a href="#voice">Voice Interface</a></li>
+                            <li><a href="#docs">Documentation</a></li>
+                            <li><a href="roadmap.html">Roadmap</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Community</h3>
+                        <ul>
+                            <li><a href="#community">Join Us</a></li>
+                            <li><a href="https://github.com/Pavleee23/chatbots/discussions">Discussions</a></li>
+                            <li><a href="https://discord.gg/opensource-chatbots">Discord</a></li>
+                            <li><a href="https://twitter.com/OSChatbots">Twitter</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links-column">
+                        <h3>Resources</h3>
+                        <ul>
+                            <li><a href="docs/user-guide.html">User Guide</a></li>
+                            <li><a href="docs/developer-guide.html">Developer Guide</a></li>
+                            <li><a href="blog.html">Blog</a></li>
+                            <li><a href="faq.html">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 Open-Source Chatbots Platform. Released under the MIT License.</p>
+                <div class="footer-social">
+                    <a href="https://github.com/Pavleee23/chatbots"><i class="fab fa-github"></i></a>
+                    <a href="https://twitter.com/OSChatbots"><i class="fab fa-twitter"></i></a>
+                    <a href="https://discord.gg/opensource-chatbots"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="js/main.js"></script>
+</body>
+</html>

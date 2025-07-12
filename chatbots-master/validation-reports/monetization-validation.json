@@ -1,0 +1,182 @@
+{
+  "timestamp": "2025-07-01T04:04:39.538Z",
+  "components": {
+    "total": 36,
+    "found": 26,
+    "missing": [
+      {
+        "category": "services",
+        "name": "Subscription Service",
+        "path": "../src/billing/services/subscription.service.js"
+      },
+      {
+        "category": "services",
+        "name": "Analytics Service",
+        "path": "../src/analytics/services/analytics.service.js"
+      },
+      {
+        "category": "controllers",
+        "name": "Subscription Controller",
+        "path": "../src/billing/controllers/subscription.controller.js"
+      },
+      {
+        "category": "controllers",
+        "name": "Analytics Controller",
+        "path": "../src/analytics/controllers/analytics.controller.js"
+      },
+      {
+        "category": "models",
+        "name": "Payment Model",
+        "path": "../src/billing/models/payment.model.js"
+      },
+      {
+        "category": "models",
+        "name": "Payment Method Model",
+        "path": "../src/billing/models/payment-method.model.js"
+      },
+      {
+        "category": "models",
+        "name": "Analytics Event Model",
+        "path": "../src/analytics/models/analytics-event.model.js"
+      },
+      {
+        "category": "frontend",
+        "name": "Subscription Onboarding",
+        "path": "../src/frontend/components/billing/SubscriptionOnboarding.jsx"
+      },
+      {
+        "category": "tests",
+        "name": "Subscription Service Tests",
+        "path": "../tests/unit/billing/subscription.service.test.js"
+      },
+      {
+        "category": "tests",
+        "name": "Payment Service Tests",
+        "path": "../tests/unit/billing/payment.service.test.js"
+      }
+    ],
+    "byCategory": {
+      "services": {
+        "total": 7,
+        "found": 5,
+        "missing": [
+          "Subscription Service",
+          "Analytics Service"
+        ]
+      },
+      "controllers": {
+        "total": 7,
+        "found": 5,
+        "missing": [
+          "Subscription Controller",
+          "Analytics Controller"
+        ]
+      },
+      "models": {
+        "total": 5,
+        "found": 2,
+        "missing": [
+          "Payment Model",
+          "Payment Method Model",
+          "Analytics Event Model"
+        ]
+      },
+      "middleware": {
+        "total": 2,
+        "found": 2,
+        "missing": []
+      },
+      "utils": {
+        "total": 3,
+        "found": 3,
+        "missing": []
+      },
+      "frontend": {
+        "total": 3,
+        "found": 2,
+        "missing": [
+          "Subscription Onboarding"
+        ]
+      },
+      "tests": {
+        "total": 9,
+        "found": 7,
+        "missing": [
+          "Subscription Service Tests",
+          "Payment Service Tests"
+        ]
+      }
+    }
+  },
+  "api": {
+    "total": 6,
+    "valid": 2,
+    "invalid": [
+      {
+        "method": "POST",
+        "path": "/billing/payment-methods/setup-intent",
+        "name": "Create Setup Intent"
+      },
+      {
+        "method": "GET",
+        "path": "/billing/feature-access/basic_chat",
+        "name": "Check Feature Access"
+      },
+      {
+        "method": "GET",
+        "path": "/analytics/dashboard/summary",
+        "name": "Get Analytics Summary"
+      },
+      {
+        "method": "GET",
+        "path": "/analytics/export/formats",
+        "name": "Get Export Formats"
+      }
+    ],
+    "endpoints": [
+      {
+        "method": "GET",
+        "path": "/billing/plans",
+        "name": "Get Plans",
+        "status": "valid"
+      },
+      {
+        "method": "GET",
+        "path": "/billing/subscriptions",
+        "name": "Get Subscriptions",
+        "status": "valid"
+      },
+      {
+        "method": "POST",
+        "path": "/billing/payment-methods/setup-intent",
+        "name": "Create Setup Intent",
+        "status": "invalid"
+      },
+      {
+        "method": "GET",
+        "path": "/billing/feature-access/basic_chat",
+        "name": "Check Feature Access",
+        "status": "invalid"
+      },
+      {
+        "method": "GET",
+        "path": "/analytics/dashboard/summary",
+        "name": "Get Analytics Summary",
+        "status": "invalid"
+      },
+      {
+        "method": "GET",
+        "path": "/analytics/export/formats",
+        "name": "Get Export Formats",
+        "status": "invalid"
+      }
+    ]
+  },
+  "summary": {
+    "componentsFound": "26/36",
+    "componentsPercentage": 72,
+    "apiEndpointsValid": "2/6",
+    "apiEndpointsPercentage": 33,
+    "overallStatus": "incomplete"
+  }
+}

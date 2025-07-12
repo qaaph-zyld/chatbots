@@ -1,0 +1,134 @@
+{
+  "startTime": "2025-06-21T12:45:28.722Z",
+  "endTime": "2025-06-21T12:47:01.177Z",
+  "duration": 92455,
+  "entries": [
+    {
+      "timestamp": "2025-06-21T12:45:28.724Z",
+      "level": "info",
+      "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-21T12-45-28-722Z.log",
+      "data": null,
+      "elapsedMs": 2
+    },
+    {
+      "timestamp": "2025-06-21T12:45:28.725Z",
+      "level": "info",
+      "message": "DEBUG: Entered runTestsWithAutoFix method.",
+      "data": null,
+      "elapsedMs": 3
+    },
+    {
+      "timestamp": "2025-06-21T12:45:28.725Z",
+      "level": "info",
+      "message": "Starting test execution with auto-fix",
+      "data": {
+        "runId": "616a3196-e878-4f87-99dc-b776e6f18e1b",
+        "testCommand": "npx jest --json --outputFile=test-results/jest-results.json test-results/sample-tests/calculator.test.js",
+        "maxRetries": 2,
+        "aiFixEnabled": true
+      },
+      "elapsedMs": 3
+    },
+    {
+      "timestamp": "2025-06-21T12:46:28.989Z",
+      "level": "info",
+      "message": "Using configured test command: npx jest --json --outputFile=test-results/jest-results.json test-results/sample-tests/calculator.test.js",
+      "data": {
+        "runId": "616a3196-e878-4f87-99dc-b776e6f18e1b"
+      },
+      "elapsedMs": 60267
+    },
+    {
+      "timestamp": "2025-06-21T12:46:28.998Z",
+      "level": "info",
+      "message": "Test attempt 1/2",
+      "data": null,
+      "elapsedMs": 60276
+    },
+    {
+      "timestamp": "2025-06-21T12:46:28.999Z",
+      "level": "info",
+      "message": "Executing test command: npx jest --json --outputFile=test-results/jest-results.json test-results/sample-tests/calculator.test.js",
+      "data": null,
+      "elapsedMs": 60277
+    },
+    {
+      "timestamp": "2025-06-21T12:46:43.967Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 75245
+    },
+    {
+      "timestamp": "2025-06-21T12:46:43.969Z",
+      "level": "info",
+      "message": "Test attempt 2/2",
+      "data": null,
+      "elapsedMs": 75247
+    },
+    {
+      "timestamp": "2025-06-21T12:46:43.970Z",
+      "level": "info",
+      "message": "Executing test command: npx jest --json --outputFile=test-results/jest-results.json test-results/sample-tests/calculator.test.js",
+      "data": null,
+      "elapsedMs": 75248
+    },
+    {
+      "timestamp": "2025-06-21T12:47:01.144Z",
+      "level": "error",
+      "message": "Error during test execution",
+      "data": {
+        "error": "[object Object]"
+      },
+      "elapsedMs": 92422
+    },
+    {
+      "timestamp": "2025-06-21T12:47:01.146Z",
+      "level": "info",
+      "message": "Test execution completed",
+      "data": {
+        "success": false,
+        "attempts": 3,
+        "lastExitCode": -1,
+        "appliedFixes": [],
+        "duration": 92420,
+        "stats": {
+          "totalRuns": 3,
+          "successfulRuns": 1,
+          "failedRuns": 2,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-21T12:47:01.139Z"
+        }
+      },
+      "elapsedMs": 92424
+    },
+    {
+      "timestamp": "2025-06-21T12:47:01.175Z",
+      "level": "info",
+      "message": "Recorded test run in analytics history",
+      "data": {
+        "id": "616a3196-e878-4f87-99dc-b776e6f18e1b",
+        "success": false,
+        "failedTests": 0
+      },
+      "elapsedMs": 92453
+    },
+    {
+      "timestamp": "2025-06-21T12:47:01.176Z",
+      "level": "info",
+      "message": "Recorded test run analytics",
+      "data": {
+        "runId": "616a3196-e878-4f87-99dc-b776e6f18e1b"
+      },
+      "elapsedMs": 92454
+    }
+  ],
+  "stats": {
+    "errors": 2,
+    "warnings": 0,
+    "totalEntries": 13,
+    "successRate": "84.62"
+  }
+}

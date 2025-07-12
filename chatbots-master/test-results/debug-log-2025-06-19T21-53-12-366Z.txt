@@ -1,0 +1,7 @@
+Starting debug log
+Output directory: C:\Users\ajelacn\Documents\chatbots\test-results
+Current working directory: C:\Users\ajelacn\Documents\chatbots
+Running echo command test...
+Error running echo command: undefined
+Jest version: 29.7.0
+Attempting to run Jest directly with child_process.spawn...

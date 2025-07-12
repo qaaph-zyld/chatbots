@@ -1,0 +1,167 @@
+# Default values for chatbots-platform Helm chart
+# This is a YAML-formatted file.
+
+replicaCount: 1
+
+image:
+  repository: chatbots-platform
+  tag: latest
+  pullPolicy: IfNotPresent
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  # Specifies whether a service account should be created
+  create: true
+  # The name of the service account to use.
+  # If not set and create is true, a name is generated using the fullname template
+  name: ""
+
+podSecurityContext: {}
+  # fsGroup: 2000
+
+securityContext: {}
+  # capabilities:
+  #   drop:
+  #   - ALL
+  # readOnlyRootFilesystem: true
+  # runAsNonRoot: true
+  # runAsUser: 1000
+
+service:
+  type: ClusterIP
+  port: 80
+  targetPort: 3000
+
+ingress:
+  enabled: false
+  annotations: {}
+    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/tls-acme: "true"
+  hosts:
+    - host: chart-example.local
+      paths: ["/"]
+  tls: []
+  #  - secretName: chart-example-tls
+  #    hosts:
+  #      - chart-example.local
+
+resources:
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+  requests:
+    cpu: 500m
+    memory: 512Mi
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
+
+# Application configuration
+config:
+  # Environment
+  nodeEnv: production
+  
+  # Server
+  port: 3000
+  
+  # MongoDB
+  mongodb:
+    uri: "mongodb://mongodb:27017/chatbots"
+    
+  # Redis
+  redis:
+    host: "redis"
+    port: 6379
+    
+  # JWT
+  jwt:
+    secret: ""  # Set this in a secure way
+    expiresIn: "1h"
+    
+  # Refresh Token
+  refreshToken:
+    secret: ""  # Set this in a secure way
+    expiresIn: "7d"
+    
+  # Logging
+  logging:
+    level: "info"
+    
+  # Security
+  security:
+    mfaEnabled: true
+    passwordPolicyMinLength: 10
+    
+  # Data Protection
+  dataProtection:
+    encryptionAlgorithm: "aes-256-gcm"
+    hashAlgorithm: "sha256"
+    
+  # Audit Logging
+  auditLogging:
+    retentionPeriod: 365
+    enabledCategories: "authentication,authorization,data,system"
+    
+  # Data Retention
+  dataRetention:
+    defaultRetentionPeriod: 365
+    enableAutomaticPurge: true
+    purgeFrequency: "daily"
+
+# Dependencies
+dependencies:
+  # MongoDB
+  mongodb:
+    enabled: true
+    architecture: standalone
+    auth:
+      enabled: false
+    persistence:
+      enabled: true
+      size: 10Gi
+      
+  # Redis
+  redis:
+    enabled: true
+    architecture: standalone
+    auth:
+      enabled: false
+    master:
+      persistence:
+        enabled: true
+        size: 5Gi
+
+# Horizontal Pod Autoscaler
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 80
+  targetMemoryUtilizationPercentage: 80
+
+# Prometheus metrics
+metrics:
+  enabled: true
+  serviceMonitor:
+    enabled: false
+
+# Persistent volumes for uploads and logs
+persistence:
+  enabled: true
+  uploads:
+    enabled: true
+    size: 10Gi
+    storageClass: ""
+  logs:
+    enabled: true
+    size: 5Gi
+    storageClass: ""

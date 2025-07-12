@@ -1,0 +1,45 @@
+Script started at 2025-06-21T10:28:47.394Z
+Defined paths at 2025-06-21T10:28:47.413Z
+Ensured output directory exists at 2025-06-21T10:28:47.414Z
+About to execute Jest at 2025-06-21T10:28:47.416Z
+Jest process initiated at 2025-06-21T10:28:47.423Z
+Process started message logged at 2025-06-21T10:28:47.424Z
+Jest callback executed at 2025-06-21T10:28:47.426Z
+Error: {"errno":-4058,"code":"ENOENT","syscall":"spawn C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\.bin\\jest","path":"C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\.bin\\jest","spawnargs":["--verbose"],"cmd":"C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\.bin\\jest --verbose"}
+Writing output files at 2025-06-21T10:28:47.429Z
+Finished writing output files at 2025-06-21T10:28:47.433Z
+Timeout reached at 2025-06-21T10:29:17.439Z
+Script started at 2025-06-21T10:31:45.122Z
+Platform: win32, using executable: jest.cmd
+Defined paths at 2025-06-21T10:31:45.149Z
+Ensured output directory exists at 2025-06-21T10:31:45.154Z
+About to execute Jest at 2025-06-21T10:31:45.159Z
+ERROR executing Jest: spawn EINVAL at 2025-06-21T10:31:45.172Z
+Process started message logged at 2025-06-21T10:31:45.178Z
+Timeout reached at 2025-06-21T10:32:15.193Z
+Script started at 2025-06-21T10:36:02.709Z
+Platform: win32, using executable: jest.cmd
+Defined paths at 2025-06-21T10:36:02.733Z
+Ensured output directory exists at 2025-06-21T10:36:02.734Z
+About to execute Jest at 2025-06-21T10:36:02.736Z
+Jest command: "C:\Users\ajelacn\Documents\chatbots\node_modules\.bin\jest.cmd" --verbose
+Jest process initiated at 2025-06-21T10:36:02.819Z
+Process started message logged at 2025-06-21T10:36:02.822Z
+Timeout reached at 2025-06-21T10:36:32.833Z
+Jest callback executed at 2025-06-21T10:37:02.842Z
+Error: {"code":null,"killed":true,"signal":"SIGTERM","cmd":"\"C:\\Users\\ajelacn\\Documents\\chatbots\\node_modules\\.bin\\jest.cmd\" --verbose"}
+Writing output files at 2025-06-21T10:37:03.026Z
+Finished writing output files at 2025-06-21T10:37:03.039Z
+Script started at 2025-06-21T10:45:16.868Z
+Platform: win32, using executable: jest.cmd
+Defined paths at 2025-06-21T10:45:16.885Z
+Ensured output directory exists at 2025-06-21T10:45:16.887Z
+About to execute Jest at 2025-06-21T10:45:16.889Z
+Jest command: "C:\Users\ajelacn\Documents\chatbots\node_modules\.bin\jest.cmd" --showConfig
+Jest process initiated at 2025-06-21T10:45:16.944Z
+Process started message logged at 2025-06-21T10:45:16.946Z
+Jest callback executed at 2025-06-21T10:45:18.960Z
+Error: none
+Writing output files at 2025-06-21T10:45:18.964Z
+Finished writing output files at 2025-06-21T10:45:18.970Z
+Timeout reached at 2025-06-21T10:45:46.949Z

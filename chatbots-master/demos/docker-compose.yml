@@ -1,0 +1,148 @@
+version: '3.8'
+
+services:
+  # Frontend application
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - API_URL=http://api:4000
+    depends_on:
+      - api
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Backend API
+  api:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=mongodb://mongodb:27017/chatbot-demo
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=demo-secret-key-change-in-production
+      - VECTOR_DB_URL=http://weaviate:8080
+      - ENABLE_DEMO_MODE=true
+      - DEMO_TENANT_ID=demo-tenant
+    depends_on:
+      - mongodb
+      - redis
+      - weaviate
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # MongoDB database
+  mongodb:
+    image: mongo:5.0
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+      - ./demo/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Redis for caching and session management
+  redis:
+    image: redis:6.2-alpine
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Weaviate vector database for knowledge base
+  weaviate:
+    image: semitechnologies/weaviate:1.18.0
+    ports:
+      - "8080:8080"
+    environment:
+      QUERY_DEFAULTS_LIMIT: 25
+      AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED: 'true'
+      PERSISTENCE_DATA_PATH: '/var/lib/weaviate'
+      DEFAULT_VECTORIZER_MODULE: 'text2vec-transformers'
+      ENABLE_MODULES: 'text2vec-transformers'
+      TRANSFORMERS_INFERENCE_API: 'http://t2v-transformers:8080'
+    volumes:
+      - weaviate-data:/var/lib/weaviate
+    depends_on:
+      - t2v-transformers
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Text2Vec Transformers for Weaviate
+  t2v-transformers:
+    image: semitechnologies/transformers-inference:sentence-transformers-all-MiniLM-L6-v2
+    environment:
+      ENABLE_CUDA: '0'
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # LocalAI for open source LLM support
+  localai:
+    image: localai/localai:latest
+    ports:
+      - "8081:8080"
+    environment:
+      - MODELS_PATH=/models
+    volumes:
+      - ./demo/localai-models:/models
+      - ./demo/localai-config.yaml:/app/config.yaml
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Prometheus for metrics collection
+  prometheus:
+    image: prom/prometheus:v2.37.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./demo/prometheus.yml:/etc/prometheus/prometheus.yml
+      - prometheus-data:/prometheus
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+  # Grafana for metrics visualization
+  grafana:
+    image: grafana/grafana:9.0.0
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=demo-password
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - ./demo/grafana-provisioning:/etc/grafana/provisioning
+      - grafana-data:/var/lib/grafana
+    depends_on:
+      - prometheus
+    networks:
+      - chatbot-network
+    restart: unless-stopped
+
+networks:
+  chatbot-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  redis-data:
+  weaviate-data:
+  prometheus-data:
+  grafana-data:

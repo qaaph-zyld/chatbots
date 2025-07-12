@@ -1,0 +1,39 @@
+{{- if .Values.persistence.enabled }}
+{{- if .Values.persistence.uploads.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "chatbots-platform.fullname" . }}-uploads
+  labels:
+    {{- include "chatbots-platform.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.uploads.size }}
+  {{- if .Values.persistence.uploads.storageClass }}
+  storageClassName: {{ .Values.persistence.uploads.storageClass }}
+  {{- end }}
+{{- end }}
+
+{{- if .Values.persistence.logs.enabled }}
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: {{ include "chatbots-platform.fullname" . }}-logs
+  labels:
+    {{- include "chatbots-platform.labels" . | nindent 4 }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: {{ .Values.persistence.logs.size }}
+  {{- if .Values.persistence.logs.storageClass }}
+  storageClassName: {{ .Values.persistence.logs.storageClass }}
+  {{- end }}
+{{- end }}
+{{- end }}

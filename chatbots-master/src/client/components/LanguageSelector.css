@@ -1,0 +1,145 @@
+/* Language Selector Styles */
+
+.language-selector {
+  position: relative;
+  display: inline-block;
+}
+
+.language-selector__button {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f5f5f5;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.language-selector__button:hover {
+  background-color: #e0e0e0;
+}
+
+.language-selector__flag {
+  margin-right: 8px;
+  font-size: 16px;
+}
+
+.language-selector__name {
+  margin-right: 8px;
+}
+
+.language-selector__arrow {
+  font-size: 10px;
+  color: #666;
+}
+
+.language-selector__dropdown {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 10;
+  min-width: 150px;
+  margin-top: 4px;
+  padding: 0;
+  background-color: #fff;
+  border: 1px solid #e0e0e0;
+  border-radius: 4px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  list-style: none;
+}
+
+.language-selector__option {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 8px 12px;
+  border: none;
+  background-color: transparent;
+  text-align: left;
+  cursor: pointer;
+  font-size: 14px;
+  color: #333;
+  transition: background-color 0.2s ease;
+}
+
+.language-selector__option:hover {
+  background-color: #f5f5f5;
+}
+
+.language-selector__option.active {
+  background-color: #e3f2fd;
+  font-weight: 500;
+}
+
+/* RTL Support */
+[dir="rtl"] .language-selector__flag {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .language-selector__name {
+  margin-right: 0;
+  margin-left: 8px;
+}
+
+[dir="rtl"] .language-selector__dropdown {
+  right: auto;
+  left: 0;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .language-selector__name {
+    display: none;
+  }
+  
+  .language-selector__button {
+    padding: 8px;
+  }
+  
+  .language-selector__flag {
+    margin-right: 4px;
+  }
+  
+  .language-selector__dropdown {
+    min-width: 120px;
+  }
+}
+
+/* Dark mode support */
+@media (prefers-color-scheme: dark) {
+  .language-selector__button {
+    background-color: #333;
+    border-color: #444;
+    color: #f5f5f5;
+  }
+  
+  .language-selector__button:hover {
+    background-color: #444;
+  }
+  
+  .language-selector__arrow {
+    color: #aaa;
+  }
+  
+  .language-selector__dropdown {
+    background-color: #333;
+    border-color: #444;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  }
+  
+  .language-selector__option {
+    color: #f5f5f5;
+  }
+  
+  .language-selector__option:hover {
+    background-color: #444;
+  }
+  
+  .language-selector__option.active {
+    background-color: #1565c0;
+  }
+}

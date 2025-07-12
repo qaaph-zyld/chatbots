@@ -1,0 +1,8 @@
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In C:\Users\ajelacn\Documents\chatbots
+  797 files checked.
+  testMatch: **/tests/**/*.test.js, **/tests/**/*.spec.js - 106 matches
+  testPathIgnorePatterns: \\node_modules\\, \\tests\\e2e\\, chatbot-flow.test.js, voice-components.test.js, advanced-context-awareness.test.js - 786 matches
+  testRegex:  - 0 matches
+Pattern: test-results\\sample-tests\\calculator.test.js - 0 matches

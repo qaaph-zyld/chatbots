@@ -1,0 +1,23 @@
+Command: node -e console.log("About to exit with code 2"); process.exit(2);
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-26-21.413Z
+
+PID: 17052
+
+[eval]:1
+console.log(About to exit with code 2);
+            ^^^^^
+
+SyntaxError: missing ) after argument list
+    at makeContextifyScript (node:internal/vm:185:14)
+    at node:internal/process/execution:107:22
+    at [eval]-wrapper:6:24
+    at runScript (node:internal/process/execution:101:62)
+    at evalScript (node:internal/process/execution:136:3)
+    at node:internal/main/eval_string:55:3
+
+Node.js v22.11.0
+
+
+Command completed with exit code: 1
+Duration: 0ms

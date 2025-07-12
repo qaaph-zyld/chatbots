@@ -1,0 +1,10 @@
+Command: node -e console.error("This is an error message"); process.exit(0);
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-06-26T02-26-21.248Z
+
+PID: 8572
+
+
+
+Command completed with exit code: 1
+Duration: 0ms

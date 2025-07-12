@@ -1,0 +1,34 @@
+{
+  "timestamp": "2025-06-15T14:49:41.407Z",
+  "summary": {
+    "totalFilesAnalyzed": 0,
+    "obsoleteFilesFound": 0,
+    "filesRemoved": 0,
+    "spaceFreed": 0,
+    "spaceFreedFormatted": "0 Bytes",
+    "errors": 0,
+    "dryRun": true
+  },
+  "details": {
+    "architecture": {
+      "fileCount": 0,
+      "directoryCount": 0,
+      "testFiles": 0,
+      "configFiles": 0
+    },
+    "obsoleteFiles": [],
+    "cleanupResults": {
+      "removed": [],
+      "errors": [],
+      "emptyDirectoriesRemoved": []
+    }
+  },
+  "recommendations": [
+    {
+      "type": "testing",
+      "priority": "medium",
+      "message": "Low test coverage detected - consider adding more tests"
+    }
+  ],
+  "architecturalInsights": []
+}

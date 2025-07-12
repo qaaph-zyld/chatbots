@@ -1,0 +1,102 @@
+{
+  "startTime": "2025-06-21T23:24:45.123Z",
+  "endTime": "2025-06-21T23:25:00.052Z",
+  "duration": 14929,
+  "entries": [
+    {
+      "timestamp": "2025-06-21T23:24:45.124Z",
+      "level": "info",
+      "message": "Logger initialized. Log file: C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\output\\test-run-2025-06-21T23-24-45-123Z.log",
+      "data": null,
+      "elapsedMs": 1
+    },
+    {
+      "timestamp": "2025-06-21T23:24:45.125Z",
+      "level": "info",
+      "message": "DEBUG: Entered runTestsWithAutoFix method.",
+      "data": null,
+      "elapsedMs": 2
+    },
+    {
+      "timestamp": "2025-06-21T23:24:45.127Z",
+      "level": "info",
+      "message": "Starting test execution with auto-fix",
+      "data": {
+        "runId": "56ad5c03-3f09-487a-b24d-3dd478fc2337",
+        "testCommand": "npx jest test-results/sample-tests/baseline.test.js --config=test-results/baseline-jest.config.js --json --outputFile=\"C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\jest-baseline-results-2025-06-21T23-24-45-109Z.json\"",
+        "maxRetries": 1,
+        "aiFixEnabled": false
+      },
+      "elapsedMs": 4
+    },
+    {
+      "timestamp": "2025-06-21T23:24:45.139Z",
+      "level": "info",
+      "message": "Test attempt 1/1",
+      "data": null,
+      "elapsedMs": 16
+    },
+    {
+      "timestamp": "2025-06-21T23:25:00.040Z",
+      "level": "success",
+      "message": "Tests passed successfully",
+      "data": {
+        "attempt": 1
+      },
+      "elapsedMs": 14917
+    },
+    {
+      "timestamp": "2025-06-21T23:25:00.041Z",
+      "level": "info",
+      "message": "Test execution completed",
+      "data": {
+        "success": true,
+        "attempts": 1,
+        "lastExitCode": 0,
+        "appliedFixes": [],
+        "duration": 14915,
+        "stats": {
+          "totalRuns": 1,
+          "successfulRuns": 1,
+          "failedRuns": 0,
+          "networkErrors": 0,
+          "lastRunTimestamp": "2025-06-21T23:25:00.036Z"
+        }
+      },
+      "elapsedMs": 14918
+    },
+    {
+      "timestamp": "2025-06-21T23:25:00.047Z",
+      "level": "info",
+      "message": "Loaded 5 historical test runs",
+      "data": null,
+      "elapsedMs": 14924
+    },
+    {
+      "timestamp": "2025-06-21T23:25:00.050Z",
+      "level": "info",
+      "message": "Recorded test run in analytics history",
+      "data": {
+        "id": "56ad5c03-3f09-487a-b24d-3dd478fc2337",
+        "success": true,
+        "failedTests": 0
+      },
+      "elapsedMs": 14927
+    },
+    {
+      "timestamp": "2025-06-21T23:25:00.051Z",
+      "level": "info",
+      "message": "Recorded test run analytics",
+      "data": {
+        "runId": "56ad5c03-3f09-487a-b24d-3dd478fc2337"
+      },
+      "elapsedMs": 14928
+    }
+  ],
+  "stats": {
+    "errors": 0,
+    "warnings": 0,
+    "totalEntries": 9,
+    "successRate": 100
+  }
+}

@@ -1,0 +1,4 @@
+Starting debug log
+Output directory: C:\Users\ajelacn\Documents\chatbots\test-results\output
+Current working directory: C:\Users\ajelacn\Documents\chatbots
+Using configured test command: npx jest test-results/sample-tests/baseline.test.js --config=test-results/baseline-jest.config.js --json --outputFile="C:\Users\ajelacn\Documents\chatbots\test-results\jest-baseline-results-2025-06-21T14-36-43-037Z.json"

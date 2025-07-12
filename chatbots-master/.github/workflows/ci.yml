@@ -1,0 +1,184 @@
+name: CI
+
+on:
+  push:
+    branches: [ main, master, develop ]
+  pull_request:
+    branches: [ main, master, develop ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Lint
+      run: npm run lint
+    
+    - name: Build
+      run: npm run build --if-present
+    
+    - name: Test
+      run: npm test
+      env:
+        NODE_ENV: test
+        MONGODB_URI: mongodb://localhost:27017/chatbots-test
+
+  mongodb-memory-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install MongoDB Memory Server
+      run: npm install --save-dev mongodb-memory-server
+    
+    - name: Run tests with MongoDB Memory Server
+      run: npm run test:memory
+      env:
+        NODE_ENV: test
+        USE_MEMORY_SERVER: true
+
+  rate-limit-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run rate limiting middleware tests
+      run: npm run test -- --testMatch="**/rate-limit*.test.js"
+      env:
+        NODE_ENV: test
+        USE_MEMORY_SERVER: true
+        REDIS_HOST: localhost
+        REDIS_PORT: 6379
+        
+  cache-middleware-tests:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [16.x]
+
+    services:
+      redis:
+        image: redis
+        ports:
+          - 6379:6379
+        options: --health-cmd "redis-cli ping" --health-interval 10s --health-timeout 5s --health-retries 5
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run cache middleware tests
+      run: npm run test -- --testMatch="**/cache*.test.js"
+      env:
+        NODE_ENV: test
+        USE_MEMORY_SERVER: true
+        REDIS_HOST: localhost
+        REDIS_PORT: 6379
+        CACHE_ENABLED: true
+        USE_REDIS_RATE_LIMIT: true
+
+  documentation-validation:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Install markdown-lint
+      run: npm install -g markdownlint-cli
+    
+    - name: Lint Markdown files
+      run: markdownlint "docs/**/*.md" --config .markdownlint.json || echo "Markdown linting found issues. Please fix them."
+    
+    - name: Check for broken links in documentation
+      run: |
+        npm install -g markdown-link-check
+        find docs -name "*.md" -exec markdown-link-check {} \;
+    
+    - name: Validate documentation structure
+      run: |
+        # Check if required directories exist
+        if [ ! -d "docs/01_Testing_Strategies" ] || \
+           [ ! -d "docs/02_Security_and_DevOps" ] || \
+           [ ! -d "docs/03_Development_Methodologies" ] || \
+           [ ! -d "docs/04_Project_Specifics" ]; then
+          echo "Error: One or more required documentation directories are missing."
+          exit 1
+        fi
+        
+        # Check if each directory has a README.md
+        for dir in docs/0*_*/; do
+          if [ ! -f "${dir}README.md" ]; then
+            echo "Error: README.md missing in ${dir}"
+            exit 1
+          fi
+        done
+        
+        echo "Documentation structure validation passed."

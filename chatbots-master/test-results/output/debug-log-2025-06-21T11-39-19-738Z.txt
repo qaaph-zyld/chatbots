@@ -1,0 +1,1782 @@
+Starting debug log
+Output directory: C:\Users\ajelacn\Documents\chatbots\test-results\output
+Current working directory: C:\Users\ajelacn\Documents\chatbots
+Running echo command test...
+Echo command exit code: 0
+Echo command stdout: "Command execution test"
+
+Echo command stderr: 
+Jest version: 29.7.0
+Attempting to run Jest directly with child_process.spawn...
+JEST STDERR: FAIL src/tests/unit/storage/local-storage.test.js (11.56 s)
+
+JEST STDERR:   Local Storage Service
+    File Storage
+      √ should initialize successfully (321 ms)
+      √ should store and retrieve data (236 ms)
+      √ should generate ID if not provided (236 ms)
+      √ should query data (315 ms)
+      √ should delete data (279 ms)
+    SQLite Storage
+      × should initialize successfully (290 ms)
+      √ should store and retrieve data (393 ms)
+      × should query data (350 ms)
+      √ should delete data (339 ms)
+      √ should handle settings collection specially (316 ms)
+
+  ● Local Storage Service › SQLite Storage › should initialize successfully
+
+    ENOENT: no such file or directory, stat 'C:\Users\ajelacn\AppData\Local\Temp\chatbot-test-a0cd1a0e-0be4-4b5a-ade4-27040f20d380\test.db'
+
+
+
+  ● Local Storage Service › SQLite Storage › should query data
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: 2
+    Received: 0
+
+    [0m [90m 185 |[39m       [90m// Query by exact match[39m
+     [90m 186 |[39m       [36mconst[39m supportBots [33m=[39m [36mawait[39m localStorageService[33m.[39mquery([32m'bots'[39m[33m,[39m { type[33m:[39m [32m'support'[39m })[33m;[39m
+    [31m[1m>[22m[39m[90m 187 |[39m       expect(supportBots[33m.[39mlength)[33m.[39mtoBe([35m2[39m)[33m;[39m
+     [90m     |[39m                                  [31m[1m^[22m[39m
+     [90m 188 |[39m       expect(supportBots[33m.[39mmap(b [33m=>[39m b[33m.[39mid)[33m.[39msort())[33m.[39mtoEqual([[32m'bot1'[39m[33m,[39m [32m'bot3'[39m][33m.[39msort())[33m;[39m
+     [90m 189 |[39m     })[33m;[39m
+     [90m 190 |[39m     [0m
+
+      at toBe (src/tests/unit/storage/local-storage.test.js:187:34)
+      at s (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:75:16)
+      at Generator.<anonymous> (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:58:19)
+      at Generator.next (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:100:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+
+JEST STDOUT:   console.error
+    Error during cleanup: Error: ENOENT: no such file or directory, unlink 'C:\Users\ajelacn\Documents\chatbots\temp\audio\cleanup-test.wav'
+        at Object.unlink (node:internal/fs/promises:1060:10) {
+      errno: -4058,
+      code: 'ENOENT',
+      syscall: 'unlink',
+      path: 'C:\\Users\\ajelacn\\Documents\\chatbots\\temp\\audio\\cleanup-test.wav'
+    }
+
+    [0m [90m 129 |[39m       }
+     [90m 130 |[39m     } [36mcatch[39m (error) {
+    [31m[1m>[22m[39m[90m 131 |[39m       console[33m.[39merror([32m'Error during cleanup:'[39m[33m,[39m error)[33m;[39m
+     [90m     |[39m               [31m[1m^[22m[39m
+     [90m 132 |[39m     }
+     [90m 133 |[39m   }
+     [90m 134 |[39m[0m
+
+      at VoiceService.error (src/services/voice.service.js:131:15)
+      at s (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:75:16)
+      at Generator.<anonymous> (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:58:19)
+      at Generator.throw (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:100:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _throw (node_modules/@babel/runtime/helpers/asyncToGenerator.js:20:9)
+
+
+JEST STDERR: FAIL tests/unit/services/voice.service.test.js
+  Voice Service
+    saveAudioFile
+      × should save audio data to a file and create directories (15 ms)
+      √ should handle save errors (20 ms)
+
+JEST STDERR:     loadAudioFile
+      √ should load audio data from a file (10 ms)
+      √ should handle load errors (5 ms)
+    speechToText
+      √ should convert speech to text (5 ms)
+      √ should handle conversion errors (3 ms)
+      √ should handle missing input service (24 ms)
+    textToSpeech
+      √ should convert text to speech (3 ms)
+      √ should handle synthesis errors (4 ms)
+      √ should handle missing output service (5 ms)
+    cleanup functionality
+      × should clean up old temporary files (10 ms)
+      √ should not start cleanup interval in test environment (51 ms)
+
+  ● Voice Service › saveAudioFile › should save audio data to a file and create directories
+
+    expect(received).toContain(expected) // indexOf
+
+    Expected substring: "temp/audio"
+    Received string:    "C:\\Users\\ajelacn\\Documents\\chatbots\\temp\\audio\\test-audio.wav"
+
+    [0m [90m 44 |[39m
+     [90m 45 |[39m       expect(filePath)[33m.[39mtoContain(filename)[33m;[39m
+    [31m[1m>[22m[39m[90m 46 |[39m       expect(filePath)[33m.[39mtoContain([32m'temp/audio'[39m)[33m;[39m
+     [90m    |[39m                        [31m[1m^[22m[39m
+     [90m 47 |[39m
+     [90m 48 |[39m       [90m// Verify file was created[39m
+     [90m 49 |[39m       [36mconst[39m savedData [33m=[39m [36mawait[39m fs[33m.[39mreadFile(filePath)[33m;[39m[0m
+
+      at toContain (tests/unit/services/voice.service.test.js:46:24)
+      at s (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:75:16)
+      at Generator.<anonymous> (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:58:19)
+      at Generator.next (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:100:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+  ● Voice Service › cleanup functionality › should clean up old temporary files
+
+    expect(received).toBe(expected) // Object.is equality
+
+    Expected: false
+    Received: true
+
+    [0m [90m 188 |[39m         fileExists [33m=[39m [36mfalse[39m[33m;[39m
+     [90m 189 |[39m       }
+    [31m[1m>[22m[39m[90m 190 |[39m       expect(fileExists)[33m.[39mtoBe([36mfalse[39m)[33m;[39m
+     [90m     |[39m                          [31m[1m^[22m[39m
+     [90m 191 |[39m     })[33m;[39m
+     [90m 192 |[39m
+     [90m 193 |[39m     it([32m'should not start cleanup interval in test environment'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at toBe (tests/unit/services/voice.service.test.js:190:26)
+      at s (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:75:16)
+      at Generator.<anonymous> (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:58:19)
+      at Generator.next (node_modules/@babel/runtime/helpers/regeneratorRuntime.js:100:21)
+      at asyncGeneratorStep (node_modules/@babel/runtime/helpers/asyncToGenerator.js:3:17)
+      at _next (node_modules/@babel/runtime/helpers/asyncToGenerator.js:17:9)
+
+
+JEST STDERR: PASS src/tests/security/basic-security.test.js
+
+JEST STDERR:   Basic Security Tests
+    √ package.json should not contain vulnerable dependencies (4 ms)
+    √ should not have hardcoded secrets in the codebase (2 ms)
+    √ should have proper security configurations (7 ms)
+    √ should have proper error handling (6 ms)
+
+
+JEST STDERR: FAIL src/tests/unit/nlp/intent/intent.service.test.js
+  ● Test suite failed to run
+
+    Cannot find module '../../utils' from 'src/tests/unit/nlp/intent/intent.service.test.js'
+
+    [0m [90m 22 |[39m })[33m,[39m { virtual[33m:[39m [36mtrue[39m })[33m;[39m
+     [90m 23 |[39m
+    [31m[1m>[22m[39m[90m 24 |[39m jest[33m.[39mmock([32m'../../utils'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 25 |[39m   logger[33m:[39m {
+     [90m 26 |[39m     debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 27 |[39m     info[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.mock (src/tests/unit/nlp/intent/intent.service.test.js:24:6)
+
+
+JEST STDERR: FAIL tests/unit/middleware/cache/cache.middleware.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @core/logger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\core\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@core\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\core\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 20 |[39m
+     [90m 21 |[39m [90m// Mock logger[39m
+    [31m[1m>[22m[39m[90m 22 |[39m jest[33m.[39mmock([32m'@core/logger'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 23 |[39m   debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 24 |[39m   info[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 25 |[39m   warn[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.mock (tests/unit/middleware/cache/cache.middleware.test.js:22:6)
+
+
+JEST STDERR: FAIL tests/unit/middleware/cache/cache-warmer.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @core/logger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\core\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@core\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\core\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 17 |[39m
+     [90m 18 |[39m [90m// Mock logger[39m
+    [31m[1m>[22m[39m[90m 19 |[39m jest[33m.[39mmock([32m'@core/logger'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 20 |[39m   debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 21 |[39m   info[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 22 |[39m   warn[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.mock (tests/unit/middleware/cache/cache-warmer.test.js:19:6)
+
+
+JEST STDERR: FAIL tests/unit/middleware/cache/cache-monitor.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @core/logger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\core\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@core\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\core\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m  9 |[39m
+     [90m 10 |[39m [90m// Mock logger[39m
+    [31m[1m>[22m[39m[90m 11 |[39m jest[33m.[39mmock([32m'@core/logger'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 12 |[39m   debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 13 |[39m   info[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 14 |[39m   warn[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.mock (tests/unit/middleware/cache/cache-monitor.test.js:11:6)
+
+
+JEST STDERR: FAIL tests/unit/middleware/cache/adaptive-ttl.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    ReferenceError: C:\Users\ajelacn\Documents\chatbots\tests\unit\middleware\cache\adaptive-ttl.test.js: The module factory of `jest.mock()` is not allowed to reference any out-of-scope variables.
+    Invalid variable access: adaptiveTTLModule
+    Allowed objects: AbortController, AbortSignal, AggregateError, Array, ArrayBuffer, Atomics, BigInt, BigInt64Array, BigUint64Array, Blob, Boolean, BroadcastChannel, Buffer, ByteLengthQueuingStrategy, CompressionStream, CountQueuingStrategy, Crypto, CryptoKey, CustomEvent, DOMException, DataView, Date, DecompressionStream, Error, EvalError, Event, EventTarget, File, FinalizationRegistry, Float32Array, Float64Array, FormData, Function, Generator, GeneratorFunction, Headers, Infinity, Int16Array, Int32Array, Int8Array, InternalError, Intl, Iterator, JSON, Map, Math, MessageChannel, MessageEvent, MessagePort, NaN, Navigator, Number, Object, Performance, PerformanceEntry, PerformanceMark, PerformanceMeasure, PerformanceObserver, PerformanceObserverEntryList, PerformanceResourceTiming, Promise, Proxy, RangeError, ReadableByteStreamController, ReadableStream, ReadableStreamBYOBReader, ReadableStreamBYOBRequest, ReadableStreamDefaultController, ReadableStreamDefaultReader, ReferenceError, Reflect, RegExp, Request, Response, Set, SharedArrayBuffer, String, SubtleCrypto, Symbol, SyntaxError, TextDecoder, TextDecoderStream, TextEncoder, TextEncoderStream, TransformStream, TransformStreamDefaultController, TypeError, URIError, URL, URLSearchParams, Uint16Array, Uint32Array, Uint8Array, Uint8ClampedArray, WeakMap, WeakRef, WeakSet, WebAssembly, WebSocket, WritableStream, WritableStreamDefaultController, WritableStreamDefaultWriter, __dirname, __filename, arguments, atob, btoa, clearImmediate, clearInterval, clearTimeout, console, crypto, decodeURI, decodeURIComponent, encodeURI, encodeURIComponent, escape, eval, expect, exports, fetch, global, globalThis, isFinite, isNaN, jest, module, navigator, parseFloat, parseInt, performance, process, queueMicrotask, require, setImmediate, setInterval, setTimeout, structuredClone, undefined, unescape.
+    Note: This is a precaution to guard against uninitialized mock variables. If it is ensured that the mock is required lazily, variable names prefixed with `mock` (case insensitive) are permitted.
+
+    [0m [90m 16 |[39m
+     [90m 17 |[39m [90m// Mock the module before requiring it[39m
+    [31m[1m>[22m[39m[90m 18 |[39m jest[33m.[39mmock([32m'@middleware/cache/adaptive-ttl'[39m[33m,[39m () [33m=>[39m adaptiveTTLModule)[33m;[39m
+     [90m    |[39m                                                   [31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m[31m[1m^[22m[39m
+     [90m 19 |[39m
+     [90m 20 |[39m [90m// Mock Redis client[39m
+     [90m 21 |[39m jest[33m.[39mmock([32m'@services/redis'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at File.buildCodeFrameError (node_modules/@babel/core/src/transformation/file/file.ts:256:12)
+      at NodePath.buildError [as buildCodeFrameError] (node_modules/@babel/traverse/src/path/index.ts:142:21)
+      at call (node_modules/@babel/traverse/src/visitors.ts:303:14)
+      at NodePath.call [as _call] (node_modules/@babel/traverse/src/path/context.ts:36:20)
+      at NodePath.call (node_modules/@babel/traverse/src/path/context.ts:21:18)
+      at NodePath.call [as visit] (node_modules/@babel/traverse/src/path/context.ts:97:31)
+      at TraversalContext.visit [as visitQueue] (node_modules/@babel/traverse/src/context.ts:148:16)
+      at TraversalContext.visitQueue [as visitMultiple] (node_modules/@babel/traverse/src/context.ts:99:17)
+      at TraversalContext.visitMultiple [as visit] (node_modules/@babel/traverse/src/context.ts:178:19)
+      at visit (node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at NodePath.visit (node_modules/@babel/traverse/src/path/context.ts:104:33)
+      at TraversalContext.visit [as visitQueue] (node_modules/@babel/traverse/src/context.ts:148:16)
+      at TraversalContext.visitQueue [as visitSingle] (node_modules/@babel/traverse/src/context.ts:109:19)
+      at TraversalContext.visitSingle [as visit] (node_modules/@babel/traverse/src/context.ts:180:19)
+      at visit (node_modules/@babel/traverse/src/traverse-node.ts:208:17)
+      at traverse (node_modules/@babel/traverse/src/index.ts:83:15)
+      at transformFile (node_modules/@babel/core/src/transformation/index.ts:119:15)
+          at transformFile.next (<anonymous>)
+      at transformFile (node_modules/@babel/core/src/transformation/index.ts:49:12)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL tests/unit/middleware/rate-limit/rate-limit.middleware.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Cannot find module '@middleware/rate-limit/rate-limit.middleware' from 'tests/unit/middleware/rate-limit/rate-limit.middleware.test.js'
+
+    [0m [90m  9 |[39m
+     [90m 10 |[39m [90m// Import dependencies[39m
+    [31m[1m>[22m[39m[90m 11 |[39m [36mconst[39m { createRateLimiter[33m,[39m configureRateLimits } [33m=[39m require([32m'@middleware/rate-limit/rate-limit.middleware'[39m)[33m;[39m
+     [90m    |[39m                                                    [31m[1m^[22m[39m
+     [90m 12 |[39m [36mconst[39m redis [33m=[39m require([32m'redis'[39m)[33m;[39m
+     [90m 13 |[39m
+     [90m 14 |[39m [90m// Mock redis[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/unit/middleware/rate-limit/rate-limit.middleware.test.js:11:52)
+
+
+JEST STDERR: FAIL tests/unit/modules/topic/topic.memory.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @tests/unitsetupmemory-server-setup mapped as:
+    C:\Users\ajelacn\Documents\chatbots\tests\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@tests\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\tests\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 10 |[39m [90m// Import mongoose and our test setup utilities[39m
+     [90m 11 |[39m [36mconst[39m mongoose [33m=[39m require([32m'mongoose'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 12 |[39m require([32m'@tests/unit\setup\memory-server-setup'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 13 |[39m [36mconst[39m [33mTopicModel[39m [33m=[39m require([32m'@domain/topic.model'[39m)[33m;[39m
+     [90m 14 |[39m [36mconst[39m [33mTopicService[39m [33m=[39m require([32m'@modules/topic/topic.service'[39m)[33m;[39m
+     [90m 15 |[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (tests/unit/modules/topic/topic.memory.test.js:12:1)
+
+
+JEST STDERR: FAIL tests/unit/modules/sentiment/sentiment.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @core/logger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\core\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@core\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\core\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m  6 |[39m
+     [90m  7 |[39m [90m// Import dependencies[39m
+    [31m[1m>[22m[39m[90m  8 |[39m [36mconst[39m logger [33m=[39m require([32m'@core/logger'[39m)[33m;[39m
+     [90m    |[39m                [31m[1m^[22m[39m
+     [90m  9 |[39m
+     [90m 10 |[39m [90m/**[39m
+     [90m 11 |[39m [90m * Sentiment Service class[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/modules/sentiment/services/sentiment.service.js:8:16)
+      at Object.require (tests/unit/modules/sentiment/sentiment.service.test.js:11:30)
+
+
+JEST STDERR: FAIL tests/unit/nlp/intent/intent.service.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Cannot find module '../../utils' from 'tests/unit/nlp/intent/intent.service.test.js'
+
+    [0m [90m 22 |[39m })[33m,[39m { virtual[33m:[39m [36mtrue[39m })[33m;[39m
+     [90m 23 |[39m
+    [31m[1m>[22m[39m[90m 24 |[39m jest[33m.[39mmock([32m'../../utils'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 25 |[39m   logger[33m:[39m {
+     [90m 26 |[39m     debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 27 |[39m     info[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.mock (tests/unit/nlp/intent/intent.service.test.js:24:6)
+
+
+JEST STDERR: FAIL tests/unit/modules/conversation/conversation.service.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Cannot find module '@domain/conversation.model' from 'src/modules/conversation/repositories/conversation.repository.js'
+
+    [0m [90m  9 |[39m
+     [90m 10 |[39m [90m// Import models[39m
+    [31m[1m>[22m[39m[90m 11 |[39m [36mconst[39m [33mConversation[39m [33m=[39m require([32m'@domain/conversation.model'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 12 |[39m
+     [90m 13 |[39m [90m/**[39m
+     [90m 14 |[39m [90m * Conversation Repository[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/modules/conversation/repositories/conversation.repository.js:11:22)
+      at Object.require (tests/unit/modules/conversation/conversation.service.test.js:12:36)
+
+
+JEST STDERR: FAIL tests/integration/modules/conversation/conversation.api.test.js
+  ● Test suite failed to run
+
+    Cannot find module '@domain/conversation.model' from 'tests/integration/modules/conversation/conversation.api.test.js'
+
+    [0m [90m 12 |[39m [36mconst[39m request [33m=[39m require([32m'supertest'[39m)[33m;[39m
+     [90m 13 |[39m [36mconst[39m mongoose [33m=[39m require([32m'mongoose'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 14 |[39m [36mconst[39m { [33mConversationModel[39m } [33m=[39m require([32m'@domain/conversation.model'[39m)[33m;[39m
+     [90m    |[39m                               [31m[1m^[22m[39m
+     [90m 15 |[39m [36mconst[39m { [33mUserModel[39m } [33m=[39m require([32m'@domain/user.model'[39m)[33m;[39m
+     [90m 16 |[39m [36mconst[39m { [33mChatbotModel[39m } [33m=[39m require([32m'@domain/chatbot.model'[39m)[33m;[39m
+     [90m 17 |[39m [36mconst[39m app [33m=[39m require([32m'@core/server'[39m)[33m.[39mapp[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/integration/modules/conversation/conversation.api.test.js:14:31)
+
+
+JEST STDERR: FAIL tests/integration/modules/sentiment/sentiment.api.test.js
+  ● Test suite failed to run
+
+    Cannot find module '@domain/user.model' from 'tests/integration/modules/sentiment/sentiment.api.test.js'
+
+    [0m [90m 12 |[39m [36mconst[39m request [33m=[39m require([32m'supertest'[39m)[33m;[39m
+     [90m 13 |[39m [36mconst[39m mongoose [33m=[39m require([32m'mongoose'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 14 |[39m [36mconst[39m { [33mUserModel[39m } [33m=[39m require([32m'@domain/user.model'[39m)[33m;[39m
+     [90m    |[39m                       [31m[1m^[22m[39m
+     [90m 15 |[39m [36mconst[39m app [33m=[39m require([32m'@core/server'[39m)[33m.[39mapp[33m;[39m
+     [90m 16 |[39m
+     [90m 17 |[39m describe([32m'Sentiment Analysis API'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/integration/modules/sentiment/sentiment.api.test.js:14:23)
+
+
+JEST STDERR: FAIL tests/integration/middleware/rate-limit/rate-limit.integration.test.js
+  ● Test suite failed to run
+
+    Cannot find module '@middleware/rate-limit/rate-limit.middleware' from 'tests/integration/middleware/rate-limit/rate-limit.integration.test.js'
+
+    [0m [90m 11 |[39m [36mconst[39m express [33m=[39m require([32m'express'[39m)[33m;[39m
+     [90m 12 |[39m [36mconst[39m request [33m=[39m require([32m'supertest'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 13 |[39m [36mconst[39m { createRateLimiter } [33m=[39m require([32m'@middleware/rate-limit/rate-limit.middleware'[39m)[33m;[39m
+     [90m    |[39m                               [31m[1m^[22m[39m
+     [90m 14 |[39m
+     [90m 15 |[39m describe([32m'Rate Limiting Middleware Integration'[39m[33m,[39m () [33m=>[39m {
+     [90m 16 |[39m   [36mlet[39m app[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (tests/integration/middleware/rate-limit/rate-limit.integration.test.js:13:31)
+
+
+JEST STDERR: FAIL tests/integration/middleware/cache/cache.integration.test.js
+  ● Test suite failed to run
+
+    Cannot find module '@middleware/auth' from 'tests/integration/middleware/cache/cache.integration.test.js'
+
+    [0m [90m 25 |[39m
+     [90m 26 |[39m [90m// Mock authentication middleware[39m
+    [31m[1m>[22m[39m[90m 27 |[39m jest[33m.[39mmock([32m'@middleware/auth'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 28 |[39m   authenticate[33m:[39m (req[33m,[39m res[33m,[39m next) [33m=>[39m {
+     [90m 29 |[39m     req[33m.[39muser [33m=[39m { _id[33m:[39m [32m'test-user-id'[39m[33m,[39m isAdmin[33m:[39m req[33m.[39mheaders[[32m'x-admin'[39m] [33m===[39m [32m'true'[39m }[33m;[39m
+     [90m 30 |[39m     next()[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.mock (tests/integration/middleware/cache/cache.integration.test.js:27:6)
+
+
+JEST STDERR: FAIL tests/integration/middleware/cache/cache-warming.integration.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @core/logger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\core\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@core\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\core\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 27 |[39m
+     [90m 28 |[39m [90m// Mock logger[39m
+    [31m[1m>[22m[39m[90m 29 |[39m jest[33m.[39mmock([32m'@core/logger'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 30 |[39m   debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 31 |[39m   info[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 32 |[39m   warn[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.mock (tests/integration/middleware/cache/cache-warming.integration.test.js:29:6)
+
+
+JEST STDERR: FAIL tests/integration/middleware/cache/cache-monitoring.integration.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @core/logger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\core\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@core\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\core\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 27 |[39m
+     [90m 28 |[39m [90m// Mock logger[39m
+    [31m[1m>[22m[39m[90m 29 |[39m jest[33m.[39mmock([32m'@core/logger'[39m[33m,[39m () [33m=>[39m ({
+     [90m    |[39m      [31m[1m^[22m[39m
+     [90m 30 |[39m   debug[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 31 |[39m   info[33m:[39m jest[33m.[39mfn()[33m,[39m
+     [90m 32 |[39m   warn[33m:[39m jest[33m.[39mfn()[33m,[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.mock (tests/integration/middleware/cache/cache-monitoring.integration.test.js:29:6)
+
+
+JEST STDERR: FAIL tests/integration/middleware/cache/adaptive-ttl.integration.test.js
+  ● Test suite failed to run
+
+    ReferenceError: defaultConfig is not defined
+
+    [0m [90m 29 |[39m   [36mset[39m[33m:[39m jest[33m.[39mfn()[33m.[39mmockResolvedValue([32m'OK'[39m)[33m,[39m
+     [90m 30 |[39m   hset[33m:[39m jest[33m.[39mfn()[33m.[39mmockResolvedValue([35m1[39m)[33m,[39m
+    [31m[1m>[22m[39m[90m 31 |[39m   [36mget[39m[33m:[39m jest[33m.[39mfn()[33m.[39mmockResolvedValue([33mJSON[39m[33m.[39mstringify(defaultConfig))[33m,[39m
+     [90m    |[39m                                                   [31m[1m^[22m[39m
+     [90m 32 |[39m   hgetall[33m:[39m jest[33m.[39mfn()[33m.[39mmockImplementation((key) [33m=>[39m {
+     [90m 33 |[39m     [36mif[39m (key[33m.[39mincludes([32m'api'[39m)) {
+     [90m 34 |[39m       [36mreturn[39m [33mPromise[39m[33m.[39mresolve({[0m
+
+      at Object.defaultConfig (tests/integration/middleware/cache/adaptive-ttl.integration.test.js:31:51)
+
+
+JEST STDERR: FAIL src/tests/unit/services/workflow.service.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\services\workflow.service.test.js: Bad character escape sequence. (18:21)
+
+    [0m [90m 16 |[39m
+     [90m 17 |[39m [90m// Import test utilities[39m
+    [31m[1m>[22m[39m[90m 18 |[39m require([32m'@src/tests\utils\mock-factory'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 19 |[39m
+     [90m 20 |[39m [90m// Mock dependencies[39m
+     [90m 21 |[39m jest[33m.[39mmock([32m'../../../models/workflow.model'[39m)[33m;[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/services/topic.service.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\services\topic.service.test.js: Bad character escape sequence. (18:21)
+
+    [0m [90m 16 |[39m
+     [90m 17 |[39m [90m// Import test utilities[39m
+    [31m[1m>[22m[39m[90m 18 |[39m require([32m'@src/tests\utils\mock-factory'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 19 |[39m
+     [90m 20 |[39m [90m// Mock dependencies[39m
+     [90m 21 |[39m jest[33m.[39mmock([32m'../../../models/topic.model'[39m)[33m;[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/services/scaling.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/scalingscaling.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m  8 |[39m
+     [90m  9 |[39m [90m// Import the service to test[39m
+    [31m[1m>[22m[39m[90m 10 |[39m require([32m'@src/scaling\scaling.service'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 11 |[39m
+     [90m 12 |[39m [90m// Import dependencies[39m
+     [90m 13 |[39m require([32m'@src/scaling\cluster'[39m)[33m;[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/services/scaling.service.test.js:10:1)
+
+
+JEST STDERR: FAIL src/tests/unit/services/output.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/servicesoutput.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 3 |[39m [90m */[39m
+     [90m 4 |[39m
+    [31m[1m>[22m[39m[90m 5 |[39m require([32m'@src/services\output.service'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 6 |[39m require([32m'@src/utils\logger'[39m)[33m;[39m
+     [90m 7 |[39m
+     [90m 8 |[39m [90m// Mock dependencies[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/services/output.service.test.js:5:1)
+
+
+JEST STDERR: FAIL src/tests/unit/services/preference.service.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\services\preference.service.test.js: Bad character escape sequence. (17:21)
+
+    [0m [90m 15 |[39m
+     [90m 16 |[39m [90m// Import test utilities[39m
+    [31m[1m>[22m[39m[90m 17 |[39m require([32m'@src/tests\utils\mock-factory'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 18 |[39m
+     [90m 19 |[39m [90m// Mock dependencies[39m
+     [90m 20 |[39m jest[33m.[39mmock([32m'../../../models/preference.model'[39m)[33m;[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/services/integration.service.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\services\integration.service.test.js: Bad character escape sequence. (18:21)
+
+    [0m [90m 16 |[39m
+     [90m 17 |[39m [90m// Import test utilities[39m
+    [31m[1m>[22m[39m[90m 18 |[39m require([32m'@src/tests\utils\mock-factory'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 19 |[39m
+     [90m 20 |[39m [90m// Mock dependencies[39m
+     [90m 21 |[39m jest[33m.[39mmock([32m'../../../models/integration.model'[39m)[33m;[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/services/local-model.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/serviceslocal-model.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m  5 |[39m [36mconst[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+     [90m  6 |[39m [36mconst[39m fs [33m=[39m require([32m'fs'[39m)[33m.[39mpromises[33m;[39m
+    [31m[1m>[22m[39m[90m  7 |[39m require([32m'@src/services\local-model.service'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m  8 |[39m require([32m'@src/utils'[39m)[33m;[39m
+     [90m  9 |[39m
+     [90m 10 |[39m [90m// Mock dependencies[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/services/local-model.service.test.js:7:1)
+
+
+JEST STDERR: FAIL src/tests/unit/services/entity.service.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\services\entity.service.test.js: Bad character escape sequence. (19:21)
+
+    [0m [90m 17 |[39m
+     [90m 18 |[39m [90m// Import test utilities[39m
+    [31m[1m>[22m[39m[90m 19 |[39m require([32m'@src/tests\utils\mock-factory'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 20 |[39m
+     [90m 21 |[39m [90m// Mock dependencies[39m
+     [90m 22 |[39m jest[33m.[39mmock([32m'../../../models/entity.model'[39m)[33m;[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/services/input.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/servicesinput.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 3 |[39m [90m */[39m
+     [90m 4 |[39m
+    [31m[1m>[22m[39m[90m 5 |[39m require([32m'@src/services\input.service'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 6 |[39m require([32m'@src/utils\logger'[39m)[33m;[39m
+     [90m 7 |[39m
+     [90m 8 |[39m [90m// Mock dependencies[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/services/input.service.test.js:5:1)
+
+
+JEST STDERR: FAIL src/tests/unit/services/documentation.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/servicesdocumentation.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 3 |[39m [90m */[39m
+     [90m 4 |[39m
+    [31m[1m>[22m[39m[90m 5 |[39m require([32m'@src/services\documentation.service'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 6 |[39m require([32m'@src/utils\indexedDB'[39m)[33m;[39m
+     [90m 7 |[39m [36mconst[39m fs [33m=[39m require([32m'fs'[39m)[33m.[39mpromises[33m;[39m
+     [90m 8 |[39m [36mconst[39m path [33m=[39m require([32m'path'[39m)[33m;[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/services/documentation.test.js:5:1)
+
+
+JEST STDERR: FAIL src/tests/unit/services/config.service.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/utilslogger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 4 |[39m
+     [90m 5 |[39m require([32m'@src/config'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 6 |[39m require([32m'@src/utils\logger'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 7 |[39m
+     [90m 8 |[39m [90m// Mock dependencies[39m
+     [90m 9 |[39m jest[33m.[39mmock([32m'../../../utils/logger'[39m[33m,[39m () [33m=>[39m ({[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/services/config.service.test.js:6:1)
+
+
+JEST STDERR: FAIL src/tests/unit/services/analytics.service.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\services\analytics.service.test.js: Bad character escape sequence. (18:21)
+
+    [0m [90m 16 |[39m
+     [90m 17 |[39m [90m// Import test utilities[39m
+    [31m[1m>[22m[39m[90m 18 |[39m require([32m'@src/tests\utils\mock-factory'[39m)[33m;[39m
+     [90m    |[39m                      [31m[1m^[22m[39m
+     [90m 19 |[39m
+     [90m 20 |[39m [90m// Mock dependencies[39m
+     [90m 21 |[39m jest[33m.[39mmock([32m'../../../models/analytics.model'[39m)[33m;[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/training/training.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/storagelocal-storage.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m  8 |[39m
+     [90m  9 |[39m [90m// Mock dependencies[39m
+    [31m[1m>[22m[39m[90m 10 |[39m require([32m'@src/storage\local-storage.service'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 11 |[39m [36mconst[39m fs [33m=[39m require([32m'fs'[39m)[33m.[39mpromises[33m;[39m
+     [90m 12 |[39m [36mconst[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+     [90m 13 |[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/training/training.service.test.js:10:1)
+
+
+JEST STDERR: FAIL src/tests/unit/utils/logger.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/utilslogger mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 31 |[39m
+     [90m 32 |[39m [90m// Now import the logger[39m
+    [31m[1m>[22m[39m[90m 33 |[39m require([32m'@src/utils\logger'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 34 |[39m [36mconst[39m winston [33m=[39m require([32m'winston'[39m)[33m;[39m
+     [90m 35 |[39m
+     [90m 36 |[39m describe([32m'Logger'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/utils/logger.test.js:33:1)
+
+
+JEST STDERR: FAIL src/tests/unit/training/training.controller.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Cannot find module 'node-mocks-http' from 'src/tests/unit/training/training.controller.test.js'
+
+    [0m [90m  5 |[39m [36mconst[39m { expect } [33m=[39m require([32m'chai'[39m)[33m;[39m
+     [90m  6 |[39m [36mconst[39m sinon [33m=[39m require([32m'sinon'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m  7 |[39m [36mconst[39m httpMocks [33m=[39m require([32m'node-mocks-http'[39m)[33m;[39m
+     [90m    |[39m                   [31m[1m^[22m[39m
+     [90m  8 |[39m
+     [90m  9 |[39m [90m// Mock dependencies[39m
+     [90m 10 |[39m require([32m'@src/training\training.service'[39m)[33m;[39m[0m
+
+      at Resolver._throwModNotFoundError (node_modules/jest-resolve/build/resolver.js:427:11)
+      at Object.require (src/tests/unit/training/training.controller.test.js:7:19)
+
+
+JEST STDERR: FAIL src/tests/unit/storage/storage.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/storagestorage.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m  5 |[39m [36mconst[39m path [33m=[39m require([32m'path'[39m)[33m;[39m
+     [90m  6 |[39m [36mconst[39m fs [33m=[39m require([32m'fs'[39m)[33m.[39mpromises[33m;[39m
+    [31m[1m>[22m[39m[90m  7 |[39m require([32m'@src/storage\storage.service'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m  8 |[39m require([32m'@src/utils'[39m)[33m;[39m
+     [90m  9 |[39m
+     [90m 10 |[39m [90m// Mock dependencies[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/storage/storage.service.test.js:7:1)
+
+
+JEST STDERR: FAIL src/tests/unit/templates/template.service.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/templates	emplate.service mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 26 |[39m
+     [90m 27 |[39m require([32m'@src/storage'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 28 |[39m require([32m'@src/templates\template.service'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 29 |[39m
+     [90m 30 |[39m describe([32m'Template Service'[39m[33m,[39m () [33m=>[39m {
+     [90m 31 |[39m   beforeEach(() [33m=>[39m {[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/templates/template.service.test.js:28:1)
+
+
+JEST STDERR: FAIL src/tests/unit/bot/engine.factory.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/botenginesengine.factory mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 37 |[39m
+     [90m 38 |[39m [90m// Import the engine factory after mocks[39m
+    [31m[1m>[22m[39m[90m 39 |[39m require([32m'@src/bot\engines\engine.factory'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 40 |[39m require([32m'@src/bot\engines\botpress.engine'[39m)[33m;[39m
+     [90m 41 |[39m require([32m'@src/bot\engines\huggingface.engine'[39m)[33m;[39m
+     [90m 42 |[39m require([32m'@src/utils'[39m)[33m;[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/bot/engine.factory.test.js:39:1)
+
+
+JEST STDERR: FAIL src/tests/unit/bot/base.engine.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/botenginesase.engine mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 4 |[39m
+     [90m 5 |[39m [90m// Import the base engine[39m
+    [31m[1m>[22m[39m[90m 6 |[39m require([32m'@src/bot\engines\base.engine'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 7 |[39m
+     [90m 8 |[39m describe([32m'Base Chatbot Engine'[39m[33m,[39m () [33m=>[39m {
+     [90m 9 |[39m   describe([32m'Constructor'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/bot/base.engine.test.js:6:1)
+
+
+JEST STDERR: FAIL src/tests/unit/models/conversation.model.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/modelsconversation.model mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 4 |[39m
+     [90m 5 |[39m [36mconst[39m mongoose [33m=[39m require([32m'mongoose'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 6 |[39m require([32m'@src/models\conversation.model'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 7 |[39m
+     [90m 8 |[39m describe([32m'Conversation Model'[39m[33m,[39m () [33m=>[39m {
+     [90m 9 |[39m   [90m// Test data[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/models/conversation.model.test.js:6:1)
+
+
+JEST STDERR: FAIL src/tests/unit/models/chatbot.model.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/modelschatbot.model mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 4 |[39m
+     [90m 5 |[39m [36mconst[39m mongoose [33m=[39m require([32m'mongoose'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 6 |[39m require([32m'@src/models\chatbot.model'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 7 |[39m
+     [90m 8 |[39m describe([32m'Chatbot Model'[39m[33m,[39m () [33m=>[39m {
+     [90m 9 |[39m   [90m// Test data[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/models/chatbot.model.test.js:6:1)
+
+
+JEST STDERR: FAIL src/tests/unit/models/analytics.model.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/modelsanalytics.model mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 4 |[39m
+     [90m 5 |[39m [36mconst[39m mongoose [33m=[39m require([32m'mongoose'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 6 |[39m require([32m'@src/models\analytics.model'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 7 |[39m
+     [90m 8 |[39m describe([32m'Analytics Model'[39m[33m,[39m () [33m=>[39m {
+     [90m 9 |[39m   [90m// Test data[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/models/analytics.model.test.js:6:1)
+
+
+JEST STDERR: FAIL src/tests/unit/controllers/model.controller.test.js
+  ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/apicontrollersmodel.controller mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 3 |[39m [90m */[39m
+     [90m 4 |[39m
+    [31m[1m>[22m[39m[90m 5 |[39m require([32m'@src/api\controllers\model.controller'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 6 |[39m require([32m'@src/services\local-model.service'[39m)[33m;[39m
+     [90m 7 |[39m
+     [90m 8 |[39m [90m// Mock dependencies[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/controllers/model.controller.test.js:5:1)
+
+
+JEST STDERR: FAIL src/tests/unit/controllers/chatbot.controller.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/apicontrollerschatbot.controller mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 3 |[39m [90m */[39m
+     [90m 4 |[39m
+    [31m[1m>[22m[39m[90m 5 |[39m require([32m'@src/api\controllers\chatbot.controller'[39m)[33m;[39m
+     [90m   |[39m [31m[1m^[22m[39m
+     [90m 6 |[39m require([32m'@src/services\chatbot.service'[39m)[33m;[39m
+     [90m 7 |[39m require([32m'@src/utils\errors'[39m)[33m;[39m
+     [90m 8 |[39m require([32m'@src/utils'[39m)[33m;[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/controllers/chatbot.controller.test.js:5:1)
+
+
+JEST STDERR: FAIL src/tests/unit/auth/auth.service.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\unit\auth\auth.service.test.js: Bad character escape sequence. (70:22)
+
+    [0m [90m 68 |[39m [36mconst[39m jwt [33m=[39m require([32m'jsonwebtoken'[39m)[33m;[39m
+     [90m 69 |[39m [36mconst[39m bcrypt [33m=[39m require([32m'bcrypt'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m 70 |[39m require([32m'@src/models\user.model'[39m)[33m;[39m
+     [90m    |[39m                       [31m[1m^[22m[39m
+     [90m 71 |[39m require([32m'@src/utils\logger'[39m)[33m;[39m
+     [90m 72 |[39m require([32m'@src/config'[39m)[33m;[39m
+     [90m 73 |[39m[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+JEST STDERR: FAIL src/tests/unit/auth/auth.middleware.test.js
+
+JEST STDERR:   ● Test suite failed to run
+
+    Configuration error:
+
+    Could not locate module @src/authauth.middleware mapped as:
+    C:\Users\ajelacn\Documents\chatbots\src\$1.
+
+    Please check your configuration for these entries:
+    {
+      "moduleNameMapper": {
+        "/^@src\/(.*)$/": "C:\Users\ajelacn\Documents\chatbots\src\$1"
+      },
+      "resolver": undefined
+    }
+
+    [0m [90m 41 |[39m
+     [90m 42 |[39m [90m// Import the auth middleware after mocks[39m
+    [31m[1m>[22m[39m[90m 43 |[39m require([32m'@src/auth\auth.middleware'[39m)[33m;[39m
+     [90m    |[39m [31m[1m^[22m[39m
+     [90m 44 |[39m require([32m'@src/auth\auth.service'[39m)[33m;[39m
+     [90m 45 |[39m require([32m'@src/utils\logger'[39m)[33m;[39m
+     [90m 46 |[39m[0m
+
+      at createNoMappedModuleFoundError (node_modules/jest-resolve/build/resolver.js:759:17)
+      at Object.require (src/tests/unit/auth/auth.middleware.test.js:43:1)
+
+
+JEST STDERR: FAIL src/tests/integration/api/auth.api.test.js
+  ● Test suite failed to run
+
+    Jest encountered an unexpected token
+
+    Jest failed to parse a file. This happens e.g. when your code or its dependencies use non-standard JavaScript syntax, or when Jest is not configured to support such syntax.
+
+    Out of the box Jest supports Babel, which will be used to transform your files into valid JS based on your Babel configuration.
+
+    By default "node_modules" folder is ignored by transformers.
+
+    Here's what you can do:
+     • If you are trying to use ECMAScript Modules, see https://jestjs.io/docs/ecmascript-modules for how to enable it.
+     • If you are trying to use TypeScript, see https://jestjs.io/docs/getting-started#using-typescript
+     • To have some of your "node_modules" files transformed, you can specify a custom "transformIgnorePatterns" in your config.
+     • If you need a custom transformation specify a "transform" option in your config.
+     • If you simply want to mock your non-JS modules (e.g. binary assets) you can stub them out with the "moduleNameMapper" config option.
+
+    You'll find more details and examples of these config options in the docs:
+    https://jestjs.io/docs/configuration
+    For information about custom transformations, see:
+    https://jestjs.io/docs/code-transformation
+
+    Details:
+
+    SyntaxError: C:\Users\ajelacn\Documents\chatbots\src\tests\integration\api\auth.api.test.js: Bad character escape sequence. (9:22)
+
+    [0m [90m  7 |[39m [36mconst[39m bcrypt [33m=[39m require([32m'bcryptjs'[39m)[33m;[39m
+     [90m  8 |[39m require([32m'@src/app'[39m)[33m;[39m
+    [31m[1m>[22m[39m[90m  9 |[39m require([32m'@src/models\user.model'[39m)[33m;[39m
+     [90m    |[39m                       [31m[1m^[22m[39m
+     [90m 10 |[39m require([32m'@src/tests\utils\test-helpers'[39m)[33m;[39m
+     [90m 11 |[39m
+     [90m 12 |[39m describe([32m'Authentication API'[39m[33m,[39m () [33m=>[39m {[0m
+
+      at constructor (node_modules/@babel/parser/src/parse-error.ts:95:45)
+      at JSXParserMixin.toParseError [as raise] (node_modules/@babel/parser/src/tokenizer/index.ts:1503:19)
+      at Object.raise [as invalidEscapeSequence] (node_modules/@babel/parser/src/tokenizer/index.ts:1576:12)
+      at invalidEscapeSequence (node_modules/@babel/babel-helper-string-parser/src/index.ts:293:14)
+      at readHexChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:449:22)
+      at readCodePoint (node_modules/@babel/babel-helper-string-parser/src/index.ts:191:24)
+      at readEscapedChar (node_modules/@babel/babel-helper-string-parser/src/index.ts:80:19)
+      at JSXParserMixin.readStringContents [as readString] (node_modules/@babel/parser/src/tokenizer/index.ts:1336:46)
+      at JSXParserMixin.readString (node_modules/@babel/parser/src/tokenizer/index.ts:991:14)
+      at JSXParserMixin.getTokenFromCode (node_modules/@babel/parser/src/plugins/jsx/index.ts:631:13)
+      at JSXParserMixin.getTokenFromCode [as nextToken] (node_modules/@babel/parser/src/tokenizer/index.ts:278:10)
+      at JSXParserMixin.nextToken [as next] (node_modules/@babel/parser/src/tokenizer/index.ts:121:10)
+      at JSXParserMixin.next [as parseCoverCallAndAsyncArrowHead] (node_modules/@babel/parser/src/parser/expression.ts:888:10)
+      at JSXParserMixin.parseCoverCallAndAsyncArrowHead [as parseSubscript] (node_modules/@babel/parser/src/parser/expression.ts:790:19)
+      at JSXParserMixin.parseSubscript [as parseSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:749:19)
+      at JSXParserMixin.parseSubscripts [as parseExprSubscripts] (node_modules/@babel/parser/src/parser/expression.ts:734:17)
+      at JSXParserMixin.parseExprSubscripts [as parseUpdate] (node_modules/@babel/parser/src/parser/expression.ts:707:21)
+      at JSXParserMixin.parseUpdate [as parseMaybeUnary] (node_modules/@babel/parser/src/parser/expression.ts:669:23)
+      at JSXParserMixin.parseMaybeUnary [as parseMaybeUnaryOrPrivate] (node_modules/@babel/parser/src/parser/expression.ts:403:14)
+      at JSXParserMixin.parseMaybeUnaryOrPrivate [as parseExprOps] (node_modules/@babel/parser/src/parser/expression.ts:415:23)
+      at JSXParserMixin.parseExprOps [as parseMaybeConditional] (node_modules/@babel/parser/src/parser/expression.ts:370:23)
+      at JSXParserMixin.parseMaybeConditional [as parseMaybeAssign] (node_modules/@babel/parser/src/parser/expression.ts:301:21)
+      at JSXParserMixin.parseMaybeAssign [as parseExpressionBase] (node_modules/@babel/parser/src/parser/expression.ts:226:23)
+      at parseExpressionBase (node_modules/@babel/parser/src/parser/expression.ts:217:39)
+      at JSXParserMixin.callback [as allowInAnd] (node_modules/@babel/parser/src/parser/expression.ts:3144:16)
+      at JSXParserMixin.allowInAnd [as parseExpression] (node_modules/@babel/parser/src/parser/expression.ts:217:17)
+      at JSXParserMixin.parseExpression [as parseStatementContent] (node_modules/@babel/parser/src/parser/statement.ts:675:23)
+      at JSXParserMixin.parseStatementContent [as parseStatementLike] (node_modules/@babel/parser/src/parser/statement.ts:468:17)
+      at JSXParserMixin.parseStatementLike [as parseModuleItem] (node_modules/@babel/parser/src/parser/statement.ts:405:17)
+      at JSXParserMixin.parseModuleItem [as parseBlockOrModuleBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1434:16)
+      at JSXParserMixin.parseBlockOrModuleBlockBody [as parseBlockBody] (node_modules/@babel/parser/src/parser/statement.ts:1408:10)
+      at JSXParserMixin.parseBlockBody [as parseProgram] (node_modules/@babel/parser/src/parser/statement.ts:225:10)
+      at JSXParserMixin.parseProgram [as parseTopLevel] (node_modules/@babel/parser/src/parser/statement.ts:203:25)
+      at JSXParserMixin.parseTopLevel [as parse] (node_modules/@babel/parser/src/parser/index.ts:93:10)
+      at parse (node_modules/@babel/parser/src/index.ts:92:38)
+      at parser (node_modules/@babel/core/src/parser/index.ts:28:19)
+          at parser.next (<anonymous>)
+      at normalizeFile (node_modules/@babel/core/src/transformation/normalize-file.ts:49:24)
+          at normalizeFile.next (<anonymous>)
+      at run (node_modules/@babel/core/src/transformation/index.ts:40:36)
+          at run.next (<anonymous>)
+      at transform (node_modules/@babel/core/src/transform.ts:29:20)
+          at transform.next (<anonymous>)
+      at evaluateSync (node_modules/gensync/index.js:251:28)
+      at sync (node_modules/gensync/index.js:89:14)
+      at fn (node_modules/@babel/core/src/errors/rewrite-stack-trace.ts:99:14)
+      at transformSync (node_modules/@babel/core/src/transform.ts:66:52)
+      at ScriptTransformer.transformSource (node_modules/@jest/transform/build/ScriptTransformer.js:545:31)
+      at ScriptTransformer._transformAndBuildScript (node_modules/@jest/transform/build/ScriptTransformer.js:674:40)
+      at ScriptTransformer.transform (node_modules/@jest/transform/build/ScriptTransformer.js:726:19)
+
+
+Jest process timed out after 60 seconds

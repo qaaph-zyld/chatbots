@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Open-Source Voice Interface Demo - Chatbots Platform</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+  <link rel="stylesheet" href="/css/voice-interface.css">
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      padding: 20px;
+      background-color: #f8f9fa;
+    }
+    .demo-container {
+      max-width: 800px;
+      margin: 0 auto;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .header h1 {
+      color: #2c3e50;
+      margin-bottom: 10px;
+    }
+    .header p {
+      color: #7f8c8d;
+      font-size: 18px;
+    }
+    .open-source-badge {
+      display: inline-block;
+      background-color: #27ae60;
+      color: white;
+      font-weight: bold;
+      padding: 5px 10px;
+      border-radius: 4px;
+      margin-bottom: 15px;
+    }
+    .demo-section {
+      margin-bottom: 40px;
+      padding: 20px;
+      border-radius: 8px;
+      background-color: #f8f9fa;
+    }
+    .demo-section h2 {
+      color: #2c3e50;
+      margin-bottom: 20px;
+      font-size: 24px;
+    }
+    .demo-controls {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 20px;
+    }
+    .conversation-container {
+      height: 300px;
+      overflow-y: auto;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px;
+      background-color: white;
+      margin-bottom: 20px;
+    }
+    .message {
+      margin-bottom: 15px;
+      padding: 10px 15px;
+      border-radius: 18px;
+      max-width: 80%;
+      position: relative;
+    }
+    .user-message {
+      background-color: #e3f2fd;
+      margin-left: auto;
+      border-bottom-right-radius: 5px;
+    }
+    .bot-message {
+      background-color: #f1f1f1;
+      margin-right: auto;
+      border-bottom-left-radius: 5px;
+    }
+    .settings-panel {
+      background-color: white;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-top: 20px;
+    }
+    .engine-info {
+      margin-top: 10px;
+      font-size: 14px;
+      color: #666;
+      text-align: center;
+    }
+    .engine-badge {
+      display: inline-block;
+      padding: 2px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: bold;
+      margin-right: 5px;
+    }
+    .engine-badge.deepspeech {
+      background-color: #3498db;
+      color: white;
+    }
+    .engine-badge.vosk {
+      background-color: #9b59b6;
+      color: white;
+    }
+    .engine-badge.coqui {
+      background-color: #e74c3c;
+      color: white;
+    }
+    .engine-badge.espeak {
+      background-color: #f39c12;
+      color: white;
+    }
+    .code-example {
+      background-color: #2c3e50;
+      color: #ecf0f1;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin-top: 20px;
+    }
+    .open-source-info {
+      background-color: #e8f5e9;
+      border-left: 4px solid #4caf50;
+      padding: 15px;
+      margin-bottom: 20px;
+      border-radius: 4px;
+    }
+    .open-source-info h3 {
+      color: #2e7d32;
+      margin-top: 0;
+      font-size: 18px;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 40px;
+      color: #7f8c8d;
+    }
+  </style>
+</head>
+<body>
+  <div class="demo-container">
+    <div class="header">
+      <div class="open-source-badge">100% Open Source</div>
+      <h1>Open-Source Voice Interface Demo</h1>
+      <p>Experience the power of voice interactions with your chatbots using only free, open-source components</p>
+    </div>
+    
+    <div class="open-source-info">
+      <h3>Why Open Source?</h3>
+      <p>This voice interface uses only free, open-source components for speech-to-text and text-to-speech processing:</p>
+      <ul>
+        <li><strong>Mozilla DeepSpeech</strong> - Open-source speech recognition engine</li>
+        <li><strong>Vosk</strong> - Lightweight offline speech recognition toolkit</li>
+        <li><strong>Coqui TTS</strong> - Open-source text-to-speech engine</li>
+        <li><strong>eSpeak NG</strong> - Compact open-source speech synthesizer</li>
+      </ul>
+      <p>All processing happens locally on your server, with no dependency on commercial cloud APIs.</p>
+    </div>
+    
+    <div class="demo-section">
+      <h2>Try It Out</h2>
+      <p>Click the microphone button and speak to the chatbot. Your voice will be converted to text using open-source speech recognition, processed by the chatbot, and you'll hear the response generated by open-source text-to-speech.</p>
+      
+      <div class="conversation-container" id="conversation">
+        <div class="message bot-message">
+          Hi there! I'm a voice-enabled chatbot powered by 100% open-source technology. Click the microphone button and speak to me.
+        </div>
+      </div>
+      
+      <div class="demo-controls">
+        <div id="open-voice-interface-container"></div>
+        <div id="status-message" class="mt-2 text-muted"></div>
+      </div>
+      
+      <div class="settings-panel">
+        <h3>Settings</h3>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="stt-engine-select" class="form-label">Speech-to-Text Engine</label>
+              <select id="stt-engine-select" class="form-select">
+                <option value="deepspeech">Mozilla DeepSpeech</option>
+                <option value="vosk">Vosk</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="language-select" class="form-label">Language</label>
+              <select id="language-select" class="form-select">
+                <option value="en-US">English (US)</option>
+                <option value="en-GB">English (UK)</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="mb-3">
+              <label for="tts-engine-select" class="form-label">Text-to-Speech Engine</label>
+              <select id="tts-engine-select" class="form-select">
+                <option value="coqui">Coqui TTS</option>
+                <option value="espeak">eSpeak NG</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label for="voice-select" class="form-label">Voice</label>
+              <select id="voice-select" class="form-select">
+                <option value="ljspeech">LJSpeech (Female)</option>
+                <option value="vctk/p225">VCTK p225 (Male)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>How It Works</h2>
+      <div class="row">
+        <div class="col-md-6">
+          <h4>Speech-to-Text</h4>
+          <p>Your voice is captured and processed using one of these open-source engines:</p>
+          <ul>
+            <li><span class="engine-badge deepspeech">DeepSpeech</span> Mozilla's neural network based STT engine</li>
+            <li><span class="engine-badge vosk">Vosk</span> Lightweight offline STT toolkit</li>
+          </ul>
+          <p>Both engines run entirely on your server, with no data sent to external services.</p>
+        </div>
+        <div class="col-md-6">
+          <h4>Text-to-Speech</h4>
+          <p>The chatbot's response is converted to speech using:</p>
+          <ul>
+            <li><span class="engine-badge coqui">Coqui TTS</span> High-quality neural TTS engine</li>
+            <li><span class="engine-badge espeak">eSpeak NG</span> Lightweight speech synthesizer</li>
+          </ul>
+          <p>All voice synthesis happens locally, ensuring privacy and zero usage costs.</p>
+        </div>
+      </div>
+    </div>
+    
+    <div class="demo-section">
+      <h2>How to Implement</h2>
+      <p>Adding open-source voice capabilities to your chatbot is simple. Just include our component and a few lines of code:</p>
+      
+      <div class="code-example">
+        <pre><code>// Include the Open Voice Interface component
+&lt;script src="/js/components/OpenVoiceInterface.js"&gt;&lt;/script&gt;
+
+// Add the CSS
+&lt;link rel="stylesheet" href="/css/voice-interface.css"&gt;
+
+// Create an instance
+const openVoiceInterface = new OpenVoiceInterface({
+  chatbotId: 'your-chatbot-id',
+  showEngineInfo: true,
+  onResponse: (data) => {
+    // Handle the response
+    console.log(data);
+  }
+});
+
+// Render the component
+ReactDOM.render(
+  openVoiceInterface,
+  document.getElementById('voice-container')
+);</code></pre>
+      </div>
+      
+      <div class="mt-4">
+        <h4>Benefits of Open-Source Voice</h4>
+        <ul>
+          <li><strong>Zero API Costs</strong> - No usage fees or API keys required</li>
+          <li><strong>Full Privacy</strong> - All processing happens on your server</li>
+          <li><strong>Complete Control</strong> - Customize and extend as needed</li>
+          <li><strong>Offline Operation</strong> - Works without internet connection</li>
+          <li><strong>No Vendor Lock-in</strong> - Free from commercial service dependencies</li>
+        </ul>
+      </div>
+    </div>
+    
+    <div class="footer">
+      <p>© 2025 Chatbots Platform. All rights reserved.</p>
+      <small>Powered by 100% open-source technology</small>
+    </div>
+  </div>
+  
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/react@17.0.2/umd/react.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@17.0.2/umd/react-dom.production.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prop-types@15.7.2/prop-types.min.js"></script>
+  <script src="/js/components/OpenVoiceInterface.js"></script>
+  
+  <script>
+    // Demo chatbot ID - replace with your own
+    const DEMO_CHATBOT_ID = 'demo-chatbot-123';
+    
+    // Conversation state
+    let conversationId = null;
+    const conversation = document.getElementById('conversation');
+    const statusMessage = document.getElementById('status-message');
+    const sttEngineSelect = document.getElementById('stt-engine-select');
+    const ttsEngineSelect = document.getElementById('tts-engine-select');
+    const languageSelect = document.getElementById('language-select');
+    const voiceSelect = document.getElementById('voice-select');
+    
+    // Add a message to the conversation
+    function addMessage(text, isUser, engine) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+      
+      let content = text;
+      
+      // Add engine badge if provided
+      if (engine) {
+        const engineBadge = document.createElement('span');
+        engineBadge.className = `engine-badge ${engine}`;
+        engineBadge.textContent = engine;
+        
+        content = `${text} `;
+        messageDiv.appendChild(document.createTextNode(content));
+        messageDiv.appendChild(engineBadge);
+      } else {
+        messageDiv.textContent = content;
+      }
+      
+      conversation.appendChild(messageDiv);
+      conversation.scrollTop = conversation.scrollHeight;
+    }
+    
+    // Update voice options based on selected engine
+    function updateVoiceOptions(engine) {
+      voiceSelect.innerHTML = '';
+      
+      if (engine === 'coqui') {
+        addOption(voiceSelect, 'ljspeech', 'LJSpeech (Female)');
+        addOption(voiceSelect, 'vctk/p225', 'VCTK p225 (Male)');
+        addOption(voiceSelect, 'vctk/p228', 'VCTK p228 (Female)');
+        addOption(voiceSelect, 'sam', 'Sam (Male)');
+      } else if (engine === 'espeak') {
+        addOption(voiceSelect, 'en', 'English (Male)');
+        addOption(voiceSelect, 'en-us', 'English US (Male)');
+        addOption(voiceSelect, 'en-gb', 'English GB (Male)');
+        addOption(voiceSelect, 'en+f3', 'English (Female)');
+        addOption(voiceSelect, 'en-us+f3', 'English US (Female)');
+      }
+    }
+    
+    // Add option to select element
+    function addOption(selectElement, value, text) {
+      const option = document.createElement('option');
+      option.value = value;
+      option.textContent = text;
+      selectElement.appendChild(option);
+    }
+    
+    // Initialize the open voice interface when the DOM is loaded
+    document.addEventListener('DOMContentLoaded', function() {
+      // Create voice interface props
+      const voiceProps = {
+        chatbotId: DEMO_CHATBOT_ID,
+        conversationId: conversationId,
+        buttonSize: 'large',
+        showEngineInfo: true,
+        onListeningStart: () => {
+          statusMessage.textContent = 'Listening...';
+        },
+        onListeningStop: () => {
+          statusMessage.textContent = 'Processing...';
+        },
+        onResponse: (data) => {
+          // Update conversation ID
+          conversationId = data.conversationId;
+          
+          // Add messages to conversation
+          addMessage(data.input.text, true, data.input.engine);
+          addMessage(data.response.text, false, data.response.engine);
+          
+          // Update status
+          statusMessage.textContent = '';
+        },
+        onSpeakingStart: () => {
+          statusMessage.textContent = 'Speaking...';
+        },
+        onSpeakingEnd: () => {
+          statusMessage.textContent = '';
+        },
+        onEngineInfoLoaded: (info) => {
+          console.log('Engine info loaded:', info);
+          
+          // Update engine selects with default values
+          if (info.stt && info.stt.defaultEngine) {
+            sttEngineSelect.value = info.stt.defaultEngine;
+          }
+          
+          if (info.tts && info.tts.defaultEngine) {
+            ttsEngineSelect.value = info.tts.defaultEngine;
+            updateVoiceOptions(info.tts.defaultEngine);
+          }
+        },
+        onError: (error) => {
+          statusMessage.textContent = `Error: ${error.message}`;
+          console.error('Voice interface error:', error);
+        }
+      };
+      
+      // Create voice interface element
+      const openVoiceInterfaceElement = React.createElement(OpenVoiceInterface, voiceProps);
+      
+      // Render voice interface
+      ReactDOM.render(
+        openVoiceInterfaceElement,
+        document.getElementById('open-voice-interface-container')
+      );
+      
+      // Handle engine and voice changes
+      sttEngineSelect.addEventListener('change', function() {
+        console.log('STT engine changed:', this.value);
+      });
+      
+      ttsEngineSelect.addEventListener('change', function() {
+        console.log('TTS engine changed:', this.value);
+        updateVoiceOptions(this.value);
+      });
+      
+      languageSelect.addEventListener('change', function() {
+        console.log('Language changed:', this.value);
+      });
+      
+      voiceSelect.addEventListener('change', function() {
+        console.log('Voice changed:', this.value);
+      });
+      
+      // Initialize voice options
+      updateVoiceOptions('coqui');
+    });
+  </script>
+</body>
+</html>

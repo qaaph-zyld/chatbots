@@ -1,0 +1,46 @@
+{
+  "compilerOptions": {
+    "target": "es2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "checkJs": false,  // Disable type checking for JS files
+    "strict": false,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "outDir": "./dist",
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "@src/*": ["./src/*"],
+      "@core/*": ["./src/core/*"],
+      "@api/*": ["./src/api/*"],
+      "@models/*": ["./src/core/models/*"],
+      "@services/*": ["./src/core/services/*"],
+      "@integrations/*": ["./src/integrations/*"],
+      "@tests/*": ["./src/tests/*"],
+      "@utils/*": ["./src/utils/*"]
+    },
+    "typeRoots": [
+      "./node_modules/@types"
+    ],
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "isolatedModules": true
+  },
+  "include": [
+    "src/**/*.js",
+    "src/**/*.ts",
+    "src/**/*.jsx",
+    "src/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist",
+    "**/*.test.js",
+    "**/*.spec.js",
+    "**/*.test.ts",
+    "**/*.spec.ts"
+  ]
+}

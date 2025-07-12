@@ -1,0 +1,151 @@
+name: Test Automation Framework
+
+on:
+  push:
+    branches: [ main, master, develop ]
+    paths:
+      - 'auto-test-runner.js'
+      - 'test-utils/**'
+      - 'scripts/robust-command-runner.js'
+      - 'tests/integration/command-executor.test.js'
+  pull_request:
+    branches: [ main, master, develop ]
+    paths:
+      - 'auto-test-runner.js'
+      - 'test-utils/**'
+      - 'scripts/robust-command-runner.js'
+      - 'tests/integration/command-executor.test.js'
+  workflow_dispatch:
+    inputs:
+      test_command:
+        description: 'Test command to run'
+        required: false
+        default: 'npx jest'
+      retries:
+        description: 'Maximum retry attempts'
+        required: false
+        default: '3'
+      ai_enabled:
+        description: 'Enable AI fix generation'
+        required: false
+        default: 'true'
+        type: boolean
+
+jobs:
+  validate-framework:
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x, 18.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Run command executor integration tests
+      run: npx jest tests/integration/command-executor.test.js --verbose
+    
+    - name: Validate robust command runner
+      run: node scripts/validate-command-runner.js
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: command-executor-test-results
+        path: test-results/
+        if-no-files-found: warn
+  
+  run-automated-tests:
+    needs: validate-framework
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16.x]
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Create test results directory
+      run: mkdir -p test-results
+    
+    - name: Run test automation framework
+      run: |
+        node auto-test-runner.js \
+          --command="${{ github.event.inputs.test_command || 'npx jest' }}" \
+          --output="./test-results" \
+          --retries=${{ github.event.inputs.retries || 3 }} \
+          --ai=${{ github.event.inputs.ai_enabled || 'true' }}
+    
+    - name: Upload test results
+      uses: actions/upload-artifact@v3
+      with:
+        name: auto-test-results
+        path: test-results/
+        if-no-files-found: warn
+    
+    - name: Generate test report
+      run: node scripts/generate-test-report.js
+      if: always()
+    
+    - name: Upload test report
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-report
+        path: test-results/report/
+        if-no-files-found: warn
+
+  analyze-test-results:
+    needs: run-automated-tests
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Use Node.js 16.x
+      uses: actions/setup-node@v3
+      with:
+        node-version: 16.x
+        cache: 'npm'
+    
+    - name: Install dependencies
+      run: npm ci
+    
+    - name: Download test results
+      uses: actions/download-artifact@v3
+      with:
+        name: auto-test-results
+        path: test-results/
+    
+    - name: Analyze test results
+      run: node scripts/analyze-test-results.js
+    
+    - name: Upload analysis report
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-analysis
+        path: test-results/analysis/
+        if-no-files-found: warn
+    
+    - name: Check for recurring failures
+      run: node scripts/check-recurring-failures.js
+      continue-on-error: true
