@@ -29,8 +29,8 @@ jest.mock('winston', () => {
   };
 });
 
-// Now import the logger
-require('');
+// Import the logger
+const logger = require('@/utils/logger');
 const winston = require('winston');
 
 describe('Logger', () => {
@@ -40,10 +40,13 @@ describe('Logger', () => {
   });
 
   it('should have logging methods', () => {
+    // The logger should have standard logging methods
     expect(logger.debug).toBeDefined();
     expect(logger.info).toBeDefined();
     expect(logger.warn).toBeDefined();
     expect(logger.error).toBeDefined();
+    
+    // Verify they are functions
     expect(typeof logger.debug).toBe('function');
     expect(typeof logger.info).toBe('function');
     expect(typeof logger.warn).toBe('function');

@@ -30,7 +30,7 @@ jest.mock('../../utils', () => ({
   }
 }));
 
-jest.mock('../../storage', () => ({
+jest.mock('@/storage', () => ({
   localStorageService: {
     storeFile: jest.fn().mockResolvedValue({ path: '/mock/path/model.json' }),
     retrieveFile: jest.fn().mockResolvedValue({ 
