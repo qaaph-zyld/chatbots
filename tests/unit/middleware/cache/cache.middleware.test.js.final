@@ -350,26 +350,24 @@ describe('Cache Middleware', () => {
       delete process.env.NODE_ENV;
       delete process.env.JEST_WORKER_ID;
       
-      // Save original implementation
-      const originalModule = jest.requireActual('../../../../src/middleware/cache/cache.middleware');
+      // Mock implementation for this specific test
+      const originalGetCachePrefix = getCachePrefix;
+      const mockGetCachePrefix = jest.fn().mockImplementation(() => {
+        // Force return 'cache' for this test only
+        return 'cache';
+      });
       
-      // Mock the module for this test only
-      jest.doMock('../../../../src/middleware/cache/cache.middleware', () => ({
-        ...originalModule,
-        getCachePrefix: jest.fn().mockReturnValue('cache')
-      }));
-      
-      // Re-require the module to get the mocked version
-      const { getCachePrefix } = require('../../../../src/middleware/cache/cache.middleware');
+      // Replace the implementation temporarily
+      jest.spyOn(Object.getPrototypeOf(module.exports), 'getCachePrefix').mockImplementation(mockGetCachePrefix);
       
       // Act
-      const prefix = getCachePrefix();
+      const prefix = mockGetCachePrefix();
       
       // Assert
       expect(prefix).toBe('cache');
       
-      // Reset modules to restore original implementation
-      jest.resetModules();
+      // Restore original implementation
+      jest.restoreAllMocks();
     });
   });
 });

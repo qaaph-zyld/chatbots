@@ -9,6 +9,8 @@ process.env.DB_URI = 'mongodb://localhost:27017/chatbot_test';
 process.env.JWT_SECRET = 'test-jwt-secret-key';
 process.env.PORT = 3001;
 process.env.SUPPRESS_JEST_WARNINGS = 'true';
+// Suppress deprecation warnings (e.g., Punycode)
+process.env.NODE_OPTIONS = '--no-deprecation';
 
 // Global test timeout
 jest.setTimeout(10000);
@@ -38,10 +40,7 @@ beforeAll(async () => {
     const mongoUri = mongoServer.getUri();
     
     // Connect to test database
-    await mongoose.connect(mongoUri, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true
-    });
+    await mongoose.connect(mongoUri);
     
     console.log('Test database connected successfully');
   } catch (error) {

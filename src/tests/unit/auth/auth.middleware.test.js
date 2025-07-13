@@ -2,8 +2,11 @@
  * Auth Middleware Tests
  */
 
-// Mock dependencies before importing the auth middleware
-jest.mock('../../../auth/auth.service', () => ({
+const httpMocks = require('node-mocks-http');
+
+// Mock dependencies with inline factory functions - BEFORE imports
+// Mock dependencies with inline factory functions - BEFORE imports
+jest.mock('@src/auth/auth.service', () => ({
   verifyToken: jest.fn().mockImplementation(token => {
     if (token === 'valid-token') {
       return Promise.resolve({ userId: 'user123', role: 'user' });
@@ -29,10 +32,12 @@ jest.mock('../../../auth/auth.service', () => ({
     } else {
       return Promise.resolve(null);
     }
-  })
+  }),
+  verifyApiKey: jest.fn(),
+  hasPermission: jest.fn()
 }));
 
-jest.mock('../../../utils/logger', () => ({
+jest.mock('@src/utils/logger', () => ({
   debug: jest.fn(),
   info: jest.fn(),
   warn: jest.fn(),
@@ -40,17 +45,14 @@ jest.mock('../../../utils/logger', () => ({
 }));
 
 // Import the auth middleware after mocks
-require('@src/auth\auth.middleware');
-require('@src/auth\auth.service');
-require('@src/utils\logger');
+const authMiddleware = require('@src/auth/auth.middleware');
+const authService = require('@src/auth/auth.service');
+const logger = require('@src/utils/logger');
 
 describe('Auth Middleware', () => {
   let req, res, next;
 
   beforeEach(() => {
-    // Clear all mocks
-    jest.clearAllMocks();
-
     // Set up request, response, and next function mocks
     req = {
       headers: {},
@@ -61,15 +63,26 @@ describe('Auth Middleware', () => {
       json: jest.fn()
     };
     next = jest.fn();
+    
+    // Clear all mocks
+    jest.clearAllMocks();
   });
 
-  describe('authenticate', () => {
+  describe('authenticateToken', () => {
     it('should pass with valid token in Authorization header', async () => {
       // Arrange
       req.headers.authorization = 'Bearer valid-token';
+      
+      // Explicitly set up mocks for this test
+      authService.verifyToken.mockResolvedValueOnce({ userId: 'user123' });
+      authService.getUserById.mockResolvedValueOnce({
+        _id: 'user123',
+        email: 'user@example.com',
+        role: 'user'
+      });
 
       // Act
-      await authenticate(req, res, next);
+      await authMiddleware.authenticateToken(req, res, next);
 
       // Assert
       expect(authService.verifyToken).toHaveBeenCalledWith('valid-token');
@@ -86,7 +99,7 @@ describe('Auth Middleware', () => {
 
     it('should fail with missing Authorization header', async () => {
       // Act
-      await authenticate(req, res, next);
+      await authMiddleware.authenticateToken(req, res, next);
 
       // Assert
       expect(authService.verifyToken).not.toHaveBeenCalled();
@@ -102,7 +115,7 @@ describe('Auth Middleware', () => {
       req.headers.authorization = 'invalid-format';
 
       // Act
-      await authenticate(req, res, next);
+      await authMiddleware.authenticateToken(req, res, next);
 
       // Assert
       expect(authService.verifyToken).not.toHaveBeenCalled();
@@ -118,7 +131,7 @@ describe('Auth Middleware', () => {
       req.headers.authorization = 'Bearer invalid-token';
 
       // Act
-      await authenticate(req, res, next);
+      await authMiddleware.authenticateToken(req, res, next);
 
       // Assert
       expect(authService.verifyToken).toHaveBeenCalledWith('invalid-token');
@@ -132,10 +145,13 @@ describe('Auth Middleware', () => {
     it('should fail if user not found', async () => {
       // Arrange
       req.headers.authorization = 'Bearer valid-token';
+      
+      // Explicitly set up mocks for this test
+      authService.verifyToken.mockResolvedValueOnce({ userId: 'user123' });
       authService.getUserById.mockResolvedValueOnce(null);
 
       // Act
-      await authenticate(req, res, next);
+      await authMiddleware.authenticateToken(req, res, next);
 
       // Assert
       expect(authService.verifyToken).toHaveBeenCalledWith('valid-token');
@@ -155,7 +171,7 @@ describe('Auth Middleware', () => {
         email: 'admin@example.com',
         role: 'admin'
       };
-      const middleware = requireRole('admin');
+      const middleware = authMiddleware.hasRole('admin');
 
       // Act
       await middleware(req, res, next);
@@ -173,7 +189,7 @@ describe('Auth Middleware', () => {
         email: 'user@example.com',
         role: 'user'
       };
-      const middleware = requireRole('admin');
+      const middleware = authMiddleware.hasRole('admin');
 
       // Act
       await middleware(req, res, next);
@@ -187,7 +203,7 @@ describe('Auth Middleware', () => {
     it('should fail when user is not authenticated', async () => {
       // Arrange
       req.user = null;
-      const middleware = requireRole('admin');
+      const middleware = authMiddleware.hasRole('admin');
 
       // Act
       await middleware(req, res, next);
@@ -205,7 +221,7 @@ describe('Auth Middleware', () => {
         email: 'user@example.com',
         role: 'user'
       };
-      const middleware = requireRole(['user', 'admin']);
+      const middleware = authMiddleware.hasRole(['user', 'admin']);
 
       // Act
       await middleware(req, res, next);
@@ -219,7 +235,7 @@ describe('Auth Middleware', () => {
     it('should handle malformed user objects gracefully', async () => {
       // Arrange
       req.user = {}; // Malformed user object without role
-      const middleware = requireRole('admin');
+      const middleware = authMiddleware.hasRole('admin');
 
       // Act
       await middleware(req, res, next);

@@ -8,7 +8,7 @@ for every folder, subfolder, and file. Addresses all architectural issues identi
 in the performance gap analysis.
 
 Features:
-- Comprehensive zip extraction with nested archive handling
+- Works with both zip files and normal directory paths
 - Bulletproof directory traversal with permission handling
 - Memory-efficient processing for large datasets
 - Progress tracking and monitoring
@@ -17,6 +17,7 @@ Features:
 - Markdown output generation
 
 Usage:
+    python folder_mapper.py path/to/your/directory
     python folder_mapper.py path/to/your/file.zip
 """
 
@@ -32,8 +33,6 @@ from datetime import datetime
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from dataclasses import dataclass, field
 import mimetypes
-import hashlib
-import json
 import argparse
 
 
@@ -55,8 +54,8 @@ class ComprehensiveFolderMapper:
     Advanced folder mapping system with comprehensive analysis capabilities.
     """
     
-    def __init__(self, zip_path: str, output_file: str = "folder_mapping.md"):
-        self.zip_path = Path(zip_path)
+    def __init__(self, input_path: str, output_file: str = "folder_mapping.md"):
+        self.input_path = Path(input_path)
         self.output_file = Path(output_file)
         self.temp_dir = None
         self.extracted_path = None
@@ -65,6 +64,7 @@ class ComprehensiveFolderMapper:
         self.max_depth = 100
         self.chunk_size = 5000
         self.max_workers = 8
+        self.is_zip = False
         
         # Setup logging
         self._setup_logging()
@@ -72,7 +72,7 @@ class ComprehensiveFolderMapper:
         # Initialize MIME types
         mimetypes.init()
         
-        logging.info(f"Initialized ComprehensiveFolderMapper for: {self.zip_path}")
+        logging.info(f"Initialized ComprehensiveFolderMapper for: {self.input_path}")
     
     def _setup_logging(self):
         """Configure comprehensive logging system."""
@@ -86,37 +86,44 @@ class ComprehensiveFolderMapper:
             ]
         )
     
-    def extract_zip_comprehensive(self) -> bool:
+    def prepare_input(self) -> bool:
         """
-        Enhanced extraction handling nested archives and complex structures.
+        Prepare input by extracting ZIP or using directory directly.
         """
         try:
-            self.temp_dir = tempfile.mkdtemp(prefix='folder_mapper_')
-            logging.info(f"Created temporary directory: {self.temp_dir}")
-            
-            with zipfile.ZipFile(self.zip_path, 'r') as zip_ref:
-                # Extract all files, preserving directory structure
-                zip_ref.extractall(self.temp_dir)
-                logging.info(f"Extracted {len(zip_ref.namelist())} items from ZIP")
-            
-            # Set extracted path to temp directory (process ALL content)
-            self.extracted_path = Path(self.temp_dir)
-            
-            # Handle nested zip files recursively
-            self._process_nested_archives()
-            
-            logging.info(f"Comprehensive extraction completed: {self.extracted_path}")
+            if self.input_path.is_file() and self.input_path.suffix.lower() == '.zip':
+                self.is_zip = True
+                self.temp_dir = tempfile.mkdtemp(prefix='folder_mapper_')
+                logging.info(f"Created temporary directory: {self.temp_dir}")
+                
+                with zipfile.ZipFile(self.input_path, 'r') as zip_ref:
+                    zip_ref.extractall(self.temp_dir)
+                    logging.info(f"Extracted {len(zip_ref.namelist())} items from ZIP")
+                
+                self.extracted_path = Path(self.temp_dir)
+                self._process_nested_archives()
+                logging.info("ZIP extraction completed")
+            elif self.input_path.is_dir():
+                self.extracted_path = self.input_path
+                logging.info(f"Using directory directly: {self.input_path}")
+            else:
+                logging.error(f"Input path is not a ZIP file or directory: {self.input_path}")
+                return False
+                
             return True
             
         except Exception as e:
-            logging.error(f"Comprehensive extraction failed: {str(e)}")
+            logging.error(f"Input preparation failed: {str(e)}")
             return False
     
     def _process_nested_archives(self):
         """Process any nested archive files found during extraction."""
+        if not self.extracted_path:
+            return
+            
         nested_archives = []
         
-        for root, dirs, files in os.walk(self.temp_dir):
+        for root, dirs, files in os.walk(self.extracted_path):
             for file in files:
                 if file.lower().endswith(('.zip', '.tar.gz', '.rar', '.7z')):
                     nested_archives.append(Path(root) / file)
@@ -145,7 +152,7 @@ class ComprehensiveFolderMapper:
         Comprehensive directory mapping with advanced traversal capabilities.
         """
         if not self.extracted_path or not self.extracted_path.exists():
-            logging.error("No valid extracted path available")
+            logging.error("No valid path available for mapping")
             return False
         
         try:
@@ -200,7 +207,7 @@ class ComprehensiveFolderMapper:
         if batch:
             yield batch
     
-    def _process_item_batch(self, batch: List[Tuple[Path, str, int]]):
+    def _process_item_batch(self, batch: List[Tuple[Path, str, int]):
         """Process a batch of items with parallel processing."""
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = {
@@ -456,9 +463,11 @@ class ComprehensiveFolderMapper:
     
     def _write_markdown_header(self, f):
         """Write markdown header section."""
+        input_type = "ZIP Archive" if self.is_zip else "Directory"
         f.write("# Comprehensive Folder Mapping Report\n\n")
         f.write(f"**Generated:** {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n")
-        f.write(f"**Source:** {self.zip_path}\n")
+        f.write(f"**Source Type:** {input_type}\n")
+        f.write(f"**Source Path:** {self.input_path}\n")
         f.write(f"**Processing Time:** {datetime.now() - self.stats.start_time}\n\n")
         f.write("---\n\n")
     
@@ -567,8 +576,8 @@ class ComprehensiveFolderMapper:
         try:
             logging.info("Starting comprehensive folder mapping process...")
             
-            # Step 1: Extract ZIP file
-            if not self.extract_zip_comprehensive():
+            # Step 1: Prepare input (extract ZIP or use directory)
+            if not self.prepare_input():
                 return False
             
             # Step 2: Map directory structure
@@ -596,7 +605,7 @@ class ComprehensiveFolderMapper:
 def main():
     """Main execution function."""
     parser = argparse.ArgumentParser(description="Comprehensive Folder Mapping Tool")
-    parser.add_argument("zip_path", help="Path to the ZIP file to analyze")
+    parser.add_argument("input_path", help="Path to the directory or ZIP file to analyze")
     parser.add_argument("-o", "--output", default="folder_mapping.md", 
                        help="Output markdown file path")
     parser.add_argument("--max-depth", type=int, default=100,
@@ -608,13 +617,14 @@ def main():
     
     args = parser.parse_args()
     
-    # Validate input file
-    if not Path(args.zip_path).exists():
-        print(f"Error: ZIP file not found: {args.zip_path}")
+    # Validate input path
+    input_path = Path(args.input_path)
+    if not input_path.exists():
+        print(f"Error: Input path not found: {args.input_path}")
         return 1
     
     # Create mapper instance
-    mapper = ComprehensiveFolderMapper(args.zip_path, args.output)
+    mapper = ComprehensiveFolderMapper(args.input_path, args.output)
     mapper.max_depth = args.max_depth
     mapper.max_workers = args.max_workers
     mapper.chunk_size = args.chunk_size

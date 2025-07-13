@@ -17,8 +17,8 @@ const TEST_URI = process.env.MONGODB_TEST_URI || 'mongodb://localhost:27017/chat
 
 // MongoDB connection options
 const DEFAULT_OPTIONS = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
+  // Removed deprecated options: useNewUrlParser and useUnifiedTopology
+  // These are no longer needed in MongoDB Node.js Driver 4.0.0+
   serverSelectionTimeoutMS: 5000,
   connectTimeoutMS: 10000
 };

@@ -20,13 +20,16 @@ module.exports = {
     '**/?(*.)+(spec|test).js'
   ],
   
-  // Exclude Playwright tests and problematic test files
+  // An array of regexp pattern strings that are matched against all test paths, matched tests are skipped
   testPathIgnorePatterns: [
     '/node_modules/',
+    '/dist/',
+    '\.backup/',  // Exclude backup files from test runs
     '/tests/e2e/',  // Exclude Playwright e2e tests
     'chatbot-flow.test.js',  // Specifically exclude the Playwright test
     'voice-components.test.js',  // Exclude problematic voice component tests
-    'advanced-context-awareness.test.js'  // Exclude empty test suite
+    'advanced-context-awareness.test.js',  // Exclude empty test suite
+    '/.backup/'  // Exclude .backup directory from test runs
   ],
   
   // An array of file extensions your modules use
@@ -35,17 +38,24 @@ module.exports = {
   // A list of paths to directories that Jest should use to search for files in
   roots: ['<rootDir>'],
   
-  // Module name mapping - Cross-platform path resolution
+  // Module name mapper - Cross-platform path resolution
   moduleNameMapper: {
     '^@src/(.*)$': '<rootDir>/src/$1',
-    '^@tests/(.*)$': '<rootDir>/tests/$1',
+    '^@tests/(.*)$': '<rootDir>/src/tests/$1',
     '^@config/(.*)$': '<rootDir>/config/$1',
     '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@core/(.*)$': '<rootDir>/src/core/$1',
     '^@models/(.*)$': '<rootDir>/src/models/$1',
     '^@controllers/(.*)$': '<rootDir>/src/api/external/v1/controllers/$1',
     '^@services/(.*)$': '<rootDir>/src/services/$1',
-    '^@middleware/(.*)$': '<rootDir>/src/middleware/$1'
+    '^@middleware/(.*)$': '<rootDir>/src/middleware/$1',
+    '^@routes/(.*)$': '<rootDir>/src/api/external/v1/routes/$1'
   },
+  
+  // Mock configuration
+  clearMocks: true,
+  resetMocks: true,
+  restoreMocks: true,
   
   // The directory where Jest should output its coverage files
   coverageDirectory: '<rootDir>/coverage',

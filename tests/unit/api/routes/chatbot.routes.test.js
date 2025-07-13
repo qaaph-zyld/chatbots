@@ -2,138 +2,295 @@
  * Unit tests for chatbot routes
  */
 
-const sinon = require('sinon');
-const httpMocks = require('node-mocks-http');
+const request = require('supertest');
+const express = require('express');
+
+// Mock modules with inline factory functions - BEFORE imports
+jest.mock('../../../../src/api/controllers/chatbot.controller', () => ({
+  chatbotController: {
+    createChatbot: jest.fn(),
+    getChatbots: jest.fn(),
+    getChatbotById: jest.fn(),
+    updateChatbot: jest.fn(),
+    deleteChatbot: jest.fn(),
+    trainChatbot: jest.fn(),
+    testChatbot: jest.fn(),
+    processMessage: jest.fn(),
+    getConversationHistory: jest.fn()
+  }
+}));
+
+jest.mock('../../../../src/middleware', () => ({
+  authenticate: jest.fn((req, res, next) => next()),
+  validateRequest: jest.fn((req, res, next) => next()),
+  authorize: jest.fn((req, res, next) => next()),
+  checkRole: jest.fn(() => (req, res, next) => next())
+}));
+
+// Import after mocking
+const chatbotRoutes = require('../../../../src/api/routes/chatbot.routes');
+const { chatbotController } = require('../../../../src/api/controllers/chatbot.controller');
+const { authenticate, validateRequest, authorize, checkRole } = require('../../../../src/middleware');
 
 describe('Chatbot Routes', () => {
-  let router;
-  let chatbotControllerMock;
-  let checkRoleMock;
-  let routerStub;
-  
+  let app;
+
   beforeEach(() => {
-    // Create mock for chatbot controller
-    chatbotControllerMock = {
-      getAllChatbots: sinon.stub(),
-      getChatbotById: sinon.stub(),
-      createChatbot: sinon.stub(),
-      updateChatbot: sinon.stub(),
-      deleteChatbot: sinon.stub(),
-      processMessage: sinon.stub(),
-      getConversationHistory: sinon.stub()
-    };
+    // Setup Express app for each test
+    app = express();
+    app.use(express.json());
+    app.use('/api/chatbots', chatbotRoutes);
     
-    // Create mock for checkRole middleware
-    checkRoleMock = sinon.stub().returns((req, res, next) => next());
-    
-    // Mock express router
-    routerStub = {
-      get: sinon.stub(),
-      post: sinon.stub(),
-      put: sinon.stub(),
-      delete: sinon.stub()
-    };
-    
-    // Setup the router with mocked routes
-    routerStub.get.withArgs('/').returns(routerStub);
-    routerStub.get.withArgs('/:id').returns(routerStub);
-    routerStub.get.withArgs('/:id/conversations').returns(routerStub);
-    routerStub.post.withArgs('/').returns(routerStub);
-    routerStub.post.withArgs('/:id/message').returns(routerStub);
-    routerStub.put.withArgs('/:id').returns(routerStub);
-    routerStub.delete.withArgs('/:id').returns(routerStub);
-    
-    // Mock the route setup
-    routerStub.get.callsFake((path, handler) => {
-      if (path === '/') {
-        routerStub.getAllChatbotsHandler = handler;
-      } else if (path === '/:id') {
-        routerStub.getChatbotByIdHandler = handler;
-      } else if (path === '/:id/conversations') {
-        routerStub.getConversationHistoryHandler = handler;
-      }
-      return routerStub;
-    });
-    
-    routerStub.post.callsFake((path, middleware, handler) => {
-      if (path === '/') {
-        routerStub.createChatbotMiddleware = middleware;
-        routerStub.createChatbotHandler = handler;
-      } else if (path === '/:id/message') {
-        routerStub.processMessageHandler = handler;
-      }
-      return routerStub;
-    });
-    
-    routerStub.put.callsFake((path, middleware, handler) => {
-      if (path === '/:id') {
-        routerStub.updateChatbotMiddleware = middleware;
-        routerStub.updateChatbotHandler = handler;
-      }
-      return routerStub;
-    });
-    
-    routerStub.delete.callsFake((path, middleware, handler) => {
-      if (path === '/:id') {
-        routerStub.deleteChatbotMiddleware = middleware;
-        routerStub.deleteChatbotHandler = handler;
-      }
-      return routerStub;
-    });
-    
-    // Mock the express module
-    const expressMock = {
-      Router: jest.fn().mockReturnValue(routerStub)
-    };
-    
-    // Mock the controller and middleware modules
-    jest.mock('../../../../src/api/controllers/chatbot.controller', () => ({
-      chatbotController: chatbotControllerMock
-    }));
-    
-    jest.mock('../../../../src/middleware', () => ({
-      checkRole: checkRoleMock
-    }));
-    
-    // Load the routes module
-    router = require('../../../../src/api/routes/chatbot.routes');
+    // Reset all mocks
+    jest.clearAllMocks();
   });
-  
-  describe('Route configuration', () => {
-    it('should define GET / route for getting all chatbots', () => {
-      expect(routerStub.get).toHaveBeenCalledWith('/', expect.any(Function));
+
+  describe('POST /api/chatbots', () => {
+    it('should create a new chatbot', async () => {
+      const mockChatbot = {
+        id: 1,
+        name: 'Test Bot',
+        description: 'Test Description',
+        userId: 1
+      };
+
+      chatbotController.createChatbot.mockResolvedValue(mockChatbot);
+
+      const response = await request(app)
+        .post('/api/chatbots')
+        .send({
+          name: 'Test Bot',
+          description: 'Test Description'
+        });
+
+      expect(response.status).toBe(201);
+      expect(response.body).toEqual(mockChatbot);
+      expect(chatbotController.createChatbot).toHaveBeenCalledWith(
+        expect.objectContaining({
+          body: { name: 'Test Bot', description: 'Test Description' }
+        }),
+        expect.any(Object)
+      );
     });
-    
-    it('should define GET /:id route for getting a chatbot by ID', () => {
-      expect(routerStub.get).toHaveBeenCalledWith('/:id', expect.any(Function));
+
+    it('should handle validation errors', async () => {
+      const validationError = new Error('Validation failed');
+      validationError.status = 400;
+      
+      chatbotController.createChatbot.mockRejectedValue(validationError);
+
+      const response = await request(app)
+        .post('/api/chatbots')
+        .send({
+          name: '', // Invalid empty name
+          description: 'Test Description'
+        });
+
+      expect(response.status).toBe(400);
+      expect(chatbotController.createChatbot).toHaveBeenCalled();
     });
-    
-    it('should define POST / route for creating a chatbot with admin role check', () => {
-      expect(routerStub.post).toHaveBeenCalledWith('/', expect.any(Function), expect.any(Function));
-      expect(checkRoleMock).toHaveBeenCalledWith('admin');
+  });
+
+  describe('GET /api/chatbots', () => {
+    it('should retrieve all chatbots', async () => {
+      const mockChatbots = [
+        { id: 1, name: 'Bot 1', description: 'Description 1' },
+        { id: 2, name: 'Bot 2', description: 'Description 2' }
+      ];
+
+      chatbotController.getChatbots.mockResolvedValue(mockChatbots);
+
+      const response = await request(app)
+        .get('/api/chatbots');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockChatbots);
+      expect(chatbotController.getChatbots).toHaveBeenCalledWith(
+        expect.any(Object),
+        expect.any(Object)
+      );
     });
-    
-    it('should define PUT /:id route for updating a chatbot with admin role check', () => {
-      expect(routerStub.put).toHaveBeenCalledWith('/:id', expect.any(Function), expect.any(Function));
-      expect(checkRoleMock).toHaveBeenCalledWith('admin');
+
+    it('should handle empty results', async () => {
+      chatbotController.getChatbots.mockResolvedValue([]);
+
+      const response = await request(app)
+        .get('/api/chatbots');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual([]);
     });
-    
-    it('should define DELETE /:id route for deleting a chatbot with admin role check', () => {
-      expect(routerStub.delete).toHaveBeenCalledWith('/:id', expect.any(Function), expect.any(Function));
-      expect(checkRoleMock).toHaveBeenCalledWith('admin');
+  });
+
+  describe('GET /api/chatbots/:id', () => {
+    it('should retrieve a specific chatbot', async () => {
+      const mockChatbot = {
+        id: 1,
+        name: 'Test Bot',
+        description: 'Test Description'
+      };
+
+      chatbotController.getChatbotById.mockResolvedValue(mockChatbot);
+
+      const response = await request(app)
+        .get('/api/chatbots/1');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockChatbot);
+      expect(chatbotController.getChatbotById).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: { id: '1' }
+        }),
+        expect.any(Object)
+      );
     });
-    
-    it('should define POST /:id/message route for processing messages', () => {
-      expect(routerStub.post).toHaveBeenCalledWith('/:id/message', expect.any(Function));
+
+    it('should handle not found errors', async () => {
+      const notFoundError = new Error('Chatbot not found');
+      notFoundError.status = 404;
+      
+      chatbotController.getChatbotById.mockRejectedValue(notFoundError);
+
+      const response = await request(app)
+        .get('/api/chatbots/999');
+
+      expect(response.status).toBe(404);
     });
-    
-    it('should define GET /:id/conversations route for getting conversation history', () => {
-      expect(routerStub.get).toHaveBeenCalledWith('/:id/conversations', expect.any(Function));
+  });
+
+  describe('PUT /api/chatbots/:id', () => {
+    it('should update a chatbot', async () => {
+      const mockUpdatedChatbot = {
+        id: 1,
+        name: 'Updated Bot',
+        description: 'Updated Description'
+      };
+
+      chatbotController.updateChatbot.mockResolvedValue(mockUpdatedChatbot);
+
+      const response = await request(app)
+        .put('/api/chatbots/1')
+        .send({
+          name: 'Updated Bot',
+          description: 'Updated Description'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockUpdatedChatbot);
+      expect(chatbotController.updateChatbot).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: { id: '1' },
+          body: { name: 'Updated Bot', description: 'Updated Description' }
+        }),
+        expect.any(Object)
+      );
     });
-    
-    afterEach(() => {
-      jest.resetModules();
-      jest.clearAllMocks();
+  });
+
+  describe('DELETE /api/chatbots/:id', () => {
+    it('should delete a chatbot', async () => {
+      chatbotController.deleteChatbot.mockResolvedValue({ message: 'Deleted successfully' });
+
+      const response = await request(app)
+        .delete('/api/chatbots/1');
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual({ message: 'Deleted successfully' });
+      expect(chatbotController.deleteChatbot).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: { id: '1' }
+        }),
+        expect.any(Object)
+      );
     });
+  });
+
+  describe('POST /api/chatbots/:id/train', () => {
+    it('should train a chatbot', async () => {
+      const mockTrainingResult = {
+        id: 1,
+        status: 'training',
+        message: 'Training started'
+      };
+
+      chatbotController.trainChatbot.mockResolvedValue(mockTrainingResult);
+
+      const response = await request(app)
+        .post('/api/chatbots/1/train')
+        .send({
+          trainingData: 'Sample training data'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockTrainingResult);
+      expect(chatbotController.trainChatbot).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: { id: '1' },
+          body: { trainingData: 'Sample training data' }
+        }),
+        expect.any(Object)
+      );
+    });
+  });
+
+  describe('POST /api/chatbots/:id/test', () => {
+    it('should test a chatbot', async () => {
+      const mockTestResult = {
+        response: 'Test response from chatbot',
+        confidence: 0.95
+      };
+
+      chatbotController.testChatbot.mockResolvedValue(mockTestResult);
+
+      const response = await request(app)
+        .post('/api/chatbots/1/test')
+        .send({
+          message: 'Test message'
+        });
+
+      expect(response.status).toBe(200);
+      expect(response.body).toEqual(mockTestResult);
+      expect(chatbotController.testChatbot).toHaveBeenCalledWith(
+        expect.objectContaining({
+          params: { id: '1' },
+          body: { message: 'Test message' }
+        }),
+        expect.any(Object)
+      );
+    });
+  });
+
+  describe('Middleware Integration', () => {
+    it('should call authentication middleware', async () => {
+      chatbotController.getChatbots.mockResolvedValue([]);
+
+      await request(app)
+        .get('/api/chatbots');
+
+      expect(authenticate).toHaveBeenCalled();
+    });
+
+    it('should call validation middleware for POST requests', async () => {
+      chatbotController.createChatbot.mockResolvedValue({});
+
+      await request(app)
+        .post('/api/chatbots')
+        .send({ name: 'Test', description: 'Test' });
+
+      expect(validateRequest).toHaveBeenCalled();
+    });
+
+    it('should call authorization middleware for protected routes', async () => {
+      chatbotController.deleteChatbot.mockResolvedValue({});
+
+      await request(app)
+        .delete('/api/chatbots/1');
+
+      expect(authorize).toHaveBeenCalled();
+    });
+  });
+
+  afterEach(() => {
+    jest.resetModules();
   });
 });

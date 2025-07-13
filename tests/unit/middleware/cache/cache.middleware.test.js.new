@@ -12,21 +12,8 @@ const mockLogger = {
   error: jest.fn()
 };
 
-// Mock cache config - must be before imports
-const mockCacheConfig = {
-  ttl: 3600,
-  prefix: 'test-prefix',
-  enabled: true,
-  monitoring: false,
-  warming: false,
-  adaptiveTTL: false
-};
-
 // Use doMock for more reliable mocking
 jest.doMock('../../../../src/utils/logger', () => mockLogger);
-jest.doMock('../../../../src/config/cache.config', () => ({
-  getConfig: jest.fn().mockReturnValue(mockCacheConfig)
-}));
 
 // Import dependencies - after mocks are set up
 const { createCacheMiddleware, generateCacheKey, clearCache, getCachePrefix } = require('../../../../src/middleware/cache/cache.middleware');
@@ -34,9 +21,7 @@ const { createCacheMiddleware, generateCacheKey, clearCache, getCachePrefix } = 
 // Mock Redis client
 const mockRedisClient = {
   get: jest.fn(),
-  setex: jest.fn().mockReturnValue({
-    catch: jest.fn().mockReturnValue(true)
-  }),
+  setex: jest.fn().mockResolvedValue(true),
   keys: jest.fn(),
   del: jest.fn()
 };
@@ -65,16 +50,24 @@ jest.mock('../../../../src/middleware/cache/adaptive-ttl', () => ({
   trackResourceAccess: jest.fn().mockResolvedValue(true)
 }));
 
+// Mock cache.config
+jest.mock('../../../../src/config/cache.config', () => ({
+  getConfig: jest.fn().mockReturnValue({
+    ttl: 3600,
+    prefix: 'test',
+    enabled: true,
+    monitoring: false,
+    warming: false,
+    adaptiveTTL: false
+  })
+}));
+
 describe('Cache Middleware', () => {
   let mockRequest;
   let mockResponse;
   let nextFunction;
-  let originalEnv;
   
   beforeEach(() => {
-    // Save original environment
-    originalEnv = { ...process.env };
-    
     // Reset all mocks
     jest.clearAllMocks();
     
@@ -97,11 +90,6 @@ describe('Cache Middleware', () => {
     };
     
     nextFunction = jest.fn();
-  });
-  
-  afterEach(() => {
-    // Restore original environment
-    process.env = originalEnv;
   });
   
   describe('generateCacheKey', () => {
@@ -323,6 +311,7 @@ describe('Cache Middleware', () => {
   describe('getCachePrefix', () => {
     it('should return environment variable prefix when available', () => {
       // Arrange
+      const originalPrefix = process.env.CACHE_PREFIX;
       process.env.CACHE_PREFIX = 'env-prefix';
       
       // Act
@@ -330,10 +319,15 @@ describe('Cache Middleware', () => {
       
       // Assert
       expect(prefix).toBe('env-prefix');
+      
+      // Cleanup
+      process.env.CACHE_PREFIX = originalPrefix;
     });
     
     it('should return test prefix in test environment', () => {
       // Arrange
+      const originalPrefix = process.env.CACHE_PREFIX;
+      const originalEnv = process.env.NODE_ENV;
       delete process.env.CACHE_PREFIX;
       process.env.NODE_ENV = 'test';
       
@@ -342,25 +336,18 @@ describe('Cache Middleware', () => {
       
       // Assert
       expect(prefix).toBe('test');
+      
+      // Cleanup
+      process.env.CACHE_PREFIX = originalPrefix;
+      process.env.NODE_ENV = originalEnv;
     });
     
     it('should return default prefix when no environment variable or test environment', () => {
       // Arrange
+      const originalPrefix = process.env.CACHE_PREFIX;
+      const originalEnv = process.env.NODE_ENV;
       delete process.env.CACHE_PREFIX;
-      delete process.env.NODE_ENV;
-      delete process.env.JEST_WORKER_ID;
-      
-      // Save original implementation
-      const originalModule = jest.requireActual('../../../../src/middleware/cache/cache.middleware');
-      
-      // Mock the module for this test only
-      jest.doMock('../../../../src/middleware/cache/cache.middleware', () => ({
-        ...originalModule,
-        getCachePrefix: jest.fn().mockReturnValue('cache')
-      }));
-      
-      // Re-require the module to get the mocked version
-      const { getCachePrefix } = require('../../../../src/middleware/cache/cache.middleware');
+      process.env.NODE_ENV = 'development';
       
       // Act
       const prefix = getCachePrefix();
@@ -368,8 +355,9 @@ describe('Cache Middleware', () => {
       // Assert
       expect(prefix).toBe('cache');
       
-      // Reset modules to restore original implementation
-      jest.resetModules();
+      // Cleanup
+      process.env.CACHE_PREFIX = originalPrefix;
+      process.env.NODE_ENV = originalEnv;
     });
   });
 });

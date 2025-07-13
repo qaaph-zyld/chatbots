@@ -34,9 +34,7 @@ const { createCacheMiddleware, generateCacheKey, clearCache, getCachePrefix } = 
 // Mock Redis client
 const mockRedisClient = {
   get: jest.fn(),
-  setex: jest.fn().mockReturnValue({
-    catch: jest.fn().mockReturnValue(true)
-  }),
+  setex: jest.fn().mockResolvedValue(true),
   keys: jest.fn(),
   del: jest.fn()
 };
@@ -347,29 +345,13 @@ describe('Cache Middleware', () => {
     it('should return default prefix when no environment variable or test environment', () => {
       // Arrange
       delete process.env.CACHE_PREFIX;
-      delete process.env.NODE_ENV;
-      delete process.env.JEST_WORKER_ID;
-      
-      // Save original implementation
-      const originalModule = jest.requireActual('../../../../src/middleware/cache/cache.middleware');
-      
-      // Mock the module for this test only
-      jest.doMock('../../../../src/middleware/cache/cache.middleware', () => ({
-        ...originalModule,
-        getCachePrefix: jest.fn().mockReturnValue('cache')
-      }));
-      
-      // Re-require the module to get the mocked version
-      const { getCachePrefix } = require('../../../../src/middleware/cache/cache.middleware');
+      process.env.NODE_ENV = 'development';
       
       // Act
       const prefix = getCachePrefix();
       
       // Assert
       expect(prefix).toBe('cache');
-      
-      // Reset modules to restore original implementation
-      jest.resetModules();
     });
   });
 });

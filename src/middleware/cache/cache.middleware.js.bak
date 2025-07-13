@@ -1,0 +1,381 @@
+/**
+ * Cache Middleware
+ * 
+ * Express middleware for caching API responses with monitoring and warming
+ */
+
+// Import dependencies
+const crypto = require('crypto');
+const logger = require('../../utils/logger');
+const { getConfig } = require('../../config/cache.config');
+const { initMonitoring, recordHit, recordMiss } = require('./cache-monitor');
+const { initWarming, trackAccess } = require('./cache-warmer');
+const { calculateAdaptiveTTL, trackResourceAccess } = require('./adaptive-ttl');
+
+/**
+ * Dynamic cache prefix resolution
+ * Prioritizes environment variables, then test context, then default
+ * @returns {String} The appropriate cache prefix
+ */
+const getCachePrefix = () => {
+  // Priority: Environment variable > Test context > Default
+  if (process.env.CACHE_PREFIX) {
+    return process.env.CACHE_PREFIX;
+  }
+  
+  // Test environment detection
+  if (process.env.NODE_ENV === 'test' || process.env.JEST_WORKER_ID) {
+    return 'test';
+  }
+  
+  return 'cache';
+};
+
+/**
+ * Generate a cache key from request data
+ * @param {Object} req - Express request object
+ * @param {String|Object} prefixOrOptions - Cache key prefix or options object
+ * @returns {String} - Cache key
+ */
+const generateCacheKey = (req, prefixOrOptions = '') => {
+  // Create a string representation of the request
+  const requestData = {
+    path: req.path,
+    body: req.body,
+    params: req.params,
+    query: req.query,
+    user: req.user ? req.user._id : 'anonymous'
+  };
+  
+  // Create a hash of the request data
+  const hash = crypto
+    .createHash('md5')
+    .update(JSON.stringify(requestData))
+    .digest('hex');
+  
+  // Handle different prefix input types with proper fallbacks
+  let prefix;
+  
+  if (typeof prefixOrOptions === 'string') {
+    // String prefix with fallback
+    prefix = prefixOrOptions || getCachePrefix();
+  } else if (prefixOrOptions && typeof prefixOrOptions === 'object') {
+    // Object with prefix property
+    prefix = prefixOrOptions.prefix || getCachePrefix();
+  } else {
+    // Default fallback
+    prefix = getCachePrefix();
+  }
+  
+  // Return the cache key with resolved prefix
+  return `${prefix}:${hash}`;
+};
+
+/**
+ * Create a caching middleware
+ * @param {Object} redisClient - Redis client instance
+ * @param {Object} options - Caching options
+ * @returns {Function} - Express middleware function
+ */
+const createCacheMiddleware = (redisClient, options = {}) => {
+  // Default options with dynamic prefix resolution
+  const defaultOptions = {
+    ttl: 3600, // Cache TTL in seconds (1 hour)
+    prefix: getCachePrefix(), // Dynamic cache key prefix
+    enabled: true, // Whether caching is enabled
+    logHits: true, // Whether to log cache hits
+    bypassHeader: 'X-Bypass-Cache', // Header to bypass cache
+    bypassQuery: '_nocache', // Query parameter to bypass cache
+    monitoring: false, // Whether to enable monitoring
+    warming: false, // Whether to enable cache warming
+    adaptiveTTL: false, // Whether to enable adaptive TTL
+    resourceType: null, // Resource type for adaptive TTL
+    resourceKey: null, // Resource key for adaptive TTL
+    cacheMethods: ['GET', 'POST'] // HTTP methods to cache
+  };
+  
+  // Get config from cache.config.js
+  const config = getConfig();
+  
+  // Merge default options with config and provided options
+  // Ensure prefix is properly resolved with priority
+  const mergedOptions = { 
+    ...defaultOptions, 
+    ...config,
+    ...options
+  };
+  
+  // Ensure prefix is properly resolved with priority
+  mergedOptions.prefix = options.prefix || config.prefix || getCachePrefix();
+  
+  // Initialize monitoring and warming if enabled
+  const monitor = mergedOptions.monitoring ? initMonitoring() : null;
+  const warmer = mergedOptions.warming ? initWarming(redisClient) : null;
+  
+  // Return middleware function
+  return async (req, res, next) => {
+    try {
+      // Critical: Early return for disabled caching
+      if (!mergedOptions.enabled) {
+        return next();
+      }
+      
+      // Skip caching for non-cacheable HTTP methods
+      if (!mergedOptions.cacheMethods.includes(req.method)) {
+        return next();
+      }
+    
+    // Check for cache bypass header or query parameter
+    if (
+      req.headers[mergedOptions.bypassHeader.toLowerCase()] ||
+      req.query[mergedOptions.bypassQuery]
+    ) {
+      logger.debug('Cache bypass requested');
+      return next();
+    }
+    
+    try {
+      // Generate cache key
+      const cacheKey = generateCacheKey(req, mergedOptions.prefix);
+      
+      // Check if response is in cache
+      const cachedResponse = await redisClient.get(cacheKey);
+      
+      if (cachedResponse) {
+        // Cache hit
+        if (mergedOptions.logHits) {
+          logger.debug(`Cache hit for ${req.path}`);
+        }
+        
+        // Parse cached response
+        const parsedResponse = JSON.parse(cachedResponse);
+        
+        // Record cache hit for monitoring
+        if (monitor && mergedOptions.monitoring) {
+          const startTime = process.hrtime();
+          const result = res.status(parsedResponse.status).json(parsedResponse.body);
+          const [seconds, nanoseconds] = process.hrtime(startTime);
+          const latency = seconds * 1000 + nanoseconds / 1000000;
+          const size = cachedResponse.length;
+          
+          monitor.recordHit(mergedOptions.prefix, cacheKey, latency, size);
+          return result;
+        } else {
+          // Send cached response without monitoring
+          return res.status(parsedResponse.status).json(parsedResponse.body);
+        }
+      }
+      
+      // Cache miss, continue to handler
+      logger.debug(`Cache miss for ${req.path}`);
+      
+      // Record cache miss for monitoring
+      if (monitor && mergedOptions.monitoring) {
+        monitor.recordMiss(mergedOptions.prefix, cacheKey);
+      }
+      
+      // Store original res.json method
+      const originalJson = res.json;
+      
+      // Override res.json method to cache response
+      res.json = function(body) {
+        // Restore original res.json method
+        res.json = originalJson;
+        
+        // Only cache successful responses
+        if (res.statusCode >= 200 && res.statusCode < 300) {
+          // Cache response
+          const responseToCache = {
+            status: res.statusCode,
+            body
+          };
+          
+          // Determine resource type from request path
+          const resourceType = req.path.split('/').filter(Boolean)[1] || 'default';
+          const resourceKey = cacheKey.split(':')[1] || 'default';
+          
+          // Resource tracking with guaranteed Promise
+          if (mergedOptions.adaptiveTTL && resourceType && resourceKey) {
+            try {
+              // Get the tracking operation
+              const trackingOperation = trackResourceAccess(resourceType, resourceKey);
+              
+              // Ensure Promise handling even if trackResourceAccess doesn't return a Promise
+              Promise.resolve(trackingOperation)
+                .catch(err => {
+                  logger.error(`Error tracking resource access: ${err.message}`);
+                });
+            } catch (trackingError) {
+              // Catch any synchronous errors in trackResourceAccess
+              logger.error(`Error initiating resource tracking: ${trackingError.message}`);
+              // Continue execution - don't let tracking errors affect response
+            }
+          }
+          
+          // Calculate TTL (adaptive or default)
+          const getTTL = async () => {
+            if (mergedOptions.adaptiveTTL && process.env.ENABLE_ADAPTIVE_TTL === 'true') {
+              return await calculateAdaptiveTTL(resourceType, resourceKey);
+            }
+            return mergedOptions.ttl;
+          };
+          
+          // Store in Redis with calculated TTL
+  }
+  
+  // Test environment detection
+  if (process.env.NODE_ENV === 'test' || process.env.JEST_WORKER_ID) {
+    return 'test';
+  }
+  
+  return 'cache';
+};
+
+// Default options
+const defaultOptions = {
+  enabled: true,
+  prefix: getCachePrefix(),
+  ttl: 3600,
+  monitoring: false,
+  warming: false,
+  adaptiveTTL: false,
+  resourceType: null,
+  resourceKey: null
+};
+
+/**
+ * Generate a consistent cache key from request data
+ * @param {Object} req - Express request object
+ * @param {String|Object} prefixOrOptions - Cache key prefix or options object
+ * @returns {String} - Cache key
+ */
+const generateCacheKey = (req, prefixOrOptions = 'cache') => {
+  const { method, url, user, query, body } = req;
+  const userId = user?.id || 'anonymous';
+  const queryString = JSON.stringify(query || {});
+  const bodyString = JSON.stringify(body || {});
+  
+  const keyData = `${method}:${url}:${userId}:${queryString}:${bodyString}`;
+  const hash = crypto.createHash('md5').update(keyData).digest('hex');
+  
+  // Handle both string prefix and options object
+  const prefix = typeof prefixOrOptions === 'string' 
+    ? prefixOrOptions 
+    : (prefixOrOptions.prefix || getCachePrefix());
+  
+  return `${prefix}:${hash}`;
+};
+
+/**
+ * Create cache middleware
+ * @param {Object} redisClient - Redis client
+ * @returns {Function} - Express middleware
+ */
+const createCacheMiddleware = (redisClient) => {
+  return async (req, res, next) => {
+    // Get cache configuration
+    const config = getConfig();
+    const mergedOptions = { 
+      ...defaultOptions, 
+      ...config,
+      prefix: config.prefix || getCachePrefix() // Dynamic prefix resolution
+    };
+    
+    // Critical: Early return for disabled caching
+    if (!mergedOptions.enabled) {
+      return next();
+    }
+    
+    const cacheKey = generateCacheKey(req, mergedOptions.prefix);
+    
+    try {
+      // Try to get from cache
+      const cachedResponse = await redisClient.get(cacheKey);
+      
+      if (cachedResponse) {
+        const parsedResponse = JSON.parse(cachedResponse);
+        return res.status(parsedResponse.status).json(parsedResponse.body);
+      }
+      
+      // If not in cache, intercept the response
+      const originalJson = res.json;
+      res.json = function(body) {
+        const responseData = {
+          status: res.statusCode,
+          body,
+          timestamp: Date.now()
+        };
+        
+        // Cache the response
+        const cacheOperation = redisClient.setex(
+          cacheKey,
+          mergedOptions.ttl,
+          JSON.stringify(responseData)
+        );
+        
+        // Resource tracking with guaranteed Promise
+        if (mergedOptions.adaptiveTTL && mergedOptions.resourceType && mergedOptions.resourceKey) {
+          const trackingOperation = trackResourceAccess(
+            mergedOptions.resourceType, 
+            mergedOptions.resourceKey
+          );
+          
+          // Parallel execution with comprehensive error handling
+          Promise.allSettled([cacheOperation, trackingOperation])
+            .then(results => {
+              results.forEach((result, index) => {
+                if (result.status === 'rejected') {
+                  const operation = index === 0 ? 'caching' : 'tracking';
+                  logger.error(`${operation} operation failed: ${result.reason?.message || 'Unknown error'}`);
+                }
+              });
+            })
+            .catch(err => {
+              logger.error(`Promise settlement error: ${err.message}`);
+            });
+        } else {
+          // Cache-only operation
+          cacheOperation.catch(err => {
+            logger.error(`Cache operation failed: ${err.message}`);
+          });
+        }
+        
+        return originalJson.call(this, body);
+      };
+      
+      next();
+    } catch (error) {
+      logger.error(`Cache middleware error: ${error.message}`);
+      // Always proceed - cache failures should not block requests
+      next();
+    }
+  };
+};
+
+/**
+ * Clear cache keys matching a pattern
+ * @param {Object} redisClient - Redis client
+ * @param {String} pattern - Key pattern to match
+ * @returns {Promise<Number>} - Number of keys cleared
+ */
+const clearCache = async (redisClient, pattern) => {
+  try {
+    const keys = await redisClient.keys(pattern);
+    
+    if (keys.length === 0) {
+      return 0;
+    }
+    
+    const deleted = await redisClient.del(keys);
+    return deleted;
+  } catch (error) {
+    logger.error(`Error clearing cache: ${error.message}`);
+    throw error;
+  }
+};
+
+module.exports = {
+  generateCacheKey,
+  createCacheMiddleware,
+  clearCache
+};

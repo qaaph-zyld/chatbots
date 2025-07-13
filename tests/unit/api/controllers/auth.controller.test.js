@@ -2,89 +2,88 @@
  * Unit tests for authentication controller
  */
 
+// Mock dependencies - must be at the top level before imports
+jest.mock('@src/auth/auth.service', () => ({
+  registerUser: jest.fn(),
+  loginUser: jest.fn(),
+  refreshToken: jest.fn(),
+  logoutUser: jest.fn(),
+  requestPasswordReset: jest.fn(),
+  resetPassword: jest.fn(),
+  generateApiKey: jest.fn()
+}));
+
+jest.mock('@src/models/user.model', () => ({
+  User: {
+    findById: jest.fn().mockReturnThis(),
+    findOne: jest.fn().mockReturnThis(),
+    find: jest.fn().mockReturnThis(),
+    findByIdAndUpdate: jest.fn().mockReturnThis(),
+    findByIdAndDelete: jest.fn().mockReturnThis(),
+    select: jest.fn().mockReturnThis(),
+    exec: jest.fn(),
+    save: jest.fn()
+  }
+}));
+
+jest.mock('@src/utils/token.service', () => ({
+  generateAuthTokens: jest.fn(),
+  verifyRefreshToken: jest.fn(),
+  clearTokens: jest.fn()
+}));
+
+jest.mock('@src/utils/apiError', () => ({
+  NotFoundError: jest.fn(message => ({
+    name: 'NotFoundError',
+    message,
+    statusCode: 404
+  })),
+  BadRequestError: jest.fn(message => ({
+    name: 'BadRequestError',
+    message,
+    statusCode: 400
+  })),
+  UnauthorizedError: jest.fn(message => ({
+    name: 'UnauthorizedError',
+    message,
+    statusCode: 401
+  })),
+  ForbiddenError: jest.fn(message => ({
+    name: 'ForbiddenError',
+    message,
+    statusCode: 403
+  }))
+}));
+
+jest.mock('@src/utils', () => ({
+  logger: {
+    info: jest.fn(),
+    error: jest.fn(),
+    debug: jest.fn(),
+    warn: jest.fn()
+  }
+}));
+
 const httpMocks = require('node-mocks-http');
 
 describe('Authentication Controller', () => {
   let authController;
-  let authServiceMock;
-  let userModelMock;
-  let tokenServiceMock;
-  let apiErrorMock;
-  let loggerMock;
+  let authService;
+  let userModel;
+  let tokenService;
+  let apiError;
+  let logger;
   
   beforeEach(() => {
-    // Create mocks
-    authServiceMock = {
-      registerUser: jest.fn(),
-      loginUser: jest.fn(),
-      refreshToken: jest.fn(),
-      logoutUser: jest.fn(),
-      requestPasswordReset: jest.fn(),
-      resetPassword: jest.fn(),
-      generateApiKey: jest.fn()
-    };
+    // Get the mocked modules
+    authService = require('@src/auth/auth.service');
+    userModel = require('@src/models/user.model').User;
+    tokenService = require('@src/utils/token.service');
+    apiError = require('@src/utils/apiError');
+    logger = require('@src/utils').logger;
     
-    userModelMock = {
-      findById: jest.fn().mockReturnThis(),
-      findOne: jest.fn().mockReturnThis(),
-      find: jest.fn().mockReturnThis(),
-      findByIdAndUpdate: jest.fn().mockReturnThis(),
-      findByIdAndDelete: jest.fn().mockReturnThis(),
-      select: jest.fn().mockReturnThis(),
-      exec: jest.fn(),
-      save: jest.fn()
-    };
-    
-    tokenServiceMock = {
-      generateAuthTokens: jest.fn(),
-      verifyRefreshToken: jest.fn(),
-      clearTokens: jest.fn()
-    };
-    
-    apiErrorMock = {
-      NotFoundError: jest.fn(message => ({
-        name: 'NotFoundError',
-        message,
-        statusCode: 404
-      })),
-      BadRequestError: jest.fn(message => ({
-        name: 'BadRequestError',
-        message,
-        statusCode: 400
-      })),
-      UnauthorizedError: jest.fn(message => ({
-        name: 'UnauthorizedError',
-        message,
-        statusCode: 401
-      })),
-      ForbiddenError: jest.fn(message => ({
-        name: 'ForbiddenError',
-        message,
-        statusCode: 403
-      }))
-    };
-    
-    loggerMock = {
-      info: jest.fn(),
-      error: jest.fn(),
-      debug: jest.fn(),
-      warn: jest.fn()
-    };
-    
-    // Mock dependencies
-    jest.mock('@src/auth/auth.service', () => authServiceMock);
-    
-    jest.mock('@src/models/user.model', () => ({
-      User: userModelMock
-    }));
-    
-    jest.mock('@src/utils/token.service', () => tokenServiceMock);
-    
-    jest.mock('@src/utils/apiError', () => apiErrorMock);
-    
-    jest.mock('@src/utils', () => ({
-      logger: loggerMock
-    }));
+    // Reset all mocks
+    jest.clearAllMocks();
     
     // Load the controller module
     authController = require('../../../../src/api/controllers/auth.controller');
@@ -114,7 +113,7 @@ describe('Authentication Controller', () => {
       const res = httpMocks.createResponse();
       const next = jest.fn();
       
-      authServiceMock.registerUser.mockResolvedValue(createdUser);
+      authService.registerUser.mockResolvedValue(createdUser);
       
       // Act
       await authController.register(req, res, next);
@@ -125,7 +124,7 @@ describe('Authentication Controller', () => {
       expect(responseData.success).toBe(true);
       expect(responseData.data).toEqual(createdUser);
       
-      expect(authServiceMock.registerUser).toHaveBeenCalledWith(userData);
+      expect(authService.registerUser).toHaveBeenCalledWith(userData);
     });
     
     it('should handle duplicate user error with 409 status code', async () => {
@@ -144,7 +143,7 @@ describe('Authentication Controller', () => {
       const next = jest.fn();
       
       const duplicateError = new Error('User with this email already exists');
-      authServiceMock.registerUser.mockRejectedValue(duplicateError);
+      authService.registerUser.mockRejectedValue(duplicateError);
       
       // Act
       await authController.register(req, res, next);
@@ -155,7 +154,7 @@ describe('Authentication Controller', () => {
       expect(responseData.success).toBe(false);
       expect(responseData.error).toBe('User with this email already exists');
       
-      expect(loggerMock.error).toHaveBeenCalledWith('Error in register:', 'User with this email already exists');
+      expect(logger.error).toHaveBeenCalledWith('Error in register:', 'User with this email already exists');
     });
     
     it('should handle other errors with next middleware', async () => {
@@ -174,14 +173,14 @@ describe('Authentication Controller', () => {
       const next = jest.fn();
       
       const error = new Error('Database connection error');
-      authServiceMock.registerUser.mockRejectedValue(error);
+      authService.registerUser.mockRejectedValue(error);
       
       // Act
       await authController.register(req, res, next);
       
       // Assert
       expect(next).toHaveBeenCalledWith(error);
-      expect(loggerMock.error).toHaveBeenCalledWith('Error in register:', 'Database connection error');
+      expect(logger.error).toHaveBeenCalledWith('Error in register:', 'Database connection error');
     });
   });
   
@@ -211,7 +210,7 @@ describe('Authentication Controller', () => {
       const res = httpMocks.createResponse();
       const next = jest.fn();
       
-      authServiceMock.loginUser.mockResolvedValue({ user, tokens });
+      authService.loginUser.mockResolvedValue({ user, tokens });
       
       // Act
       await authController.login(req, res, next);
@@ -223,7 +222,7 @@ describe('Authentication Controller', () => {
       expect(responseData.data.user).toEqual(user);
       expect(responseData.data.tokens).toEqual(tokens);
       
-      expect(authServiceMock.loginUser).toHaveBeenCalledWith(loginData.username, loginData.password);
+      expect(authService.loginUser).toHaveBeenCalledWith(loginData.username, loginData.password);
     });
     
     it('should return 400 when username or password is missing', async () => {
@@ -264,7 +263,7 @@ describe('Authentication Controller', () => {
       
       const authError = new Error('Invalid credentials');
       authError.statusCode = 401;
-      authServiceMock.loginUser.mockRejectedValue(authError);
+      authService.loginUser.mockRejectedValue(authError);
       
       // Act
       await authController.login(req, res, next);
@@ -291,7 +290,7 @@ describe('Authentication Controller', () => {
       const res = httpMocks.createResponse();
       const next = jest.fn();
       
-      authServiceMock.refreshToken.mockResolvedValue(newTokens);
+      authService.refreshToken.mockResolvedValue(newTokens);
       
       // Act
       await authController.refreshToken(req, res, next);
@@ -302,7 +301,7 @@ describe('Authentication Controller', () => {
       expect(responseData.success).toBe(true);
       expect(responseData.data).toEqual(newTokens);
       
-      expect(authServiceMock.refreshToken).toHaveBeenCalledWith(refreshToken);
+      expect(authService.refreshToken).toHaveBeenCalledWith(refreshToken);
     });
     
     it('should return 400 when refresh token is missing', async () => {
@@ -336,7 +335,7 @@ describe('Authentication Controller', () => {
       const next = jest.fn();
       
       const tokenError = new Error('Invalid refresh token');
-      authServiceMock.refreshToken.mockRejectedValue(tokenError);
+      authService.refreshToken.mockRejectedValue(tokenError);
       
       // Act
       await authController.refreshToken(req, res, next);
@@ -367,7 +366,7 @@ describe('Authentication Controller', () => {
       expect(responseData.success).toBe(true);
       expect(responseData.message).toBe('Logged out successfully');
       
-      expect(authServiceMock.logoutUser).toHaveBeenCalledWith(refreshToken);
+      expect(authService.logoutUser).toHaveBeenCalledWith(refreshToken);
     });
     
     it('should return 400 when refresh token is missing', async () => {
@@ -401,7 +400,7 @@ describe('Authentication Controller', () => {
       const next = jest.fn();
       
       const error = new Error('Logout error');
-      authServiceMock.logoutUser.mockRejectedValue(error);
+      authService.logoutUser.mockRejectedValue(error);
       
       // Act
       await authController.logout(req, res, next);
@@ -479,7 +478,7 @@ describe('Authentication Controller', () => {
       const res = httpMocks.createResponse();
       const next = jest.fn();
       
-      authServiceMock.generateApiKey.mockResolvedValue(apiKey);
+      authService.generateApiKey.mockResolvedValue(apiKey);
       
       // Act
       await authController.generateApiKey(req, res, next);
@@ -490,7 +489,7 @@ describe('Authentication Controller', () => {
       expect(responseData.success).toBe(true);
       expect(responseData.data).toEqual(apiKey);
       
-      expect(authServiceMock.generateApiKey).toHaveBeenCalledWith(userId);
+      expect(authService.generateApiKey).toHaveBeenCalledWith(userId);
     });
     
     it('should handle errors with next middleware', async () => {
@@ -505,7 +504,7 @@ describe('Authentication Controller', () => {
       const next = jest.fn();
       
       const error = new Error('API key generation error');
-      authServiceMock.generateApiKey.mockRejectedValue(error);
+      authService.generateApiKey.mockRejectedValue(error);
       
       // Act
       await authController.generateApiKey(req, res, next);

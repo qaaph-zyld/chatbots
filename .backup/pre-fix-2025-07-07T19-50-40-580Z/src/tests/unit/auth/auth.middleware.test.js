@@ -40,9 +40,9 @@ jest.mock('../../../utils/logger', () => ({
 }));
 
 // Import the auth middleware after mocks
-require('@src/auth\auth.middleware');
-require('@src/auth\auth.service');
-require('@src/utils\logger');
+require('@src/auth/auth.middleware');
+require('@src/auth/auth.service');
+require('@src/utils/logger');
 
 describe('Auth Middleware', () => {
   let req, res, next;

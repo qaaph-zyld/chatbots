@@ -191,19 +191,9 @@ const createCacheMiddleware = (redisClient, options = {}) => {
                   body
                 });
                 
-                try {
-                  if (typeof redisClient.setex === 'function') {
-                    redisClient.setex(cacheKey, adaptiveTTL, responseToCache)
-                      .catch(err => {
-                        logger.error('Redis error when setting cached response with adaptive TTL', err);
-                      });
-                  } else {
-                    // Handle mock or alternative implementation
-                    redisClient.setex(cacheKey, adaptiveTTL, responseToCache);
-                  }
-                } catch (err) {
-                  logger.error('Error caching response with adaptive TTL', err);
-                }
+                redisClient.setex(cacheKey, adaptiveTTL, responseToCache).catch(err => {
+                  logger.error('Redis error when setting cached response with adaptive TTL', err);
+                });
               })
               .catch(err => {
                 logger.error('Error calculating adaptive TTL', err);
@@ -214,19 +204,9 @@ const createCacheMiddleware = (redisClient, options = {}) => {
                   body
                 });
                 
-                try {
-                  if (typeof redisClient.setex === 'function') {
-                    redisClient.setex(cacheKey, ttl, responseToCache)
-                      .catch(err => {
-                        logger.error('Redis error when setting cached response with default TTL', err);
-                      });
-                  } else {
-                    // Handle mock or alternative implementation
-                    redisClient.setex(cacheKey, ttl, responseToCache);
-                  }
-                } catch (err) {
-                  logger.error('Error caching response with default TTL', err);
-                }
+                redisClient.setex(cacheKey, ttl, responseToCache).catch(err => {
+                  logger.error('Redis error when setting cached response with default TTL', err);
+                });
               });
           } else {
             // Cache the response with default TTL
@@ -235,19 +215,9 @@ const createCacheMiddleware = (redisClient, options = {}) => {
               body
             });
             
-            try {
-              if (typeof redisClient.setex === 'function') {
-                redisClient.setex(cacheKey, ttl, responseToCache)
-                  .catch(err => {
-                    logger.error('Redis error when setting cached response', err);
-                  });
-              } else {
-                // Handle mock or alternative implementation
-                redisClient.setex(cacheKey, ttl, responseToCache);
-              }
-            } catch (err) {
-              logger.error('Error caching response', err);
-            }
+            redisClient.setex(cacheKey, ttl, responseToCache).catch(err => {
+              logger.error('Redis error when setting cached response', err);
+            });
           }
         }
         
