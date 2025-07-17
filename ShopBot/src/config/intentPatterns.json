@@ -1,0 +1,20 @@
+{
+  "ORDER_STATUS": {
+    "patterns": ["order.*status", "where.*order", "tracking"],
+    "confidence": 0.8,
+    "authentication": true,
+    "handler": "processOrderInquiry"
+  },
+  "RETURN_REQUEST": {
+    "patterns": ["return", "refund", "exchange"],
+    "confidence": 0.9,
+    "authentication": true,
+    "handler": "processReturnRequest"
+  },
+  "PRODUCT_INQUIRY": {
+    "patterns": ["product", "item", "availability"],
+    "confidence": 0.7,
+    "authentication": false,
+    "handler": "processProductQuery"
+  }
+}
