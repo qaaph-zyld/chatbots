@@ -6,8 +6,9 @@
 
 // Import dependencies
 const rateLimit = require('express-rate-limit');
-const RedisStore = require('rate-limit-redis');
-const logger = require('@core/logger');
+const rateLimitRedis = require('rate-limit-redis');
+const RedisStore = rateLimitRedis.default;
+const logger = require('../../utils/logger');
 
 /**
  * Create a rate limiter middleware with specified options
@@ -21,6 +22,8 @@ const createRateLimiter = (options = {}) => {
     max: 100, // Limit each IP to 100 requests per windowMs
     standardHeaders: true, // Return rate limit info in the `RateLimit-*` headers
     legacyHeaders: false, // Disable the `X-RateLimit-*` headers
+    skipSuccessfulRequests: false,
+    skipFailedRequests: false,
     message: {
       success: false,
       message: 'Too many requests, please try again later.'
@@ -36,7 +39,6 @@ const createRateLimiter = (options = {}) => {
 
   // If Redis client is provided, use Redis store
   if (options.redisClient) {
-    logger.info('Using Redis store for rate limiting');
     mergedOptions.store = new RedisStore({
       client: options.redisClient,
       prefix: 'rl:', // Key prefix in Redis

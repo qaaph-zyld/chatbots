@@ -7,10 +7,13 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\advanced-context.controller');
-require('@src/api\middleware\auth');
-require('@src/api\middleware\validate');
+const advancedContextController = require('@src/api/controllers/advanced-context.controller');
+const { authenticate, authorize } = require('@src/api/middleware/auth');
+const { validateBody, validateParams } = require('@src/api/middleware/validate');
 const Joi = require('joi');
+
+// Define validate function for backward compatibility
+const validate = validateBody;
 
 // Validation schemas
 const messageSchema = Joi.object({

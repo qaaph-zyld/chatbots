@@ -69,7 +69,10 @@
     "generate-deployment-report": "node scripts/generate-deployment-report.js",
     "build:dev": "webpack --config webpack.config.js --mode development",
     "build:prod": "webpack --config webpack.config.js --mode production",
-    "lint:fix": "eslint . --fix"
+    "lint:fix": "eslint . --fix",
+    "test:load:auth": "k6 run tests/load/auth-load-test.js",
+    "test:load:chat": "k6 run tests/load/chatbot-load-test.js",
+    "test:load:mixed": "k6 run tests/load/mixed-workload.js"
   },
   "repository": {
     "type": "git",
@@ -150,6 +153,7 @@
     "nodemon": "^3.0.2",
     "playwright": "^1.52.0",
     "prettier": "^3.5.3",
+    "rate-limit-redis": "^4.2.1",
     "sinon": "^17.0.1",
     "style-loader": "^4.0.0",
     "supertest": "^6.3.4",

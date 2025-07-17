@@ -40,6 +40,7 @@ module.exports = {
   
   // Module name mapper - Cross-platform path resolution
   moduleNameMapper: {
+    '@src/(.*)': '<rootDir>/src/$1',
     '^@src/(.*)$': '<rootDir>/src/$1',
     '^@tests/(.*)$': '<rootDir>/src/tests/$1',
     '^@config/(.*)$': '<rootDir>/config/$1',
@@ -49,7 +50,9 @@ module.exports = {
     '^@controllers/(.*)$': '<rootDir>/src/api/external/v1/controllers/$1',
     '^@services/(.*)$': '<rootDir>/src/services/$1',
     '^@middleware/(.*)$': '<rootDir>/src/middleware/$1',
-    '^@routes/(.*)$': '<rootDir>/src/api/external/v1/routes/$1'
+    '^@routes/(.*)$': '<rootDir>/src/api/external/v1/routes/$1',
+    '^@data/connection$': '<rootDir>/src/data/connection',
+    '^@data/(.*)$': '<rootDir>/src/data/$1',
   },
   
   // Mock configuration

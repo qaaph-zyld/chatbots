@@ -1,12 +1,37 @@
-mportant!
-Note: Strict protocol for all test runs is now a standing workflow rule:
-Run the command
-Save output to a specific file
-Wait for 60 seconds
-Check the output file after 60 seconds
-Analyze the output and proceed accordingly
-If the file is missing, try other ways to get the output
-Do not claim tests are passing until you paste the exact summary lines from the output (e.g. 'Test Suites: 2 failed, 2 total')
+# Testing Protocol: Terminal Operations and Test Verification
+
+## Strict Protocol for All Test Runs
+
+1. Run the command with proper output redirection
+2. Save output to a specific file in test-results directory
+3. Wait for 60 seconds to ensure test completion
+4. Check the output file after 60 seconds
+5. Analyze the output and proceed accordingly
+6. If the file is missing, try other ways to get the output
+7. Do not claim tests are passing until you paste the exact summary lines from the output (e.g. 'Test Suites: 2 failed, 2 total')
+8. Update comprehensive_testing_results.md after each test run
+
+## Error Handling in Tests
+
+1. Always use try/catch blocks around async operations in tests
+2. Ensure all Promise-returning functions are properly awaited
+3. Use .mockResolvedValue() instead of .mockImplementation() for cleaner Promise mocks
+4. Add explicit error assertions for expected failure cases
+
+## Mock Implementation Standards
+
+1. Use jest.doMock() for more reliable mocking of modules
+2. Place all mocks before any imports in test files
+3. Reset all mocks in beforeEach() to prevent test interference
+4. Use consistent mock patterns across all test files
+5. Ensure mock paths are correct and consistent (e.g., '../../../src/utils/logger')
+
+## Test Isolation Guidelines
+
+1. Reset all mocks between tests using jest.clearAllMocks()
+2. Save and restore environment variables that tests may modify
+3. Use unique identifiers for test data to prevent collisions
+4. Clean up any resources created during tests in afterEach() or afterAll()
 Note: Latest test output for auth.middleware.test.js:
 Test Suites: 2 failed, 2 total
 Tests: 2 failed, 8 passed, 10 total
@@ -22,6 +47,22 @@ powershell
 powershell -Command "npm test -- [test-file-path] --verbose *> test-results/[test-name]-output.txt"
 
 ## Critical Rules
+
+1. **NEVER assume tests pass without explicit verification**
+   - Always verify test completion by checking for Jest summary statistics (e.g., "Test Suites: X passed, X total")
+   - Never declare tests as passing without this explicit confirmation
+   - If test output is incomplete, treat test status as INDETERMINATE
+
+2. **Properly handle async operations**
+   - Return Promises from test functions for proper async handling
+   - Use explicit timeouts for long-running operations
+   - Implement proper cleanup in afterEach/afterAll hooks
+
+3. **Supertest best practices**
+   - Always use .end() with callback for proper connection closure
+   - Move assertions inside the callback to ensure execution
+   - Return Promise from test function for proper async handling
+   - Clean up Express app instances after each test
 
 1. **No Proceeding Without Complete Output**: We cannot move forward without seeing the exact Jest summary
 2. **60-Second Wait Mandatory**: Always wait the full 60 seconds before checking files

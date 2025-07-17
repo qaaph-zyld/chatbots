@@ -5,35 +5,10 @@
 const httpMocks = require('node-mocks-http');
 
 // Mock dependencies with inline factory functions - BEFORE imports
-// Mock dependencies with inline factory functions - BEFORE imports
 jest.mock('@src/auth/auth.service', () => ({
-  verifyToken: jest.fn().mockImplementation(token => {
-    if (token === 'valid-token') {
-      return Promise.resolve({ userId: 'user123', role: 'user' });
-    } else if (token === 'admin-token') {
-      return Promise.resolve({ userId: 'admin123', role: 'admin' });
-    } else {
-      return Promise.reject(new Error('Invalid token'));
-    }
-  }),
-  getUserById: jest.fn().mockImplementation(id => {
-    if (id === 'user123') {
-      return Promise.resolve({
-        _id: 'user123',
-        email: 'user@example.com',
-        role: 'user'
-      });
-    } else if (id === 'admin123') {
-      return Promise.resolve({
-        _id: 'admin123',
-        email: 'admin@example.com',
-        role: 'admin'
-      });
-    } else {
-      return Promise.resolve(null);
-    }
-  }),
-  verifyApiKey: jest.fn(),
+  verifyToken: jest.fn(),
+  getUserById: jest.fn(),
+  validatePermissions: jest.fn(),
   hasPermission: jest.fn()
 }));
 
@@ -66,6 +41,12 @@ describe('Auth Middleware', () => {
     
     // Clear all mocks
     jest.clearAllMocks();
+    
+    // Reset mock implementations to avoid test interference
+    authService.verifyToken.mockReset();
+    authService.getUserById.mockReset();
+    authService.validatePermissions.mockReset();
+    authService.hasPermission.mockReset();
   });
 
   describe('authenticateToken', () => {
@@ -74,12 +55,14 @@ describe('Auth Middleware', () => {
       req.headers.authorization = 'Bearer valid-token';
       
       // Explicitly set up mocks for this test
-      authService.verifyToken.mockResolvedValueOnce({ userId: 'user123' });
-      authService.getUserById.mockResolvedValueOnce({
+      const mockUser = {
         _id: 'user123',
         email: 'user@example.com',
         role: 'user'
-      });
+      };
+      
+      authService.verifyToken.mockResolvedValue({ userId: 'user123' });
+      authService.getUserById.mockResolvedValue(mockUser);
 
       // Act
       await authMiddleware.authenticateToken(req, res, next);
@@ -87,11 +70,7 @@ describe('Auth Middleware', () => {
       // Assert
       expect(authService.verifyToken).toHaveBeenCalledWith('valid-token');
       expect(authService.getUserById).toHaveBeenCalledWith('user123');
-      expect(req.user).toEqual({
-        _id: 'user123',
-        email: 'user@example.com',
-        role: 'user'
-      });
+      expect(req.user).toEqual(mockUser);
       expect(next).toHaveBeenCalled();
       expect(res.status).not.toHaveBeenCalled();
       expect(res.json).not.toHaveBeenCalled();
@@ -129,6 +108,9 @@ describe('Auth Middleware', () => {
     it('should fail with invalid token', async () => {
       // Arrange
       req.headers.authorization = 'Bearer invalid-token';
+      
+      // Mock token verification to fail
+      authService.verifyToken.mockRejectedValue(new Error('Invalid token'));
 
       // Act
       await authMiddleware.authenticateToken(req, res, next);
@@ -147,8 +129,8 @@ describe('Auth Middleware', () => {
       req.headers.authorization = 'Bearer valid-token';
       
       // Explicitly set up mocks for this test
-      authService.verifyToken.mockResolvedValueOnce({ userId: 'user123' });
-      authService.getUserById.mockResolvedValueOnce(null);
+      authService.verifyToken.mockResolvedValue({ userId: 'user123' });
+      authService.getUserById.mockResolvedValue(null);
 
       // Act
       await authMiddleware.authenticateToken(req, res, next);
@@ -163,7 +145,7 @@ describe('Auth Middleware', () => {
     });
   });
 
-  describe('requireRole', () => {
+  describe('hasRole', () => {
     it('should pass when user has required role', async () => {
       // Arrange
       req.user = {

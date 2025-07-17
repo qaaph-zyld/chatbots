@@ -45,6 +45,16 @@ The Customizable Chatbots Platform allows developers and businesses to:
   - **Comprehensive Logging**: Structured logging with different log levels
   - [Learn more about the Test Automation Framework](./docs/test-automation-framework.md)
 
+## Architecture Diagrams
+We provide visual documentation of the system architecture in the [docs/architecture-diagrams](docs/architecture-diagrams) directory. This includes:
+- Component Interaction
+- Test Coverage Map
+- Deployment Topology
+- Data Flow
+- CI/CD Pipeline
+- Security Architecture
+- Error Handling Flow
+
 ## Documentation
 
 > [!IMPORTANT]

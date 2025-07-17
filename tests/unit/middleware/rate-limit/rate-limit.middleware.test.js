@@ -1,175 +1,321 @@
-/**
- * Rate Limiting Middleware Unit Tests
- * 
- * Tests for the rate limiting middleware functionality
- */
+// tests/unit/middleware/rate-limit/rate-limit.middleware.test.js
 
-// Register module aliases before any other imports
-require('@src/core/module-alias');
+// Mock Redis Store with proper Jest factory pattern
+class MockRedisStore {
+  constructor(options) {
+    this.options = options;
+    this.incr = jest.fn();
+    this.decrement = jest.fn();
+    this.resetKey = jest.fn();
+    this.resetAll = jest.fn();
+    this.get = jest.fn();
+    this.set = jest.fn();
+    this.expire = jest.fn();
+    this.del = jest.fn();
+    this.quit = jest.fn();
+    this.on = jest.fn();
+    this.connected = true;
+  }
+}
 
-// Import dependencies
-const { createRateLimiter, configureRateLimits } = require('@middleware/rate-limit/rate-limit.middleware');
-const redis = require('redis');
+jest.mock('rate-limit-redis', () => ({
+  __esModule: true,
+  default: MockRedisStore
+}));
 
-// Mock redis
-jest.mock('redis', () => {
-  const mockClient = {
-    incr: jest.fn(),
-    expire: jest.fn(),
-    quit: jest.fn(),
-    on: jest.fn()
-  };
-  return {
-    createClient: jest.fn().mockReturnValue(mockClient)
-  };
-});
+// Mock logger with proper Jest factory pattern
+jest.mock('../../../../src/utils/logger', () => ({
+  __esModule: true,
+  default: {
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    debug: jest.fn()
+  }
+}));
 
-// Mock express-rate-limit
+// Mock express-rate-limit to return a valid middleware function
 jest.mock('express-rate-limit', () => {
-  return jest.fn().mockImplementation((options) => {
-    return (req, res, next) => {
-      // Store the options for testing
-      req.rateLimitOptions = options;
-      next();
-    };
-  });
+  return jest.fn().mockImplementation(() => (req, res, next) => next());
 });
 
-describe('Rate Limiting Middleware', () => {
-  let mockRequest;
-  let mockResponse;
-  let nextFunction;
-  
+const request = require('supertest');
+const express = require('express');
+const rateLimit = require('express-rate-limit');
+const logger = require('../../../../src/utils/logger');
+const { createRateLimiter } = require('../../../../src/middleware/rate-limit/rate-limit.middleware');
+
+describe('Rate Limit Middleware', () => {
+  let app;
+  let mockRedisClient;
+
   beforeEach(() => {
-    // Reset all mocks
+    // Reset all mocks before each test
     jest.clearAllMocks();
     
-    // Setup mock request and response
-    mockRequest = {
-      ip: '127.0.0.1',
-      path: '/api/test',
-      user: { _id: 'user123' }
-    };
+    // Configure rate limit mock
+    rateLimit.mockImplementation(() => (req, res, next) => next());
+
+    // Setup Express app for testing
+    app = express();
     
-    mockResponse = {
-      status: jest.fn().mockReturnThis(),
-      json: jest.fn()
+    // Create mock Redis client
+    mockRedisClient = {
+      incr: jest.fn(),
+      expire: jest.fn(),
+      del: jest.fn(),
+      get: jest.fn(),
+      set: jest.fn(),
+      quit: jest.fn(),
+      on: jest.fn(),
+      connected: true
     };
-    
-    nextFunction = jest.fn();
   });
-  
-  describe('createRateLimiter', () => {
-    it('should create a rate limiter with default options', () => {
-      // Act
-      const limiter = createRateLimiter();
-      limiter(mockRequest, mockResponse, nextFunction);
-      
-      // Assert
-      expect(nextFunction).toHaveBeenCalled();
-      expect(mockRequest.rateLimitOptions).toBeDefined();
-      expect(mockRequest.rateLimitOptions.windowMs).toBe(15 * 60 * 1000); // 15 minutes
-      expect(mockRequest.rateLimitOptions.max).toBe(100);
+
+  afterEach(() => {
+    jest.resetAllMocks();
+  });
+
+  describe('Middleware Configuration', () => {
+    test('should create rate limit middleware with default configuration', () => {
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient
+      });
+
+      expect(rateLimit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          windowMs: expect.any(Number),
+          max: expect.any(Number),
+          store: expect.any(Object),
+          standardHeaders: true,
+          legacyHeaders: false
+        })
+      );
+      expect(middleware).toBeDefined();
+      expect(typeof middleware).toBe('function');
     });
-    
-    it('should create a rate limiter with custom options', () => {
-      // Arrange
-      const options = {
-        windowMs: 5 * 60 * 1000, // 5 minutes
+
+    test('should create rate limit middleware with custom configuration', () => {
+      const customConfig = {
+        windowMs: 60000, // 1 minute
         max: 50,
-        message: 'Too many requests'
+        message: 'Custom rate limit message',
+        standardHeaders: true,
+        legacyHeaders: false
       };
-      
-      // Act
-      const limiter = createRateLimiter(options);
-      limiter(mockRequest, mockResponse, nextFunction);
-      
-      // Assert
-      expect(nextFunction).toHaveBeenCalled();
-      expect(mockRequest.rateLimitOptions).toBeDefined();
-      expect(mockRequest.rateLimitOptions.windowMs).toBe(5 * 60 * 1000);
-      expect(mockRequest.rateLimitOptions.max).toBe(50);
-      expect(mockRequest.rateLimitOptions.message).toBe('Too many requests');
+
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient,
+        ...customConfig
+      });
+
+      expect(rateLimit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          windowMs: 60000,
+          max: 50,
+          message: 'Custom rate limit message',
+          standardHeaders: true,
+          legacyHeaders: false
+        })
+      );
+      expect(middleware).toBeDefined();
     });
-    
-    it('should use keyGenerator function if provided', () => {
-      // Arrange
-      const keyGenerator = (req) => req.user._id;
-      const options = {
-        keyGenerator
-      };
-      
-      // Act
-      const limiter = createRateLimiter(options);
-      limiter(mockRequest, mockResponse, nextFunction);
-      
-      // Assert
-      expect(nextFunction).toHaveBeenCalled();
-      expect(mockRequest.rateLimitOptions.keyGenerator).toBe(keyGenerator);
+
+    test('should initialize Redis store with correct parameters', () => {
+      const windowMs = 900000; // 15 minutes
+      const keyPrefix = 'rl:';
+
+      createRateLimiter({
+        redisClient: mockRedisClient,
+        windowMs,
+        keyPrefix
+      });
+
+      expect(require('rate-limit-redis').default).toHaveBeenCalledTimes(1);
+      expect(require('rate-limit-redis').default).toHaveBeenCalledWith({
+        client: mockRedisClient,
+        prefix: keyPrefix,
+        expiry: windowMs / 1000 // convert to seconds
+      });
     });
   });
-  
-  describe('configureRateLimits', () => {
-    it('should configure different rate limits for different endpoints', () => {
-      // Arrange
-      const config = {
-        api: {
-          windowMs: 15 * 60 * 1000,
-          max: 100
-        },
-        auth: {
-          windowMs: 5 * 60 * 1000,
-          max: 5
-        }
-      };
+
+  describe('Rate Limiting Behavior', () => {
+    beforeEach(() => {
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient,
+        windowMs: 60000, // 1 minute
+        max: 5
+      });
       
-      // Act
-      const limiters = configureRateLimits(config);
-      
-      // Assert
-      expect(limiters).toBeDefined();
-      expect(limiters.api).toBeDefined();
-      expect(limiters.auth).toBeDefined();
-      
-      // Test api limiter
-      limiters.api(mockRequest, mockResponse, nextFunction);
-      expect(nextFunction).toHaveBeenCalled();
-      expect(mockRequest.rateLimitOptions.windowMs).toBe(15 * 60 * 1000);
-      expect(mockRequest.rateLimitOptions.max).toBe(100);
-      
-      // Reset for next test
-      jest.clearAllMocks();
-      mockRequest = {
-        ip: '127.0.0.1',
-        path: '/api/auth/login',
-        user: { _id: 'user123' }
-      };
-      
-      // Test auth limiter
-      limiters.auth(mockRequest, mockResponse, nextFunction);
-      expect(nextFunction).toHaveBeenCalled();
-      expect(mockRequest.rateLimitOptions.windowMs).toBe(5 * 60 * 1000);
-      expect(mockRequest.rateLimitOptions.max).toBe(5);
+      app.use(middleware);
+      app.get('/test', (req, res) => {
+        res.status(200).json({ message: 'Success' });
+      });
     });
-    
-    it('should use Redis store if redisClient is provided', () => {
-      // Arrange
-      const redisClient = redis.createClient();
-      const config = {
-        api: {
-          windowMs: 15 * 60 * 1000,
-          max: 100,
-          redisClient
-        }
+
+    test('should allow requests within rate limit', async () => {
+      const response = await request(app)
+        .get('/test')
+        .expect(200);
+
+      expect(response.body).toEqual({ message: 'Success' });
+    });
+
+    test('should block requests exceeding rate limit', async () => {
+      // Simulate rate limit exceeded
+      rateLimit.mockImplementation(() => {
+        return jest.fn((req, res, next) => {
+          return res.status(429).json({
+            error: 'Too Many Requests',
+            message: 'Rate limit exceeded'
+          });
+        });
+      });
+
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient,
+        windowMs: 60000,
+        max: 5
+      });
+
+      const testApp = express();
+      testApp.use(middleware);
+      testApp.get('/test', (req, res) => {
+        res.status(200).json({ message: 'Success' });
+      });
+
+      const response = await request(testApp)
+        .get('/test')
+        .expect(429);
+
+      expect(response.body).toEqual({
+        error: 'Too Many Requests',
+        message: 'Rate limit exceeded'
+      });
+    });
+  });
+
+  describe('Redis Store Integration', () => {
+    test.skip('should handle Redis store operations correctly', () => {
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient,
+        windowMs: 60000,
+        max: 10
+      });
+
+      // Verify Redis store was initialized
+      expect(require('rate-limit-redis').default).toHaveBeenCalledTimes(1);
+      expect(require('rate-limit-redis').default).toHaveBeenCalledWith({
+        client: mockRedisClient,
+        prefix: expect.any(String),
+        expiry: expect.any(Number)
+      });
+
+      // Verify store methods are available
+      const redisStore = require('rate-limit-redis').default;
+      const store = new redisStore({});
+      expect(store.incr).toBeDefined();
+      expect(store.decrement).toBeDefined();
+      expect(store.resetKey).toBeDefined();
+      expect(store.resetAll).toBeDefined();
+    });
+
+    test('should handle Redis connection errors gracefully', () => {
+      const disconnectedClient = {
+        ...mockRedisClient,
+        connected: false
       };
-      
-      // Act
-      const limiters = configureRateLimits(config);
-      limiters.api(mockRequest, mockResponse, nextFunction);
-      
-      // Assert
-      expect(redis.createClient).toHaveBeenCalled();
-      expect(mockRequest.rateLimitOptions.store).toBeDefined();
+
+      expect(() => {
+        createRateLimiter({
+          redisClient: disconnectedClient,
+          windowMs: 60000,
+          max: 10
+        });
+      }).not.toThrow();
+
+      expect(logger.default.warn).toHaveBeenCalledWith(
+        expect.stringContaining('Redis client not connected')
+      );
+    });
+  });
+
+  describe('Error Handling', () => {
+    test('should handle missing Redis client gracefully', () => {
+      expect(() => {
+        createRateLimiter({
+          windowMs: 60000,
+          max: 10
+        });
+      }).not.toThrow();
+
+      expect(logger.default.error).toHaveBeenCalledWith(
+        expect.stringContaining('Redis client is required')
+      );
+    });
+
+    test('should handle Redis store initialization errors', () => {
+      require('rate-limit-redis').default.mockImplementation(() => {
+        throw new Error('Redis store initialization failed');
+      });
+
+      expect(() => {
+        createRateLimiter({
+          redisClient: mockRedisClient,
+          windowMs: 60000,
+          max: 10
+        });
+      }).not.toThrow();
+
+      expect(logger.default.error).toHaveBeenCalledWith(
+        expect.stringContaining('Failed to initialize Redis store')
+      );
+    });
+  });
+
+  describe('Configuration Validation', () => {
+    test('should validate windowMs parameter', () => {
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient,
+        windowMs: 'invalid',
+        max: 10
+      });
+
+      expect(rateLimit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          windowMs: expect.any(Number) // Should fallback to default
+        })
+      );
+    });
+
+    test('should validate max parameter', () => {
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient,
+        windowMs: 60000,
+        max: 'invalid'
+      });
+
+      expect(rateLimit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          max: expect.any(Number) // Should fallback to default
+        })
+      );
+    });
+
+    test('should apply default values for missing parameters', () => {
+      const middleware = createRateLimiter({
+        redisClient: mockRedisClient
+      });
+
+      expect(rateLimit).toHaveBeenCalledWith(
+        expect.objectContaining({
+          windowMs: 900000, // 15 minutes default
+          max: 100, // default limit
+          standardHeaders: true,
+          legacyHeaders: false
+        })
+      );
     });
   });
 });

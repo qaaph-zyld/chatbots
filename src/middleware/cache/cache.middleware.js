@@ -102,6 +102,12 @@ const createCacheMiddleware = (redisClient, options = {}) => {
   // Ensure prefix is properly resolved with priority - safely handle undefined
   mergedOptions.prefix = options.prefix || (config && config.prefix) || getCachePrefix();
   
+  // Ensure we always have a valid prefix
+  if (!mergedOptions.prefix) {
+    mergedOptions.prefix = getCachePrefix();
+    logger.debug(`Using fallback cache prefix: ${mergedOptions.prefix}`);
+  }
+  
   // Initialize monitoring and warming if enabled
   const monitor = mergedOptions.monitoring ? initMonitoring() : null;
   const warmer = mergedOptions.warming ? initWarming(redisClient) : null;
@@ -134,10 +140,13 @@ const createCacheMiddleware = (redisClient, options = {}) => {
       const cacheKey = generateCacheKey(req, mergedOptions.prefix);
       
       // Try to get cached response
-      const cachedResponse = await redisClient.get(cacheKey).catch(err => {
+      let cachedResponse = null;
+      try {
+        cachedResponse = await redisClient.get(cacheKey);
+      } catch (err) {
         logger.error('Redis error when getting cached response', err);
-        return null;
-      });
+        // Continue with null response (cache miss)
+      }
       
       // If cached response exists, return it
       if (cachedResponse) {
@@ -164,14 +173,24 @@ const createCacheMiddleware = (redisClient, options = {}) => {
       
       // Track resource access for adaptive TTL if enabled
       if (mergedOptions.adaptiveTTL) {
-        // Ensure this returns a Promise
-        await Promise.resolve(trackResourceAccess(cacheKey, req.path));
+        try {
+          // Ensure this returns a Promise
+          await Promise.resolve(trackResourceAccess(cacheKey, req.path));
+        } catch (err) {
+          logger.error('Error tracking resource access for adaptive TTL', err);
+          // Continue execution even if tracking fails
+        }
       }
       
       // Track access for cache warming if enabled
       if (warmer) {
-        // Ensure this returns a Promise
-        await Promise.resolve(warmer.trackAccess(cacheKey, req.path));
+        try {
+          // Ensure this returns a Promise
+          await Promise.resolve(warmer.trackAccess(cacheKey, req.path));
+        } catch (err) {
+          logger.error('Error tracking access for cache warming', err);
+          // Continue execution even if tracking fails
+        }
       }
       
       // Cache miss, continue to next middleware

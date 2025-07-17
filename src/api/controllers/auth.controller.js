@@ -4,8 +4,8 @@
  * API endpoints for user authentication and management
  */
 
-require('@src/auth\auth.service');
-require('@src/utils');
+const authService = require('@src/auth/auth.service');
+const { logger } = require('@src/utils');
 
 /**
  * Register a new user
@@ -22,6 +22,7 @@ exports.register = async (req, res, next) => {
       data: user
     });
   } catch (error) {
+    // Ensure logger.error is called before any conditional returns
     logger.error('Error in register:', error.message);
     
     // Handle duplicate key errors
@@ -54,8 +55,12 @@ exports.login = async (req, res, next) => {
     // Login user
     const result = await authService.loginUser(username, password);
     
+    // Extract tokens from result based on structure
+    const accessToken = result.tokens ? result.tokens.accessToken : result.accessToken;
+    const refreshToken = result.tokens ? result.tokens.refreshToken : result.refreshToken;
+    
     // Set refresh token as HTTP-only cookie
-    res.cookie('refreshToken', result.refreshToken, {
+    res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
       maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
@@ -64,7 +69,7 @@ exports.login = async (req, res, next) => {
     res.status(200).json({
       success: true,
       data: {
-        accessToken: result.accessToken,
+        accessToken: accessToken,
         user: result.user
       }
     });
@@ -74,7 +79,7 @@ exports.login = async (req, res, next) => {
     // Handle authentication errors
     if (error.message.includes('Invalid username or password') || 
         error.message.includes('Account is disabled')) {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         error: error.message
       });
@@ -89,11 +94,11 @@ exports.login = async (req, res, next) => {
  */
 exports.refreshToken = async (req, res, next) => {
   try {
-    // Get refresh token from cookie
-    const refreshToken = req.cookies.refreshToken;
+    // Get refresh token from cookie or request body
+    const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
     
     if (!refreshToken) {
-      return res.status(401).json({
+      return res.status(400).json({
         success: false,
         error: 'Refresh token is required'
       });
@@ -108,11 +113,7 @@ exports.refreshToken = async (req, res, next) => {
     });
   } catch (error) {
     logger.error('Error in refreshToken:', error.message);
-    
-    return res.status(401).json({
-      success: false,
-      error: 'Invalid or expired refresh token'
-    });
+    next(error);
   }
 };
 
@@ -121,14 +122,18 @@ exports.refreshToken = async (req, res, next) => {
  */
 exports.logout = async (req, res, next) => {
   try {
-    // Get access token
-    const authHeader = req.headers.authorization;
-    const accessToken = authHeader && authHeader.split(' ')[1];
+    // Get refresh token from request body
+    const { refreshToken } = req.body;
     
-    if (accessToken) {
-      // Logout user
-      await authService.logoutUser(accessToken);
+    if (!refreshToken) {
+      return res.status(400).json({
+        success: false,
+        error: 'Refresh token is required'
+      });
     }
+    
+    // Logout user
+    await authService.logoutUser(refreshToken);
     
     // Clear refresh token cookie
     res.clearCookie('refreshToken');
@@ -149,6 +154,13 @@ exports.logout = async (req, res, next) => {
 exports.getCurrentUser = async (req, res, next) => {
   try {
     // User is added to request by auth middleware
+    if (!req.user) {
+      return res.status(401).json({
+        success: false,
+        error: 'User not authenticated'
+      });
+    }
+    
     const userId = req.user.id;
     
     // Get user
@@ -207,7 +219,7 @@ exports.generateApiKey = async (req, res, next) => {
     
     res.status(200).json({
       success: true,
-      data: { apiKey }
+      data: apiKey
     });
   } catch (error) {
     logger.error('Error in generateApiKey:', error.message);
