@@ -1,0 +1,1162 @@
+{
+  "store": {
+    "name": "shopbot-test-store",
+    "domain": "shopbot-test-store.myshopify.com",
+    "purpose": "ShopBot integration testing",
+    "password_enabled": true,
+    "password": "shopbot2024"
+  },
+  "products": [
+    {
+      "id": 1,
+      "title": "Test Product 1",
+      "description": "This is a test product for ShopBot integration testing. Product 1 description.",
+      "price": "17.44",
+      "category": "Clothing",
+      "inventory": 42,
+      "sku": "TEST-PROD-001",
+      "weight": "2.21",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 2,
+      "title": "Test Product 2",
+      "description": "This is a test product for ShopBot integration testing. Product 2 description.",
+      "price": "33.88",
+      "category": "Electronics",
+      "inventory": 108,
+      "sku": "TEST-PROD-002",
+      "weight": "2.80",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 3,
+      "title": "Test Product 3",
+      "description": "This is a test product for ShopBot integration testing. Product 3 description.",
+      "price": "99.52",
+      "category": "Clothing",
+      "inventory": 78,
+      "sku": "TEST-PROD-003",
+      "weight": "1.03",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 4,
+      "title": "Test Product 4",
+      "description": "This is a test product for ShopBot integration testing. Product 4 description.",
+      "price": "22.71",
+      "category": "Sports",
+      "inventory": 70,
+      "sku": "TEST-PROD-004",
+      "weight": "5.46",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 5,
+      "title": "Test Product 5",
+      "description": "This is a test product for ShopBot integration testing. Product 5 description.",
+      "price": "57.70",
+      "category": "Home & Garden",
+      "inventory": 39,
+      "sku": "TEST-PROD-005",
+      "weight": "2.46",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 6,
+      "title": "Test Product 6",
+      "description": "This is a test product for ShopBot integration testing. Product 6 description.",
+      "price": "56.65",
+      "category": "Electronics",
+      "inventory": 48,
+      "sku": "TEST-PROD-006",
+      "weight": "3.98",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 7,
+      "title": "Test Product 7",
+      "description": "This is a test product for ShopBot integration testing. Product 7 description.",
+      "price": "34.85",
+      "category": "Electronics",
+      "inventory": 51,
+      "sku": "TEST-PROD-007",
+      "weight": "4.55",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 8,
+      "title": "Test Product 8",
+      "description": "This is a test product for ShopBot integration testing. Product 8 description.",
+      "price": "69.20",
+      "category": "Books",
+      "inventory": 13,
+      "sku": "TEST-PROD-008",
+      "weight": "1.36",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 9,
+      "title": "Test Product 9",
+      "description": "This is a test product for ShopBot integration testing. Product 9 description.",
+      "price": "100.15",
+      "category": "Home & Garden",
+      "inventory": 105,
+      "sku": "TEST-PROD-009",
+      "weight": "4.50",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 10,
+      "title": "Test Product 10",
+      "description": "This is a test product for ShopBot integration testing. Product 10 description.",
+      "price": "70.80",
+      "category": "Home & Garden",
+      "inventory": 102,
+      "sku": "TEST-PROD-010",
+      "weight": "1.45",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "title": "Test Product 11",
+      "description": "This is a test product for ShopBot integration testing. Product 11 description.",
+      "price": "87.83",
+      "category": "Clothing",
+      "inventory": 13,
+      "sku": "TEST-PROD-011",
+      "weight": "2.05",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "title": "Test Product 12",
+      "description": "This is a test product for ShopBot integration testing. Product 12 description.",
+      "price": "19.15",
+      "category": "Electronics",
+      "inventory": 83,
+      "sku": "TEST-PROD-012",
+      "weight": "0.69",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 13,
+      "title": "Test Product 13",
+      "description": "This is a test product for ShopBot integration testing. Product 13 description.",
+      "price": "94.63",
+      "category": "Home & Garden",
+      "inventory": 55,
+      "sku": "TEST-PROD-013",
+      "weight": "4.75",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 14,
+      "title": "Test Product 14",
+      "description": "This is a test product for ShopBot integration testing. Product 14 description.",
+      "price": "104.40",
+      "category": "Electronics",
+      "inventory": 55,
+      "sku": "TEST-PROD-014",
+      "weight": "4.20",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 15,
+      "title": "Test Product 15",
+      "description": "This is a test product for ShopBot integration testing. Product 15 description.",
+      "price": "75.48",
+      "category": "Sports",
+      "inventory": 73,
+      "sku": "TEST-PROD-015",
+      "weight": "3.70",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 16,
+      "title": "Test Product 16",
+      "description": "This is a test product for ShopBot integration testing. Product 16 description.",
+      "price": "104.25",
+      "category": "Books",
+      "inventory": 81,
+      "sku": "TEST-PROD-016",
+      "weight": "3.09",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 17,
+      "title": "Test Product 17",
+      "description": "This is a test product for ShopBot integration testing. Product 17 description.",
+      "price": "83.74",
+      "category": "Electronics",
+      "inventory": 100,
+      "sku": "TEST-PROD-017",
+      "weight": "3.26",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 18,
+      "title": "Test Product 18",
+      "description": "This is a test product for ShopBot integration testing. Product 18 description.",
+      "price": "58.38",
+      "category": "Electronics",
+      "inventory": 76,
+      "sku": "TEST-PROD-018",
+      "weight": "2.14",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 19,
+      "title": "Test Product 19",
+      "description": "This is a test product for ShopBot integration testing. Product 19 description.",
+      "price": "12.34",
+      "category": "Home & Garden",
+      "inventory": 23,
+      "sku": "TEST-PROD-019",
+      "weight": "1.43",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    },
+    {
+      "id": 20,
+      "title": "Test Product 20",
+      "description": "This is a test product for ShopBot integration testing. Product 20 description.",
+      "price": "50.02",
+      "category": "Clothing",
+      "inventory": 14,
+      "sku": "TEST-PROD-020",
+      "weight": "2.92",
+      "variants": [
+        {
+          "size": "Small",
+          "color": "Red",
+          "price": "+0.00"
+        },
+        {
+          "size": "Medium",
+          "color": "Blue",
+          "price": "+5.00"
+        },
+        {
+          "size": "Large",
+          "color": "Green",
+          "price": "+10.00"
+        }
+      ]
+    }
+  ],
+  "orders": [
+    {
+      "id": 1001,
+      "order_number": "#1001",
+      "customer": {
+        "email": "customer1@test.com",
+        "name": "Test Customer 1",
+        "phone": "555-0001"
+      },
+      "status": "pending",
+      "total": "204.77",
+      "items": 1,
+      "created_at": "2025-07-11T05:16:46.522Z",
+      "shipping_address": {
+        "address1": "1 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1002,
+      "order_number": "#1002",
+      "customer": {
+        "email": "customer2@test.com",
+        "name": "Test Customer 2",
+        "phone": "555-0002"
+      },
+      "status": "pending",
+      "total": "147.23",
+      "items": 3,
+      "created_at": "2025-06-20T03:20:04.947Z",
+      "shipping_address": {
+        "address1": "2 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1003,
+      "order_number": "#1003",
+      "customer": {
+        "email": "customer3@test.com",
+        "name": "Test Customer 3",
+        "phone": "555-0003"
+      },
+      "status": "processing",
+      "total": "114.72",
+      "items": 2,
+      "created_at": "2025-07-01T10:20:34.064Z",
+      "shipping_address": {
+        "address1": "3 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1004,
+      "order_number": "#1004",
+      "customer": {
+        "email": "customer4@test.com",
+        "name": "Test Customer 4",
+        "phone": "555-0004"
+      },
+      "status": "cancelled",
+      "total": "188.81",
+      "items": 3,
+      "created_at": "2025-07-10T16:15:44.108Z",
+      "shipping_address": {
+        "address1": "4 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1005,
+      "order_number": "#1005",
+      "customer": {
+        "email": "customer5@test.com",
+        "name": "Test Customer 5",
+        "phone": "555-0005"
+      },
+      "status": "cancelled",
+      "total": "165.60",
+      "items": 2,
+      "created_at": "2025-07-01T10:55:17.564Z",
+      "shipping_address": {
+        "address1": "5 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1006,
+      "order_number": "#1006",
+      "customer": {
+        "email": "customer6@test.com",
+        "name": "Test Customer 6",
+        "phone": "555-0006"
+      },
+      "status": "pending",
+      "total": "158.45",
+      "items": 1,
+      "created_at": "2025-07-06T17:57:34.888Z",
+      "shipping_address": {
+        "address1": "6 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1007,
+      "order_number": "#1007",
+      "customer": {
+        "email": "customer7@test.com",
+        "name": "Test Customer 7",
+        "phone": "555-0007"
+      },
+      "status": "delivered",
+      "total": "214.82",
+      "items": 2,
+      "created_at": "2025-06-29T03:31:44.279Z",
+      "shipping_address": {
+        "address1": "7 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1008,
+      "order_number": "#1008",
+      "customer": {
+        "email": "customer8@test.com",
+        "name": "Test Customer 8",
+        "phone": "555-0008"
+      },
+      "status": "delivered",
+      "total": "196.51",
+      "items": 3,
+      "created_at": "2025-07-11T06:45:55.774Z",
+      "shipping_address": {
+        "address1": "8 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1009,
+      "order_number": "#1009",
+      "customer": {
+        "email": "customer9@test.com",
+        "name": "Test Customer 9",
+        "phone": "555-0009"
+      },
+      "status": "cancelled",
+      "total": "79.86",
+      "items": 1,
+      "created_at": "2025-07-11T12:56:43.162Z",
+      "shipping_address": {
+        "address1": "9 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1010,
+      "order_number": "#1010",
+      "customer": {
+        "email": "customer10@test.com",
+        "name": "Test Customer 10",
+        "phone": "555-0010"
+      },
+      "status": "delivered",
+      "total": "92.75",
+      "items": 1,
+      "created_at": "2025-06-21T09:02:09.591Z",
+      "shipping_address": {
+        "address1": "10 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1011,
+      "order_number": "#1011",
+      "customer": {
+        "email": "customer11@test.com",
+        "name": "Test Customer 11",
+        "phone": "555-0011"
+      },
+      "status": "cancelled",
+      "total": "193.84",
+      "items": 3,
+      "created_at": "2025-07-04T21:37:48.365Z",
+      "shipping_address": {
+        "address1": "11 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1012,
+      "order_number": "#1012",
+      "customer": {
+        "email": "customer12@test.com",
+        "name": "Test Customer 12",
+        "phone": "555-0012"
+      },
+      "status": "pending",
+      "total": "83.38",
+      "items": 2,
+      "created_at": "2025-07-13T15:09:11.568Z",
+      "shipping_address": {
+        "address1": "12 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1013,
+      "order_number": "#1013",
+      "customer": {
+        "email": "customer13@test.com",
+        "name": "Test Customer 13",
+        "phone": "555-0013"
+      },
+      "status": "delivered",
+      "total": "199.66",
+      "items": 3,
+      "created_at": "2025-06-30T03:09:20.465Z",
+      "shipping_address": {
+        "address1": "13 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1014,
+      "order_number": "#1014",
+      "customer": {
+        "email": "customer14@test.com",
+        "name": "Test Customer 14",
+        "phone": "555-0014"
+      },
+      "status": "shipped",
+      "total": "174.82",
+      "items": 1,
+      "created_at": "2025-07-13T04:45:34.745Z",
+      "shipping_address": {
+        "address1": "14 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1015,
+      "order_number": "#1015",
+      "customer": {
+        "email": "customer15@test.com",
+        "name": "Test Customer 15",
+        "phone": "555-0015"
+      },
+      "status": "pending",
+      "total": "77.87",
+      "items": 1,
+      "created_at": "2025-07-13T13:50:17.706Z",
+      "shipping_address": {
+        "address1": "15 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1016,
+      "order_number": "#1016",
+      "customer": {
+        "email": "customer16@test.com",
+        "name": "Test Customer 16",
+        "phone": "555-0016"
+      },
+      "status": "processing",
+      "total": "43.64",
+      "items": 1,
+      "created_at": "2025-06-29T12:41:30.021Z",
+      "shipping_address": {
+        "address1": "16 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1017,
+      "order_number": "#1017",
+      "customer": {
+        "email": "customer17@test.com",
+        "name": "Test Customer 17",
+        "phone": "555-0017"
+      },
+      "status": "shipped",
+      "total": "105.65",
+      "items": 3,
+      "created_at": "2025-06-23T18:24:34.913Z",
+      "shipping_address": {
+        "address1": "17 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1018,
+      "order_number": "#1018",
+      "customer": {
+        "email": "customer18@test.com",
+        "name": "Test Customer 18",
+        "phone": "555-0018"
+      },
+      "status": "pending",
+      "total": "65.40",
+      "items": 2,
+      "created_at": "2025-07-18T22:14:58.381Z",
+      "shipping_address": {
+        "address1": "18 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1019,
+      "order_number": "#1019",
+      "customer": {
+        "email": "customer19@test.com",
+        "name": "Test Customer 19",
+        "phone": "555-0019"
+      },
+      "status": "pending",
+      "total": "53.13",
+      "items": 1,
+      "created_at": "2025-06-28T16:09:20.936Z",
+      "shipping_address": {
+        "address1": "19 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1020,
+      "order_number": "#1020",
+      "customer": {
+        "email": "customer20@test.com",
+        "name": "Test Customer 20",
+        "phone": "555-0020"
+      },
+      "status": "cancelled",
+      "total": "178.71",
+      "items": 3,
+      "created_at": "2025-07-04T04:49:07.849Z",
+      "shipping_address": {
+        "address1": "20 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1021,
+      "order_number": "#1021",
+      "customer": {
+        "email": "customer21@test.com",
+        "name": "Test Customer 21",
+        "phone": "555-0021"
+      },
+      "status": "processing",
+      "total": "183.20",
+      "items": 2,
+      "created_at": "2025-07-11T14:58:41.844Z",
+      "shipping_address": {
+        "address1": "21 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1022,
+      "order_number": "#1022",
+      "customer": {
+        "email": "customer22@test.com",
+        "name": "Test Customer 22",
+        "phone": "555-0022"
+      },
+      "status": "delivered",
+      "total": "94.72",
+      "items": 1,
+      "created_at": "2025-06-25T14:36:24.227Z",
+      "shipping_address": {
+        "address1": "22 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1023,
+      "order_number": "#1023",
+      "customer": {
+        "email": "customer23@test.com",
+        "name": "Test Customer 23",
+        "phone": "555-0023"
+      },
+      "status": "delivered",
+      "total": "76.79",
+      "items": 1,
+      "created_at": "2025-06-24T22:55:47.421Z",
+      "shipping_address": {
+        "address1": "23 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1024,
+      "order_number": "#1024",
+      "customer": {
+        "email": "customer24@test.com",
+        "name": "Test Customer 24",
+        "phone": "555-0024"
+      },
+      "status": "shipped",
+      "total": "116.04",
+      "items": 3,
+      "created_at": "2025-06-25T17:45:51.275Z",
+      "shipping_address": {
+        "address1": "24 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1025,
+      "order_number": "#1025",
+      "customer": {
+        "email": "customer25@test.com",
+        "name": "Test Customer 25",
+        "phone": "555-0025"
+      },
+      "status": "cancelled",
+      "total": "54.47",
+      "items": 1,
+      "created_at": "2025-07-08T11:38:39.700Z",
+      "shipping_address": {
+        "address1": "25 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1026,
+      "order_number": "#1026",
+      "customer": {
+        "email": "customer26@test.com",
+        "name": "Test Customer 26",
+        "phone": "555-0026"
+      },
+      "status": "shipped",
+      "total": "80.71",
+      "items": 3,
+      "created_at": "2025-07-03T10:44:53.385Z",
+      "shipping_address": {
+        "address1": "26 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1027,
+      "order_number": "#1027",
+      "customer": {
+        "email": "customer27@test.com",
+        "name": "Test Customer 27",
+        "phone": "555-0027"
+      },
+      "status": "shipped",
+      "total": "110.76",
+      "items": 1,
+      "created_at": "2025-06-28T06:19:55.718Z",
+      "shipping_address": {
+        "address1": "27 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1028,
+      "order_number": "#1028",
+      "customer": {
+        "email": "customer28@test.com",
+        "name": "Test Customer 28",
+        "phone": "555-0028"
+      },
+      "status": "shipped",
+      "total": "213.56",
+      "items": 2,
+      "created_at": "2025-06-23T22:02:01.472Z",
+      "shipping_address": {
+        "address1": "28 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1029,
+      "order_number": "#1029",
+      "customer": {
+        "email": "customer29@test.com",
+        "name": "Test Customer 29",
+        "phone": "555-0029"
+      },
+      "status": "pending",
+      "total": "23.61",
+      "items": 1,
+      "created_at": "2025-06-26T08:29:14.281Z",
+      "shipping_address": {
+        "address1": "29 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "id": 1030,
+      "order_number": "#1030",
+      "customer": {
+        "email": "customer30@test.com",
+        "name": "Test Customer 30",
+        "phone": "555-0030"
+      },
+      "status": "processing",
+      "total": "51.62",
+      "items": 2,
+      "created_at": "2025-07-04T05:47:10.049Z",
+      "shipping_address": {
+        "address1": "30 Test Street",
+        "city": "Test City",
+        "state": "TC",
+        "zip": "12345",
+        "country": "US"
+      }
+    }
+  ],
+  "setup_instructions": {
+    "step1": "Create Shopify Partner account at partners.shopify.com",
+    "step2": "Navigate to Stores > Create store > Development store",
+    "step3": "Use store name: shopbot-test-store",
+    "step4": "Enable password protection with password: shopbot2024",
+    "step5": "Install sample products and orders (see generated data)",
+    "step6": "Configure webhooks for ShopBot integration",
+    "step7": "Test API connectivity with provided credentials"
+  }
+}

@@ -1,0 +1,1201 @@
+{
+  "config": {
+    "site_url": "https://shopbot-test.local",
+    "admin_user": "admin",
+    "admin_password": "shopbot_test_2024",
+    "store_settings": {
+      "currency": "USD",
+      "country": "US",
+      "address": "123 Test Street, Test City, TC 12345",
+      "timezone": "America/New_York"
+    },
+    "payment_gateways": [
+      "paypal",
+      "stripe_test"
+    ],
+    "shipping_zones": [
+      "US",
+      "International"
+    ]
+  },
+  "products": [
+    {
+      "name": "WooCommerce Test Product 1",
+      "type": "simple",
+      "regular_price": "46.10",
+      "description": "Test product 1 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 1",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 108,
+      "sku": "WOO-TEST-001"
+    },
+    {
+      "name": "WooCommerce Test Product 2",
+      "type": "simple",
+      "regular_price": "37.25",
+      "description": "Test product 2 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 2",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 104,
+      "sku": "WOO-TEST-002"
+    },
+    {
+      "name": "WooCommerce Test Product 3",
+      "type": "simple",
+      "regular_price": "103.51",
+      "description": "Test product 3 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 3",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 10,
+      "sku": "WOO-TEST-003"
+    },
+    {
+      "name": "WooCommerce Test Product 4",
+      "type": "simple",
+      "regular_price": "79.87",
+      "description": "Test product 4 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 4",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 92,
+      "sku": "WOO-TEST-004"
+    },
+    {
+      "name": "WooCommerce Test Product 5",
+      "type": "simple",
+      "regular_price": "72.26",
+      "description": "Test product 5 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 5",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 73,
+      "sku": "WOO-TEST-005"
+    },
+    {
+      "name": "WooCommerce Test Product 6",
+      "type": "simple",
+      "regular_price": "107.29",
+      "description": "Test product 6 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 6",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 106,
+      "sku": "WOO-TEST-006"
+    },
+    {
+      "name": "WooCommerce Test Product 7",
+      "type": "simple",
+      "regular_price": "17.15",
+      "description": "Test product 7 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 7",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 85,
+      "sku": "WOO-TEST-007"
+    },
+    {
+      "name": "WooCommerce Test Product 8",
+      "type": "simple",
+      "regular_price": "29.31",
+      "description": "Test product 8 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 8",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 82,
+      "sku": "WOO-TEST-008"
+    },
+    {
+      "name": "WooCommerce Test Product 9",
+      "type": "simple",
+      "regular_price": "26.18",
+      "description": "Test product 9 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 9",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 17,
+      "sku": "WOO-TEST-009"
+    },
+    {
+      "name": "WooCommerce Test Product 10",
+      "type": "simple",
+      "regular_price": "29.58",
+      "description": "Test product 10 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 10",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 77,
+      "sku": "WOO-TEST-010"
+    },
+    {
+      "name": "WooCommerce Test Product 11",
+      "type": "simple",
+      "regular_price": "13.77",
+      "description": "Test product 11 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 11",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 78,
+      "sku": "WOO-TEST-011"
+    },
+    {
+      "name": "WooCommerce Test Product 12",
+      "type": "simple",
+      "regular_price": "99.91",
+      "description": "Test product 12 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 12",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 17,
+      "sku": "WOO-TEST-012"
+    },
+    {
+      "name": "WooCommerce Test Product 13",
+      "type": "simple",
+      "regular_price": "72.59",
+      "description": "Test product 13 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 13",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 41,
+      "sku": "WOO-TEST-013"
+    },
+    {
+      "name": "WooCommerce Test Product 14",
+      "type": "simple",
+      "regular_price": "66.43",
+      "description": "Test product 14 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 14",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 101,
+      "sku": "WOO-TEST-014"
+    },
+    {
+      "name": "WooCommerce Test Product 15",
+      "type": "simple",
+      "regular_price": "20.47",
+      "description": "Test product 15 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 15",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 34,
+      "sku": "WOO-TEST-015"
+    },
+    {
+      "name": "WooCommerce Test Product 16",
+      "type": "simple",
+      "regular_price": "21.96",
+      "description": "Test product 16 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 16",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 25,
+      "sku": "WOO-TEST-016"
+    },
+    {
+      "name": "WooCommerce Test Product 17",
+      "type": "simple",
+      "regular_price": "106.59",
+      "description": "Test product 17 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 17",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 44,
+      "sku": "WOO-TEST-017"
+    },
+    {
+      "name": "WooCommerce Test Product 18",
+      "type": "simple",
+      "regular_price": "64.11",
+      "description": "Test product 18 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 18",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 34,
+      "sku": "WOO-TEST-018"
+    },
+    {
+      "name": "WooCommerce Test Product 19",
+      "type": "simple",
+      "regular_price": "30.01",
+      "description": "Test product 19 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 19",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 51,
+      "sku": "WOO-TEST-019"
+    },
+    {
+      "name": "WooCommerce Test Product 20",
+      "type": "simple",
+      "regular_price": "92.75",
+      "description": "Test product 20 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 20",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 73,
+      "sku": "WOO-TEST-020"
+    },
+    {
+      "name": "WooCommerce Test Product 21",
+      "type": "simple",
+      "regular_price": "99.39",
+      "description": "Test product 21 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 21",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 46,
+      "sku": "WOO-TEST-021"
+    },
+    {
+      "name": "WooCommerce Test Product 22",
+      "type": "simple",
+      "regular_price": "96.00",
+      "description": "Test product 22 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 22",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 59,
+      "sku": "WOO-TEST-022"
+    },
+    {
+      "name": "WooCommerce Test Product 23",
+      "type": "simple",
+      "regular_price": "44.17",
+      "description": "Test product 23 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 23",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 20,
+      "sku": "WOO-TEST-023"
+    },
+    {
+      "name": "WooCommerce Test Product 24",
+      "type": "simple",
+      "regular_price": "38.19",
+      "description": "Test product 24 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 24",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 88,
+      "sku": "WOO-TEST-024"
+    },
+    {
+      "name": "WooCommerce Test Product 25",
+      "type": "simple",
+      "regular_price": "39.13",
+      "description": "Test product 25 for WooCommerce ShopBot integration",
+      "short_description": "Short description for product 25",
+      "categories": [
+        {
+          "name": "Test Category"
+        }
+      ],
+      "manage_stock": true,
+      "stock_quantity": 62,
+      "sku": "WOO-TEST-025"
+    }
+  ],
+  "orders": [
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "21.61",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 1",
+        "email": "woocustomer1@test.com",
+        "phone": "555-1001"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 1",
+        "address_1": "1 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "25.36",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 2",
+        "email": "woocustomer2@test.com",
+        "phone": "555-1002"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 2",
+        "address_1": "2 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "104.23",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 3",
+        "email": "woocustomer3@test.com",
+        "phone": "555-1003"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 3",
+        "address_1": "3 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "184.55",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 4",
+        "email": "woocustomer4@test.com",
+        "phone": "555-1004"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 4",
+        "address_1": "4 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "70.93",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 5",
+        "email": "woocustomer5@test.com",
+        "phone": "555-1005"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 5",
+        "address_1": "5 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "130.78",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 6",
+        "email": "woocustomer6@test.com",
+        "phone": "555-1006"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 6",
+        "address_1": "6 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "127.14",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 7",
+        "email": "woocustomer7@test.com",
+        "phone": "555-1007"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 7",
+        "address_1": "7 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "46.12",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 8",
+        "email": "woocustomer8@test.com",
+        "phone": "555-1008"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 8",
+        "address_1": "8 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "61.24",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 9",
+        "email": "woocustomer9@test.com",
+        "phone": "555-1009"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 9",
+        "address_1": "9 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "191.56",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 10",
+        "email": "woocustomer10@test.com",
+        "phone": "555-1010"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 10",
+        "address_1": "10 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "165.80",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 11",
+        "email": "woocustomer11@test.com",
+        "phone": "555-1011"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 11",
+        "address_1": "11 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "130.97",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 12",
+        "email": "woocustomer12@test.com",
+        "phone": "555-1012"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 12",
+        "address_1": "12 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "75.87",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 13",
+        "email": "woocustomer13@test.com",
+        "phone": "555-1013"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 13",
+        "address_1": "13 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "116.23",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 14",
+        "email": "woocustomer14@test.com",
+        "phone": "555-1014"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 14",
+        "address_1": "14 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "processing",
+      "currency": "USD",
+      "total": "192.64",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 15",
+        "email": "woocustomer15@test.com",
+        "phone": "555-1015"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 15",
+        "address_1": "15 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "183.03",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 16",
+        "email": "woocustomer16@test.com",
+        "phone": "555-1016"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 16",
+        "address_1": "16 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "137.11",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 17",
+        "email": "woocustomer17@test.com",
+        "phone": "555-1017"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 17",
+        "address_1": "17 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "146.35",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 18",
+        "email": "woocustomer18@test.com",
+        "phone": "555-1018"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 18",
+        "address_1": "18 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "175.23",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 19",
+        "email": "woocustomer19@test.com",
+        "phone": "555-1019"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 19",
+        "address_1": "19 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "processing",
+      "currency": "USD",
+      "total": "33.45",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 20",
+        "email": "woocustomer20@test.com",
+        "phone": "555-1020"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 20",
+        "address_1": "20 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "processing",
+      "currency": "USD",
+      "total": "66.03",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 21",
+        "email": "woocustomer21@test.com",
+        "phone": "555-1021"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 21",
+        "address_1": "21 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "153.30",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 22",
+        "email": "woocustomer22@test.com",
+        "phone": "555-1022"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 22",
+        "address_1": "22 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "processing",
+      "currency": "USD",
+      "total": "176.64",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 23",
+        "email": "woocustomer23@test.com",
+        "phone": "555-1023"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 23",
+        "address_1": "23 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "29.37",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 24",
+        "email": "woocustomer24@test.com",
+        "phone": "555-1024"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 24",
+        "address_1": "24 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "25.16",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 25",
+        "email": "woocustomer25@test.com",
+        "phone": "555-1025"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 25",
+        "address_1": "25 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "121.86",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 26",
+        "email": "woocustomer26@test.com",
+        "phone": "555-1026"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 26",
+        "address_1": "26 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "136.94",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 27",
+        "email": "woocustomer27@test.com",
+        "phone": "555-1027"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 27",
+        "address_1": "27 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "processing",
+      "currency": "USD",
+      "total": "157.30",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 28",
+        "email": "woocustomer28@test.com",
+        "phone": "555-1028"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 28",
+        "address_1": "28 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "90.19",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 29",
+        "email": "woocustomer29@test.com",
+        "phone": "555-1029"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 29",
+        "address_1": "29 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "215.99",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 30",
+        "email": "woocustomer30@test.com",
+        "phone": "555-1030"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 30",
+        "address_1": "30 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "165.57",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 31",
+        "email": "woocustomer31@test.com",
+        "phone": "555-1031"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 31",
+        "address_1": "31 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "processing",
+      "currency": "USD",
+      "total": "57.47",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 32",
+        "email": "woocustomer32@test.com",
+        "phone": "555-1032"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 32",
+        "address_1": "32 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "completed",
+      "currency": "USD",
+      "total": "166.22",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 33",
+        "email": "woocustomer33@test.com",
+        "phone": "555-1033"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 33",
+        "address_1": "33 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "30.61",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 34",
+        "email": "woocustomer34@test.com",
+        "phone": "555-1034"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 34",
+        "address_1": "34 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "189.38",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 35",
+        "email": "woocustomer35@test.com",
+        "phone": "555-1035"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 35",
+        "address_1": "35 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "43.43",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 36",
+        "email": "woocustomer36@test.com",
+        "phone": "555-1036"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 36",
+        "address_1": "36 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "cancelled",
+      "currency": "USD",
+      "total": "153.84",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 37",
+        "email": "woocustomer37@test.com",
+        "phone": "555-1037"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 37",
+        "address_1": "37 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "106.15",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 38",
+        "email": "woocustomer38@test.com",
+        "phone": "555-1038"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 38",
+        "address_1": "38 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "pending",
+      "currency": "USD",
+      "total": "106.26",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 39",
+        "email": "woocustomer39@test.com",
+        "phone": "555-1039"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 39",
+        "address_1": "39 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    },
+    {
+      "status": "on-hold",
+      "currency": "USD",
+      "total": "211.13",
+      "billing": {
+        "first_name": "Test",
+        "last_name": "Customer 40",
+        "email": "woocustomer40@test.com",
+        "phone": "555-1040"
+      },
+      "shipping": {
+        "first_name": "Test",
+        "last_name": "Customer 40",
+        "address_1": "40 WooCommerce Street",
+        "city": "Test City",
+        "state": "TC",
+        "postcode": "12345",
+        "country": "US"
+      }
+    }
+  ],
+  "setup_script": "#!/bin/bash\n# WooCommerce Test Environment Setup Script\n\necho \"Setting up WooCommerce test environment...\"\n\n# 1. Install WordPress (if using Local by Flywheel, this is automated)\necho \"✅ WordPress installation (manual step)\"\n\n# 2. Install WooCommerce plugin\necho \"✅ Install WooCommerce plugin from WordPress admin\"\n\n# 3. Configure WooCommerce settings\necho \"Configuring WooCommerce settings...\"\necho \"- Store Address: 123 Test Street, Test City, TC 12345\"\necho \"- Currency: USD\"\necho \"- Country: US\"\n\n# 4. Set up payment gateways\necho \"Setting up payment gateways:\"\necho \"- PayPal (test mode)\"\necho \"- Stripe (test mode)\"\n\n# 5. Configure shipping\necho \"Setting up shipping zones and methods\"\n\n# 6. Import test data\necho \"Import test products and orders using WooCommerce importer\"\n\n# 7. Set up REST API\necho \"Enable REST API and generate consumer key/secret\"\n\necho \"✅ WooCommerce test environment setup complete!\"\n"
+}

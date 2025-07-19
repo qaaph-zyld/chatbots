@@ -1,0 +1,79 @@
+{
+  "scenarios": [
+    {
+      "type": "order_status",
+      "query": "Where is my order #1001?",
+      "expected_response": "order_tracking_info"
+    },
+    {
+      "type": "order_modification",
+      "query": "Can I change my shipping address?",
+      "expected_response": "modification_policy"
+    },
+    {
+      "type": "order_cancellation",
+      "query": "I want to cancel my order",
+      "expected_response": "cancellation_process"
+    },
+    {
+      "type": "product_availability",
+      "query": "Is the blue sweater in stock?",
+      "expected_response": "inventory_check"
+    },
+    {
+      "type": "product_info",
+      "query": "Tell me about the wireless headphones",
+      "expected_response": "product_details"
+    },
+    {
+      "type": "size_guide",
+      "query": "What size should I order?",
+      "expected_response": "sizing_information"
+    },
+    {
+      "type": "return_policy",
+      "query": "What is your return policy?",
+      "expected_response": "return_policy_info"
+    },
+    {
+      "type": "return_request",
+      "query": "I want to return my item",
+      "expected_response": "return_process"
+    },
+    {
+      "type": "refund_status",
+      "query": "When will I get my refund?",
+      "expected_response": "refund_timeline"
+    },
+    {
+      "type": "shipping_info",
+      "query": "How long does shipping take?",
+      "expected_response": "shipping_timeline"
+    },
+    {
+      "type": "payment_issue",
+      "query": "My payment was declined",
+      "expected_response": "payment_troubleshooting"
+    },
+    {
+      "type": "account_help",
+      "query": "I forgot my password",
+      "expected_response": "account_recovery"
+    },
+    {
+      "type": "multiple_orders",
+      "query": "I have two orders, which one shipped first?",
+      "expected_response": "multiple_order_handling"
+    },
+    {
+      "type": "gift_order",
+      "query": "I ordered this as a gift, can you change the message?",
+      "expected_response": "gift_order_modification"
+    },
+    {
+      "type": "damaged_item",
+      "query": "My item arrived damaged",
+      "expected_response": "damage_claim_process"
+    }
+  ]
+}

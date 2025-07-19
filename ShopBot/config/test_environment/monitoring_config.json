@@ -1,0 +1,25 @@
+{
+  "metrics": {
+    "response_time": {
+      "target": 2000,
+      "alert_threshold": 3000
+    },
+    "accuracy_rate": {
+      "target": 95,
+      "alert_threshold": 90
+    },
+    "uptime": {
+      "target": 99.9,
+      "alert_threshold": 98.9
+    }
+  },
+  "alerts": {
+    "email": "alerts@shopbot.com",
+    "webhook": "https://api.shopbot.com/alerts/performance"
+  },
+  "reporting": {
+    "interval": "1h",
+    "retention": "30d",
+    "dashboard_url": "https://monitoring.shopbot.com/dashboard"
+  }
+}

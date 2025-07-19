@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopBot Performance Monitoring Dashboard</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .dashboard { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+        .metric-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .metric-value { font-size: 2em; font-weight: bold; color: #2563eb; }
+        .metric-label { color: #6b7280; margin-top: 5px; }
+        .status-good { color: #10b981; }
+        .status-warning { color: #f59e0b; }
+        .status-error { color: #ef4444; }
+    </style>
+</head>
+<body>
+    <h1>🚀 ShopBot Performance Dashboard - Phase 2 Testing</h1>
+    
+    <div class="dashboard">
+        <div class="metric-card">
+            <div class="metric-value" id="response-time">--</div>
+            <div class="metric-label">Average Response Time (ms)</div>
+            <div id="response-status" class="status-good">Target: <2000ms</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value" id="accuracy-rate">--</div>
+            <div class="metric-label">Accuracy Rate (%)</div>
+            <div id="accuracy-status" class="status-good">Target: >95%</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value" id="uptime">--</div>
+            <div class="metric-label">Uptime (%)</div>
+            <div id="uptime-status" class="status-good">Target: >99.9%</div>
+        </div>
+        
+        <div class="metric-card">
+            <div class="metric-value" id="total-tests">--</div>
+            <div class="metric-label">Total Tests Completed</div>
+            <div id="tests-status" class="status-good">Target: 50+ tests</div>
+        </div>
+    </div>
+    
+    <div style="margin-top: 30px;">
+        <h2>📊 Performance Trends</h2>
+        <canvas id="performanceChart" width="400" height="200"></canvas>
+    </div>
+    
+    <script>
+        // Real-time dashboard updates
+        function updateDashboard() {
+            // Simulate real metrics (replace with actual API calls)
+            document.getElementById('response-time').textContent = Math.floor(Math.random() * 1000 + 500);
+            document.getElementById('accuracy-rate').textContent = (Math.random() * 10 + 90).toFixed(1);
+            document.getElementById('uptime').textContent = (Math.random() * 0.5 + 99.5).toFixed(2);
+            document.getElementById('total-tests').textContent = Math.floor(Math.random() * 20 + 30);
+        }
+        
+        // Update every 5 seconds
+        setInterval(updateDashboard, 5000);
+        updateDashboard();
+        
+        // Performance chart
+        const ctx = document.getElementById('performanceChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                datasets: [{
+                    label: 'Response Time (ms)',
+                    data: [1200, 800, 600, 500],
+                    borderColor: 'rgb(75, 192, 192)',
+                    tension: 0.1
+                }, {
+                    label: 'Accuracy Rate (%)',
+                    data: [85, 92, 96, 98],
+                    borderColor: 'rgb(255, 99, 132)',
+                    tension: 0.1
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
