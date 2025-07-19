@@ -5,6 +5,36 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ShopBot - AI-Powered E-commerce Customer Support</title>
     <meta name="description" content="Automate your e-commerce customer support with ShopBot. Reduce costs by 70% while improving customer satisfaction. Works with Shopify & WooCommerce.">
+    
+    <!-- Google Analytics 4 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=GA_MEASUREMENT_ID"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'GA_MEASUREMENT_ID', {
+            page_title: 'ShopBot Landing Page',
+            page_location: window.location.href
+        });
+        
+        // Custom events for conversion tracking
+        function trackDemoRequest(email) {
+            gtag('event', 'demo_request', {
+                event_category: 'engagement',
+                event_label: 'demo_form_submission',
+                value: 1
+            });
+        }
+        
+        function trackPricingView(plan) {
+            gtag('event', 'pricing_view', {
+                event_category: 'engagement',
+                event_label: plan,
+                value: 1
+            });
+        }
+    </script>
+    
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 </head>

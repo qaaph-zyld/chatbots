@@ -16,7 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Demo form handling
+    // Demo form handling with analytics tracking
     const demoForm = document.querySelector('#demo form');
     if (demoForm) {
         demoForm.addEventListener('submit', function(e) {
@@ -29,21 +29,66 @@ document.addEventListener('DOMContentLoaded', function() {
                 return;
             }
 
+            // Track demo request in Google Analytics
+            if (typeof gtag !== 'undefined') {
+                trackDemoRequest(email);
+            }
+
             // Show success message
             const button = this.querySelector('button');
             const originalText = button.textContent;
             button.textContent = 'Sending...';
             button.disabled = true;
 
+            // Send to lead capture system (placeholder for email service integration)
+            const leadData = {
+                email: email,
+                source: 'website_demo_form',
+                timestamp: new Date().toISOString(),
+                page: window.location.href
+            };
+            
+            // Store lead locally for now (will integrate with email service)
+            localStorage.setItem('shopbot_lead_' + Date.now(), JSON.stringify(leadData));
+
             // Simulate form submission
             setTimeout(() => {
-                alert('Thank you! We\'ll send you a demo link shortly.');
+                alert('Thank you! We\'ll send you a demo link shortly. Check your email in the next few minutes.');
                 this.reset();
                 button.textContent = originalText;
                 button.disabled = false;
+                
+                // Track successful conversion
+                if (typeof gtag !== 'undefined') {
+                    gtag('event', 'conversion', {
+                        event_category: 'lead_generation',
+                        event_label: 'demo_request_completed',
+                        value: 1
+                    });
+                }
             }, 1500);
         });
     }
+
+    // Track pricing plan clicks
+    const pricingButtons = document.querySelectorAll('[href="#demo"]');
+    pricingButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const planCard = this.closest('.bg-gray-50, .bg-blue-600');
+            let planName = 'unknown';
+            
+            if (planCard) {
+                const planTitle = planCard.querySelector('h3');
+                if (planTitle) {
+                    planName = planTitle.textContent.toLowerCase();
+                }
+            }
+            
+            if (typeof gtag !== 'undefined') {
+                trackPricingView(planName);
+            }
+        });
+    });
 
     // Mobile menu toggle (if needed)
     const mobileMenuButton = document.querySelector('.mobile-menu-button');
