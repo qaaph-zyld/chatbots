@@ -25,7 +25,7 @@ Comprehensive guide for testing ShopBot with real Shopify stores to validate int
    - Navigate to "Stores" in Partner Dashboard
    - Click "Create store" → "Development store"
    - Store details:
-     - **Store name**: "ShopBot Test Store"
+     - **Store name**: "Shop    "
      - **Store URL**: shopbot-test-store.myshopify.com
      - **Purpose**: Testing app integrations
      - **Password**: Enable password protection

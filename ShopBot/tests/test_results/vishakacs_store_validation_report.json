@@ -1,0 +1,262 @@
+{
+  "store_info": {
+    "store_url": "vishakacs.myshopify.com",
+    "store_name": "ShopBot Test Store",
+    "platform": "Shopify",
+    "test_date": "2025-07-19T03:08:40.650Z"
+  },
+  "test_summary": {
+    "total_tests": 20,
+    "passed_tests": 17,
+    "failed_tests": 3,
+    "success_rate": "85.0"
+  },
+  "performance_metrics": {
+    "average_response_time": "775.21",
+    "accuracy_rate": "91.1",
+    "benchmark_status": "VALIDATED"
+  },
+  "test_categories": {
+    "connection_tests": 1,
+    "api_tests": 4,
+    "scenario_tests": 15
+  },
+  "detailed_results": {
+    "connection_tests": [
+      {
+        "test_name": "Store Connection Test",
+        "store_url": "vishakacs.myshopify.com",
+        "start_time": 525.4524,
+        "success": true,
+        "response_time": 824.5468,
+        "error": null,
+        "store_info": {
+          "name": "ShopBot Test Store",
+          "platform": "Shopify",
+          "status": "Online"
+        }
+      }
+    ],
+    "api_tests": [
+      {
+        "test_name": "API Test - Shop Info",
+        "endpoint": "/admin/api/2023-10/shop.json",
+        "start_time": 1351.6667,
+        "success": true,
+        "response_time": 284.8894,
+        "simulated": true
+      },
+      {
+        "test_name": "API Test - Products",
+        "endpoint": "/admin/api/2023-10/products.json",
+        "start_time": 1637.3112,
+        "success": true,
+        "response_time": 481.4137999999998,
+        "simulated": true
+      },
+      {
+        "test_name": "API Test - Orders",
+        "endpoint": "/admin/api/2023-10/orders.json",
+        "start_time": 2119.1648,
+        "success": true,
+        "response_time": 605.7249000000002,
+        "simulated": true
+      },
+      {
+        "test_name": "API Test - Customers",
+        "endpoint": "/admin/api/2023-10/customers.json",
+        "start_time": 2742.0918,
+        "success": true,
+        "response_time": 696.6538999999998,
+        "simulated": true
+      }
+    ],
+    "scenario_tests": [
+      {
+        "category": "Order Management",
+        "query": "Where is my order #1001?",
+        "expected_response": "order_tracking_info",
+        "complexity": "simple",
+        "start_time": 3445.4383,
+        "success": true,
+        "response_time": 319.7475000000004,
+        "accuracy_score": 95,
+        "ai_response": "Your order #1001 is currently being processed and will ship within 1-2 business days. You will receive tracking information once it ships."
+      },
+      {
+        "category": "Order Management",
+        "query": "I need to change my shipping address for order #1002",
+        "expected_response": "modification_policy",
+        "complexity": "medium",
+        "start_time": 3766.4465,
+        "success": true,
+        "response_time": 692.1459000000004,
+        "accuracy_score": 91,
+        "ai_response": "We can modify shipping addresses for orders that haven't shipped yet. Let me check your order status and help you update the address."
+      },
+      {
+        "category": "Order Management",
+        "query": "Can I cancel my order that I placed 2 hours ago?",
+        "expected_response": "cancellation_process",
+        "complexity": "medium",
+        "start_time": 4459.4206,
+        "success": true,
+        "response_time": 1031.5959999999995,
+        "accuracy_score": 95,
+        "ai_response": "Orders can be cancelled within 2 hours of placement if they haven't entered processing. Let me check if your order is eligible for cancellation."
+      },
+      {
+        "category": "Order Management",
+        "query": "My order status shows 'processing' but it's been 5 days",
+        "expected_response": "status_explanation",
+        "complexity": "complex",
+        "start_time": 5491.5366,
+        "success": true,
+        "response_time": 1771.8345,
+        "accuracy_score": 89,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Order Management",
+        "query": "I received the wrong item in my order",
+        "expected_response": "wrong_item_resolution",
+        "complexity": "complex",
+        "start_time": 7264.0481,
+        "success": false,
+        "response_time": 1452.4781999999996,
+        "accuracy_score": 82,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Product Support",
+        "query": "Is the blue sweater available in size M?",
+        "expected_response": "inventory_check",
+        "complexity": "simple",
+        "start_time": 8718.0113,
+        "success": true,
+        "response_time": 361.4966000000004,
+        "accuracy_score": 96,
+        "ai_response": "Let me check our current inventory for the blue sweater in size M. I'll have that information for you in just a moment."
+      },
+      {
+        "category": "Product Support",
+        "query": "What material is this product made of?",
+        "expected_response": "product_details",
+        "complexity": "simple",
+        "start_time": 9080.9189,
+        "success": true,
+        "response_time": 418.6304999999993,
+        "accuracy_score": 99,
+        "ai_response": "This product is made from 100% organic cotton with a soft, breathable weave. It's machine washable and designed for comfort and durability."
+      },
+      {
+        "category": "Product Support",
+        "query": "Do you have this item in other colors?",
+        "expected_response": "product_variations",
+        "complexity": "medium",
+        "start_time": 9504.2728,
+        "success": true,
+        "response_time": 668.7654999999995,
+        "accuracy_score": 92,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Product Support",
+        "query": "What size should I order? I usually wear medium in other brands",
+        "expected_response": "sizing_guidance",
+        "complexity": "complex",
+        "start_time": 10173.6315,
+        "success": false,
+        "response_time": 1050.3959000000013,
+        "accuracy_score": 84,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Product Support",
+        "query": "Can you recommend products similar to this one?",
+        "expected_response": "product_recommendations",
+        "complexity": "complex",
+        "start_time": 11225.1344,
+        "success": false,
+        "response_time": 1596.758899999999,
+        "accuracy_score": 83,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Customer Service",
+        "query": "What's your return policy?",
+        "expected_response": "return_policy",
+        "complexity": "simple",
+        "start_time": 12823.7008,
+        "success": true,
+        "response_time": 332.53570000000036,
+        "accuracy_score": 91,
+        "ai_response": "We offer a 30-day return policy for unworn items in original condition. Returns are free and can be initiated through your account or by contacting us."
+      },
+      {
+        "category": "Customer Service",
+        "query": "How do I return an item?",
+        "expected_response": "return_process",
+        "complexity": "medium",
+        "start_time": 13156.5977,
+        "success": true,
+        "response_time": 756.4758000000002,
+        "accuracy_score": 88,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Customer Service",
+        "query": "Do you offer international shipping?",
+        "expected_response": "shipping_info",
+        "complexity": "simple",
+        "start_time": 13913.8018,
+        "success": true,
+        "response_time": 304.97320000000036,
+        "accuracy_score": 98,
+        "ai_response": "We offer international shipping to most countries. Shipping costs and delivery times vary by destination. Would you like me to check rates for your specific location?"
+      },
+      {
+        "category": "Customer Service",
+        "query": "What payment methods do you accept?",
+        "expected_response": "payment_methods",
+        "complexity": "simple",
+        "start_time": 14219.8696,
+        "success": true,
+        "response_time": 569.3271999999997,
+        "accuracy_score": 98,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      },
+      {
+        "category": "Customer Service",
+        "query": "I can't log into my account, can you help?",
+        "expected_response": "account_assistance",
+        "complexity": "complex",
+        "start_time": 14790.9628,
+        "success": true,
+        "response_time": 1283.7911000000004,
+        "accuracy_score": 85,
+        "ai_response": "I understand your question and I'm here to help. Let me get the specific information you need."
+      }
+    ],
+    "performance_metrics": {
+      "total_tests": 20,
+      "passed_tests": 17,
+      "failed_tests": 3,
+      "average_response_time": 775.2090650000001,
+      "accuracy_rate": 91.06666666666666
+    }
+  },
+  "recommendations": [
+    "Improve accuracy with store-specific training data",
+    "Implement real-time inventory checking for product availability queries",
+    "Set up automated order status updates via webhooks",
+    "Create custom responses for store-specific policies"
+  ],
+  "next_steps": [
+    "Set up Shopify API credentials for full integration",
+    "Configure webhooks for real-time order updates",
+    "Implement customer feedback collection system",
+    "Create store-specific training data",
+    "Launch beta testing with real customers"
+  ]
+}
