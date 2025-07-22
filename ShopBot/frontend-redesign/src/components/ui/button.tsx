@@ -50,14 +50,9 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     
     const isDisabled = disabled || loading
     
-    return (
-      <Comp
-        className={cn(buttonVariants({ variant, size, className }))}
-        ref={ref}
-        disabled={isDisabled}
-        aria-disabled={isDisabled}
-        {...props}
-      >
+    // Combine all content into a single child when using Slot to avoid React.Children.only error
+    const buttonContent = (
+      <>
         {loading && (
           <svg
             className="mr-2 h-4 w-4 animate-spin"
@@ -88,6 +83,35 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         {!loading && icon && iconPosition === "right" && (
           <span className="ml-2 flex-shrink-0">{icon}</span>
         )}
+      </>
+    )
+    
+    if (asChild) {
+      // When using Slot, wrap content in a single element to avoid React.Children.only error
+      return (
+        <Comp
+          className={cn(buttonVariants({ variant, size, className }))}
+          ref={ref}
+          disabled={isDisabled}
+          aria-disabled={isDisabled}
+          {...props}
+        >
+          <span className="inline-flex items-center justify-center">
+            {buttonContent}
+          </span>
+        </Comp>
+      )
+    }
+    
+    return (
+      <Comp
+        className={cn(buttonVariants({ variant, size, className }))}
+        ref={ref}
+        disabled={isDisabled}
+        aria-disabled={isDisabled}
+        {...props}
+      >
+        {buttonContent}
       </Comp>
     )
   }
