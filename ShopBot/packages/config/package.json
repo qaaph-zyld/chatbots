@@ -1,0 +1,12 @@
+{
+  "name": "@shopbot/config",
+  "version": "1.0.0",
+  "description": "Shared configuration for ShopBot",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"No tests specified\""
+  },
+  "dependencies": {
+    "dotenv": "^16.3.1"
+  }
+}

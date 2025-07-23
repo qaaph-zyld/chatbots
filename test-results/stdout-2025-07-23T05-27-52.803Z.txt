@@ -1,0 +1,10 @@
+Command: command-that-does-not-exist 
+Working directory: C:\Users\ajelacn\Documents\chatbots
+Timestamp: 2025-07-23T05-27-52.803Z
+
+PID: 1832
+
+
+
+Command completed with exit code: 1
+Duration: 0ms

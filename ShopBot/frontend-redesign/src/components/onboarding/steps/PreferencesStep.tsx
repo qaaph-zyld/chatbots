@@ -85,7 +85,7 @@ const PreferencesStep: React.FC<OnboardingStepProps> = ({
       value: 'friendly',
       label: 'Friendly',
       description: 'Warm, approachable, and conversational',
-      example: 'Hi there! I'd be happy to help you track your order!',
+      example: 'Hi there! I would be happy to help you track your order!',
     },
     {
       value: 'professional',
@@ -97,7 +97,7 @@ const PreferencesStep: React.FC<OnboardingStepProps> = ({
       value: 'casual',
       label: 'Casual',
       description: 'Relaxed, informal, and personable',
-      example: 'Hey! Let's get that order tracked down for you right away.',
+      example: 'Hey! Let us get that order tracked down for you right away.',
     },
     {
       value: 'formal',

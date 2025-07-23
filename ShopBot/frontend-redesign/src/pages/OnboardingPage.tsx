@@ -6,14 +6,14 @@ import PlatformIntegrationStep from '../components/onboarding/steps/PlatformInte
 import PreferencesStep from '../components/onboarding/steps/PreferencesStep';
 import AITrainingStep from '../components/onboarding/steps/AITrainingStep';
 import { OnboardingConfig } from '../components/onboarding/OnboardingTypes';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/router';
 
 /**
  * OnboardingPage
  * Main entry point for the ShopBot onboarding experience
  */
 const OnboardingPage: React.FC = () => {
-  const navigate = useNavigate();
+  const router = useRouter();
 
   // Define onboarding configuration
   const onboardingConfig: OnboardingConfig = {
@@ -70,7 +70,7 @@ const OnboardingPage: React.FC = () => {
     // });
     
     // For demo purposes, just navigate to dashboard
-    navigate('/dashboard');
+    router.push('/dashboard');
   };
 
   // Handle step completion
