@@ -1,0 +1,21 @@
+{
+  "timestamp": "2025-08-30T21:18:18.142Z",
+  "coverage": {
+    "statements": 11.29,
+    "branches": 13.62,
+    "functions": 7.6,
+    "lines": 11.5
+  },
+  "testResults": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "passRate": 0
+  },
+  "quality": {
+    "coverageScore": 7.6,
+    "passRateScore": 0,
+    "meetsTargets": false
+  },
+  "targetsMet": false
+}
