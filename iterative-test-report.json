@@ -1,0 +1,425 @@
+{
+  "summary": {
+    "totalIterations": 10,
+    "maxIterations": 10,
+    "targetCoverage": 80,
+    "targetPassRate": 99,
+    "finalResult": {
+      "iteration": 10,
+      "timestamp": "2025-08-30T21:27:15.746Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    "targetsAchieved": false
+  },
+  "iterations": [
+    {
+      "iteration": 1,
+      "timestamp": "2025-08-30T21:26:30.089Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 2,
+      "timestamp": "2025-08-30T21:26:35.170Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 3,
+      "timestamp": "2025-08-30T21:26:40.276Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 4,
+      "timestamp": "2025-08-30T21:26:45.350Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 5,
+      "timestamp": "2025-08-30T21:26:50.413Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 6,
+      "timestamp": "2025-08-30T21:26:55.486Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 7,
+      "timestamp": "2025-08-30T21:27:00.562Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 8,
+      "timestamp": "2025-08-30T21:27:05.630Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 9,
+      "timestamp": "2025-08-30T21:27:10.693Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    },
+    {
+      "iteration": 10,
+      "timestamp": "2025-08-30T21:27:15.746Z",
+      "coverage": {
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "quality": {
+        "coverageScore": 7.6,
+        "passRateScore": 0,
+        "meetsTargets": false
+      },
+      "targetsMet": false,
+      "exitCode": 0
+    }
+  ],
+  "analysis": {
+    "coverageProgression": [
+      {
+        "iteration": 1,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 2,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 3,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 4,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 5,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 6,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 7,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 8,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 9,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      },
+      {
+        "iteration": 10,
+        "statements": 11.29,
+        "branches": 13.62,
+        "functions": 7.6,
+        "lines": 11.5
+      }
+    ],
+    "passRateProgression": [
+      {
+        "iteration": 1,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 2,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 3,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 4,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 5,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 6,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 7,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 8,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 9,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      },
+      {
+        "iteration": 10,
+        "passRate": 0,
+        "passed": 0,
+        "failed": 0,
+        "total": 0
+      }
+    ],
+    "commonIssues": [
+      "Low overall coverage - need more comprehensive test generation",
+      "Network connectivity issues preventing test execution",
+      "Test timeout issues - need to optimize test execution time",
+      "Missing test server setup for API integration tests"
+    ],
+    "recommendations": [
+      "Implement mock servers for API tests to avoid network dependencies",
+      "Reduce test timeout values and optimize test execution",
+      "Generate more unit tests for uncovered functions and branches",
+      "Fix existing test failures before generating new tests",
+      "Implement test server setup/teardown for integration tests",
+      "Add more edge case testing for better branch coverage"
+    ]
+  },
+  "timestamp": "2025-08-30T21:27:15.757Z"
+}

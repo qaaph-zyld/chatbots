@@ -1,0 +1,130 @@
+[2025-08-30T21:31:22.454Z] 🚀 Starting Final Verification - 5 Test Runs
+[2025-08-30T21:31:22.460Z] 🎯 Target: 80% coverage, 99% pass rate
+[2025-08-30T21:31:22.461Z] 🔄 === TEST RUN 1/5 ===
+C:\Users\cc\Documents\Project\Chatbot\chatbots\node_modules\.bin\jest:2
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+          ^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1486:18)
+    at Module._compile (node:internal/modules/cjs/loader:1528:20)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.14.0
+[2025-08-30T21:31:22.569Z] ⚠️ Failed to parse test results for run 1: Unexpected end of JSON input
+[2025-08-30T21:31:22.570Z] 📊 Run 1 Results:
+[2025-08-30T21:31:22.570Z]    Coverage: 0% statements
+[2025-08-30T21:31:22.571Z]    Pass Rate: 0%
+[2025-08-30T21:31:22.572Z]    Tests: 0/0
+[2025-08-30T21:31:22.574Z]    Duration: 107ms
+[2025-08-30T21:31:22.574Z] ⏳ Preparing for next run...
+[2025-08-30T21:31:32.589Z] 🔄 === TEST RUN 2/5 ===
+C:\Users\cc\Documents\Project\Chatbot\chatbots\node_modules\.bin\jest:2
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+          ^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1486:18)
+    at Module._compile (node:internal/modules/cjs/loader:1528:20)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.14.0
+[2025-08-30T21:31:32.660Z] ⚠️ Failed to parse test results for run 2: Unexpected end of JSON input
+[2025-08-30T21:31:32.661Z] 📊 Run 2 Results:
+[2025-08-30T21:31:32.662Z]    Coverage: 0% statements
+[2025-08-30T21:31:32.662Z]    Pass Rate: 0%
+[2025-08-30T21:31:32.663Z]    Tests: 0/0
+[2025-08-30T21:31:32.663Z]    Duration: 70ms
+[2025-08-30T21:31:32.664Z] ⏳ Preparing for next run...
+[2025-08-30T21:31:42.678Z] 🔄 === TEST RUN 3/5 ===
+C:\Users\cc\Documents\Project\Chatbot\chatbots\node_modules\.bin\jest:2
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+          ^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1486:18)
+    at Module._compile (node:internal/modules/cjs/loader:1528:20)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.14.0
+[2025-08-30T21:31:42.753Z] ⚠️ Failed to parse test results for run 3: Unexpected end of JSON input
+[2025-08-30T21:31:42.754Z] 📊 Run 3 Results:
+[2025-08-30T21:31:42.754Z]    Coverage: 0% statements
+[2025-08-30T21:31:42.755Z]    Pass Rate: 0%
+[2025-08-30T21:31:42.755Z]    Tests: 0/0
+[2025-08-30T21:31:42.756Z]    Duration: 75ms
+[2025-08-30T21:31:42.757Z] ⏳ Preparing for next run...
+[2025-08-30T21:31:52.771Z] 🔄 === TEST RUN 4/5 ===
+C:\Users\cc\Documents\Project\Chatbot\chatbots\node_modules\.bin\jest:2
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+          ^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1486:18)
+    at Module._compile (node:internal/modules/cjs/loader:1528:20)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.14.0
+[2025-08-30T21:31:52.852Z] ⚠️ Failed to parse test results for run 4: Unexpected end of JSON input
+[2025-08-30T21:31:52.852Z] 📊 Run 4 Results:
+[2025-08-30T21:31:52.853Z]    Coverage: 0% statements
+[2025-08-30T21:31:52.854Z]    Pass Rate: 0%
+[2025-08-30T21:31:52.854Z]    Tests: 0/0
+[2025-08-30T21:31:52.855Z]    Duration: 79ms
+[2025-08-30T21:31:52.855Z] ⏳ Preparing for next run...
+[2025-08-30T21:32:02.864Z] 🔄 === TEST RUN 5/5 ===
+C:\Users\cc\Documents\Project\Chatbot\chatbots\node_modules\.bin\jest:2
+basedir=$(dirname "$(echo "$0" | sed -e 's,\\,/,g')")
+          ^^^^^^^
+
+SyntaxError: missing ) after argument list
+    at wrapSafe (node:internal/modules/cjs/loader:1486:18)
+    at Module._compile (node:internal/modules/cjs/loader:1528:20)
+    at Object..js (node:internal/modules/cjs/loader:1706:10)
+    at Module.load (node:internal/modules/cjs/loader:1289:32)
+    at Function._load (node:internal/modules/cjs/loader:1108:12)
+    at TracingChannel.traceSync (node:diagnostics_channel:322:14)
+    at wrapModuleLoad (node:internal/modules/cjs/loader:220:24)
+    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:170:5)
+    at node:internal/main/run_main_module:36:49
+
+Node.js v22.14.0
+[2025-08-30T21:32:02.926Z] ⚠️ Failed to parse test results for run 5: Unexpected end of JSON input
+[2025-08-30T21:32:02.927Z] 📊 Run 5 Results:
+[2025-08-30T21:32:02.927Z]    Coverage: 0% statements
+[2025-08-30T21:32:02.928Z]    Pass Rate: 0%
+[2025-08-30T21:32:02.928Z]    Tests: 0/0
+[2025-08-30T21:32:02.929Z]    Duration: 61ms
+[2025-08-30T21:32:02.931Z] 📄 Final Verification Report Generated:
+[2025-08-30T21:32:02.931Z]    File: final-verification-report.json
+[2025-08-30T21:32:02.932Z]    Completed Runs: 5/5
+[2025-08-30T21:32:02.932Z]    Success Rate: 0%
+[2025-08-30T21:32:02.933Z]    Coverage Range: 0% - 0%
+[2025-08-30T21:32:02.934Z]    Pass Rate Range: 0% - 0%
+[2025-08-30T21:32:02.934Z]    Targets Achieved: NO
+[2025-08-30T21:32:02.935Z] 🏁 Final Verification Complete
+[2025-08-30T21:32:02.935Z] 📊 Overall Assessment: CRITICAL: Test infrastructure unstable
