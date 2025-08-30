@@ -1,5 +1,7 @@
 // Enhanced test setup
-const { server } = require('./mock-server');
+// Mock server temporarily disabled due to path-to-regexp compatibility issues
+// const { server } = require('./mock-server');
+require('../../src/tests/setup/jest-setup');
 
 // Global test configuration
 jest.setTimeout(30000); // 30 second timeout
@@ -17,9 +19,10 @@ beforeAll(async () => {
 
 // Cleanup after all tests
 afterAll(async () => {
-  if (server) {
-    server.close();
-  }
+  // Mock server cleanup disabled
+  // if (server) {
+  //   server.close();
+  // }
 });
 
 // Mock common modules

@@ -25,7 +25,7 @@ app.get('/static/css/main.css', (req, res) => {
 });
 
 // Catch all other routes
-app.use('*', (req, res) => {
+app.use('/*', (req, res) => {
   res.status(404).json({ error: 'Not found', path: req.originalUrl });
 });
 
