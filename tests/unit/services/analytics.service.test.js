@@ -15,7 +15,7 @@ const Conversation = require('../../../models/conversation.model');
 const { logger } = require('../../../utils');
 
 // Import test utilities
-require('@tests/utils\mock-factory');
+require('@tests/utils\\\\\\\mock-factory');
 
 // Mock dependencies
 jest.mock('../../../models/analytics.model');

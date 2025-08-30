@@ -4,9 +4,9 @@
  * Handles API requests for advanced template operations
  */
 
-require('@src/services\advanced-template.service');
+require('@src/services\\\\\\\advanced-template.service');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\\\\\errors');
 
 /**
  * Create a template with inheritance

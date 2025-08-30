@@ -144,7 +144,7 @@ async function runDiagnostics() {
     {
       name: 'Command with special characters',
       command: 'echo',
-      args: ['Special chars: !@#$%^&*()_+{}[]|\\:;"\'<>,.?/'],
+      args: ['Special chars: !@#$%^&*()_+{}[]|\\\\\\\:;"\'<>,.?/'],
       expectedExitCode: 0
     },
     {

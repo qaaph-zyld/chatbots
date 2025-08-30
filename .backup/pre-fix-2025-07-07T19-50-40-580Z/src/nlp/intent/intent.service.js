@@ -400,8 +400,8 @@ class IntentClassificationService {
     }
     
     // Tokenize texts into words
-    const wordsA = a.split(/\s+/).filter(Boolean);
-    const wordsB = b.split(/\s+/).filter(Boolean);
+    const wordsA = a.split(/\\\s+/).filter(Boolean);
+    const wordsB = b.split(/\\\s+/).filter(Boolean);
     
     // Create sets of words
     const setA = new Set(wordsA);

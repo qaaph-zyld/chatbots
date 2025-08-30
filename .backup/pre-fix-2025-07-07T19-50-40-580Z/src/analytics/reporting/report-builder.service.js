@@ -136,7 +136,7 @@ class ReportBuilderService {
       }
 
       // Generate template ID
-      const templateId = `${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`;
+      const templateId = `${name.toLowerCase().replace(/\\\s+/g, '-')}-${Date.now()}`;
 
       // Create template object
       const template = {

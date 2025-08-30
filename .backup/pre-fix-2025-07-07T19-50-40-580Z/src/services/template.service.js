@@ -6,8 +6,8 @@
  */
 
 require('@src/models\template.model');
-require('@src/services\chatbot.service');
-require('@src/utils\logger');
+require('@src/services\\\chatbot.service');
+require('@src/utils\\\logger');
 
 class TemplateService {
   /**

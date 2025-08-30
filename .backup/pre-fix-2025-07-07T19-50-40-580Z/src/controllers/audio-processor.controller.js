@@ -4,12 +4,12 @@
  * Handles API requests for audio processing.
  */
 
-require('@src/utils\audio-processor');
-require('@src/utils\logger');
+require('@src/utils\\\audio-processor');
+require('@src/utils\\\logger');
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
-require('@src/config\open-voice.config');
+require('@src/config\\\open-voice.config');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

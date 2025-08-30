@@ -4,8 +4,8 @@
  * Service for managing analytics data in the chatbot platform
  */
 
-require('@src/modules\utils');
-require('@src/modules\data');
+require('@src/modules\\utils');
+require('@src/modules\\\data');
 
 /**
  * Record analytics data

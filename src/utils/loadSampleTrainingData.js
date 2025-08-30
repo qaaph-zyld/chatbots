@@ -6,10 +6,10 @@
 
 const fs = require('fs');
 const path = require('path');
-require('@src/database\connection');
-require('@src/database\schemas\chatbot.schema');
+require('@src/database\\\\\\\connection');
+require('@src/database\\\\\\\schemas\\\\\\\chatbot.schema');
 require('@src/services\training.service');
-require('@src/utils\index');
+require('@src/utils\\\\\\\index');
 
 /**
  * Load sample training data for a chatbot

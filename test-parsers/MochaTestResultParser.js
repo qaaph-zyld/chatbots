@@ -39,7 +39,7 @@ class MochaTestResultParser extends ITestResultParser {
     try {
       // Try to find and parse JSON output from Mocha
       // Mocha's JSON reporter outputs a complete JSON object
-      const jsonMatch = rawOutput.match(/({[\s\S]*"stats"[\s\S]*})/);
+      const jsonMatch = rawOutput.match(/({[\\\\\\\s\\\\\\\S]*"stats"[\\\\\\\s\\\\\\\S]*})/);
       
       if (!jsonMatch) {
         // If no JSON found, create a basic error result
@@ -429,7 +429,7 @@ class MochaTestResultParser extends ITestResultParser {
    * @private
    */
   _normalizePath(filePath) {
-    return filePath.replace(/\\/g, '/');
+    return filePath.replace(/\\\\\\\/g, '/');
   }
 }
 

@@ -6,8 +6,8 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/analytics\analytics.service');
-require('@src/utils\logger');
+require('@src/analytics\\\analytics.service');
+require('@src/utils\\\logger');
 
 // MongoDB connection string
 const MONGO_URI = process.env.MONGO_URI || 'mongodb://localhost:27017/chatbot-platform';

@@ -6,8 +6,8 @@
 
 const mongoose = require('mongoose');
 require('@src/utils');
-require('@src/models\integration.model');
-require('@src/bot\core');
+require('@src/models\\\\\\\integration.model');
+require('@src/bot\\\\\\\core');
 
 class IntegrationService {
   /**

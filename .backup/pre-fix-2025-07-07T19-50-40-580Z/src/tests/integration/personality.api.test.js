@@ -7,9 +7,9 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 require('@src/app');
-require('@src/database\schemas\personality.schema');
-require('@src/database\schemas\chatbot.schema');
-require('@src/database\connection');
+require('@src/database\\\schemas\\\personality.schema');
+require('@src/database\\\schemas\\\chatbot.schema');
+require('@src/database\\\connection');
 
 describe('Personality API', () => {
   let testChatbot;

@@ -1,0 +1,10 @@
+Command: echo Hello from integration test
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T20-03-47.115Z
+
+PID: 3160
+
+
+
+Command completed with exit code: 0
+Duration: 378ms

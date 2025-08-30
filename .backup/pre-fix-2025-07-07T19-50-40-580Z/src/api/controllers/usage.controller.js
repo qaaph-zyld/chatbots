@@ -4,7 +4,7 @@
  * Handles API endpoints for usage monitoring and analytics
  */
 
-require('@src/monitoring\usage.service');
+require('@src/monitoring\\usage.service');
 require('@src/utils');
 
 /**

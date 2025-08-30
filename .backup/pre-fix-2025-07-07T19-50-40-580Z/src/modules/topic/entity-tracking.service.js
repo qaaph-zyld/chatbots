@@ -6,10 +6,10 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/modules\models\entity.model');
-require('@src/modules\models\entity-relation.model');
-require('@src/modules\models\entity-reference.model');
-require('@src/modules\utils');
+require('@src/modules\\\models\\\entity.model');
+require('@src/modules\\\models\\\entity-relation.model');
+require('@src/modules\\\models\\\entity-reference.model');
+require('@src/modules\\utils');
 const axios = require('axios');
 
 // Configure axios with proxy

@@ -6,14 +6,14 @@ const { TestAutomationRunner } = require('./auto-test-runner');
 
 // Create a test runner instance with minimal configuration
 const runner = new TestAutomationRunner({
-  testCommand: process.platform === 'win32' ? '.\\node_modules\\.bin\\jest --version' : './node_modules/.bin/jest --version',
+  testCommand: process.platform === 'win32' ? '.\\node_modules\\\\\\\.bin\\\\\\\\jest --version' : './node_modules/.bin/jest --version',
   outputDir: './test-results',
   networkTimeoutMs: 30000, // 30 seconds timeout
   aiFixEnabled: false // Disable AI fix for this test
 });
 
 console.log(`Platform: ${process.platform}`);
-console.log(`Using command: ${process.platform === 'win32' ? '.\\node_modules\\.bin\\jest --version' : './node_modules/.bin/jest --version'}`);
+console.log(`Using command: ${process.platform === 'win32' ? '.\\node_modules\\\\\\\.bin\\\\\\\\jest --version' : './node_modules/.bin/jest --version'}`);
 
 
 // Run the test and log the results
@@ -21,7 +21,7 @@ async function runTest() {
   console.log('Starting Jest execution test...');
   
   try {
-    const jestPath = process.platform === 'win32' ? '.\\node_modules\\.bin\\jest --version' : './node_modules/.bin/jest --version';
+    const jestPath = process.platform === 'win32' ? '.\\node_modules\\\\\\\.bin\\\\\\\\jest --version' : './node_modules/.bin/jest --version';
     console.log(`Executing command: ${jestPath}`);
     const result = await runner.runCommand(jestPath);
     console.log('Test completed successfully!');

@@ -8,7 +8,7 @@
 const mongoose = require('mongoose');
 const axios = require('axios');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\\\\\errors');
 
 // Define theme schema if not already defined
 let Theme;

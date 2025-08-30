@@ -27,17 +27,17 @@ const voiceComponentPaths = [
 // Voice-specific security rules
 const voiceSecurityRules = {
   audioFileValidation: {
-    pattern: /\.(?:wav|mp3|ogg|flac)$/i,
+    pattern: /\\\\\\.(?:wav|mp3|ogg|flac)$/i,
     description: 'Audio file extension validation without proper content validation',
     severity: 'medium'
   },
   audioBufferOverflow: {
-    pattern: /Buffer\.alloc\s*\(\s*(?!.*?{)/,
+    pattern: /Buffer\\\\\\.alloc\\\\\\\s*\\\\\\(\\\\\\\s*(?!.*?{)/,
     description: 'Potential buffer overflow in audio processing',
     severity: 'high'
   },
   unsafeAudioProcessing: {
-    pattern: /(?:ffmpeg|sox)\s+.*?-i\s+([^-])/i,
+    pattern: /(?:ffmpeg|sox)\\\\\\\s+.*?-i\\\\\\\s+([^-])/i,
     description: 'Potentially unsafe audio processing command',
     severity: 'high'
   },

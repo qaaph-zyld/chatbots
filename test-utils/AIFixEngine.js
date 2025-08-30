@@ -630,22 +630,22 @@ class AIFixEngine {
     // Extract patterns from test code if available
     if (failure.testCode) {
       // Extract import/require statements
-      const importMatches = failure.testCode.match(/import\s+.*?from\s+['"].*?['"];?|require\(['"].*?['"]\)/g) || [];
+      const importMatches = failure.testCode.match(/import\\\\\\\s+.*?from\\\\\\\s+['"].*?['"];?|require\\\\\\(['"].*?['"]\\\\\\)/g) || [];
       patterns.push(...importMatches);
       
       // Extract function/class definitions
-      const functionMatches = failure.testCode.match(/function\s+\w+\s*\(.*?\)\s*\{|class\s+\w+\s*(extends\s+\w+)?\s*\{/g) || [];
+      const functionMatches = failure.testCode.match(/function\\\\\\\s+\\\\\\\w+\\\\\\\s*\\\\\\(.*?\\\\\\)\\\\\\\s*\\\\\\{|class\\\\\\\s+\\\\\\\w+\\\\\\\s*(extends\\\\\\\s+\\\\\\\w+)?\\\\\\\s*\\\\\\{/g) || [];
       patterns.push(...functionMatches);
       
       // Extract assertion patterns
-      const assertionMatches = failure.testCode.match(/expect\(.*?\)\.\w+\(.*?\)/g) || [];
+      const assertionMatches = failure.testCode.match(/expect\\\\\\(.*?\\\\\\)\\\\\\.\\\\\\\w+\\\\\\(.*?\\\\\\)/g) || [];
       patterns.push(...assertionMatches);
     }
     
     // Extract patterns from error message if available
     if (failure.errorMessage) {
       // Extract line references
-      const lineMatches = failure.errorMessage.match(/line\s+\d+/g) || [];
+      const lineMatches = failure.errorMessage.match(/line\\\\\\\s+\\\\\\\d+/g) || [];
       patterns.push(...lineMatches);
       
       // Extract quoted code snippets
@@ -712,11 +712,11 @@ class AIFixEngine {
     let processedCode = fixCode;
     
     // Remove unnecessary comments
-    processedCode = processedCode.replace(/\/\/\s*Auto-generated fix.*?\n/g, '');
+    processedCode = processedCode.replace(/\\\\\\/\\\\\\/\\\\\\\s*Auto-generated fix.*?\n/g, '');
     
     // Ensure proper indentation
     if (failure.testCode) {
-      const indentMatch = failure.testCode.match(/^(\s+)/);
+      const indentMatch = failure.testCode.match(/^(\\\\\\\s+)/);
       if (indentMatch && indentMatch[1]) {
         const lines = processedCode.split('\n');
         processedCode = lines.map(line => line.trim() ? indentMatch[1] + line : line).join('\n');
@@ -727,8 +727,8 @@ class AIFixEngine {
     switch (failureType) {
       case 'syntax-error':
         // Ensure all brackets are balanced
-        const openBrackets = (processedCode.match(/\{/g) || []).length;
-        const closeBrackets = (processedCode.match(/\}/g) || []).length;
+        const openBrackets = (processedCode.match(/\\\\\\{/g) || []).length;
+        const closeBrackets = (processedCode.match(/\\\\\\}/g) || []).length;
         if (openBrackets > closeBrackets) {
           processedCode += '\n'.repeat(openBrackets - closeBrackets) + '}'.repeat(openBrackets - closeBrackets);
         }
@@ -736,7 +736,7 @@ class AIFixEngine {
       case 'assertion-failure':
         // Ensure assertions are properly formatted
         if (processedCode.includes('expect(') && !processedCode.includes('.to') && !processedCode.includes('.not')) {
-          processedCode = processedCode.replace(/expect\(([^)]+)\)/, 'expect($1).toBe(');
+          processedCode = processedCode.replace(/expect\\\\\\(([^)]+)\\\\\\)/, 'expect($1).toBe(');
         }
         break;
     }
@@ -753,10 +753,10 @@ class AIFixEngine {
   async validateFixSyntax(fixCode, filePath) {
     try {
       // Basic validation - check for balanced brackets
-      const openBrackets = (fixCode.match(/\{/g) || []).length;
-      const closeBrackets = (fixCode.match(/\}/g) || []).length;
-      const openParens = (fixCode.match(/\(/g) || []).length;
-      const closeParens = (fixCode.match(/\)/g) || []).length;
+      const openBrackets = (fixCode.match(/\\\\\\{/g) || []).length;
+      const closeBrackets = (fixCode.match(/\\\\\\}/g) || []).length;
+      const openParens = (fixCode.match(/\\\\\\(/g) || []).length;
+      const closeParens = (fixCode.match(/\\\\\\)/g) || []).length;
       
       const messages = [];
       let valid = true;
@@ -852,7 +852,7 @@ class AIFixEngine {
           for (const part of commonParts) {
             if (part.length < 3) continue; // Skip very short matches
             
-            const regex = new RegExp(part.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'g');
+            const regex = new RegExp(part.replace(/[-\\\\\\/\\\\\\\^$*+?.()|[\\\\\\]{}]/g, '\\\\\\\$&'), 'g');
             fixCode = fixCode.replace(regex, part);
           }
         }
@@ -888,7 +888,7 @@ class AIFixEngine {
     patterns.push(...stringMatches);
     
     // Extract numbers
-    const numberMatches = text.match(/\b\d+(\.\d+)?\b/g) || [];
+    const numberMatches = text.match(/\b\\\\\\\d+(\\\\\\.\\\\\\\d+)?\b/g) || [];
     patterns.push(...numberMatches);
     
     return Array.from(new Set(patterns)); // Remove duplicates
@@ -904,8 +904,8 @@ class AIFixEngine {
     if (!str1 || !str2) return [];
     
     const common = [];
-    const words1 = str1.split(/\s+/);
-    const words2 = str2.split(/\s+/);
+    const words1 = str1.split(/\\\\\\\s+/);
+    const words2 = str2.split(/\\\\\\\s+/);
     
     // Find common words
     for (const word1 of words1) {

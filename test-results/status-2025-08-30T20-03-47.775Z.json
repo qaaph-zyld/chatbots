@@ -1,0 +1,10 @@
+{
+  "command": "echo Command 1",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:03:47.782Z",
+  "currentTime": "2025-08-30T20:03:47.808Z",
+  "duration": 26,
+  "status": "success",
+  "exitCode": null,
+  "pid": 11344
+}

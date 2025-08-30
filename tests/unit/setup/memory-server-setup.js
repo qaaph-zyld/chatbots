@@ -10,7 +10,7 @@
 require('../../../src/core/module-alias');
 
 // Import mongoose test setup utilities
-require('@tests/unit\setup\mongoose-test-setup');
+require('@tests/unit\\\\\\\setup\\\\\\\mongoose-test-setup');
 const mongoose = require('mongoose');
 
 // Set environment variables for tests

@@ -5,8 +5,8 @@
  * Refactored to use the MongoDB data abstraction layer with repository pattern
  */
 
-require('@src/modules\utils');
-require('@src/modules\data');
+require('@src/modules\\\\\\\\\\utils');
+require('@src/modules\\\\\\\data');
 
 /**
  * Create a new topic

@@ -261,7 +261,7 @@ function generateRecurringFailuresReport(recurringFailures) {
     report += `- **Failure Rate:** ${failure.failureRate}%\n`;
     report += `- **First Seen:** ${new Date(failure.firstSeen).toISOString()}\n`;
     report += `- **Last Seen:** ${new Date(failure.lastSeen).toISOString()}\n\n`;
-    report += `**Error Message:**\n\`\`\`\n${failure.message}\n\`\`\`\n\n`;
+    report += `**Error Message:**\n\\\\\\`\\\\\\`\\\\\\`\n${failure.message}\n\\\\\\`\\\\\\`\\\\\\`\n\n`;
     
     // Add recommendations based on failure type
     report += `**Recommendations:**\n`;
@@ -319,7 +319,7 @@ function generateIssueBody(failure) {
   body += `- **Last Seen:** ${new Date(failure.lastSeen).toISOString()}\n\n`;
   
   body += `### Error Message\n\n`;
-  body += `\`\`\`\n${failure.message}\n\`\`\`\n\n`;
+  body += `\\\\\\`\\\\\\`\\\\\\`\n${failure.message}\n\\\\\\`\\\\\\`\\\\\\`\n\n`;
   
   body += `### Recommendations\n\n`;
   

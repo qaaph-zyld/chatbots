@@ -6,9 +6,9 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-require('@src/modules\utils');
+require('@src/modules\\\\\\\\\\utils');
 require('@src/modules\topic\translation.service');
-require('@src/modules\topic\knowledge-base.service');
+require('@src/modules\topic\\\\\\\knowledge-base.service');
 
 class MultilingualKnowledgeBaseService {
   constructor() {

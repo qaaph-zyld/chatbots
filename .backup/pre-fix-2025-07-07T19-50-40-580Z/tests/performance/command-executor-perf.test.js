@@ -93,7 +93,7 @@ describe('Command Executor Performance', () => {
         
         return sieve.reduce((count, isPrime, index) => {
           if (isPrime) {
-            console.log(\`Prime: \${index}\`);
+            console.log(\\`Prime: \\${index}\\`);
             return count + 1;
           }
           return count;
@@ -101,7 +101,7 @@ describe('Command Executor Performance', () => {
       }
       
       const count = calculatePrimes(100000);
-      console.log(\`Found \${count} prime numbers\`);
+      console.log(\\`Found \\${count} prime numbers\\`);
     `;
     
     fs.writeFileSync(scriptPath, scriptContent);
@@ -135,18 +135,18 @@ describe('Command Executor Performance', () => {
         for (let i = 0; i < count; i++) {
           const array = new Array(size).fill('X');
           arrays.push(array);
-          console.log(\`Allocated array \${i+1}/\${count}\`);
+          console.log(\\`Allocated array \\${i+1}/\\${count}\\`);
         }
         
         console.log('Memory allocation complete');
-        console.log(\`Total allocated: ~\${count}MB\`);
+        console.log(\\`Total allocated: ~\\${count}MB\\`);
         
         // Hold the memory for a moment
         return arrays.length;
       }
       
       const result = consumeMemory();
-      console.log(\`Operation complete with \${result} arrays\`);
+      console.log(\\`Operation complete with \\${result} arrays\\`);
     `;
     
     fs.writeFileSync(scriptPath, scriptContent);
@@ -178,7 +178,7 @@ describe('Command Executor Performance', () => {
       const fs = require('fs');
       const path = require('path');
       
-      const testDir = '${testDir.replace(/\\/g, '\\\\')}';
+      const testDir = '${testDir.replace(/\\\/g, '\\\\')}';
       const fileCount = 100;
       const fileSize = 10240; // 10KB per file
       
@@ -186,12 +186,12 @@ describe('Command Executor Performance', () => {
       
       // Write files
       for (let i = 0; i < fileCount; i++) {
-        const filePath = path.join(testDir, \`file-\${i}.txt\`);
+        const filePath = path.join(testDir, \\`file-\\${i}.txt\\`);
         const content = 'X'.repeat(fileSize);
         fs.writeFileSync(filePath, content);
         
         if (i % 10 === 0) {
-          console.log(\`Written \${i} files\`);
+          console.log(\\`Written \\${i} files\\`);
         }
       }
       
@@ -200,21 +200,21 @@ describe('Command Executor Performance', () => {
       // Read files
       let totalSize = 0;
       for (let i = 0; i < fileCount; i++) {
-        const filePath = path.join(testDir, \`file-\${i}.txt\`);
+        const filePath = path.join(testDir, \\`file-\\${i}.txt\\`);
         const content = fs.readFileSync(filePath, 'utf8');
         totalSize += content.length;
         
         if (i % 10 === 0) {
-          console.log(\`Read \${i} files\`);
+          console.log(\\`Read \\${i} files\\`);
         }
       }
       
       console.log('Read operations complete');
-      console.log(\`Total bytes read: \${totalSize}\`);
+      console.log(\\`Total bytes read: \\${totalSize}\\`);
       
       // Delete files
       for (let i = 0; i < fileCount; i++) {
-        const filePath = path.join(testDir, \`file-\${i}.txt\`);
+        const filePath = path.join(testDir, \\`file-\\${i}.txt\\`);
         fs.unlinkSync(filePath);
       }
       
@@ -260,7 +260,7 @@ describe('Command Executor Performance', () => {
           }
           
           // Report progress
-          console.log(\`Progress: \${i * 10}% complete\`);
+          console.log(\\`Progress: \\${i * 10}% complete\\`);
         }
         
         console.log('Long-running task complete');

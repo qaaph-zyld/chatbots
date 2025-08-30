@@ -20,7 +20,7 @@ console.log('Starting simple Jest execution test...');
 // Use platform-specific path formatting
 let cmd;
 if (process.platform === 'win32') {
-  cmd = '.\\node_modules\\.bin\\jest';
+  cmd = '.\\node_modules\\\\\\\.bin\\\\\\\\jest';
 } else {
   cmd = './node_modules/.bin/jest';
 }

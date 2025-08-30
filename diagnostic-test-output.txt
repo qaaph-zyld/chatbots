@@ -1,0 +1,142 @@
+[2025-08-30T20:28:33.206Z] 🚀 Starting diagnostic test runner...
+[2025-08-30T20:28:33.212Z] 📋 Step 1: Listing available tests...
+[2025-08-30T20:28:33.212Z] 🔍 Starting diagnostic test run...
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\routes\component.routes.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\command-executor.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\complex-errors\runtime-edge-cases.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\verification\security-verification.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\controllers\chatbot.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\middleware\rate-limit\rate-limit.middleware.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\controllers\auth.controller.local.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\verification\api-verification.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\controllers\auth.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\smoke\basic-smoke.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\payment-error-handler.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\chatbot.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\currency.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\verification\performance-verification.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\controllers\conversation.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\edge-cases\command-executor-edge.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\analytics\export.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\payment-error-middleware.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\src\analytics\analytics.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\src\analytics\analytics.service.fixed.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\src\analytics\analytics.service.new.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\complex-errors\language-diversity.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\routes\health.routes.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\controllers\analytics.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\middleware\cache\cache.middleware.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\auth\auth.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\basic.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\nlp\intent\intent.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\modules\topic\topic.memory.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\modules\sentiment\sentiment.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\modules\conversation\conversation.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\middleware\cache\cache-warmer.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\middleware\cache\cache-monitor.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\middleware\cache\adaptive-ttl.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\routes\chatbot.routes.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\api\routes\advanced-context.routes.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\modules\sentiment\sentiment.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\modules\conversation\conversation.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\middleware\rate-limit\rate-limit.integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\middleware\cache\cache.integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\middleware\cache\cache-warming.integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\middleware\cache\cache-monitoring.integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\middleware\cache\adaptive-ttl.integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\utils\logger.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\training\training.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\training\training.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\storage\storage.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\storage\local-storage.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\templates\template.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\workflow.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\voice.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\topic.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\scaling.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\preference.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\output.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\local-model.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\integration.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\input.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\entity.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\documentation.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\config.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\services\analytics.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\models\conversation.model.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\models\chatbot.model.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\models\analytics.model.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\core\server.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\core\index.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\core\app.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\controllers\model.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\controllers\chatbot.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\config\mongodb.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\bot\engine.factory.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\bot\base.engine.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\webhook.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\trial.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\subscription.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\subscription-lifecycle.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\payment.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\payment-retry-scheduler.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\payment-recovery.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\payment-recovery.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\billing\coupon.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\analytics\demo-data-generator.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\analytics\data-exporter.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\analytics\analytics.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\routes\auth.routes.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\billing\subscription-flow.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\billing\payment.integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\billing\payment-tenant-isolation.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\billing\payment-recovery.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\billing\payment-monitoring.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\billing\payment-error-handling.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\api\integration.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\api\auth.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\conversation.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\unit\app.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\verification\ui-verification.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\verification\deployment-verification.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\utils\model-manager.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\utils\language-detector.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\utils\audio-processor.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\services\voice-recognition.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\services\vector-db.service.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\performance\command-executor-perf.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\middleware\tenant-isolation.middleware.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\middleware\tenant-isolation-enhanced.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\voice-components.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\training.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\personality.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\chatbot.api.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\chatbot-service-integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\chatbot-conversation-flow.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\auth-flow-integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\integration\ai-fix-pipeline.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\e2e\user-journey.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\e2e\test-automation-workflow.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\e2e\payment-lifecycle.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\e2e\payment-onboarding.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\e2e\monitoring-alert-integration.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\e2e\chatbot-flow.e2e.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\controllers\language-detector.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\controllers\audio-processor.controller.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\complex-errors\multi-file-dependency.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\acceptance\voice-interface.test.js
+C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\advanced-context-awareness.test.js
+[2025-08-30T20:28:34.921Z] 📊 Test listing completed with code: 0
+[2025-08-30T20:28:34.922Z] ✅ Test listing successful
+[2025-08-30T20:28:34.922Z] 📋 Step 2: Running single test...
+[2025-08-30T20:28:34.923Z] 🧪 Running single test file...
+[2025-08-30T20:28:34.946Z] 🎯 Running test: C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\acceptance\voice-interface.test.js
+No tests found, exiting with code 1
+Run with `--passWithNoTests` to exit with code 0
+In C:\Users\cc\Documents\Project\Chatbot\chatbots
+  174 files checked.
+  testMatch: C:/Users/cc/Documents/Project/Chatbot/chatbots/tests/**/*.test.js - 125 matches
+  testPathIgnorePatterns: \\node_modules\\ - 174 matches
+  testRegex:  - 0 matches
+Pattern: "C:\Users\cc\Documents\Project\Chatbot\chatbots\tests\acceptance\voice-interface.test.js" - 0 matches
+[2025-08-30T20:28:36.588Z] 📊 Single test completed with code: 1

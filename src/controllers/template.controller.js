@@ -7,7 +7,7 @@
 
 require('@src/services\template.service');
 require('@src/utils\validator');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 /**
  * Create a new template

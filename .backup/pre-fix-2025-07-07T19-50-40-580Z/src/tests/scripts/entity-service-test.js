@@ -5,7 +5,7 @@
  */
 
 require('@src/data');
-require('@src/services\entity.service');
+require('@src/services\\\entity.service');
 require('@src/utils');
 const fs = require('fs');
 const path = require('path');

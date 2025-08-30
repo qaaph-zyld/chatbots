@@ -36,9 +36,9 @@ jest.mock('../../../bot/engines/huggingface.engine', () => {
 });
 
 // Import the engine factory after mocks
-require('@src/bot\engines\engine.factory');
-require('@src/bot\engines\botpress.engine');
-require('@src/bot\engines\huggingface.engine');
+require('@src/bot\\\engines\\\engine.factory');
+require('@src/bot\\\engines\botpress.engine');
+require('@src/bot\\\engines\\\huggingface.engine');
 require('@src/utils');
 require('@src/config');
 

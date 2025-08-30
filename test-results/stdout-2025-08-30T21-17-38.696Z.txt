@@ -1,0 +1,11 @@
+Command: node -e console.log(process.version)
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T21-17-38.696Z
+
+PID: 6960
+
+v22.14.0
+
+
+Command completed with exit code: 0
+Duration: 76ms

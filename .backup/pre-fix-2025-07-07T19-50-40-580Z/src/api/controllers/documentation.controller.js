@@ -4,7 +4,7 @@
  * Handles API requests for documentation management
  */
 
-require('@src/services\documentation.service');
+require('@src/services\\\documentation.service');
 require('@src/utils');
 
 /**

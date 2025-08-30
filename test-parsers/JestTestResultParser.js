@@ -38,7 +38,7 @@ class JestTestResultParser extends ITestResultParser {
     
     try {
       // Try to find and parse JSON output from Jest
-      const jsonMatch = rawOutput.match(/({[\s\S]*"numTotalTestSuites"[\s\S]*})/);
+      const jsonMatch = rawOutput.match(/({[\\\\\\\s\\\\\\\S]*"numTotalTestSuites"[\\\\\\\s\\\\\\\S]*})/);
       
       if (!jsonMatch) {
         // If no JSON found, create a basic error result
@@ -331,7 +331,7 @@ class JestTestResultParser extends ITestResultParser {
     const message = errorMessage.split('\n')[0];
     
     // Extract diff if available
-    const diffMatch = errorMessage.match(/- Expected([\s\S]*?)\\n/);
+    const diffMatch = errorMessage.match(/- Expected([\\\\\\\s\\\\\\\S]*?)\\n/);
     const diff = diffMatch ? diffMatch[0] : null;
     
     return {
@@ -459,7 +459,7 @@ class JestTestResultParser extends ITestResultParser {
    * @private
    */
   _normalizePath(filePath) {
-    return filePath.replace(/\\/g, '/');
+    return filePath.replace(/\\\\\\\/g, '/');
   }
 }
 

@@ -715,19 +715,19 @@ class ErrorTracker {
     // Detect browser
     if (ua.includes('Firefox/')) {
       info.browser.name = 'Firefox';
-      info.browser.version = ua.match(/Firefox\/([0-9.]+)/)[1];
+      info.browser.version = ua.match(/Firefox\\/([0-9.]+)/)[1];
     } else if (ua.includes('Chrome/')) {
       info.browser.name = 'Chrome';
-      info.browser.version = ua.match(/Chrome\/([0-9.]+)/)[1];
+      info.browser.version = ua.match(/Chrome\\/([0-9.]+)/)[1];
     } else if (ua.includes('Safari/') && !ua.includes('Chrome/')) {
       info.browser.name = 'Safari';
-      info.browser.version = ua.match(/Version\/([0-9.]+)/)?.[1] || 'Unknown';
+      info.browser.version = ua.match(/Version\\/([0-9.]+)/)?.[1] || 'Unknown';
     } else if (ua.includes('Edge/')) {
       info.browser.name = 'Edge';
-      info.browser.version = ua.match(/Edge\/([0-9.]+)/)[1];
+      info.browser.version = ua.match(/Edge\\/([0-9.]+)/)[1];
     } else if (ua.includes('Edg/')) {
       info.browser.name = 'Edge';
-      info.browser.version = ua.match(/Edg\/([0-9.]+)/)[1];
+      info.browser.version = ua.match(/Edg\\/([0-9.]+)/)[1];
     } else if (ua.includes('MSIE ')) {
       info.browser.name = 'Internet Explorer';
       info.browser.version = ua.match(/MSIE ([0-9.]+)/)[1];

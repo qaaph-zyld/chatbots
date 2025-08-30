@@ -5,7 +5,7 @@
  */
 
 require('@src/data\base.repository');
-require('@src/models\entity.model');
+require('@src/models\\\\\\\entity.model');
 require('@src/utils');
 
 class EntityRepository extends BaseRepository {

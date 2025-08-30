@@ -57,31 +57,31 @@ class EntityService {
   _initializeDefaultPatterns() {
     // Email pattern
     this.customPatterns.set(EntityType.EMAIL, {
-      pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/,
+      pattern: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Z|a-z]{2,}\b/,
       processor: (match) => ({ value: match[0], type: EntityType.EMAIL })
     });
     
     // Phone pattern
     this.customPatterns.set(EntityType.PHONE, {
-      pattern: /\b(\+\d{1,3}[\s-]?)?\(?\d{3}\)?[\s.-]?\d{3}[\s.-]?\d{4}\b/,
+      pattern: /\b(\\+\\\d{1,3}[\\\s-]?)?\\(?\\\d{3}\\)?[\\\s.-]?\\\d{3}[\\\s.-]?\\\d{4}\b/,
       processor: (match) => ({ value: match[0], type: EntityType.PHONE })
     });
     
     // URL pattern
     this.customPatterns.set(EntityType.URL, {
-      pattern: /\b(https?:\/\/)?[A-Za-z0-9]+([\-\.]{1}[A-Za-z0-9]+)*\.[A-Za-z]{2,}(:[0-9]{1,5})?(\/[^\s]*)?\b/,
+      pattern: /\b(https?:\\/\\/)?[A-Za-z0-9]+([\\-\\.]{1}[A-Za-z0-9]+)*\\.[A-Za-z]{2,}(:[0-9]{1,5})?(\\/[^\\\s]*)?\b/,
       processor: (match) => ({ value: match[0], type: EntityType.URL })
     });
     
     // Money pattern
     this.customPatterns.set(EntityType.MONEY, {
-      pattern: /\b(\$|€|£|¥)?\s?\d+(\.\d+)?\s?(\$|€|£|¥|USD|EUR|GBP|JPY)?\b/,
+      pattern: /\b(\\$|€|£|¥)?\\\s?\\\d+(\\.\\\d+)?\\\s?(\\$|€|£|¥|USD|EUR|GBP|JPY)?\b/,
       processor: (match) => ({ value: match[0], type: EntityType.MONEY })
     });
     
     // Date pattern (simple)
     this.customPatterns.set(EntityType.DATE, {
-      pattern: /\b\d{1,2}[\/\-\.]\d{1,2}[\/\-\.]\d{2,4}\b/,
+      pattern: /\b\\\d{1,2}[\\/\\-\\.]\\\d{1,2}[\\/\\-\\.]\\\d{2,4}\b/,
       processor: (match) => ({ value: match[0], type: EntityType.DATE })
     });
   }
@@ -227,12 +227,12 @@ class EntityService {
           // Strip non-numeric characters
           return {
             ...entity,
-            normalized: entity.value.replace(/\D/g, '')
+            normalized: entity.value.replace(/\\\D/g, '')
           };
           
         case EntityType.MONEY:
           // Extract numeric value
-          const numericValue = entity.value.replace(/[^\d.]/g, '');
+          const numericValue = entity.value.replace(/[^\\\d.]/g, '');
           return {
             ...entity,
             normalized: parseFloat(numericValue)

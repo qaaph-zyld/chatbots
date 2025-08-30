@@ -7,8 +7,8 @@
 
 const mongoose = require('mongoose');
 require('@src/utils');
-require('@src/analytics\learning.service');
-require('@src/analytics\learning\continuous.service');
+require('@src/analytics\\\\\\\learning.service');
+require('@src/analytics\\\\\\\learning\\\\\\\continuous.service');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 const path = require('path');

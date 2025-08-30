@@ -392,7 +392,7 @@ class ConversationAnalyticsIntegrationService {
       const provider = this.options.provider.toLowerCase();
       
       if (provider === 'matomo') {
-        const baseUrl = this.options.endpoint.replace(/\/piwik\.php$|\/matomo\.php$/, '');
+        const baseUrl = this.options.endpoint.replace(/\\\\\\/piwik\\\\\\.php$|\\\\\\/matomo\\\\\\.php$/, '');
         const siteId = options.siteId || this.options.siteId;
         
         return `${baseUrl}/index.php?module=CoreHome&action=index&idSite=${siteId}&period=day&date=yesterday`;

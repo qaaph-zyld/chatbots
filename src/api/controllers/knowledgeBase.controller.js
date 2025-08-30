@@ -4,9 +4,9 @@
  * Handles all knowledge base-related operations and API endpoints
  */
 
-require('@src/services\knowledgeBase.service');
+require('@src/services\\\\\\\knowledgeBase.service');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\\\\\errors');
 
 /**
  * Get all knowledge bases for a chatbot

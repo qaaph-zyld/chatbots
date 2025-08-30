@@ -198,10 +198,10 @@ function normalizeContent(content) {
   if (!content) return '';
   
   // Replace multiple whitespace with single space
-  let normalized = content.replace(/\s+/g, ' ');
+  let normalized = content.replace(/\\\\\\\s+/g, ' ');
   
   // Remove control characters
-  normalized = normalized.replace(/[\x00-\x1F\x7F]/g, '');
+  normalized = normalized.replace(/[\\\\\\x00-\\\\\\x1F\\\\\\x7F]/g, '');
   
   // Trim whitespace
   normalized = normalized.trim();
@@ -227,7 +227,7 @@ function chunkContent(content, maxChunkSize = 5000) {
   const chunks = [];
   
   // Split content by paragraphs
-  const paragraphs = content.split(/\n\s*\n/);
+  const paragraphs = content.split(/\n\\\\\\\s*\n/);
   let currentChunk = '';
   
   for (const paragraph of paragraphs) {

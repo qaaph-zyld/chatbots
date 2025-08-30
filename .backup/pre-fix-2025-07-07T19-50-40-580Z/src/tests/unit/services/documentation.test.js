@@ -2,8 +2,8 @@
  * Tests for Documentation Service
  */
 
-require('@src/services\documentation.service');
-require('@src/utils\indexedDB');
+require('@src/services\\\documentation.service');
+require('@src/utils\\\indexedDB');
 const fs = require('fs').promises;
 const path = require('path');
 

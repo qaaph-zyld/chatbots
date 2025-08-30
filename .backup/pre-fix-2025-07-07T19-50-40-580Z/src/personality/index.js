@@ -5,9 +5,9 @@
  * for chatbot personality customization
  */
 
-require('@src/personality\personality.service');
-require('@src/personality\message-processor');
-require('@src/personality\personality.schema');
+require('@src/personality\\\personality.service');
+require('@src/personality\\\message-processor');
+require('@src/personality\\\personality.schema');
 
 module.exports = {
   personalityService,

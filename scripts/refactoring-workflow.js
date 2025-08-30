@@ -56,7 +56,7 @@ function validateSyntax(filePath) {
       console.error(`Error: ${error.message}`);
       
       // Extract line and column information
-      const match = error.message.match(/at\s+(\d+):(\d+)/);
+      const match = error.message.match(/at\\\\\\\s+(\\\\\\\d+):(\\\\\\\d+)/);
       if (match) {
         const line = parseInt(match[1]);
         const column = parseInt(match[2]);

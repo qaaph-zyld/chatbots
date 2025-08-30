@@ -2,9 +2,9 @@
  * Chatbot Controller Tests
  */
 
-require('@src/api\controllers\chatbot.controller');
-require('@src/services\chatbot.service');
-require('@src/utils\errors');
+require('@src/api\\\\\\\controllers\\\\\\\chatbot.controller');
+require('@src/services\\\\\\\chatbot.service');
+require('@src/utils\\\\\\\errors');
 require('@src/utils');
 
 // Mock dependencies

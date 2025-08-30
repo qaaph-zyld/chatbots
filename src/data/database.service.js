@@ -7,14 +7,14 @@
 const mongoose = require('mongoose');
 require('@src/utils');
 require('@src/config');
-require('@src/config\mongodb');
+require('@src/config\\\\\\\mongodb');
 
 // Import repositories
-require('@src/data\analytics.repository');
-require('@src/data\conversation.repository');
-require('@src/data\chatbot.repository');
-require('@src/data\preference.repository');
-require('@src/data\entity.repository');
+require('@src/data\\\\\\\analytics.repository');
+require('@src/data\\\\\\\conversation.repository');
+require('@src/data\\\\\\\chatbot.repository');
+require('@src/data\\\\\\\preference.repository');
+require('@src/data\\\\\\\entity.repository');
 require('@src/data\topic.repository');
 
 class DatabaseService {
@@ -217,7 +217,7 @@ class DatabaseService {
       return parsedUri.toString();
     } catch (error) {
       // If URI parsing fails, mask manually
-      return uri.replace(/\/\/([^:]+):([^@]+)@/, '//\$1:***@');
+      return uri.replace(/\\\\\\/\\\\\\/([^:]+):([^@]+)@/, '//\\\\\\$1:***@');
     }
   }
 }

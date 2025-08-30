@@ -7,7 +7,7 @@
 const { spawn } = require('child_process');
 const path = require('path');
 const fs = require('fs');
-require('@src/tests\performance\setup');
+require('@src/tests\\\performance\\\setup');
 
 // Configuration
 const RESULTS_DIR = path.join(__dirname, 'results');

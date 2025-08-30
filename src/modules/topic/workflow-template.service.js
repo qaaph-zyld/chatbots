@@ -4,8 +4,8 @@
  * Provides functionality for managing and applying workflow templates
  */
 
-require('@src/modules\topic\workflow.service');
-require('@src/modules\models\workflow.model');
+require('@src/modules\topic\\\\\\\workflow.service');
+require('@src/modules\\\\\\\models\\\\\\\workflow.model');
 
 class WorkflowTemplateService {
   /**

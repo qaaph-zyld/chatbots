@@ -4,7 +4,7 @@
  * Integration with Hugging Face models for chatbot functionality
  */
 
-require('@src/bot\engines\base.engine');
+require('@src/bot\\\\\\\engines\base.engine');
 require('@src/utils');
 const axios = require('axios');
 

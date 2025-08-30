@@ -271,7 +271,7 @@ describe('Health Check and Monitoring Tests', () => {
         .expect(200);
 
       expect(response.body.response_time).toBeDefined();
-      expect(response.body.response_time).toMatch(/\d+ms/);
+      expect(response.body.response_time).toMatch(/\\\\\\\d+ms/);
       
       const responseTimeMs = parseInt(response.body.response_time);
       expect(responseTimeMs).toBeGreaterThan(0);

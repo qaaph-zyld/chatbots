@@ -45,7 +45,7 @@ const DIRECTORIES_TO_SCAN = [
 const FILE_EXTENSIONS = ['.js', '.jsx', '.ts', '.tsx'];
 
 // Regular expression to match import/require statements
-const IMPORT_REGEX = /(?:import\s+(?:(?:[\w*{}\n\r\t, ]+)\s+from\s+)?['"])(\.\.?\/.*?)(['"])|(?:(?:const|let|var)\s+(?:[\w{}\n\r\t, ]+)\s*=\s*require\s*\(\s*['"])(\.\.?\/.*?)(['"])/g;
+const IMPORT_REGEX = /(?:import\\\\\\\s+(?:(?:[\\\\\\\w*{}\n\r\t, ]+)\\\\\\\s+from\\\\\\\s+)?['"])(\\\\\\.\\\\\\.?\\\\\\/.*?)(['"])|(?:(?:const|let|var)\\\\\\\s+(?:[\\\\\\\w{}\n\r\t, ]+)\\\\\\\s*=\\\\\\\s*require\\\\\\\s*\\\\\\(\\\\\\\s*['"])(\\\\\\.\\\\\\.?\\\\\\/.*?)(['"])/g;
 
 /**
  * Get all JS files in a directory recursively

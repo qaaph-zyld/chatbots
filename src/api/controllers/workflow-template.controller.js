@@ -4,8 +4,8 @@
  * Handles API requests for workflow templates
  */
 
-require('@src/services\workflow-template.service');
-require('@src/api\utils\response.utils');
+require('@src/services\\\\\\\workflow-template.service');
+require('@src/api\\\\\\\\\\utils\response.utils');
 
 /**
  * Get all available workflow templates

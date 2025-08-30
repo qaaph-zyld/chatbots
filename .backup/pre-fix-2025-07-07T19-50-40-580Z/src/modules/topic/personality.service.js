@@ -5,8 +5,8 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/modules\database\schemas\personality.schema');
-require('@src/modules\utils');
+require('@src/modules\\\database\\\schemas\\\personality.schema');
+require('@src/modules\\utils');
 
 class PersonalityService {
   /**

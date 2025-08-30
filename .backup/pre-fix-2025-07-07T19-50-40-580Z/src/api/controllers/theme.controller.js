@@ -6,7 +6,7 @@
 
 require('@src/services\theme.service');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\errors');
 
 /**
  * Create a new theme

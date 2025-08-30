@@ -4,7 +4,7 @@
  * Tests the refactored preference service with the MongoDB model abstraction layer
  */
 
-require('@src/services\preference.service');
+require('@src/services\\\\\\\preference.service');
 require('@src/data');
 require('@src/utils');
 const fs = require('fs');

@@ -5,10 +5,10 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
 require('@src/app');
-require('@src/models\integration.model');
-require('@src/models\chatbot.model');
-require('@src/models\user.model');
-require('@src/tests\utils\test-helpers');
+require('@src/models\\\\\\\integration.model');
+require('@src/models\\\\\\\chatbot.model');
+require('@src/models\\\\\\\\\\user.model');
+require('@src/tests\\\\\\\\\\utils\test-helpers');
 
 describe('Integration API', () => {
   let testUser;

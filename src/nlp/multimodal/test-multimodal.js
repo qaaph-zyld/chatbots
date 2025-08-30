@@ -7,8 +7,8 @@
 
 const path = require('path');
 const fs = require('fs');
-require('@src/nlp\multimodal\input');
-require('@src/nlp\multimodal\output');
+require('@src/nlp\\\\\\\multimodal\\\\\\\input');
+require('@src/nlp\\\\\\\multimodal\\\\\\\output');
 require('@src/utils');
 
 /**

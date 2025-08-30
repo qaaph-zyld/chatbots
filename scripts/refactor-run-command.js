@@ -25,7 +25,7 @@ console.log(`Reading ${targetFile}`);
 const fileContent = fs.readFileSync(targetFile, 'utf8');
 
 // Find the runCommand method
-const runCommandRegex = /async\s+runCommand\s*\(\s*command\s*,\s*options\s*=\s*\{\s*\}\s*\)\s*\{[\s\S]*?(?=\n\s*\/\*\*|\n\s*\}$)/;
+const runCommandRegex = /async\\\\\\\s+runCommand\\\\\\\s*\\\\\\(\\\\\\\s*command\\\\\\\s*,\\\\\\\s*options\\\\\\\s*=\\\\\\\s*\\\\\\{\\\\\\\s*\\\\\\}\\\\\\\s*\\\\\\)\\\\\\\s*\\\\\\{[\\\\\\\s\\\\\\\S]*?(?=\n\\\\\\\s*\\\\\\/\\\\\\*\\\\\\*|\n\\\\\\\s*\\\\\\}$)/;
 const match = fileContent.match(runCommandRegex);
 
 if (!match) {
@@ -81,7 +81,7 @@ console.log('Updating changelog');
 const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
 const changelogEntry = `
 ## ${timestamp}
-- Refactored \`runCommand\` method in \`TestAutomationRunner\` to delegate to \`TestExecutor\`
+- Refactored \\\\\\`runCommand\\\\\\` method in \\\\\\`TestAutomationRunner\\\\\\` to delegate to \\\\\\`TestExecutor\\\\\\`
 - Added fallback to original implementation if delegation fails
 `;
 

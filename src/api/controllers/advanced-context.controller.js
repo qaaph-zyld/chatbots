@@ -5,10 +5,10 @@
  * entity tracking, topic detection, and preference learning.
  */
 
-require('@src/services\advanced-context.service');
-require('@src/services\entity-tracking.service');
+require('@src/services\\\\\\\advanced-context.service');
+require('@src/services\\\\\\\entity-tracking.service');
 require('@src/services\topic-detection.service');
-require('@src/services\preference-learning.service');
+require('@src/services\\\\\\\preference-learning.service');
 require('@src/utils');
 
 /**

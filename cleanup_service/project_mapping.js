@@ -44,13 +44,13 @@ class ProjectMappingSystem {
             ],
             analysisRules: {
                 // File type classification
-                source: /\.(js|ts|jsx|tsx|py|java|cpp|c|h)$/,
-                config: /\.(json|yaml|yml|toml|ini|conf)$/,
-                documentation: /\.(md|txt|rst|adoc)$/,
-                test: /\.(test|spec)\.(js|ts|jsx|tsx|py)$/,
-                build: /\.(dockerfile|makefile|gulpfile|webpack|rollup)$/i,
-                style: /\.(css|scss|sass|less)$/,
-                data: /\.(sql|json|csv|xml)$/
+                source: /\\\\\\.(js|ts|jsx|tsx|py|java|cpp|c|h)$/,
+                config: /\\\\\\.(json|yaml|yml|toml|ini|conf)$/,
+                documentation: /\\\\\\.(md|txt|rst|adoc)$/,
+                test: /\\\\\\.(test|spec)\\\\\\.(js|ts|jsx|tsx|py)$/,
+                build: /\\\\\\.(dockerfile|makefile|gulpfile|webpack|rollup)$/i,
+                style: /\\\\\\.(css|scss|sass|less)$/,
+                data: /\\\\\\.(sql|json|csv|xml)$/
             },
             explanationTemplates: {
                 directory: "Directory containing {fileCount} files, purpose: {purpose}",
@@ -494,9 +494,9 @@ class ProjectMappingSystem {
     extractJSImports(content) {
         const imports = [];
         const patterns = [
-            /import\s+.*?\s+from\s+['"`]([^'"`]+)['"`]/g,
-            /require\(['"`]([^'"`]+)['"`]\)/g,
-            /import\(['"`]([^'"`]+)['"`]\)/g
+            /import\\\\\\\s+.*?\\\\\\\s+from\\\\\\\s+['"`]([^'"`]+)['"`]/g,
+            /require\\\\\\(['"`]([^'"`]+)['"`]\\\\\\)/g,
+            /import\\\\\\(['"`]([^'"`]+)['"`]\\\\\\)/g
         ];
 
         patterns.forEach(pattern => {
@@ -512,9 +512,9 @@ class ProjectMappingSystem {
     extractJSExports(content) {
         const exports = [];
         const patterns = [
-            /export\s+(?:default\s+)?(?:function|class|const|let|var)\s+(\w+)/g,
-            /export\s*{\s*([^}]+)\s*}/g,
-            /module\.exports\s*=\s*(\w+)/g
+            /export\\\\\\\s+(?:default\\\\\\\s+)?(?:function|class|const|let|var)\\\\\\\s+(\\\\\\\w+)/g,
+            /export\\\\\\\s*{\\\\\\\s*([^}]+)\\\\\\\s*}/g,
+            /module\\\\\\.exports\\\\\\\s*=\\\\\\\s*(\\\\\\\w+)/g
         ];
 
         patterns.forEach(pattern => {
@@ -530,10 +530,10 @@ class ProjectMappingSystem {
     extractJSFunctions(content) {
         const functions = [];
         const patterns = [
-            /function\s+(\w+)\s*\(/g,
-            /(\w+)\s*:\s*function\s*\(/g,
-            /(\w+)\s*=\s*\([^)]*\)\s*=>/g,
-            /const\s+(\w+)\s*=\s*\([^)]*\)\s*=>/g
+            /function\\\\\\\s+(\\\\\\\w+)\\\\\\\s*\\\\\\(/g,
+            /(\\\\\\\w+)\\\\\\\s*:\\\\\\\s*function\\\\\\\s*\\\\\\(/g,
+            /(\\\\\\\w+)\\\\\\\s*=\\\\\\\s*\\\\\\([^)]*\\\\\\)\\\\\\\s*=>/g,
+            /const\\\\\\\s+(\\\\\\\w+)\\\\\\\s*=\\\\\\\s*\\\\\\([^)]*\\\\\\)\\\\\\\s*=>/g
         ];
 
         patterns.forEach(pattern => {
@@ -548,7 +548,7 @@ class ProjectMappingSystem {
 
     extractJSClasses(content) {
         const classes = [];
-        const pattern = /class\s+(\w+)/g;
+        const pattern = /class\\\\\\\s+(\\\\\\\w+)/g;
         let match;
         
         while ((match = pattern.exec(content)) !== null) {
@@ -561,8 +561,8 @@ class ProjectMappingSystem {
     extractPythonImports(content) {
         const imports = [];
         const patterns = [
-            /from\s+(\S+)\s+import/g,
-            /import\s+(\S+)/g
+            /from\\\\\\\s+(\\\\\\\S+)\\\\\\\s+import/g,
+            /import\\\\\\\s+(\\\\\\\S+)/g
         ];
 
         patterns.forEach(pattern => {
@@ -577,7 +577,7 @@ class ProjectMappingSystem {
 
     extractPythonFunctions(content) {
         const functions = [];
-        const pattern = /def\s+(\w+)\s*\(/g;
+        const pattern = /def\\\\\\\s+(\\\\\\\w+)\\\\\\\s*\\\\\\(/g;
         let match;
         
         while ((match = pattern.exec(content)) !== null) {
@@ -589,7 +589,7 @@ class ProjectMappingSystem {
 
     extractPythonClasses(content) {
         const classes = [];
-        const pattern = /class\s+(\w+)/g;
+        const pattern = /class\\\\\\\s+(\\\\\\\w+)/g;
         let match;
         
         while ((match = pattern.exec(content)) !== null) {
@@ -602,12 +602,12 @@ class ProjectMappingSystem {
     calculateComplexity(content, language) {
         // Simple complexity metric based on control structures
         const complexityPatterns = [
-            /if\s*\(/g,
-            /for\s*\(/g,
-            /while\s*\(/g,
-            /switch\s*\(/g,
-            /catch\s*\(/g,
-            /else\s*{/g
+            /if\\\\\\\s*\\\\\\(/g,
+            /for\\\\\\\s*\\\\\\(/g,
+            /while\\\\\\\s*\\\\\\(/g,
+            /switch\\\\\\\s*\\\\\\(/g,
+            /catch\\\\\\\s*\\\\\\(/g,
+            /else\\\\\\\s*{/g
         ];
 
         let complexity = 1; // Base complexity
@@ -659,7 +659,7 @@ class ProjectMappingSystem {
         if (category === 'config') {
             return `Configuration file for ${fileName}`;
         } else if (category === 'test') {
-            return `Test suite for ${fileName.replace(/\.(test|spec)$/, '')}`;
+            return `Test suite for ${fileName.replace(/\\\\\\.(test|spec)$/, '')}`;
         } else if (category === 'documentation') {
             return `Documentation for ${fileName}`;
         } else if (analysis.exports.length > 0) {
@@ -894,7 +894,7 @@ class ProjectMappingSystem {
     // Helper Methods
     shouldIgnore(filePath) {
         return this.config.ignorePatterns.some(pattern => {
-            const regex = new RegExp(pattern.replace(/\*\*/g, '.*').replace(/\*/g, '[^/]*'));
+            const regex = new RegExp(pattern.replace(/\\\\\\*\\\\\\*/g, '.*').replace(/\\\\\\*/g, '[^/]*'));
             return regex.test(filePath);
         });
     }

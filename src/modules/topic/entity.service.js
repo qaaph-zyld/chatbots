@@ -5,8 +5,8 @@
  * Refactored to use the MongoDB model abstraction layer with repository pattern
  */
 
-require('@src/modules\data');
-require('@src/modules\utils');
+require('@src/modules\\\\\\\data');
+require('@src/modules\\\\\\\\\\utils');
 
 /**
  * Create a new entity

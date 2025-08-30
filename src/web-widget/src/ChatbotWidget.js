@@ -4,7 +4,7 @@
  */
 import EventEmitter from 'eventemitter3';
 import ApiClient from "@utils/ApiClient";
-import '@src/web-widget\src\ui\WidgetUI';
+import '@src/web-widget\\\\\\\src\\\\\\\\\\ui\\\\\\\WidgetUI';
 import { generateUUID, validateConfig, mergeConfig } from "@utils/helpers";
 
 // Default configuration

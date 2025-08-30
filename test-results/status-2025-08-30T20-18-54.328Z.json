@@ -1,0 +1,10 @@
+{
+  "command": "dir /b",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:18:54.332Z",
+  "currentTime": "2025-08-30T20:18:54.362Z",
+  "duration": 30,
+  "status": "success",
+  "exitCode": null,
+  "pid": 4248
+}

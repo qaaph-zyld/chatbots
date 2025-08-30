@@ -4,7 +4,7 @@
  * Handles API requests for workflow management and execution
  */
 
-require('@src/services\workflow.service');
+require('@src/services\\\workflow.service');
 require('@src/utils');
 
 /**

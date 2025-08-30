@@ -4,7 +4,7 @@
  * Handles API endpoints for scaling configuration and metrics
  */
 
-require('@src/scaling\scaling.service');
+require('@src/scaling\\\scaling.service');
 require('@src/utils');
 
 /**

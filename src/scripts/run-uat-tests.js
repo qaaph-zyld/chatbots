@@ -10,7 +10,7 @@
 const { execSync } = require('child_process');
 const fs = require('fs');
 const path = require('path');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -122,7 +122,7 @@ function generateSummaryReport() {
     });
     
     // Generate timestamp
-    const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\..+/, '');
+    const timestamp = new Date().toISOString().replace(/T/, ' ').replace(/\\\\\\..+/, '');
     
     // Generate markdown report
     let report = `# UAT Test Summary Report\n\n`;

@@ -101,7 +101,7 @@ describe('Data Exporter', () => {
       expect(fs.promises.writeFile).toHaveBeenCalled();
 
       // Check that the result is a file path
-      expect(result).toMatch(/^\/tmp\/exports\/events-/);
+      expect(result).toMatch(/^\\/tmp\\/exports\\/events-/);
     });
 
     it('should return null if no events found', async () => {
@@ -162,7 +162,7 @@ describe('Data Exporter', () => {
       expect(() => JSON.parse(jsonContent)).not.toThrow();
       
       // Check that the result is a file path
-      expect(result).toMatch(/^\/tmp\/exports\/events-/);
+      expect(result).toMatch(/^\\/tmp\\/exports\\/events-/);
     });
   });
 
@@ -207,7 +207,7 @@ describe('Data Exporter', () => {
       expect(mockWorkbook.xlsx.writeFile).toHaveBeenCalled();
       
       // Check that the result is a file path
-      expect(result).toMatch(/^\/tmp\/exports\/events-/);
+      expect(result).toMatch(/^\\/tmp\\/exports\\/events-/);
     });
   });
 
@@ -237,7 +237,7 @@ describe('Data Exporter', () => {
       expect(fs.promises.writeFile).toHaveBeenCalled();
       
       // Check that the result is a file path
-      expect(result).toMatch(/^\/tmp\/exports\/analytics-report-/);
+      expect(result).toMatch(/^\\/tmp\\/exports\\/analytics-report-/);
     });
 
     it('should export analytics report in JSON format', async () => {
@@ -260,7 +260,7 @@ describe('Data Exporter', () => {
       expect(() => JSON.parse(jsonContent)).not.toThrow();
       
       // Check that the result is a file path
-      expect(result).toMatch(/^\/tmp\/exports\/analytics-report-/);
+      expect(result).toMatch(/^\\/tmp\\/exports\\/analytics-report-/);
     });
 
     it('should export analytics report in Excel format', async () => {
@@ -293,7 +293,7 @@ describe('Data Exporter', () => {
       expect(mockWorkbook.xlsx.writeFile).toHaveBeenCalled();
       
       // Check that the result is a file path
-      expect(result).toMatch(/^\/tmp\/exports\/analytics-report-/);
+      expect(result).toMatch(/^\\/tmp\\/exports\\/analytics-report-/);
     });
 
     it('should throw error for unsupported format', async () => {

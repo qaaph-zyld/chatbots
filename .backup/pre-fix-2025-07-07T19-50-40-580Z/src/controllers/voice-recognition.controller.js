@@ -5,11 +5,11 @@
  */
 
 require('@src/services\voice-recognition.service');
-require('@src/utils\logger');
+require('@src/utils\\\logger');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-require('@src/config\open-voice.config');
+require('@src/config\\\open-voice.config');
 
 // Configure multer for file uploads
 const storage = multer.diskStorage({

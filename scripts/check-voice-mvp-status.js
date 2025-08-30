@@ -119,9 +119,9 @@ function parseChecklist() {
     }
     
     // Check for checklist items
-    if (line.match(/^- \[[ x]\]/i) && currentCategory) {
+    if (line.match(/^- \\\\\\[[ x]\\\\\\]/i) && currentCategory) {
       const completed = line.includes('- [x]') || line.includes('- [X]');
-      const item = line.replace(/^- \[[ xX]\] /, '').trim();
+      const item = line.replace(/^- \\\\\\[[ xX]\\\\\\] /, '').trim();
       
       categories[currentCategory].items.push({ item, completed });
       categories[currentCategory].total++;
@@ -218,12 +218,12 @@ function checkRoadmapProgress() {
   const lines = content.split('\n');
   
   // Find the voice interface phase
-  const voicePhaseMatch = content.match(/## Phase \d+: Open-Source Voice Interface \((\d+)-(\d+)%\)/);
-  const voicePhase = voicePhaseMatch ? `Phase ${voicePhaseMatch[0].match(/\d+/)[0]}` : 'Unknown';
+  const voicePhaseMatch = content.match(/## Phase \\\\\\\d+: Open-Source Voice Interface \\\\\\((\\\\\\\d+)-(\\\\\\\d+)%\\\\\\)/);
+  const voicePhase = voicePhaseMatch ? `Phase ${voicePhaseMatch[0].match(/\\\\\\\d+/)[0]}` : 'Unknown';
   
   // Find the MVP release phase
-  const mvpPhaseMatch = content.match(/## Phase \d+: MVP Release \((\d+)-(\d+)%\)/);
-  const mvpPhase = mvpPhaseMatch ? `Phase ${mvpPhaseMatch[0].match(/\d+/)[0]}` : 'Unknown';
+  const mvpPhaseMatch = content.match(/## Phase \\\\\\\d+: MVP Release \\\\\\((\\\\\\\d+)-(\\\\\\\d+)%\\\\\\)/);
+  const mvpPhase = mvpPhaseMatch ? `Phase ${mvpPhaseMatch[0].match(/\\\\\\\d+/)[0]}` : 'Unknown';
   
   // Count completed tasks in the MVP phase
   let mvpTasks = 0;
@@ -231,7 +231,7 @@ function checkRoadmapProgress() {
   let inMvpPhase = false;
   
   for (const line of lines) {
-    if (line.match(/## Phase \d+: MVP Release/)) {
+    if (line.match(/## Phase \\\\\\\d+: MVP Release/)) {
       inMvpPhase = true;
       continue;
     }
@@ -240,7 +240,7 @@ function checkRoadmapProgress() {
       break;
     }
     
-    if (inMvpPhase && line.match(/^- \[[ x]\]/i)) {
+    if (inMvpPhase && line.match(/^- \\\\\\[[ x]\\\\\\]/i)) {
       mvpTasks++;
       if (line.includes('- [x]') || line.includes('- [X]')) {
         completedMvpTasks++;

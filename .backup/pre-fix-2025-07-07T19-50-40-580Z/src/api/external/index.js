@@ -7,10 +7,10 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/auth\auth.middleware');
+require('@src/auth\\\auth.middleware');
 
 // Import versioned API routers
-require('@src/api\external\v1');
+require('@src/api\\\external\v1');
 
 // API documentation
 /**

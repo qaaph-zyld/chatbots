@@ -6,8 +6,8 @@
 
 const path = require('path');
 const fs = require('fs');
-require('@src/components\custom\ComponentRegistry');
-require('@src/components\custom\ComponentScaffolder');
+require('@src/components\\\custom\\\ComponentRegistry');
+require('@src/components\\\custom\\\ComponentScaffolder');
 
 class ComponentService {
   constructor() {
@@ -163,7 +163,7 @@ class ComponentService {
   kebabCase(str) {
     return str
       .replace(/([a-z])([A-Z])/g, '$1-$2')
-      .replace(/[\s_]+/g, '-')
+      .replace(/[\\\s_]+/g, '-')
       .toLowerCase();
   }
 }

@@ -6,7 +6,7 @@
  * user profiles.
  */
 
-require('@src/analytics\engagement\index');
+require('@src/analytics\\\engagement\\\index');
 const { v4: uuidv4 } = require('uuid');
 
 // Mock conversation tracking service storage

@@ -615,7 +615,7 @@ class ChatInterface {
     if (!text) return '';
     
     // Convert URLs to links
-    const urlRegex = /(https?:\/\/[^\s]+)/g;
+    const urlRegex = /(https?:\\/\\/[^\\\s]+)/g;
     text = text.replace(urlRegex, url => `<a href="${url}" target="_blank" rel="noopener noreferrer">${url}</a>`);
     
     // Convert line breaks to <br>

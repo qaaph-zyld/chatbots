@@ -4,8 +4,8 @@
  * Manages synchronization of data between local storage and server
  */
 
-require('@src/modules\utils');
-require('@src/modules\utils\indexedDB');
+require('@src/modules\\utils');
+require('@src/modules\\utils\\\indexedDB');
 
 class OfflineSyncService {
   constructor() {

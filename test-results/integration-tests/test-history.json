@@ -1,13 +1,13 @@
 {
   "history": [
     {
-      "id": "echo-1753248472803",
+      "id": "echo-1756588659050",
       "command": "echo",
       "args": [
         "Save history test"
       ],
       "options": {
-        "cwd": "C:\\Users\\ajelacn\\Documents\\chatbots",
+        "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
         "timeout": 10000,
         "progressTimeout": 2000
       },
@@ -16,17 +16,17 @@
         "signal": null,
         "stdout": "Save history test\r\n",
         "stderr": "",
-        "duration": 0,
-        "stdoutFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stdout-2025-07-23T05-27-52.803Z.txt",
-        "stderrFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\stderr-2025-07-23T05-27-52.803Z.txt",
-        "statusFile": "C:\\Users\\ajelacn\\Documents\\chatbots\\test-results\\status-2025-07-23T05-27-52.803Z.json"
+        "duration": 20,
+        "stdoutFile": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots\\test-results\\stdout-2025-08-30T21-17-39.051Z.txt",
+        "stderrFile": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots\\test-results\\stderr-2025-08-30T21-17-39.051Z.txt",
+        "statusFile": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots\\test-results\\status-2025-08-30T21-17-39.051Z.json"
       },
-      "startTime": "2025-07-23T05:27:52.803Z",
-      "endTime": "2025-07-23T05:27:52.803Z",
-      "duration": 0,
+      "startTime": "2025-08-30T21:17:39.050Z",
+      "endTime": "2025-08-30T21:17:39.077Z",
+      "duration": 27,
       "success": true
     }
   ],
-  "timestamp": "2025-07-23T05:27:52.803Z",
+  "timestamp": "2025-08-30T21:17:39.077Z",
   "count": 1
 }

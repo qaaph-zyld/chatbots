@@ -12,7 +12,7 @@ function analyzeSentiment(text) {
   const positiveWords = ['good', 'great', 'excellent', 'happy', 'love', 'like', 'thanks', 'thank', 'awesome', 'wonderful'];
   const negativeWords = ['bad', 'terrible', 'awful', 'sad', 'hate', 'dislike', 'sorry', 'problem', 'issue', 'wrong'];
   
-  const words = text.toLowerCase().split(/\s+/);
+  const words = text.toLowerCase().split(/\\\s+/);
   
   let positiveScore = 0;
   let negativeScore = 0;

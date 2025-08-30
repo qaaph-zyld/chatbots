@@ -1,0 +1,244 @@
+{
+  "timestamp": "2025-08-30T20:19:16.685Z",
+  "iteration": 3,
+  "summary": {
+    "overallStatus": "critical",
+    "targetsAchieved": {
+      "coverage": false,
+      "quality": false,
+      "passRate": false,
+      "all": false
+    },
+    "progressScore": 0
+  },
+  "coverage": {
+    "current": {
+      "statements": 0,
+      "branches": 0,
+      "functions": 0,
+      "lines": 0
+    },
+    "targets": {
+      "statements": 80,
+      "branches": 80,
+      "functions": 80,
+      "lines": 80
+    },
+    "gaps": {
+      "statements": 80,
+      "branches": 80,
+      "functions": 80,
+      "lines": 80
+    },
+    "quality": {
+      "score": 0,
+      "issues": [],
+      "fileCount": 0
+    }
+  },
+  "testQuality": {
+    "overall": 0,
+    "trends": {
+      "trend": "no_data",
+      "change": 0,
+      "history": []
+    },
+    "recommendations": [
+      {
+        "type": "coverage_improvement",
+        "priority": "high",
+        "description": "Improve code coverage, especially branch and function coverage",
+        "actions": [
+          "Add tests for uncovered branches",
+          "Test all exported functions",
+          "Add integration tests for complex workflows"
+        ]
+      },
+      {
+        "type": "assertion_improvement",
+        "priority": "high",
+        "description": "Improve assertion quality and meaningfulness",
+        "actions": [
+          "Replace trivial assertions with meaningful ones",
+          "Add more specific assertions (toEqual, toMatchObject)",
+          "Increase assertions per test to validate behavior thoroughly"
+        ]
+      },
+      {
+        "type": "completeness_improvement",
+        "priority": "medium",
+        "description": "Improve test completeness",
+        "actions": [
+          "Add more error handling tests",
+          "Include business logic validation",
+          "Test edge cases and boundary conditions"
+        ]
+      },
+      {
+        "type": "edge_case_improvement",
+        "priority": "medium",
+        "description": "Improve edge case coverage",
+        "actions": [
+          "Test null and undefined inputs",
+          "Test boundary values (min/max)",
+          "Test invalid and malformed inputs",
+          "Test extreme values and conditions"
+        ]
+      }
+    ]
+  },
+  "testExecution": {
+    "total": 0,
+    "passed": 0,
+    "failed": 0,
+    "passRate": 0,
+    "duration": 446005,
+    "performance": {
+      "speed": "slow",
+      "efficiency": "unknown",
+      "reliability": "low"
+    }
+  },
+  "fixes": {
+    "applied": 0,
+    "successful": 0,
+    "impact": 0,
+    "categories": {}
+  },
+  "trends": {
+    "coverage": {
+      "direction": "stable",
+      "velocity": 0,
+      "prediction": "unknown"
+    },
+    "quality": {
+      "direction": "stable",
+      "velocity": 0,
+      "prediction": "unknown"
+    },
+    "passRate": {
+      "direction": "stable",
+      "velocity": 0,
+      "prediction": "unknown"
+    },
+    "performance": {
+      "direction": "stable",
+      "velocity": 0,
+      "prediction": "unknown"
+    }
+  },
+  "nextActions": [
+    {
+      "type": "coverage_improvement",
+      "priority": "high",
+      "description": "Improve statement coverage",
+      "target": 80,
+      "estimatedEffort": "medium"
+    },
+    {
+      "type": "branch_testing",
+      "priority": "high",
+      "description": "Add branch coverage tests",
+      "target": 80,
+      "estimatedEffort": "high"
+    },
+    {
+      "type": "fix_failing_tests",
+      "priority": "high",
+      "description": "Fix failing tests to achieve 99% pass rate",
+      "target": 99,
+      "estimatedEffort": "high"
+    },
+    {
+      "type": "quality_improvement",
+      "priority": "medium",
+      "description": "Improve test quality and assertions",
+      "target": 80,
+      "estimatedEffort": "medium"
+    }
+  ],
+  "detailedAnalysis": {
+    "coverageAnalysis": {
+      "totalFiles": 0,
+      "wellCovered": 0,
+      "poorlyCovered": 0,
+      "uncovered": 0,
+      "criticalFiles": []
+    },
+    "qualityAnalysis": {
+      "strengths": [],
+      "weaknesses": [],
+      "improvementAreas": [
+        {
+          "type": "coverage_improvement",
+          "priority": "high",
+          "description": "Improve code coverage, especially branch and function coverage",
+          "actions": [
+            "Add tests for uncovered branches",
+            "Test all exported functions",
+            "Add integration tests for complex workflows"
+          ]
+        },
+        {
+          "type": "assertion_improvement",
+          "priority": "high",
+          "description": "Improve assertion quality and meaningfulness",
+          "actions": [
+            "Replace trivial assertions with meaningful ones",
+            "Add more specific assertions (toEqual, toMatchObject)",
+            "Increase assertions per test to validate behavior thoroughly"
+          ]
+        },
+        {
+          "type": "completeness_improvement",
+          "priority": "medium",
+          "description": "Improve test completeness",
+          "actions": [
+            "Add more error handling tests",
+            "Include business logic validation",
+            "Test edge cases and boundary conditions"
+          ]
+        },
+        {
+          "type": "edge_case_improvement",
+          "priority": "medium",
+          "description": "Improve edge case coverage",
+          "actions": [
+            "Test null and undefined inputs",
+            "Test boundary values (min/max)",
+            "Test invalid and malformed inputs",
+            "Test extreme values and conditions"
+          ]
+        }
+      ]
+    },
+    "testAnalysis": {
+      "executionSummary": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "skipped": 0
+      },
+      "performance": {
+        "speed": "slow",
+        "efficiency": "unknown",
+        "reliability": "low"
+      },
+      "reliability": 0
+    },
+    "recommendations": [
+      {
+        "category": "coverage",
+        "priority": "high",
+        "title": "Improve Branch Coverage",
+        "description": "Focus on testing conditional logic and error paths",
+        "actions": [
+          "Identify uncovered branches using coverage reports",
+          "Add tests for if/else conditions",
+          "Test error handling paths",
+          "Add tests for switch/case statements"
+        ]
+      }
+    ]
+  }
+}

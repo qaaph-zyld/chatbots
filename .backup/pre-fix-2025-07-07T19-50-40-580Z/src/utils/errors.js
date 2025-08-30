@@ -4,7 +4,7 @@
  * Provides custom error classes and error handling functions
  */
 
-require('@src/utils\logger');
+require('@src/utils\\\logger');
 
 /**
  * Base custom error class

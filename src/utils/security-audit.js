@@ -11,7 +11,7 @@ const { promisify } = require('util');
 const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
 const readFile = promisify(fs.readFile);
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 const dotenv = require('dotenv');
 
 /**
@@ -44,30 +44,30 @@ const config = {
   
   // File patterns to include
   includePatterns: [
-    /\.js$/,
-    /\.jsx$/,
-    /\.json$/,
-    /\.env$/,
-    /\.env\..+$/
+    /\\\\\\.js$/,
+    /\\\\\\.jsx$/,
+    /\\\\\\.json$/,
+    /\\\\\\.env$/,
+    /\\\\\\.env\\\\\\..+$/
   ],
   
   // Security vulnerability patterns
   vulnerabilityPatterns: [
     // Injection vulnerabilities
     {
-      pattern: /eval\s*\(/g,
+      pattern: /eval\\\\\\\s*\\\\\\(/g,
       description: 'Use of eval() (potential code injection)',
       severity: 'critical',
       recommendation: 'Avoid using eval(). Use safer alternatives like JSON.parse() for JSON data.'
     },
     {
-      pattern: /exec\s*\(\s*['"`][^'"`]*\$\{/g,
+      pattern: /exec\\\\\\\s*\\\\\\(\\\\\\\s*['"`][^'"`]*\\\\\\$\\\\\\{/g,
       description: 'Potential command injection vulnerability',
       severity: 'critical',
       recommendation: 'Use child_process.execFile() or sanitize inputs before using in exec().'
     },
     {
-      pattern: /new\s+Function\s*\(/g,
+      pattern: /new\\\\\\\s+Function\\\\\\\s*\\\\\\(/g,
       description: 'Use of new Function() (potential code injection)',
       severity: 'critical',
       recommendation: 'Avoid using new Function(). Use safer alternatives.'
@@ -75,19 +75,19 @@ const config = {
     
     // XSS vulnerabilities
     {
-      pattern: /\.innerHTML\s*=/g,
+      pattern: /\\\\\\.innerHTML\\\\\\\s*=/g,
       description: 'Direct innerHTML assignment (XSS risk)',
       severity: 'high',
       recommendation: 'Use textContent or innerText instead, or sanitize HTML with a library like DOMPurify.'
     },
     {
-      pattern: /document\.write\s*\(/g,
+      pattern: /document\\\\\\.write\\\\\\\s*\\\\\\(/g,
       description: 'Use of document.write (XSS risk)',
       severity: 'high',
       recommendation: 'Avoid document.write(). Use safer DOM manipulation methods.'
     },
     {
-      pattern: /\$\(['"]\s*\#[^'"]+['"]\s*\)\.html\s*\(/g,
+      pattern: /\\\\\\$\\\\\\(['"]\\\\\\\s*\\\\\\#[^'"]+['"]\\\\\\\s*\\\\\\)\\\\\\.html\\\\\\\s*\\\\\\(/g,
       description: 'jQuery html() method usage (XSS risk)',
       severity: 'high',
       recommendation: 'Use text() instead, or sanitize HTML with a library like DOMPurify.'
@@ -95,25 +95,25 @@ const config = {
     
     // Authentication issues
     {
-      pattern: /jwt\.sign\([^,]*,\s*['"`].*['"`],\s*{\s*expiresIn:\s*(?:false|null|undefined|0)/g,
+      pattern: /jwt\\\\\\.sign\\\\\\([^,]*,\\\\\\\s*['"`].*['"`],\\\\\\\s*{\\\\\\\s*expiresIn:\\\\\\\s*(?:false|null|undefined|0)/g,
       description: 'JWT without expiration',
       severity: 'high',
       recommendation: 'Always set an appropriate expiration time for JWTs.'
     },
     {
-      pattern: /bcrypt\.hash\([^,]*,\s*(?:5|6|7|8|9)\s*\)/g,
+      pattern: /bcrypt\\\\\\.hash\\\\\\([^,]*,\\\\\\\s*(?:5|6|7|8|9)\\\\\\\s*\\\\\\)/g,
       description: 'Weak bcrypt rounds (< 10)',
       severity: 'medium',
       recommendation: 'Use at least 10 rounds for bcrypt hashing in production.'
     },
     {
-      pattern: /createHash\s*\(\s*['"]md5['"]\s*\)/g,
+      pattern: /createHash\\\\\\\s*\\\\\\(\\\\\\\s*['"]md5['"]\\\\\\\s*\\\\\\)/g,
       description: 'Use of weak hash algorithm (MD5)',
       severity: 'high',
       recommendation: 'Use a strong hashing algorithm like SHA-256 or better.'
     },
     {
-      pattern: /createHash\s*\(\s*['"]sha1['"]\s*\)/g,
+      pattern: /createHash\\\\\\\s*\\\\\\(\\\\\\\s*['"]sha1['"]\\\\\\\s*\\\\\\)/g,
       description: 'Use of weak hash algorithm (SHA-1)',
       severity: 'medium',
       recommendation: 'Use a strong hashing algorithm like SHA-256 or better.'
@@ -121,19 +121,19 @@ const config = {
     
     // Database issues
     {
-      pattern: /mongoose\.connect\([^,]*,\s*{\s*useNewUrlParser:\s*false/g,
+      pattern: /mongoose\\\\\\.connect\\\\\\([^,]*,\\\\\\\s*{\\\\\\\s*useNewUrlParser:\\\\\\\s*false/g,
       description: 'MongoDB connection with useNewUrlParser: false',
       severity: 'medium',
       recommendation: 'Set useNewUrlParser to true for MongoDB connections.'
     },
     {
-      pattern: /mongoose\.connect\([^,]*,\s*[^)]*\)(?!.*useCreateIndex)/g,
+      pattern: /mongoose\\\\\\.connect\\\\\\([^,]*,\\\\\\\s*[^)]*\\\\\\)(?!.*useCreateIndex)/g,
       description: 'MongoDB connection without useCreateIndex',
       severity: 'low',
       recommendation: 'Set useCreateIndex to true for MongoDB connections.'
     },
     {
-      pattern: /find\s*\(\s*{\s*\$where\s*:/g,
+      pattern: /find\\\\\\\s*\\\\\\(\\\\\\\s*{\\\\\\\s*\\\\\\$where\\\\\\\s*:/g,
       description: 'MongoDB $where operator usage (injection risk)',
       severity: 'high',
       recommendation: 'Avoid using the $where operator. Use standard query operators instead.'
@@ -141,13 +141,13 @@ const config = {
     
     // Sensitive data exposure
     {
-      pattern: /(const|let|var)\s+(\w+)\s*=\s*['"](?:password|secret|api[_-]?key|access[_-]?token|auth[_-]?token)['"]/gi,
+      pattern: /(const|let|var)\\\\\\\s+(\\\\\\\w+)\\\\\\\s*=\\\\\\\s*['"](?:password|secret|api[_-]?key|access[_-]?token|auth[_-]?token)['"]/gi,
       description: 'Hardcoded credentials or secrets',
       severity: 'critical',
       recommendation: 'Use environment variables or a secure vault for secrets.'
     },
     {
-      pattern: /console\.log\s*\(\s*(?:.*password|.*secret|.*token|.*key)/gi,
+      pattern: /console\\\\\\.log\\\\\\\s*\\\\\\(\\\\\\\s*(?:.*password|.*secret|.*token|.*key)/gi,
       description: 'Logging sensitive data',
       severity: 'high',
       recommendation: 'Avoid logging sensitive information. Redact or mask sensitive data before logging.'
@@ -155,13 +155,13 @@ const config = {
     
     // Insecure headers
     {
-      pattern: /helmet\s*\(\s*{\s*contentSecurityPolicy\s*:\s*false/g,
+      pattern: /helmet\\\\\\\s*\\\\\\(\\\\\\\s*{\\\\\\\s*contentSecurityPolicy\\\\\\\s*:\\\\\\\s*false/g,
       description: 'Content Security Policy disabled',
       severity: 'medium',
       recommendation: 'Enable Content Security Policy for better protection against XSS attacks.'
     },
     {
-      pattern: /helmet\s*\(\s*{\s*xssFilter\s*:\s*false/g,
+      pattern: /helmet\\\\\\\s*\\\\\\(\\\\\\\s*{\\\\\\\s*xssFilter\\\\\\\s*:\\\\\\\s*false/g,
       description: 'XSS Protection header disabled',
       severity: 'medium',
       recommendation: 'Enable XSS Protection header for better protection against XSS attacks.'
@@ -169,7 +169,7 @@ const config = {
     
     // CSRF issues
     {
-      pattern: /app\.use\s*\(\s*csrf\s*\(\s*{\s*cookie\s*:\s*true/g,
+      pattern: /app\\\\\\.use\\\\\\\s*\\\\\\(\\\\\\\s*csrf\\\\\\\s*\\\\\\(\\\\\\\s*{\\\\\\\s*cookie\\\\\\\s*:\\\\\\\s*true/g,
       description: 'CSRF protection with cookies without SameSite attribute',
       severity: 'medium',
       recommendation: 'Set SameSite attribute for cookies used in CSRF protection.'
@@ -177,13 +177,13 @@ const config = {
     
     // Miscellaneous
     {
-      pattern: /nosniff\s*:\s*false/g,
+      pattern: /nosniff\\\\\\\s*:\\\\\\\s*false/g,
       description: 'X-Content-Type-Options: nosniff disabled',
       severity: 'low',
       recommendation: 'Enable nosniff header to prevent MIME type sniffing.'
     },
     {
-      pattern: /frameguard\s*:\s*false/g,
+      pattern: /frameguard\\\\\\\s*:\\\\\\\s*false/g,
       description: 'X-Frame-Options header disabled',
       severity: 'medium',
       recommendation: 'Enable frameguard to prevent clickjacking attacks.'

@@ -663,7 +663,7 @@ class CriticalCSSExtractor {
       // Generate filename
       const filename = route === '/'
         ? 'index'
-        : route.replace(/^\//, '').replace(/\//g, '-');
+        : route.replace(/^\\\\\\//, '').replace(/\\\\\\//g, '-');
       
       // Minify if needed
       let processedCSS = css;
@@ -730,7 +730,7 @@ function ssrMiddleware(options = {}) {
           const route = req.path || '/';
           const filename = route === '/'
             ? 'index'
-            : route.replace(/^\//, '').replace(/\//g, '-');
+            : route.replace(/^\\\\\\//, '').replace(/\\\\\\//g, '-');
           
           const criticalCSSPath = `${opts.criticalCSSPath}/critical-${filename}.css`;
           

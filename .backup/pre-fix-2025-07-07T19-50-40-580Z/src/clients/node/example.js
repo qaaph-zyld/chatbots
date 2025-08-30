@@ -2,7 +2,7 @@
  * Example usage of the Chatbots Platform API Client
  */
 
-require('@src/clients\node\index');
+require('@src/clients\node\\\index');
 
 // Create a client instance with the default proxy configuration
 const client = new ChatbotsClient({

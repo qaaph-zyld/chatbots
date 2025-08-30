@@ -57,9 +57,9 @@ const weatherKeywords = [
 
 // Location extraction regex patterns
 const locationPatterns = [
-  /weather\s+(?:in|for|at)\s+([A-Za-z\s,]+)/i,
-  /(?:how's|what's|what is) the weather (?:in|for|at)\s+([A-Za-z\s,]+)/i,
-  /(?:temperature|forecast) (?:in|for|at)\s+([A-Za-z\s,]+)/i
+  /weather\\\\\\\s+(?:in|for|at)\\\\\\\s+([A-Za-z\\\\\\\s,]+)/i,
+  /(?:how's|what's|what is) the weather (?:in|for|at)\\\\\\\s+([A-Za-z\\\\\\\s,]+)/i,
+  /(?:temperature|forecast) (?:in|for|at)\\\\\\\s+([A-Za-z\\\\\\\s,]+)/i
 ];
 
 // Extract location from message

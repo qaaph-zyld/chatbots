@@ -8,7 +8,7 @@ const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const request = require('supertest');
 require('@src/app');
-require('@src/models\user.model');
+require('@src/models\\\\\\\\\\user.model');
 const jwt = require('jsonwebtoken');
 require('@src/config');
 

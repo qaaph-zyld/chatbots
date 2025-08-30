@@ -9,7 +9,7 @@ const os = require('os');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const mongoose = require('mongoose');
-require('@src/utils\logger');
+require('@src/utils\\\logger');
 require('@src/config\redis');
 
 /**
@@ -162,7 +162,7 @@ class PerformanceOptimizer {
       // Different command based on platform
       const cmd = process.platform === 'win32'
         ? 'wmic cpu get LoadPercentage'
-        : 'top -bn1 | grep "Cpu(s)" | sed "s/.*, *\\([0-9.]*\\)%* id.*/\\1/" | awk \'{print 100 - $1}\'';
+        : 'top -bn1 | grep "Cpu(s)" | sed "s/.*, *\\\([0-9.]*\\\)%* id.*/\\1/" | awk \'{print 100 - $1}\'';
       
       const { stdout } = await exec(cmd);
       

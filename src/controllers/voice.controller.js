@@ -9,8 +9,8 @@ const path = require('path');
 const { v4: uuidv4 } = require('uuid');
 const multer = require('multer');
 require('@src/services\voice.service');
-require('@src/bot\core');
-require('@src/utils\logger');
+require('@src/bot\\\\\\\core');
+require('@src/utils\\\\\\\logger');
 require('@src/config');
 
 // Configure multer for audio file uploads

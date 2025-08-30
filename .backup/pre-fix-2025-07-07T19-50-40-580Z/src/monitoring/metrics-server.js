@@ -7,7 +7,7 @@
 
 const express = require('express');
 require('@src/utils');
-require('@src/monitoring\prometheus-exporter.service');
+require('@src/monitoring\\\prometheus-exporter.service');
 require('@src/monitoring\resource-monitor.service');
 
 /**

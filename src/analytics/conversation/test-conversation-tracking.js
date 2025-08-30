@@ -5,9 +5,9 @@
  * of the analytics system.
  */
 
-require('@src/analytics\conversation\tracking.service');
-require('@src/analytics\conversation\dashboard.service');
-require('@src/analytics\conversation\insights.service');
+require('@src/analytics\\\\\\\conversation\tracking.service');
+require('@src/analytics\\\\\\\conversation\\\\\\\dashboard.service');
+require('@src/analytics\\\\\\\conversation\\\\\\\insights.service');
 
 /**
  * Test conversation tracking

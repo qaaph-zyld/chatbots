@@ -6,7 +6,7 @@
 
 require('@src/personality');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\\\\\errors');
 
 /**
  * Get all personalities for a chatbot

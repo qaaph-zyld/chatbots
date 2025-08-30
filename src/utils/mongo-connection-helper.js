@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 /**
  * Test MongoDB connection with various configurations

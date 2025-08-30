@@ -265,7 +265,7 @@ exports.getConversationHistory = async (req, res, next) => {
     const { sessionId, conversationId } = req.query;
     
     // Get conversation service
-    require('@src/services\conversation.service');
+    require('@src/services\\\\\\\conversation.service');
     
     let conversation;
     

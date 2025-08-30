@@ -377,7 +377,7 @@ class TestCategorization {
         /low/i,
         /minor/i,
         /cosmetic/i,
-        /ui\.appearance/i
+        /ui\\\\\\.appearance/i
       ]
     };
   }
@@ -392,21 +392,21 @@ class TestCategorization {
     return {
       [TestCategory.UNIT]: [
         /unit/i,
-        /\.spec\./i,
-        /\.test\./i,
-        /\/tests\/unit\//i
+        /\\\\\\.spec\\\\\\./i,
+        /\\\\\\.test\\\\\\./i,
+        /\\\\\\/tests\\\\\\/unit\\\\\\//i
       ],
       [TestCategory.INTEGRATION]: [
         /integration/i,
-        /\.int\./i,
-        /\/tests\/integration\//i
+        /\\\\\\.int\\\\\\./i,
+        /\\\\\\/tests\\\\\\/integration\\\\\\//i
       ],
       [TestCategory.FUNCTIONAL]: [
         /functional/i,
         /e2e/i,
         /end.*to.*end/i,
-        /\/tests\/functional\//i,
-        /\/tests\/e2e\//i
+        /\\\\\\/tests\\\\\\/functional\\\\\\//i,
+        /\\\\\\/tests\\\\\\/e2e\\\\\\//i
       ],
       [TestCategory.PERFORMANCE]: [
         /performance/i,

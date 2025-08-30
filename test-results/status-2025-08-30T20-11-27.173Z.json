@@ -1,0 +1,10 @@
+{
+  "command": "npm --version",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:11:27.179Z",
+  "currentTime": "2025-08-30T20:11:27.366Z",
+  "duration": 187,
+  "status": "success",
+  "exitCode": null,
+  "pid": 8688
+}

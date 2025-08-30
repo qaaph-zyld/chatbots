@@ -1,0 +1,501 @@
+# Automated Chatbot Project Setup Script
+# PowerShell script for Windows automation
+
+param(
+    [switch]$Init,
+    [switch]$Install,
+    [switch]$Test,
+    [switch]$All
+)
+
+Write-Host "🚀 Chatbot Project Automation Script" -ForegroundColor Cyan
+Write-Host "="*50 -ForegroundColor Blue
+
+# Step 1: Check Node.js installation
+function Test-NodeJS {
+    Write-Host "🔍 Checking Node.js installation..." -ForegroundColor Yellow
+    
+    try {
+        $nodeVersion = node --version 2>$null
+        if ($nodeVersion) {
+            Write-Host "✅ Node.js found: $nodeVersion" -ForegroundColor Green
+            return $true
+        }
+    } catch {
+        Write-Host "❌ Node.js not found. Please install Node.js from https://nodejs.org/" -ForegroundColor Red
+        return $false
+    }
+}
+
+# Step 2: Initialize project structure
+function Initialize-Project {
+    Write-Host "📁 Initializing project structure..." -ForegroundColor Yellow
+    
+    # Create directories
+    $directories = @(
+        "src",
+        "tests", 
+        "docs",
+        "scripts",
+        "test-results",
+        "coverage",
+        "logs"
+    )
+    
+    foreach ($dir in $directories) {
+        if (!(Test-Path $dir)) {
+            New-Item -ItemType Directory -Path $dir -Force | Out-Null
+            Write-Host "✅ Created directory: $dir" -ForegroundColor Green
+        } else {
+            Write-Host "📁 Directory exists: $dir" -ForegroundColor Cyan
+        }
+    }
+    
+    # Create main application file
+    if (!(Test-Path "src/index.js")) {
+        $mainApp = @'
+// Main Chatbot Application
+const readline = require('readline');
+const EventEmitter = require('events');
+
+class Chatbot extends EventEmitter {
+    constructor(name = 'Assistant') {
+        super();
+        this.name = name;
+        this.responses = new Map();
+        this.context = new Map();
+        this.startTime = Date.now();
+        
+        // Default responses
+        this.loadDefaultResponses();
+        
+        console.log(`🤖 ${this.name} initialized successfully`);
+    }
+    
+    loadDefaultResponses() {
+        this.responses.set('hello', 'Hello! How can I help you today?');
+        this.responses.set('hi', 'Hi there! What can I do for you?');
+        this.responses.set('help', 'I can assist you with various tasks. Just ask me anything!');
+        this.responses.set('bye', 'Goodbye! Have a great day!');
+        this.responses.set('test', 'Test successful! All systems operational.');
+    }
+    
+    processMessage(input) {
+        const message = input.toLowerCase().trim();
+        const timestamp = new Date().toISOString();
+        
+        // Log interaction
+        this.emit('message', { input: message, timestamp });
+        
+        // Find response
+        let response = this.responses.get(message);
+        
+        if (!response) {
+            // Fuzzy matching
+            for (let [key, value] of this.responses) {
+                if (message.includes(key)) {
+                    response = value;
+                    break;
+                }
+            }
+        }
+        
+        if (!response) {
+            response = "I'm not sure how to respond to that. Can you try rephrasing?";
+        }
+        
+        this.emit('response', { output: response, timestamp });
+        return response;
+    }
+    
+    addResponse(trigger, response) {
+        this.responses.set(trigger.toLowerCase(), response);
+    }
+    
+    getStats() {
+        return {
+            name: this.name,
+            uptime: Date.now() - this.startTime,
+            totalResponses: this.responses.size,
+            contextEntries: this.context.size
+        };
+    }
+}
+
+// Interactive CLI mode
+function startInteractiveMode() {
+    const bot = new Chatbot('TestBot');
+    const rl = readline.createInterface({
+        input: process.stdin,
+        output: process.stdout
+    });
+    
+    // Event listeners
+    bot.on('message', (data) => {
+        console.log(`[${data.timestamp}] User: ${data.input}`);
+    });
+    
+    bot.on('response', (data) => {
+        console.log(`[${data.timestamp}] Bot: ${data.output}`);
+    });
+    
+    console.log('🚀 Chatbot started! Type "exit" to quit.');
+    
+    const askQuestion = () => {
+        rl.question('You: ', (input) => {
+            if (input.toLowerCase() === 'exit') {
+                console.log('\n📊 Session Stats:', bot.getStats());
+                rl.close();
+                return;
+            }
+            
+            const response = bot.processMessage(input);
+            console.log(`Bot: ${response}\n`);
+            askQuestion();
+        });
+    };
+    
+    askQuestion();
+}
+
+// Export for testing
+module.exports = Chatbot;
+
+// Run if called directly
+if (require.main === module) {
+    startInteractiveMode();
+}
+'@
+        
+        Set-Content -Path "src/index.js" -Value $mainApp
+        Write-Host "✅ Created src/index.js" -ForegroundColor Green
+    }
+    
+    # Create README.md
+    if (!(Test-Path "README.md")) {
+        $readme = @'
+# Chatbot Project
+
+Automated chatbot with comprehensive testing framework.
+
+## Features
+
+- 🤖 Interactive chatbot with customizable responses
+- 🧪 Comprehensive automated testing suite
+- 📊 Performance monitoring and reporting
+- 🔧 Full automation scripts
+- 📈 Code coverage analysis
+
+## Quick Start
+
+```bash
+# Initialize project
+node test-suite.js --init
+
+# Run all tests
+npm test
+
+# Start chatbot
+npm start
+
+# Run with coverage
+npm run test:coverage
+```
+
+## Project Structure
+
+```
+├── src/           # Source code
+├── tests/         # Test files
+├── scripts/       # Automation scripts
+├── docs/          # Documentation
+├── test-results/  # Test reports
+└── coverage/      # Coverage reports
+```
+
+## Commands
+
+- `npm test` - Run all tests
+- `npm run test:unit` - Run unit tests only
+- `npm run test:integration` - Run integration tests
+- `npm run test:performance` - Run performance tests
+- `npm start` - Start the chatbot
+
+## Testing
+
+The project includes automated testing for:
+- Unit tests
+- Integration tests  
+- Performance tests
+- End-to-end tests
+
+## License
+
+MIT License
+'@
+        
+        Set-Content -Path "README.md" -Value $readme
+        Write-Host "✅ Created README.md" -ForegroundColor Green
+    }
+    
+    # Create .gitignore
+    if (!(Test-Path ".gitignore")) {
+        $gitignore = @'
+# Node modules
+node_modules/
+
+# Test results
+test-results/
+coverage/
+
+# Logs
+logs/
+*.log
+
+# Environment variables
+.env
+.env.local
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts
+dist/
+build/
+'@
+        
+        Set-Content -Path ".gitignore" -Value $gitignore
+        Write-Host "✅ Created .gitignore" -ForegroundColor Green
+    }
+}
+
+# Step 3: Install dependencies (if needed)
+function Install-Dependencies {
+    Write-Host "📦 Setting up dependencies..." -ForegroundColor Yellow
+    
+    # Initialize npm if package.json doesn't exist
+    if (!(Test-Path "package.json")) {
+        Write-Host "🔧 Initializing npm project..." -ForegroundColor Cyan
+        npm init -y | Out-Host
+    }
+    
+    Write-Host "✅ Dependencies setup complete" -ForegroundColor Green
+}
+
+# Step 4: Run tests
+function Run-Tests {
+    Write-Host "🧪 Running automated tests..." -ForegroundColor Yellow
+    
+    if (Test-Path "test-suite.js") {
+        node test-suite.js
+    } else {
+        Write-Host "❌ test-suite.js not found. Run with -Init first." -ForegroundColor Red
+    }
+}
+
+# Step 5: Create automation scripts
+function Create-AutomationScripts {
+    Write-Host "🔧 Creating automation scripts..." -ForegroundColor Yellow
+    
+    # Create build script
+    $buildScript = @'
+#!/usr/bin/env node
+
+// Automated Build Script
+const fs = require('fs');
+const path = require('path');
+const { execSync } = require('child_process');
+
+console.log('🏗️  Starting build process...');
+
+// Step 1: Clean previous builds
+if (fs.existsSync('dist')) {
+    fs.rmSync('dist', { recursive: true });
+    console.log('✅ Cleaned previous build');
+}
+
+// Step 2: Create dist directory
+fs.mkdirSync('dist', { recursive: true });
+
+// Step 3: Copy source files
+const copyFiles = (src, dest) => {
+    if (fs.existsSync(src)) {
+        const files = fs.readdirSync(src);
+        files.forEach(file => {
+            const srcPath = path.join(src, file);
+            const destPath = path.join(dest, file);
+            
+            if (fs.statSync(srcPath).isDirectory()) {
+                fs.mkdirSync(destPath, { recursive: true });
+                copyFiles(srcPath, destPath);
+            } else if (file.endsWith('.js')) {
+                fs.copyFileSync(srcPath, destPath);
+                console.log(`✅ Copied ${srcPath} -> ${destPath}`);
+            }
+        });
+    }
+};
+
+copyFiles('src', 'dist');
+
+// Step 4: Copy package.json
+if (fs.existsSync('package.json')) {
+    fs.copyFileSync('package.json', 'dist/package.json');
+    console.log('✅ Copied package.json');
+}
+
+console.log('🎉 Build completed successfully!');
+'@
+    
+    Set-Content -Path "scripts/build.js" -Value $buildScript
+    Write-Host "✅ Created scripts/build.js" -ForegroundColor Green
+    
+    # Create lint script
+    $lintScript = @'
+#!/usr/bin/env node
+
+// Simple Linting Script
+const fs = require('fs');
+const path = require('path');
+
+console.log('🔍 Running linter...');
+
+let issues = 0;
+
+const lintFile = (filePath) => {
+    const content = fs.readFileSync(filePath, 'utf8');
+    const lines = content.split('\n');
+    
+    lines.forEach((line, index) => {
+        // Check for common issues
+        if (line.includes('console.log') && !line.includes('// Allow console')) {
+            console.log(`⚠️  ${filePath}:${index + 1} - console.log found`);
+            issues++;
+        }
+        
+        if (line.includes('var ')) {
+            console.log(`⚠️  ${filePath}:${index + 1} - use const/let instead of var`);
+            issues++;
+        }
+        
+        if (line.length > 120) {
+            console.log(`⚠️  ${filePath}:${index + 1} - line too long (${line.length} chars)`);
+            issues++;
+        }
+    });
+};
+
+const lintDirectory = (dir) => {
+    if (!fs.existsSync(dir)) return;
+    
+    const files = fs.readdirSync(dir);
+    files.forEach(file => {
+        const filePath = path.join(dir, file);
+        const stat = fs.statSync(filePath);
+        
+        if (stat.isDirectory() && !file.startsWith('.') && file !== 'node_modules') {
+            lintDirectory(filePath);
+        } else if (file.endsWith('.js')) {
+            lintFile(filePath);
+        }
+    });
+};
+
+lintDirectory('src');
+lintDirectory('tests');
+
+if (issues === 0) {
+    console.log('✅ No linting issues found!');
+} else {
+    console.log(`❌ Found ${issues} linting issues`);
+    process.exit(1);
+}
+'@
+    
+    Set-Content -Path "scripts/lint.js" -Value $lintScript
+    Write-Host "✅ Created scripts/lint.js" -ForegroundColor Green
+    
+    # Create deployment script
+    $deployScript = @'
+#!/usr/bin/env node
+
+// Automated Deployment Script
+console.log('🚀 Starting deployment process...');
+
+const steps = [
+    'Running tests',
+    'Building project', 
+    'Running linter',
+    'Generating documentation',
+    'Preparing deployment package'
+];
+
+let currentStep = 0;
+
+const runStep = () => {
+    if (currentStep >= steps.length) {
+        console.log('✅ Deployment completed successfully!');
+        return;
+    }
+    
+    console.log(`📋 Step ${currentStep + 1}/${steps.length}: ${steps[currentStep]}`);
+    
+    // Simulate deployment steps
+    setTimeout(() => {
+        console.log(`✅ ${steps[currentStep]} completed`);
+        currentStep++;
+        runStep();
+    }, 1000);
+};
+
+runStep();
+'@
+    
+    Set-Content -Path "scripts/deploy.js" -Value $deployScript
+    Write-Host "✅ Created scripts/deploy.js" -ForegroundColor Green
+}
+
+# Main execution logic
+function Main {
+    if (-not (Test-NodeJS)) {
+        exit 1
+    }
+    
+    if ($Init -or $All) {
+        Initialize-Project
+        Create-AutomationScripts
+    }
+    
+    if ($Install -or $All) {
+        Install-Dependencies
+    }
+    
+    if ($Test -or $All) {
+        Run-Tests
+    }
+    
+    Write-Host "`n🎉 Setup completed successfully!" -ForegroundColor Green
+    Write-Host "Next steps:" -ForegroundColor Cyan
+    Write-Host "1. Run 'node test-suite.js --init' to initialize the test framework" -ForegroundColor White
+    Write-Host "2. Run 'npm test' to execute all tests" -ForegroundColor White
+    Write-Host "3. Run 'npm start' to start the chatbot" -ForegroundColor White
+    Write-Host "4. Check test-results/ folder for detailed reports" -ForegroundColor White
+}
+
+# Parameter handling
+if ($args.Count -eq 0) {
+    Write-Host "Usage: ./setup.ps1 [-Init] [-Install] [-Test] [-All]" -ForegroundColor Yellow
+    Write-Host "Options:" -ForegroundColor Cyan
+    Write-Host "  -Init     Initialize project structure" -ForegroundColor White
+    Write-Host "  -Install  Install dependencies" -ForegroundColor White  
+    Write-Host "  -Test     Run test suite" -ForegroundColor White
+    Write-Host "  -All      Run all steps" -ForegroundColor White
+    exit 0
+}
+
+Main

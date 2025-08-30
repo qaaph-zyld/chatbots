@@ -6,8 +6,8 @@
  */
 
 // Import required services
-require('@src/enterprise\security\index');
-require('@src/utils\mock-utils');
+require('@src/enterprise\\\\\\\security\\\\\\\index');
+require('@src/utils\\\\\\\mock-utils');
 
 /**
  * Main test function

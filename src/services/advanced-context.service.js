@@ -5,9 +5,9 @@
  * to provide comprehensive context awareness across conversations.
  */
 
-require('@src/services\entity-tracking.service');
+require('@src/services\\\\\\\entity-tracking.service');
 require('@src/services\topic-detection.service');
-require('@src/services\preference-learning.service');
+require('@src/services\\\\\\\preference-learning.service');
 require('@src/utils');
 const axios = require('axios');
 

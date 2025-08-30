@@ -6,7 +6,7 @@
  */
 
 // Use mock utilities for testing
-require('@src/utils\mock-utils');
+require('@src/utils\\\mock-utils');
 const crypto = require('crypto');
 
 /**
@@ -296,7 +296,7 @@ class DataProtectionService {
         // Default masking: replace all but last 4 characters with X
         const pattern = this.options.defaultMaskingPattern;
         if (pattern.includes('$')) {
-          const preserveCount = parseInt(pattern.match(/\$(\d+)/)[1]);
+          const preserveCount = parseInt(pattern.match(/\\$(\\\d+)/)[1]);
           const prefix = pattern.split('$')[0];
           maskedData = prefix + data.slice(-preserveCount);
         } else {
@@ -475,7 +475,7 @@ class DataProtectionService {
     this.sensitiveDataTypes.set('creditCard', {
       name: 'creditCard',
       description: 'Credit card numbers',
-      pattern: '\\b(?:\\d{4}[- ]?){3}\\d{4}\\b',
+      pattern: '\\b(?:\\\\d{4}[- ]?){3}\\\\d{4}\\b',
       maskingRule: 'default',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -484,7 +484,7 @@ class DataProtectionService {
     this.sensitiveDataTypes.set('email', {
       name: 'email',
       description: 'Email addresses',
-      pattern: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}\\b',
+      pattern: '\\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\.[A-Za-z]{2,}\\b',
       maskingRule: 'email',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -493,7 +493,7 @@ class DataProtectionService {
     this.sensitiveDataTypes.set('phone', {
       name: 'phone',
       description: 'Phone numbers',
-      pattern: '\\b\\(?\\d{3}\\)?[-. ]?\\d{3}[-. ]?\\d{4}\\b',
+      pattern: '\\b\\\(?\\\\d{3}\\\)?[-. ]?\\\\d{3}[-. ]?\\\\d{4}\\b',
       maskingRule: 'phone',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()
@@ -502,7 +502,7 @@ class DataProtectionService {
     this.sensitiveDataTypes.set('ssn', {
       name: 'ssn',
       description: 'Social Security Numbers',
-      pattern: '\\b\\d{3}-\\d{2}-\\d{4}\\b',
+      pattern: '\\b\\\\d{3}-\\\\d{2}-\\\\d{4}\\b',
       maskingRule: 'default',
       createdAt: new Date().toISOString(),
       updatedAt: new Date().toISOString()

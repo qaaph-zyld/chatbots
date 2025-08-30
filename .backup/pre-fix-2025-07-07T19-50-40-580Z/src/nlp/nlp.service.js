@@ -11,11 +11,11 @@
 
 const axios = require('axios');
 require('@src/utils');
-require('@src/nlp\engines');
-require('@src/nlp\entity');
-require('@src/nlp\intent');
-require('@src/nlp\context');
-require('@src/nlp\sentiment');
+require('@src/nlp\\\engines');
+require('@src/nlp\\\entity');
+require('@src/nlp\\\intent');
+require('@src/nlp\\\context');
+require('@src/nlp\\\sentiment');
 
 /**
  * NLP Service class

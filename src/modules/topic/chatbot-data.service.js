@@ -4,8 +4,8 @@
  * Service for managing chatbot data using the repository pattern
  */
 
-require('@src/modules\data');
-require('@src/modules\utils');
+require('@src/modules\\\\\\\data');
+require('@src/modules\\\\\\\\\\utils');
 
 class ChatbotDataService {
   constructor() {

@@ -28,7 +28,7 @@ const config = {
   securityRules: {
     // File system access
     unsafeFileOperations: {
-      pattern: /fs\.(write|append|unlink|rm|chmod|chown|symlink|truncate|open)/g,
+      pattern: /fs\\\\\\.(write|append|unlink|rm|chmod|chown|symlink|truncate|open)/g,
       description: 'Potentially unsafe file system operations',
       severity: 'medium'
     },
@@ -40,43 +40,43 @@ const config = {
     },
     // Eval and similar
     codeEvaluation: {
-      pattern: /(eval|new\s+Function|setTimeout\([^)]*function|\)\.constructor\()/g,
+      pattern: /(eval|new\\\\\\\s+Function|setTimeout\\\\\\([^)]*function|\\\\\\)\\\\\\.constructor\\\\\\()/g,
       description: 'Dynamic code evaluation that could lead to code injection',
       severity: 'critical'
     },
     // SQL injection
     sqlInjection: {
-      pattern: /execute\s*\(\s*["'`].*?\$\{/g,
+      pattern: /execute\\\\\\\s*\\\\\\(\\\\\\\s*["'`].*?\\\\\\$\\\\\\{/g,
       description: 'Potential SQL injection vulnerability',
       severity: 'critical'
     },
     // Hardcoded secrets
     hardcodedSecrets: {
-      pattern: /(password|secret|key|token|credential)s?\s*[:=]\s*["'`][^"'`]{8,}["'`]/gi,
+      pattern: /(password|secret|key|token|credential)s?\\\\\\\s*[:=]\\\\\\\s*["'`][^"'`]{8,}["'`]/gi,
       description: 'Potentially hardcoded secrets',
       severity: 'high'
     },
     // Insecure random values
     insecureRandom: {
-      pattern: /Math\.random\(\)/g,
+      pattern: /Math\\\\\\.random\\\\\\(\\\\\\)/g,
       description: 'Insecure random number generation',
       severity: 'medium'
     },
     // Insecure HTTP
     insecureHttp: {
-      pattern: /http:\/\//g,
+      pattern: /http:\\\\\\/\\\\\\//g,
       description: 'Insecure HTTP protocol usage',
       severity: 'medium'
     },
     // Insecure cookie settings
     insecureCookies: {
-      pattern: /cookie.*?secure:\s*false|cookie.*?httpOnly:\s*false/g,
+      pattern: /cookie.*?secure:\\\\\\\s*false|cookie.*?httpOnly:\\\\\\\s*false/g,
       description: 'Insecure cookie settings',
       severity: 'medium'
     },
     // Path traversal
     pathTraversal: {
-      pattern: /\.\.\/|\.\.\\|\.\./g,
+      pattern: /\\\\\\.\\\\\\.\\\\\\/|\\\\\\.\\\\\\.\\\\\\\|\\\\\\.\\\\\\./g,
       description: 'Potential path traversal vulnerability',
       severity: 'high'
     },

@@ -2,40 +2,40 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 
 // Import pages
-import '@src/client\pages\WorkflowsListPage';
-import '@src/client\pages\WorkflowBuilderPage';
-import '@src/client\pages\WorkflowAnalyticsPage';
-import '@src/client\pages\WorkflowExecutionPage';
-import '@src/client\pages\WorkflowTemplatesPage';
-import '@src/client\pages\WorkflowTemplatePreviewPage';
-import '@src/client\pages\WorkflowFromTemplatePage';
-import '@src/client\pages\WorkflowDetailsPage';
-import '@src/client\pages\ComponentsListPage';
-import '@src/client\pages\ComponentCreatePage';
-import '@src/client\pages\ComponentDetailsPage';
-import '@src/client\pages\MarketplaceListPage';
-import '@src/client\pages\MarketplaceDetailPage';
-import '@src/client\pages\OfflineModelsPage';
-import '@src/client\pages\LanguageSettingsPage';
-import '@src/client\pages\DocumentationPage';
-import '@src/client\pages\CommunityPage';
-import '@src/client\pages\admin\CacheMetricsDashboard';
-import '@src/client\pages\admin\SubscriptionManagementAdmin';
-import '@src/client\pages\admin\TenantControlsAdmin';
-import '@src/client\pages\admin\AdminReportingDashboard';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowsListPage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowBuilderPage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowAnalyticsPage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowExecutionPage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowTemplatesPage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowTemplatePreviewPage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowFromTemplatePage';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowDetailsPage';
+import '@src/client\\\\\\\pages\\\\\\\ComponentsListPage';
+import '@src/client\\\\\\\pages\\\\\\\ComponentCreatePage';
+import '@src/client\\\\\\\pages\\\\\\\ComponentDetailsPage';
+import '@src/client\\\\\\\pages\\\\\\\MarketplaceListPage';
+import '@src/client\\\\\\\pages\\\\\\\MarketplaceDetailPage';
+import '@src/client\\\\\\\pages\\\\\\\OfflineModelsPage';
+import '@src/client\\\\\\\pages\\\\\\\LanguageSettingsPage';
+import '@src/client\\\\\\\pages\\\\\\\DocumentationPage';
+import '@src/client\\\\\\\pages\\\\\\\CommunityPage';
+import '@src/client\\\\\\\pages\\\\\\\admin\\\\\\\CacheMetricsDashboard';
+import '@src/client\\\\\\\pages\\\\\\\admin\\\\\\\SubscriptionManagementAdmin';
+import '@src/client\\\\\\\pages\\\\\\\admin\\\\\\\TenantControlsAdmin';
+import '@src/client\\\\\\\pages\\\\\\\admin\\\\\\\AdminReportingDashboard';
 
 // Import layouts
-import AdminLayout from '@src/client\components\admin\AdminLayout';
+import AdminLayout from '@src/client\\\\\\\components\\\\\\\admin\\\\\\\AdminLayout';
 
 // Import CSS
-import '@src/client\pages\WorkflowPages.css';
-import '@src/client\pages\ComponentPages.css';
-import '@src/client\pages\MarketplacePages.css';
-import '@src/client\pages\WorkflowExecutionPage.css';
-import '@src/client\pages\OfflineModelsPage.css';
-import '@src/client\pages\LanguageSettingsPage.css';
-import '@src/client\pages\DocumentationPage.css';
-import '@src/client\pages\CommunityPage.css';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowPages.css';
+import '@src/client\\\\\\\pages\\\\\\\ComponentPages.css';
+import '@src/client\\\\\\\pages\\\\\\\MarketplacePages.css';
+import '@src/client\\\\\\\pages\\\\\\\WorkflowExecutionPage.css';
+import '@src/client\\\\\\\pages\\\\\\\OfflineModelsPage.css';
+import '@src/client\\\\\\\pages\\\\\\\LanguageSettingsPage.css';
+import '@src/client\\\\\\\pages\\\\\\\DocumentationPage.css';
+import '@src/client\\\\\\\pages\\\\\\\CommunityPage.css';
 
 /**
  * Application Routes

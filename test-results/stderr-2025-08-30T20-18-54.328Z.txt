@@ -1,0 +1,10 @@
+Command: dir /b
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T20-18-54.328Z
+
+PID: 4248
+
+
+
+Command completed with exit code: 0
+Duration: 30ms

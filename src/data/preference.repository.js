@@ -5,7 +5,7 @@
  */
 
 require('@src/data\base.repository');
-require('@src/models\preference.model');
+require('@src/models\\\\\\\preference.model');
 require('@src/utils');
 
 class PreferenceRepository extends BaseRepository {

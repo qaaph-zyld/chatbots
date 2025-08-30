@@ -4,7 +4,7 @@
  * Handles various output processing for the chatbot platform
  */
 
-require('@src/modules\utils\logger');
+require('@src/modules\\\\\\\\\\utils\\\\\\\logger');
 
 class OutputService {
   /**

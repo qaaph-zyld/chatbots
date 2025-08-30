@@ -5,8 +5,8 @@
  * Provides standardized approaches for dealing with edge cases and improving robustness.
  */
 
-require('@src/utils\logger');
-require('@src/utils\error-handler');
+require('@src/utils\\\logger');
+require('@src/utils\\\error-handler');
 
 /**
  * Safely access nested object properties
@@ -193,10 +193,10 @@ function validateFieldTypes(obj, typeDefinitions) {
         isValid = value instanceof Date || (typeof value === 'string' && !isNaN(Date.parse(value)));
         break;
       case 'email':
-        isValid = typeof value === 'string' && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
+        isValid = typeof value === 'string' && /^[^\\\s@]+@[^\\\s@]+\\.[^\\\s@]+$/.test(value);
         break;
       case 'url':
-        isValid = typeof value === 'string' && /^(https?|ftp):\/\/[^\s/$.?#].[^\s]*$/i.test(value);
+        isValid = typeof value === 'string' && /^(https?|ftp):\\/\\/[^\\\s/$.?#].[^\\\s]*$/i.test(value);
         break;
       default:
         // For custom types (like 'user', 'chatbot', etc.), just check if it's an object
@@ -465,7 +465,7 @@ function createSearchQuery(searchText, searchFields = []) {
     return {};
   }
   
-  const searchRegex = new RegExp(searchText.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&'), 'i');
+  const searchRegex = new RegExp(searchText.replace(/[-\\/\\\^$*+?.()|[\\]{}]/g, '\\\$&'), 'i');
   
   return {
     $or: searchFields.map(field => ({ [field]: searchRegex }))

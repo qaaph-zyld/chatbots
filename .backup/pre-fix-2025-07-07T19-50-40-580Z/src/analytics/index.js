@@ -9,21 +9,21 @@
  * feedback collection, continuous learning, and model fine-tuning.
  */
 
-require('@src/analytics\analytics.service');
-require('@src/analytics\insights.service');
-require('@src/analytics\learning.service');
-require('@src/analytics\conversation');
-require('@src/analytics\conversation');
-require('@src/analytics\conversation\feedback.service');
-require('@src/analytics\learning');
-require('@src/analytics\engagement');
-require('@src/analytics\testing\ab-testing.service');
-require('@src/analytics\benchmarking\performance-benchmark.service');
+require('@src/analytics\\\analytics.service');
+require('@src/analytics\\\insights.service');
+require('@src/analytics\\\learning.service');
+require('@src/analytics\\\conversation');
+require('@src/analytics\\\conversation');
+require('@src/analytics\\\conversation\feedback.service');
+require('@src/analytics\\\learning');
+require('@src/analytics\\\engagement');
+require('@src/analytics\testing\\\ab-testing.service');
+require('@src/analytics\benchmarking\\\performance-benchmark.service');
 require('@src/analytics\reporting\report-builder.service');
 require('@src/analytics\reporting\report-generator.service');
-require('@src/analytics\predictive\predictive-analytics.service');
-require('@src/analytics\behavior\user-behavior-insights.service');
-require('@src/analytics\optimization\performance-optimizer.service');
+require('@src/analytics\\\predictive\\\predictive-analytics.service');
+require('@src/analytics\behavior\\user-behavior-insights.service');
+require('@src/analytics\\\optimization\\\performance-optimizer.service');
 
 module.exports = {
   analyticsService,

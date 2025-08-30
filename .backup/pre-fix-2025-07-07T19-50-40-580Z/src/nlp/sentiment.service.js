@@ -95,7 +95,7 @@ class SentimentService {
    * @returns {Object} - Sentiment analysis result
    */
   analyzeLocalSentiment(text) {
-    const words = text.toLowerCase().split(/\s+/);
+    const words = text.toLowerCase().split(/\\\s+/);
     let score = 0;
     let positiveCount = 0;
     let negativeCount = 0;
@@ -103,7 +103,7 @@ class SentimentService {
     let intensifierActive = false;
     
     for (let i = 0; i < words.length; i++) {
-      const word = words[i].replace(/[^\w]/g, ''); // Remove punctuation
+      const word = words[i].replace(/[^\\\w]/g, ''); // Remove punctuation
       
       // Check for negators
       if (this.sentimentLexicon.negators.has(word)) {

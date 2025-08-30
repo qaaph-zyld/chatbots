@@ -7,9 +7,9 @@
 const jwt = require('jsonwebtoken');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-require('@src/models\user.model');
-require('@src/models\chatbot.model');
-require('@src/models\integration.model');
+require('@src/models\\user.model');
+require('@src/models\\\chatbot.model');
+require('@src/models\\\integration.model');
 
 /**
  * Create a test user

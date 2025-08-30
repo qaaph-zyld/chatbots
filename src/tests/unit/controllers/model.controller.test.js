@@ -2,8 +2,8 @@
  * Tests for Model Controller
  */
 
-require('@src/api\controllers\model.controller');
-require('@src/services\local-model.service');
+require('@src/api\\\\\\\controllers\\\\\\\model.controller');
+require('@src/services\\\\\\\local-model.service');
 
 // Mock dependencies
 jest.mock('../../../services/local-model.service');

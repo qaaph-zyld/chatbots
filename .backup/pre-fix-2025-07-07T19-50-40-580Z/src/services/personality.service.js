@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/database\schemas\personality.schema');
+require('@src/database\\\schemas\\\personality.schema');
 require('@src/utils');
 
 class PersonalityService {

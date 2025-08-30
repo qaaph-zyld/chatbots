@@ -1,0 +1,10 @@
+Command: npm --version
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T20-40-47.362Z
+
+PID: 9380
+
+
+
+Command completed with exit code: 0
+Duration: 212ms

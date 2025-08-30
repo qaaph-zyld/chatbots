@@ -5,9 +5,9 @@
  * including creation, retrieval, updating, and deletion.
  */
 
-require('@src/modules\models\template.model');
-require('@src/modules\topic\chatbot.service');
-require('@src/modules\utils\logger');
+require('@src/modules\\\models\template.model');
+require('@src/modules\topic\\\chatbot.service');
+require('@src/modules\\utils\\\logger');
 
 class TemplateService {
   /**

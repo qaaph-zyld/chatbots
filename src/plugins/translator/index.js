@@ -71,9 +71,9 @@ const supportedLanguages = [
 
 // Translation command patterns
 const translationPatterns = [
-  /translate\s+(?:this\s+)?(?:to|into)\s+([a-zA-Z]+)(?:\s*:\s*(.+))?/i,
-  /translate\s+(?:from\s+([a-zA-Z]+)\s+)?(?:to|into)\s+([a-zA-Z]+)(?:\s*:\s*(.+))?/i,
-  /(?:translate|say)\s+(?:this\s+)?(?:in|to)\s+([a-zA-Z]+)(?:\s*:\s*(.+))?/i
+  /translate\\\\\\\s+(?:this\\\\\\\s+)?(?:to|into)\\\\\\\s+([a-zA-Z]+)(?:\\\\\\\s*:\\\\\\\s*(.+))?/i,
+  /translate\\\\\\\s+(?:from\\\\\\\s+([a-zA-Z]+)\\\\\\\s+)?(?:to|into)\\\\\\\s+([a-zA-Z]+)(?:\\\\\\\s*:\\\\\\\s*(.+))?/i,
+  /(?:translate|say)\\\\\\\s+(?:this\\\\\\\s+)?(?:in|to)\\\\\\\s+([a-zA-Z]+)(?:\\\\\\\s*:\\\\\\\s*(.+))?/i
 ];
 
 // Extract translation request from message

@@ -6,7 +6,7 @@
 
 const path = require('path');
 const fs = require('fs');
-require('@src/utils\audio-processor');
+require('@src/utils\\\audio-processor');
 
 // Create test directory if it doesn't exist
 const testDir = path.join(process.cwd(), 'tests', 'temp');

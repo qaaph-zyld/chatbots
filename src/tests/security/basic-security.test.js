@@ -61,9 +61,9 @@ describe('Basic Security Tests', () => {
     );
     
     // Check for logger error handling
-    expect(appFile).toMatch(/logger\.error/i);
+    expect(appFile).toMatch(/logger\\\\\\.error/i);
     
     // Check for process exit on critical errors
-    expect(appFile).toMatch(/process\.exit/i);
+    expect(appFile).toMatch(/process\\\\\\.exit/i);
   });
 });

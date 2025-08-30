@@ -20,7 +20,7 @@ class InputService {
     const processed = {
       original: text,
       normalized: text.trim().toLowerCase(),
-      tokens: text.trim().split(/\s+/),
+      tokens: text.trim().split(/\\\\\\\s+/),
       timestamp: new Date(),
       metadata: options
     };

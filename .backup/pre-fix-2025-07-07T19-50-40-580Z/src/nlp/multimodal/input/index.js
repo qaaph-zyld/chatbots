@@ -5,7 +5,7 @@
  * various types of input beyond text.
  */
 
-require('@src/nlp\multimodal\input\input.service');
+require('@src/nlp\\\multimodal\\\input\\\input.service');
 
 module.exports = {
   inputService

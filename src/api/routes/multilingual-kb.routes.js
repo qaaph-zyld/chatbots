@@ -6,7 +6,7 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\multilingual-kb.controller');
+require('@src/api\\\\\\\controllers\\\\\\\multilingual-kb.controller');
 require('@src/middleware');
 
 // Get knowledge base in a specific language

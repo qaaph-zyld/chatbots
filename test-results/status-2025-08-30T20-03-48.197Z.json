@@ -1,0 +1,10 @@
+{
+  "command": "echo Direct runner test",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:03:48.200Z",
+  "currentTime": "2025-08-30T20:03:48.219Z",
+  "duration": 19,
+  "status": "success",
+  "exitCode": null,
+  "pid": 3900
+}

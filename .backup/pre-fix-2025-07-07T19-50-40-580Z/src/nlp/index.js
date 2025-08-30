@@ -5,9 +5,9 @@
  */
 
 require('@src/nlp\nlp.service');
-require('@src/nlp\intent.service');
-require('@src/nlp\entity.service');
-require('@src/nlp\sentiment.service');
+require('@src/nlp\\\intent.service');
+require('@src/nlp\\\entity.service');
+require('@src/nlp\\\sentiment.service');
 
 module.exports = {
   nlpService,

@@ -3,7 +3,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/models\analytics.model');
+require('@src/models\\\analytics.model');
 
 describe('Analytics Model', () => {
   // Test data

@@ -378,19 +378,19 @@ ${results.map(r => `
 - **Result**: ${r.successful ? '✅ SUCCESS' : '❌ FAILURE'}
 
 **Original Code**:
-\`\`\`javascript
+\\\\\\`\\\\\\`\\\\\\`javascript
 ${r.originalCode.trim()}
-\`\`\`
+\\\\\\`\\\\\\`\\\\\\`
 
 **Fixed Code**:
-\`\`\`javascript
+\\\\\\`\\\\\\`\\\\\\`javascript
 ${r.fixedCode.trim()}
-\`\`\`
+\\\\\\`\\\\\\`\\\\\\`
 
 **Validation Output**:
-\`\`\`
+\\\\\\`\\\\\\`\\\\\\`
 ${r.validationOutput}
-\`\`\`
+\\\\\\`\\\\\\`\\\\\\`
 `).join('\n')}
 
 ## Recommendations

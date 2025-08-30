@@ -9,8 +9,8 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const { Readable, Transform } = require('stream');
-require('@src/utils\logger');
-require('@src/config\open-voice.config');
+require('@src/utils\\\logger');
+require('@src/config\\\open-voice.config');
 
 // Try to load audio processing libraries
 let ffmpeg;

@@ -30,7 +30,7 @@ jest.mock('winston', () => {
 });
 
 // Now import the logger
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 const winston = require('winston');
 
 describe('Logger', () => {

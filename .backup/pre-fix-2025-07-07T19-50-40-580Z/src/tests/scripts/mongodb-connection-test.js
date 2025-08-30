@@ -7,9 +7,9 @@
 const fs = require('fs');
 const path = require('path');
 const mongoose = require('mongoose');
-require('@src/utils\logger');
-require('@src/utils\mongo-connection-helper');
-require('@src/config\mongodb');
+require('@src/utils\\\logger');
+require('@src/utils\\\mongo-connection-helper');
+require('@src/config\\\mongodb');
 
 // Ensure test results directory exists
 const testResultsDir = path.join(process.cwd(), 'test-results');

@@ -4,7 +4,7 @@
  * Integration with Botpress open-source chatbot platform
  */
 
-require('@src/bot\engines\base.engine');
+require('@src/bot\\\engines\base.engine');
 require('@src/utils');
 const axios = require('axios');
 

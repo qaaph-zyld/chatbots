@@ -3,7 +3,7 @@
  */
 
 // Import the base engine
-require('@src/bot\engines\base.engine');
+require('@src/bot\\\engines\base.engine');
 
 describe('Base Chatbot Engine', () => {
   describe('Constructor', () => {

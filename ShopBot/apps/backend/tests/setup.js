@@ -94,12 +94,23 @@ const clearDatabase = async () => {
 
 // Global setup for Jest
 const globalSetup = async () => {
-  await setupTestDB();
+  try {
+    await setupTestDB();
+    console.log('Global test setup completed successfully');
+  } catch (error) {
+    console.error('Global setup failed:', error);
+    throw error;
+  }
 };
 
 // Global teardown for Jest
 const globalTeardown = async () => {
-  await teardownTestDB();
+  try {
+    await teardownTestDB();
+    console.log('Global test teardown completed successfully');
+  } catch (error) {
+    console.warn('Global teardown warning:', error);
+  }
 };
 
 module.exports = {

@@ -5,10 +5,10 @@
  * to provide comprehensive context awareness across conversations.
  */
 
-require('@src/modules\topic\entity-tracking.service');
+require('@src/modules\topic\\\entity-tracking.service');
 require('@src/modules\topic\topic-detection.service');
-require('@src/modules\topic\preference-learning.service');
-require('@src/modules\utils');
+require('@src/modules\topic\\\preference-learning.service');
+require('@src/modules\\utils');
 const axios = require('axios');
 
 // Configure axios with proxy

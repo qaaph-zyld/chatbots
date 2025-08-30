@@ -65,7 +65,7 @@ describe('Server', () => {
         '@src/app': { server: serverMock },
         '@src/utils': { logger: loggerMock },
         '@src/config': configMock,
-        '@src/scaling\\cluster': { clusterManager: clusterManagerMock }
+        '@src/scaling\\\\\\\\cluster': { clusterManager: clusterManagerMock }
       };
       
       // Load the module with mocked dependencies
@@ -102,7 +102,7 @@ describe('Server', () => {
         '@src/app': { server: serverMock },
         '@src/utils': { logger: loggerMock },
         '@src/config': configMock,
-        '@src/scaling\\cluster': { clusterManager: clusterManagerMock }
+        '@src/scaling\\\\\\\\cluster': { clusterManager: clusterManagerMock }
       };
       
       // Extract the startServer function
@@ -146,7 +146,7 @@ describe('Server', () => {
         '@src/app': { server: serverMock },
         '@src/utils': { logger: loggerMock },
         '@src/config': configMock,
-        '@src/scaling\\cluster': { clusterManager: clusterManagerMock }
+        '@src/scaling\\\\\\\\cluster': { clusterManager: clusterManagerMock }
       };
       
       // Load the module with mocked dependencies

@@ -9,7 +9,7 @@ require('@src/core/module-alias');
 
 // Import mongoose and our test setup utilities
 const mongoose = require('mongoose');
-require('@tests/unit\setup\memory-server-setup');
+require('@tests/unit\\\setup\\\memory-server-setup');
 const TopicModel = require('@domain/topic.model');
 const TopicService = require('@modules/topic/topic.service');
 

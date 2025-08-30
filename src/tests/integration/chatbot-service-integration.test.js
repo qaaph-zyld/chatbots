@@ -8,9 +8,9 @@ const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
 const request = require('supertest');
 require('@src/app');
-require('@src/models\chatbot.model');
-require('@src/models\conversation.model');
-require('@src/storage\storage.service');
+require('@src/models\\\\\\\chatbot.model');
+require('@src/models\\\\\\\conversation.model');
+require('@src/storage\\\\\\\storage.service');
 
 // Mock storage service
 jest.mock('../../storage/storage.service', () => ({

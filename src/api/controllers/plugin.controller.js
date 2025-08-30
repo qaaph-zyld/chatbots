@@ -4,9 +4,9 @@
  * Handles all plugin-related operations and API endpoints
  */
 
-require('@src/services\plugin.service');
+require('@src/services\\\\\\\plugin.service');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\\\\\errors');
 
 /**
  * Get all plugins

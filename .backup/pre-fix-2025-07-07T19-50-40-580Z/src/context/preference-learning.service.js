@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-require('@src/context\advanced-context.service');
+require('@src/context\\\advanced-context.service');
 
 // Define user preference schema if not already defined in advanced-context.service.js
 let UserPreference;

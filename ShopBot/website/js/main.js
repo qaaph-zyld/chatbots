@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Animate stats on scroll
-    const statsSection = document.querySelector('.grid-cols-1.md\\:grid-cols-4');
+    const statsSection = document.querySelector('.grid-cols-1.md\\\\\\\:grid-cols-4');
     if (statsSection) {
         const observer = new IntersectionObserver((entries) => {
             entries.forEach(entry => {

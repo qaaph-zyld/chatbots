@@ -5,7 +5,7 @@
  * including tracking, dashboard generation, insights, and external integration.
  */
 
-require('@src/analytics\conversation\index');
+require('@src/analytics\\\conversation\\\index');
 
 // Sample conversation data
 const sampleConversations = [

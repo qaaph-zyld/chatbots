@@ -6,11 +6,11 @@
 
 const fs = require('fs');
 const path = require('path');
-require('@src/database\schemas\plugin.schema');
-require('@src/database\schemas\pluginInstance.schema');
-require('@src/database\schemas\chatbot.schema');
+require('@src/database\\\schemas\\\plugin.schema');
+require('@src/database\\\schemas\\\pluginInstance.schema');
+require('@src/database\\\schemas\\\chatbot.schema');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\errors');
 
 // Plugin registry to store loaded plugin modules
 const pluginRegistry = new Map();

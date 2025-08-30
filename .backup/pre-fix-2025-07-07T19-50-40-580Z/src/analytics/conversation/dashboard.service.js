@@ -7,7 +7,7 @@
  */
 
 require('@src/utils');
-require('@src/analytics\conversation\tracking.service');
+require('@src/analytics\\\conversation\tracking.service');
 
 /**
  * Conversation Dashboard Service class

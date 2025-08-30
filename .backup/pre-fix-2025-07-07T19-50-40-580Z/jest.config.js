@@ -75,12 +75,12 @@ module.exports = {
   
   // Module name mapper for module aliases
   moduleNameMapper: {
-    '^@src[\\/](.*)$': '<rootDir>/src/$1',
-    '^@data[\\/](.*)$': '<rootDir>/src/data/$1',
-    '^@core[\\/](.*)$': '<rootDir>/src/core/$1',
-    '^@modules[\\/](.*)$': '<rootDir>/src/modules/$1',
-    '^@api[\\/](.*)$': '<rootDir>/src/api/$1',
-    '^@tests[\\/](.*)$': '<rootDir>/tests/$1'
+    '^@src[\\\/](.*)$': '<rootDir>/src/$1',
+    '^@data[\\\/](.*)$': '<rootDir>/src/data/$1',
+    '^@core[\\\/](.*)$': '<rootDir>/src/core/$1',
+    '^@modules[\\\/](.*)$': '<rootDir>/src/modules/$1',
+    '^@api[\\\/](.*)$': '<rootDir>/src/api/$1',
+    '^@tests[\\\/](.*)$': '<rootDir>/tests/$1'
   },
   
   // Set timeout for tests

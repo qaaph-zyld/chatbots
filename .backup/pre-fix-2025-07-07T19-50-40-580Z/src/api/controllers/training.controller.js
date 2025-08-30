@@ -6,7 +6,7 @@
 
 require('@src/services\training.service');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\errors');
 
 /**
  * Get all training datasets for a chatbot

@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/analytics\analytics.service');
+require('@src/analytics\\\analytics.service');
 require('@src/utils');
 
 // Define learning schema
@@ -338,7 +338,7 @@ class LearningService {
       }
       
       // Get knowledge base service
-      require('@src/services\knowledgeBase.service');
+      require('@src/services\\\knowledgeBase.service');
       
       // Find or create a learning knowledge base
       let knowledgeBase = await knowledgeBaseService.getKnowledgeBaseByName(chatbotId, 'Learned Responses');
@@ -505,7 +505,7 @@ class LearningService {
       }
       
       // Get knowledge base service
-      require('@src/services\knowledgeBase.service');
+      require('@src/services\\\knowledgeBase.service');
       
       // Find or create a learning knowledge base
       let knowledgeBase = await knowledgeBaseService.getKnowledgeBaseByName(chatbotId, 'Learned Fallbacks');

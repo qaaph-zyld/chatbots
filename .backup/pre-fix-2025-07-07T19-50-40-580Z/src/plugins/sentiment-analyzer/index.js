@@ -45,7 +45,7 @@ const analyzeLocalSentiment = (text) => {
   const positiveWords = ['happy', 'good', 'great', 'excellent', 'wonderful', 'love', 'like', 'enjoy', 'thanks', 'thank you'];
   const negativeWords = ['sad', 'bad', 'terrible', 'awful', 'hate', 'dislike', 'angry', 'upset', 'disappointed', 'sorry'];
   
-  const words = text.toLowerCase().split(/\s+/);
+  const words = text.toLowerCase().split(/\\\s+/);
   
   let positiveScore = 0;
   let negativeScore = 0;

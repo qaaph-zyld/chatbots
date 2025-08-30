@@ -106,9 +106,9 @@ class BasicProcessor extends BaseNLPProcessor {
       // Extract simple entities (very basic implementation)
       // In a real implementation, this would be more sophisticated
       const entityPatterns = {
-        date: /\b\d{1,2}\/\d{1,2}\/\d{2,4}\b/g,
-        email: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b/g,
-        phone: /\b\d{3}[-.]?\d{3}[-.]?\d{4}\b/g
+        date: /\b\\\\\\\d{1,2}\\\\\\/\\\\\\\d{1,2}\\\\\\/\\\\\\\d{2,4}\b/g,
+        email: /\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\\\\\.[A-Z|a-z]{2,}\b/g,
+        phone: /\b\\\\\\\d{3}[-.]?\\\\\\\d{3}[-.]?\\\\\\\d{4}\b/g
       };
       
       Object.keys(entityPatterns).forEach(entityType => {

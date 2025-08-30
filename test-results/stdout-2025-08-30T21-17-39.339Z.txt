@@ -1,0 +1,11 @@
+Command: echo Direct runner test
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T21-17-39.339Z
+
+PID: 4464
+
+Direct runner test
+
+
+Command completed with exit code: 0
+Duration: 19ms

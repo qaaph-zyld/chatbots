@@ -6,7 +6,7 @@
 
 const { App, ExpressReceiver } = require('@slack/bolt');
 require('@src/utils');
-require('@src/models\integration.model');
+require('@src/models\\\integration.model');
 
 class SlackIntegrationService {
   constructor() {
@@ -233,7 +233,7 @@ class SlackIntegrationService {
         await integration.recordMessageReceived();
         
         // Process message with integration service
-        require('@src/integrations\integration.service');
+        require('@src/integrations\\\integration.service');
         await integrationService.processMessage(integration, event);
       } catch (error) {
         logger.error(`Error handling Slack message event:`, error.message);
@@ -247,7 +247,7 @@ class SlackIntegrationService {
         await integration.recordMessageReceived();
         
         // Process message with integration service
-        require('@src/integrations\integration.service');
+        require('@src/integrations\\\integration.service');
         await integrationService.processMessage(integration, event);
       } catch (error) {
         logger.error(`Error handling Slack app_mention event:`, error.message);
@@ -266,7 +266,7 @@ class SlackIntegrationService {
         await integration.recordMessageReceived();
         
         // Process message with integration service
-        require('@src/integrations\integration.service');
+        require('@src/integrations\\\integration.service');
         await integrationService.processMessage(integration, event);
       } catch (error) {
         logger.error(`Error handling Slack direct_message event:`, error.message);
@@ -283,7 +283,7 @@ class SlackIntegrationService {
         await integration.recordMessageReceived();
         
         // Process command with integration service
-        require('@src/integrations\integration.service');
+        require('@src/integrations\\\integration.service');
         await integrationService.processMessage(integration, {
           ...command,
           text: command.text,

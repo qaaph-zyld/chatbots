@@ -81,28 +81,28 @@ module.exports = {
       enforceSizeThreshold: 50000,
       cacheGroups: {
         defaultVendors: {
-          test: /[\\/]node_modules[\\/]/,
+          test: /[\\\/]node_modules[\\\/]/,
           priority: -10,
           reuseExistingChunk: true,
           name: 'vendors',
         },
         // Split React and related packages into a separate chunk
         react: {
-          test: /[\\/]node_modules[\\/](react|react-dom|react-router|react-router-dom)[\\/]/,
+          test: /[\\\/]node_modules[\\\/](react|react-dom|react-router|react-router-dom)[\\\/]/,
           name: 'react',
           chunks: 'all',
           priority: 20,
         },
         // Split UI libraries into a separate chunk
         ui: {
-          test: /[\\/]node_modules[\\/](antd|@material-ui|@mui)[\\/]/,
+          test: /[\\\/]node_modules[\\\/](antd|@material-ui|@mui)[\\\/]/,
           name: 'ui-libs',
           chunks: 'all',
           priority: 15,
         },
         // Split utilities into a separate chunk
         utils: {
-          test: /[\\/]node_modules[\\/](lodash|moment|axios|uuid)[\\/]/,
+          test: /[\\\/]node_modules[\\\/](lodash|moment|axios|uuid)[\\\/]/,
           name: 'utils',
           chunks: 'all',
           priority: 10,
@@ -125,7 +125,7 @@ module.exports = {
     rules: [
       // JavaScript/JSX processing
       {
-        test: /\.(js|jsx)$/,
+        test: /\\.(js|jsx)$/,
         exclude: /node_modules/,
         use: {
           loader: 'babel-loader',
@@ -146,7 +146,7 @@ module.exports = {
       },
       // CSS processing
       {
-        test: /\.css$/,
+        test: /\\.css$/,
         use: [
           isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           {
@@ -161,7 +161,7 @@ module.exports = {
       },
       // SASS/SCSS processing
       {
-        test: /\.(sass|scss)$/,
+        test: /\\.(sass|scss)$/,
         use: [
           isProduction ? MiniCssExtractPlugin.loader : 'style-loader',
           {
@@ -177,7 +177,7 @@ module.exports = {
       },
       // Image optimization
       {
-        test: /\.(png|jpg|jpeg|gif|svg)$/i,
+        test: /\\.(png|jpg|jpeg|gif|svg)$/i,
         type: 'asset',
         parser: {
           dataUrlCondition: {
@@ -190,7 +190,7 @@ module.exports = {
       },
       // Fonts handling
       {
-        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        test: /\\.(woff|woff2|eot|ttf|otf)$/i,
         type: 'asset/resource',
         generator: {
           filename: 'fonts/[name].[hash:8][ext]',
@@ -257,7 +257,7 @@ module.exports = {
     // Compression for production builds
     isProduction && new CompressionPlugin({
       algorithm: 'gzip',
-      test: /\.(js|css|html|svg)$/,
+      test: /\\.(js|css|html|svg)$/,
       threshold: 10240, // Only compress files > 10kb
       minRatio: 0.8,
     }),

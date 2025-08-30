@@ -221,7 +221,7 @@ class EntityRecognitionService {
       // Use spaCy if specified or as fallback
       else if (this.models['spacy']?.loaded && 
                (opts.modelName === 'spacy' || this.config.fallbackToSpacy)) {
-        require('@src/nlp\engines');
+        require('@src/nlp\\\engines');
         const spaCyResult = await spaCyEngine.analyze(text, { features: ['entities'] });
         
         if (spaCyResult.success) {
@@ -371,7 +371,7 @@ class EntityRecognitionService {
         if (pattern.is_regex) {
           try {
             // Extract pattern and flags from string representation
-            const regexMatch = /\/(.*)\/([gimuy]*)/.exec(pattern.pattern);
+            const regexMatch = /\\/(.*)\\/([gimuy]*)/.exec(pattern.pattern);
             if (regexMatch) {
               patternValue = new RegExp(regexMatch[1], regexMatch[2]);
             } else {

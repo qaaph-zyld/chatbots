@@ -1,0 +1,10 @@
+Command: command-that-does-not-exist 
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T20-03-48.221Z
+
+PID: 5508
+
+
+
+Command completed with exit code: 1
+Duration: 19ms

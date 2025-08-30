@@ -11,7 +11,7 @@ const { promisify } = require('util');
 const readdir = promisify(fs.readdir);
 const stat = promisify(fs.stat);
 const readFile = promisify(fs.readFile);
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 /**
  * Bug sweep configuration
@@ -43,14 +43,14 @@ const config = {
   
   // File patterns to include
   includePatterns: [
-    /\.js$/,
-    /\.jsx$/
+    /\\\\\\.js$/,
+    /\\\\\\.jsx$/
   ],
   
   // Patterns that might indicate bugs
   bugPatterns: [
     {
-      pattern: /console\.log/g,
+      pattern: /console\\\\\\.log/g,
       description: 'Console.log statement found (should use logger)',
       severity: 'warning'
     },
@@ -60,22 +60,22 @@ const config = {
       severity: 'info'
     },
     {
-      pattern: /catch\s*\([^)]*\)\s*{\s*}/g,
+      pattern: /catch\\\\\\\s*\\\\\\([^)]*\\\\\\)\\\\\\\s*{\\\\\\\s*}/g,
       description: 'Empty catch block',
       severity: 'error'
     },
     {
-      pattern: /catch\s*\([^)]*\)\s*{\s*\/\/[^\n]*\s*}/g,
+      pattern: /catch\\\\\\\s*\\\\\\([^)]*\\\\\\)\\\\\\\s*{\\\\\\\s*\\\\\\/\\\\\\/[^\n]*\\\\\\\s*}/g,
       description: 'Catch block with only comments',
       severity: 'warning'
     },
     {
-      pattern: /\.then\(\s*\)\s*\.catch\(/g,
+      pattern: /\\\\\\.then\\\\\\(\\\\\\\s*\\\\\\)\\\\\\\s*\\\\\\.catch\\\\\\(/g,
       description: 'Empty then() block in promise chain',
       severity: 'warning'
     },
     {
-      pattern: /setTimeout\(\s*[^,]+\s*\)/g,
+      pattern: /setTimeout\\\\\\(\\\\\\\s*[^,]+\\\\\\\s*\\\\\\)/g,
       description: 'setTimeout without timeout value',
       severity: 'error'
     },
@@ -90,32 +90,32 @@ const config = {
       severity: 'warning'
     },
     {
-      pattern: /new\s+Array\(/g,
+      pattern: /new\\\\\\\s+Array\\\\\\(/g,
       description: 'Using new Array() instead of []',
       severity: 'info'
     },
     {
-      pattern: /new\s+Object\(/g,
+      pattern: /new\\\\\\\s+Object\\\\\\(/g,
       description: 'Using new Object() instead of {}',
       severity: 'info'
     },
     {
-      pattern: /\.forEach\(async/g,
+      pattern: /\\\\\\.forEach\\\\\\(async/g,
       description: 'Using async in forEach (will not wait for promises)',
       severity: 'error'
     },
     {
-      pattern: /for\s*\([^;]*;\s*;[^)]*\)/g,
+      pattern: /for\\\\\\\s*\\\\\\([^;]*;\\\\\\\s*;[^)]*\\\\\\)/g,
       description: 'For loop with missing condition',
       severity: 'error'
     },
     {
-      pattern: /if\s*\(\s*([a-zA-Z0-9_$]+)\s*=\s*[^=]/g,
+      pattern: /if\\\\\\\s*\\\\\\(\\\\\\\s*([a-zA-Z0-9_$]+)\\\\\\\s*=\\\\\\\s*[^=]/g,
       description: 'Assignment in if condition (possible typo)',
       severity: 'error'
     },
     {
-      pattern: /require\([^)]+\)\(/g,
+      pattern: /require\\\\\\([^)]+\\\\\\)\\\\\\(/g,
       description: 'Immediately invoked require',
       severity: 'warning'
     }
@@ -124,37 +124,37 @@ const config = {
   // Security vulnerability patterns
   securityPatterns: [
     {
-      pattern: /eval\s*\(/g,
+      pattern: /eval\\\\\\\s*\\\\\\(/g,
       description: 'Use of eval() (security risk)',
       severity: 'critical'
     },
     {
-      pattern: /exec\s*\(\s*['"`][^'"`]*\$\{/g,
+      pattern: /exec\\\\\\\s*\\\\\\(\\\\\\\s*['"`][^'"`]*\\\\\\$\\\\\\{/g,
       description: 'Potential command injection',
       severity: 'critical'
     },
     {
-      pattern: /\.innerHTML\s*=/g,
+      pattern: /\\\\\\.innerHTML\\\\\\\s*=/g,
       description: 'Direct innerHTML assignment (XSS risk)',
       severity: 'high'
     },
     {
-      pattern: /document\.write\s*\(/g,
+      pattern: /document\\\\\\.write\\\\\\\s*\\\\\\(/g,
       description: 'Use of document.write (XSS risk)',
       severity: 'high'
     },
     {
-      pattern: /\.createAttribute\s*\(\s*['"`]on/g,
+      pattern: /\\\\\\.createAttribute\\\\\\\s*\\\\\\(\\\\\\\s*['"`]on/g,
       description: 'Creating event handler attributes (XSS risk)',
       severity: 'high'
     },
     {
-      pattern: /mongoose\.connect\([^,]*,\s*{\s*useNewUrlParser:\s*false/g,
+      pattern: /mongoose\\\\\\.connect\\\\\\([^,]*,\\\\\\\s*{\\\\\\\s*useNewUrlParser:\\\\\\\s*false/g,
       description: 'MongoDB connection with useNewUrlParser: false',
       severity: 'medium'
     },
     {
-      pattern: /jwt\.sign\([^,]*,\s*['"`].*['"`],\s*{\s*expiresIn:\s*(?:false|null|undefined|0)/g,
+      pattern: /jwt\\\\\\.sign\\\\\\([^,]*,\\\\\\\s*['"`].*['"`],\\\\\\\s*{\\\\\\\s*expiresIn:\\\\\\\s*(?:false|null|undefined|0)/g,
       description: 'JWT without expiration',
       severity: 'high'
     }

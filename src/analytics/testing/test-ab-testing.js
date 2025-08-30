@@ -5,7 +5,7 @@
  * for optimizing chatbot configurations and responses.
  */
 
-require('@src/analytics\testing\ab-testing.service');
+require('@src/analytics\testing\\\\\\\ab-testing.service');
 
 /**
  * Run the test

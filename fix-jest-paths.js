@@ -14,11 +14,11 @@ const CONFIG = {
   rootDir: process.cwd(),
   backupDir: path.join(process.cwd(), '.backup'),
   pathPatterns: [
-    { pattern: /@src\/([^\\]+)\\(.+)/g, replacement: '@src/$1/$2' },
-    { pattern: /@src\\([^\\]+)\\(.+)/g, replacement: '@src/$1/$2' },
-    { pattern: /@src\\(.+)/g, replacement: '@src/$1' },
-    { pattern: /require\('@src\/([^']+)'\)/g, replacement: "require('@src/$1')" },
-    { pattern: /require\("@src\/([^"]+)"\)/g, replacement: 'require("@src/$1")' }
+    { pattern: /@src\\\\\\/([^\\\\\\\]+)\\\\\\\(.+)/g, replacement: '@src/$1/$2' },
+    { pattern: /@src\\\\\\\([^\\\\\\\]+)\\\\\\\(.+)/g, replacement: '@src/$1/$2' },
+    { pattern: /@src\\\\\\\(.+)/g, replacement: '@src/$1' },
+    { pattern: /require\\\\\\('@src\\\\\\/([^']+)'\\\\\\)/g, replacement: "require('@src/$1')" },
+    { pattern: /require\\\\\\("@src\\\\\\/([^"]+)"\\\\\\)/g, replacement: 'require("@src/$1")' }
   ],
   fileExtensions: ['.js', '.test.js', '.spec.js'],
   excludePatterns: [

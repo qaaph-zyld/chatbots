@@ -15,7 +15,7 @@ require('@src/models\topic-reference.model');
 require('@src/utils');
 
 // Import test utilities
-require('@src/tests\utils\mock-factory');
+require('@src/tests\\utils\\\mock-factory');
 
 // Mock dependencies
 jest.mock('../../../models/topic.model');

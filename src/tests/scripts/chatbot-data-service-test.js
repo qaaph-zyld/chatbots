@@ -4,7 +4,7 @@
  * Tests the chatbot data service with the MongoDB model abstraction layer
  */
 
-require('@src/services\chatbot-data.service');
+require('@src/services\\\\\\\chatbot-data.service');
 require('@src/data');
 require('@src/utils');
 const fs = require('fs');

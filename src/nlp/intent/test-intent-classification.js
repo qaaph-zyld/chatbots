@@ -5,7 +5,7 @@
  * to classify intents from text using local models.
  */
 
-require('@src/nlp\intent\intent.service');
+require('@src/nlp\\\\\\\intent\\\\\\\intent.service');
 require('@src/utils');
 
 // Sample texts for testing

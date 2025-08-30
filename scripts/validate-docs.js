@@ -182,14 +182,14 @@ function extractCodeReferences(content) {
   const references = [];
   
   // Look for markdown links to code files
-  const linkRegex = /\[.*?\]\((.*?\.(?:js|ts|jsx|tsx|html|css|json))\)/g;
+  const linkRegex = /\\\\\\[.*?\\\\\\]\\\\\\((.*?\\\\\\.(?:js|ts|jsx|tsx|html|css|json))\\\\\\)/g;
   let match;
   while ((match = linkRegex.exec(content)) !== null) {
     references.push(match[1]);
   }
   
   // Look for code imports or requires
-  const importRegex = /(?:import|require)\s*\(['"]([^'"]*\.(?:js|ts|jsx|tsx))['"]\)/g;
+  const importRegex = /(?:import|require)\\\\\\\s*\\\\\\(['"]([^'"]*\\\\\\.(?:js|ts|jsx|tsx))['"]\\\\\\)/g;
   while ((match = importRegex.exec(content)) !== null) {
     references.push(match[1]);
   }
@@ -230,7 +230,7 @@ function validateCrossReferences() {
 
 function extractMarkdownLinks(content) {
   const links = [];
-  const linkRegex = /\[.*?\]\((.*?)\)/g;
+  const linkRegex = /\\\\\\[.*?\\\\\\]\\\\\\((.*?)\\\\\\)/g;
   let match;
   
   while ((match = linkRegex.exec(content)) !== null) {

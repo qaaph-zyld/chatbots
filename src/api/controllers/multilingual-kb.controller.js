@@ -4,7 +4,7 @@
  * Handles API requests related to multilingual knowledge bases
  */
 
-require('@src/services\multilingual-kb.service');
+require('@src/services\\\\\\\multilingual-kb.service');
 require('@src/utils');
 
 /**

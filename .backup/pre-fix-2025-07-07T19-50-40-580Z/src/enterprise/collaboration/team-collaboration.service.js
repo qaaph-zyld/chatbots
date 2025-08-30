@@ -6,7 +6,7 @@
  */
 
 // Use mock utilities for testing
-require('@src/utils\mock-utils');
+require('@src/utils\\\mock-utils');
 
 /**
  * Team Collaboration Service class

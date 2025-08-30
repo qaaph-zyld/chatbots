@@ -93,7 +93,7 @@ async function sendSlackNotification(status, details = {}) {
             },
             {
               title: 'Commit',
-              value: `\`${config.deployment.commitSha.substring(0, 7)}\``,
+              value: `\\\\\\`${config.deployment.commitSha.substring(0, 7)}\\\\\\``,
               short: true
             },
             {

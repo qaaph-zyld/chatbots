@@ -92,7 +92,7 @@ async function getPodMetrics() {
         
         // Skip header line
         const podMetrics = lines.slice(1).map(line => {
-          const parts = line.trim().split(/\s+/);
+          const parts = line.trim().split(/\\\\\\\s+/);
           return {
             pod: parts[0],
             container: parts[1],

@@ -4,7 +4,7 @@
  * Controller for managing custom components
  */
 
-require('@src/services\component.service');
+require('@src/services\\\component.service');
 
 /**
  * Get all components

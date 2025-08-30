@@ -6,7 +6,7 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\translation.controller');
+require('@src/api\\\controllers\translation.controller');
 require('@src/middleware');
 
 // Public routes

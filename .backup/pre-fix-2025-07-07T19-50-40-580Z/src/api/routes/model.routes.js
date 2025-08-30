@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\model.controller');
-require('@src/api\middleware\auth');
+require('@src/api\\\controllers\\\model.controller');
+require('@src/api\\\middleware\\\auth');
 
 // Get available models
 router.get('/available', authenticate, modelController.getAvailableModels);

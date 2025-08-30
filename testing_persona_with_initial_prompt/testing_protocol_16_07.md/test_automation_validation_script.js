@@ -29,19 +29,19 @@ class TestAutomationFramework {
     this.mockValidationRules = [
       {
         name: 'Out-of-scope variables in jest.mock()',
-        pattern: /jest\.mock\([^)]+,\s*\(\)\s*=>\s*[^{]*\{[^}]*(?<!mock)[A-Z][a-zA-Z0-9_]*(?!.*mock)/g,
+        pattern: /jest\\\\\\.mock\\\\\\([^)]+,\\\\\\\s*\\\\\\(\\\\\\)\\\\\\\s*=>\\\\\\\s*[^{]*\\\\\\{[^}]*(?<!mock)[A-Z][a-zA-Z0-9_]*(?!.*mock)/g,
         severity: 'error',
         fix: 'Use variables prefixed with "mock" or define mocks within the factory function'
       },
       {
         name: 'Hoisted mock dependencies',
-        pattern: /jest\.mock\([^)]+,\s*\(\)\s*=>\s*.*require\(/g,
+        pattern: /jest\\\\\\.mock\\\\\\([^)]+,\\\\\\\s*\\\\\\(\\\\\\)\\\\\\\s*=>\\\\\\\s*.*require\\\\\\(/g,
         severity: 'warning',
         fix: 'Move require statements inside the factory function or use jest.doMock()'
       },
       {
         name: 'Missing __esModule in mock',
-        pattern: /jest\.mock\([^)]+,\s*\(\)\s*=>\s*\{(?![\s\S]*__esModule)[\s\S]*\}\)/g,
+        pattern: /jest\\\\\\.mock\\\\\\([^)]+,\\\\\\\s*\\\\\\(\\\\\\)\\\\\\\s*=>\\\\\\\s*\\\\\\{(?![\\\\\\\s\\\\\\\S]*__esModule)[\\\\\\\s\\\\\\\S]*\\\\\\}\\\\\\)/g,
         severity: 'warning',
         fix: 'Add __esModule: true to mock for ES6 modules'
       }
@@ -269,7 +269,7 @@ module.exports = {
   
   // Transform settings
   transform: {
-    '^.+\\.js$': 'babel-jest'
+    '^.+\\\\\\\.js$': 'babel-jest'
   },
   
   // Verbose output

@@ -64,11 +64,11 @@ jest.mock('../../../config', () => ({
 }));
 
 // Import the auth service after mocks
-require('@src/auth\auth.service');
+require('@src/auth\\\auth.service');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
-require('@src/models\user.model');
-require('@src/utils\logger');
+require('@src/models\\user.model');
+require('@src/utils\\\logger');
 require('@src/config');
 
 describe('Auth Service', () => {

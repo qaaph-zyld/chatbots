@@ -88,7 +88,7 @@ async function runTest(pattern, categoryName) {
  */
 function parseTestResults(output, categoryName) {
   // Extract test file paths
-  const fileRegex = /FAIL\s+([\w\/\.-]+)/g;
+  const fileRegex = /FAIL\\\\\\\s+([\\\\\\\w\\\\\\/\\\\\\.-]+)/g;
   let match;
   
   while ((match = fileRegex.exec(output)) !== null) {
@@ -97,7 +97,7 @@ function parseTestResults(output, categoryName) {
   }
   
   // Extract error messages
-  const errorRegex = /● ([\w\s\d\.\-]+)([\s\S]*?)(?=●|\n\n|$)/g;
+  const errorRegex = /● ([\\\\\\\w\\\\\\\s\\\\\\\d\\\\\\.\\\\\\-]+)([\\\\\\\s\\\\\\\S]*?)(?=●|\n\n|$)/g;
   
   while ((match = errorRegex.exec(output)) !== null) {
     const testName = match[1].trim();
@@ -132,7 +132,7 @@ function parseTestResults(output, categoryName) {
   }
   
   // Extract test counts
-  const summaryMatch = output.match(/Tests:\s+(\d+)\s+failed,\s+(\d+)\s+passed,\s+(\d+)\s+total/);
+  const summaryMatch = output.match(/Tests:\\\\\\\s+(\\\\\\\d+)\\\\\\\s+failed,\\\\\\\s+(\\\\\\\d+)\\\\\\\s+passed,\\\\\\\s+(\\\\\\\d+)\\\\\\\s+total/);
   if (summaryMatch) {
     const failed = parseInt(summaryMatch[1], 10);
     const passed = parseInt(summaryMatch[2], 10);
@@ -145,7 +145,7 @@ function parseTestResults(output, categoryName) {
   }
   
   // Check for timeouts
-  const timeoutMatches = output.match(/Timeout - Async callback was not invoked within the (\d+)ms/g);
+  const timeoutMatches = output.match(/Timeout - Async callback was not invoked within the (\\\\\\\d+)ms/g);
   if (timeoutMatches) {
     stats.timedOut += timeoutMatches.length;
   }

@@ -7,7 +7,7 @@
 
 const fs = require('fs');
 const path = require('path');
-require('@src/config\mongodb');
+require('@src/config\\\\\\\mongodb');
 
 // Set test environment
 process.env.NODE_ENV = 'test';

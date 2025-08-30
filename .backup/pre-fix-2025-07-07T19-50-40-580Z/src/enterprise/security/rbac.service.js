@@ -7,8 +7,8 @@
  */
 
 // Use mock utilities for testing
-require('@src/utils\mock-utils');
-require('@src/enterprise\security\authorization.service');
+require('@src/utils\\\mock-utils');
+require('@src/enterprise\\\security\\\authorization.service');
 
 /**
  * RBAC Service class

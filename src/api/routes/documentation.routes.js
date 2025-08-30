@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\documentation.controller');
-require('@src/api\middleware\auth');
+require('@src/api\\\\\\\controllers\\\\\\\documentation.controller');
+require('@src/api\\\\\\\middleware\\\\\\\auth');
 
 // Get all documentation categories
 router.get('/categories', documentationController.getCategories);

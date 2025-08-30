@@ -4,7 +4,7 @@
  * Middleware to track requests and response times for the scaling service
  */
 
-require('@src/scaling\scaling.service');
+require('@src/scaling\\\\\\\scaling.service');
 require('@src/utils');
 
 /**

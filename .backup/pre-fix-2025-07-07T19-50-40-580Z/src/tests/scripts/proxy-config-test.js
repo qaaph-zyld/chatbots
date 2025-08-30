@@ -6,8 +6,8 @@
 
 const axios = require('axios');
 require('@src/config');
-require('@src/config\environment');
-require('@src/config\proxy');
+require('@src/config\\\environment');
+require('@src/config\\\proxy');
 const HttpsProxyAgent = require('https-proxy-agent');
 
 // Test utility function

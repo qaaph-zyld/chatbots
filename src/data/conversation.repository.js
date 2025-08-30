@@ -5,7 +5,7 @@
  */
 
 require('@src/data\base.repository');
-require('@src/models\conversation.model');
+require('@src/models\\\\\\\conversation.model');
 require('@src/utils');
 
 class ConversationRepository extends BaseRepository {

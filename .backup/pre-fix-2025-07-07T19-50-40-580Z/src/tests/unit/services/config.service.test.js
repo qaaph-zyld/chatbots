@@ -3,7 +3,7 @@
  */
 
 require('@src/config');
-require('@src/utils\logger');
+require('@src/utils\\\logger');
 
 // Mock dependencies
 jest.mock('../../../utils/logger', () => ({

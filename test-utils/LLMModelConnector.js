@@ -282,10 +282,10 @@ Please provide ONLY the fixed code without any explanations or markdown formatti
     let code = response;
     
     // Remove any markdown code blocks
-    code = code.replace(/```(?:javascript|js)?\n([\s\S]*?)\n```/g, '$1');
+    code = code.replace(/```(?:javascript|js)?\n([\\\\\\\s\\\\\\\S]*?)\n```/g, '$1');
     
     // Remove any explanations before or after the code
-    code = code.replace(/^[\s\S]*?(?=function|class|const|let|var|import|\/\/|\/\*|module\.exports)/m, '');
+    code = code.replace(/^[\\\\\\\s\\\\\\\S]*?(?=function|class|const|let|var|import|\\\\\\/\\\\\\/|\\\\\\/\\\\\\*|module\\\\\\.exports)/m, '');
     
     return {
       code,

@@ -25,7 +25,7 @@ console.log(`Reading ${targetFile}`);
 const fileContent = fs.readFileSync(targetFile, 'utf8');
 
 // Find the getParsedResults method (including JSDoc and closing brace)
-const methodPattern = /\/\*\*\s*\n\s*\*\s*Gets parsed test results[\s\S]*?getParsedResults\s*\(\s*testResult\s*\)\s*\{[\s\S]*?\n\s*\}/;
+const methodPattern = /\\\\\\/\\\\\\*\\\\\\*\\\\\\\s*\n\\\\\\\s*\\\\\\*\\\\\\\s*Gets parsed test results[\\\\\\\s\\\\\\\S]*?getParsedResults\\\\\\\s*\\\\\\(\\\\\\\s*testResult\\\\\\\s*\\\\\\)\\\\\\\s*\\\\\\{[\\\\\\\s\\\\\\\S]*?\n\\\\\\\s*\\\\\\}/;
 const match = fileContent.match(methodPattern);
 
 if (!match) {
@@ -93,7 +93,7 @@ console.log('Updating changelog');
 const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
 const changelogEntry = `
 ## ${timestamp}
-- Refactored \`getParsedResults\` method in \`TestAutomationRunner\` to delegate to \`ResultAnalyzer\`
+- Refactored \\\\\\`getParsedResults\\\\\\` method in \\\\\\`TestAutomationRunner\\\\\\` to delegate to \\\\\\`ResultAnalyzer\\\\\\`
 - Added fallback to original implementation if delegation fails
 `;
 

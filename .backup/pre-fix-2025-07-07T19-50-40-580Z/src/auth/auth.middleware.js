@@ -4,7 +4,7 @@
  * Middleware for protecting API routes
  */
 
-require('@src/auth\auth.service');
+require('@src/auth\\\auth.service');
 require('@src/utils');
 
 /**

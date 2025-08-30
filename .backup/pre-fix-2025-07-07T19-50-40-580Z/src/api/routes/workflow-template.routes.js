@@ -6,8 +6,8 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\workflow-template.controller');
-require('@src/api\middleware\auth.middleware');
+require('@src/api\\\controllers\\\workflow-template.controller');
+require('@src/api\\\middleware\\\auth.middleware');
 
 // Get all templates
 router.get('/', authenticate, workflowTemplateController.getTemplates);

@@ -200,20 +200,20 @@ class NetworkErrorDetector {
       /ECONNREFUSED/i,
       /ETIMEDOUT/i,
       /ECONNRESET/i,
-      /network\s+error/i,
-      /certificate\s+has\s+expired/i,
-      /unable\s+to\s+resolve\s+host/i,
-      /proxy\s+connection\s+failed/i,
-      /socket\s+hang\s+up/i,
-      /TLS\s+handshake\s+timeout/i
+      /network\\\\\\\s+error/i,
+      /certificate\\\\\\\s+has\\\\\\\s+expired/i,
+      /unable\\\\\\\s+to\\\\\\\s+resolve\\\\\\\s+host/i,
+      /proxy\\\\\\\s+connection\\\\\\\s+failed/i,
+      /socket\\\\\\\s+hang\\\\\\\s+up/i,
+      /TLS\\\\\\\s+handshake\\\\\\\s+timeout/i
     ];
     
     // Corporate proxy block patterns
     this.corporateProxyPatterns = [
-      /proxy\s+authentication\s+required/i,
-      /407\s+proxy\s+authentication\s+required/i,
-      /blocked\s+by\s+network\s+policy/i,
-      /firewall\s+block/i
+      /proxy\\\\\\\s+authentication\\\\\\\s+required/i,
+      /407\\\\\\\s+proxy\\\\\\\s+authentication\\\\\\\s+required/i,
+      /blocked\\\\\\\s+by\\\\\\\s+network\\\\\\\s+policy/i,
+      /firewall\\\\\\\s+block/i
     ];
   }
   
@@ -353,10 +353,10 @@ class TestLogger {
     
     // Console output with color coding
     const colors = {
-      info: '\x1b[36m%s\x1b[0m',    // cyan
-      warn: '\x1b[33m%s\x1b[0m',    // yellow
-      error: '\x1b[31m%s\x1b[0m',   // red
-      success: '\x1b[32m%s\x1b[0m'  // green
+      info: '\\\\\\x1b[36m%s\\\\\\x1b[0m',    // cyan
+      warn: '\\\\\\x1b[33m%s\\\\\\x1b[0m',    // yellow
+      error: '\\\\\\x1b[31m%s\\\\\\x1b[0m',   // red
+      success: '\\\\\\x1b[32m%s\\\\\\x1b[0m'  // green
     };
     
     console.log(colors[level] || '%s', `[${level.toUpperCase()}] ${message}`);
@@ -1269,7 +1269,7 @@ class TestAutomationRunner {
     }
     
     // Simple regex-based extraction of test failures from stdout
-    const failureRegex = /FAIL\s+([^\n]+)\n/g;
+    const failureRegex = /FAIL\\\\\\\s+([^\n]+)\n/g;
     const failures = [];
     let match;
     
@@ -1636,7 +1636,7 @@ class TestAutomationRunner {
   extractErrorMessage(stdout, failureIndex) {
     // Look for error message after the failure line
     const errorSection = stdout.substring(failureIndex, failureIndex + 500);
-    const errorMatch = errorSection.match(/Error:\s+([^\n]+)/i);
+    const errorMatch = errorSection.match(/Error:\\\\\\\s+([^\n]+)/i);
     return errorMatch ? errorMatch[1].trim() : 'No detailed error message available';
   }
   

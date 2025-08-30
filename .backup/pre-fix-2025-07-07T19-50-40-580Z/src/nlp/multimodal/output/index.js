@@ -5,7 +5,7 @@
  * various types of output beyond text.
  */
 
-require('@src/nlp\multimodal\output\output.service');
+require('@src/nlp\\\multimodal\\\output\\\output.service');
 
 module.exports = {
   outputService

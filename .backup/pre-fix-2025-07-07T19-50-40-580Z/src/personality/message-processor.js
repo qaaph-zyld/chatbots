@@ -4,7 +4,7 @@
  * Applies personality modifiers to chatbot messages
  */
 
-require('@src/personality\index');
+require('@src/personality\\\index');
 require('@src/utils');
 
 /**
@@ -169,13 +169,13 @@ class PersonalityMessageProcessor {
     // Apply greeting pattern if message starts with a greeting
     if (/^(hi|hello|hey|greetings)/i.test(message) && languagePatterns.greetings && languagePatterns.greetings.length > 0) {
       const randomGreeting = languagePatterns.greetings[Math.floor(Math.random() * languagePatterns.greetings.length)];
-      modifiedMessage = modifiedMessage.replace(/^(hi|hello|hey|greetings)[,!]?\s/i, randomGreeting + ' ');
+      modifiedMessage = modifiedMessage.replace(/^(hi|hello|hey|greetings)[,!]?\\\s/i, randomGreeting + ' ');
     }
     
     // Apply farewell pattern if message ends with a farewell
-    if (/(goodbye|bye|farewell|see you|talk to you later)\.?$/i.test(message) && languagePatterns.farewells && languagePatterns.farewells.length > 0) {
+    if (/(goodbye|bye|farewell|see you|talk to you later)\\.?$/i.test(message) && languagePatterns.farewells && languagePatterns.farewells.length > 0) {
       const randomFarewell = languagePatterns.farewells[Math.floor(Math.random() * languagePatterns.farewells.length)];
-      modifiedMessage = modifiedMessage.replace(/(goodbye|bye|farewell|see you|talk to you later)\.?$/i, randomFarewell);
+      modifiedMessage = modifiedMessage.replace(/(goodbye|bye|farewell|see you|talk to you later)\\.?$/i, randomFarewell);
     }
     
     return modifiedMessage;
@@ -232,7 +232,7 @@ class PersonalityMessageProcessor {
     if (friendlinessLevel > 0.7) {
       // More friendly
       if (!message.includes('!')) {
-        message = message.replace(/\.$/, '!');
+        message = message.replace(/\\.$/, '!');
       }
       
       if (!message.includes('great') && !message.includes('wonderful') && !message.includes('awesome')) {

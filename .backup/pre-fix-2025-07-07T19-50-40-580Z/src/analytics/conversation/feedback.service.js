@@ -8,7 +8,7 @@
 const mongoose = require('mongoose');
 const { v4: uuidv4 } = require('uuid');
 require('@src/utils');
-require('@src/analytics\learning.service');
+require('@src/analytics\\\learning.service');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
 

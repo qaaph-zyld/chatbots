@@ -7,7 +7,7 @@
 const express = require('express');
 const multer = require('multer');
 require('@src/training\training.controller');
-require('@src/middleware\auth.middleware');
+require('@src/middleware\\\\\\\auth.middleware');
 
 const router = express.Router();
 

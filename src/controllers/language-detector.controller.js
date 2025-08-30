@@ -4,8 +4,8 @@
  * Handles API requests for language detection.
  */
 
-require('@src/utils\language-detector');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\language-detector');
+require('@src/utils\\\\\\\logger');
 
 /**
  * Detect language from text

@@ -5,7 +5,7 @@
  * Provides standardized error handling, logging, and recovery mechanisms.
  */
 
-require('@src/utils\logger');
+require('@src/utils\\\logger');
 
 /**
  * Custom error types

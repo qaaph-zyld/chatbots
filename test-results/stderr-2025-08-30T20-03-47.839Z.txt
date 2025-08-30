@@ -1,0 +1,10 @@
+Command: echo Command 3
+Working directory: C:\Users\cc\Documents\Project\Chatbot\chatbots
+Timestamp: 2025-08-30T20-03-47.839Z
+
+PID: 1356
+
+
+
+Command completed with exit code: 0
+Duration: 23ms

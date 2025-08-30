@@ -14,7 +14,7 @@ const Preference = require('../../../models/preference.model');
 const { logger } = require('../../../utils');
 
 // Import test utilities
-require('@tests/utils\mock-factory');
+require('@tests/utils\\\\\\\mock-factory');
 
 // Mock dependencies
 jest.mock('../../../models/preference.model');

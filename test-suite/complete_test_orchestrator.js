@@ -92,7 +92,7 @@ class CompleteTestOrchestrator {
                         let content = fs.readFileSync(filePath, 'utf8');
                         const originalContent = content;
                         
-                        content = content.replace(/\\\(?![nrtbfv'"\\\])/g, '\\\\');
+                        content = content.replace(/\\\\(?![nrtbfv'"\\])/g, '\\\\\\\\');
                         content = content.replace(/\\\\x(?![0-9a-fA-F]{2})/g, '\\\\\\x');
                         content = content.replace(/\\\\u(?![0-9a-fA-F]{4})/g, '\\\\\\u');
                         
@@ -259,7 +259,7 @@ class CompleteTestOrchestrator {
                     }
                     
                     fs.writeFileSync(testPath, testContent);
-                    this.log(`✨ Generated test file: ${testPath.replace(this.projectRoot, '').replace(/\\\/g, '/')}`);
+                    this.log(`✨ Generated test file: ${testPath.replace(this.projectRoot, '').replace(/\\/g, '/')}`);
                     generatedCount++;
                 }
             }
@@ -276,7 +276,7 @@ class CompleteTestOrchestrator {
     }
 
     generateContextAwareTest(analysis) {
-        const relativePath = path.relative(this.projectRoot, analysis.file).replace(/\\\/g, '/');
+        const relativePath = path.relative(this.projectRoot, analysis.file).replace(/\\/g, '/');
         const moduleName = path.basename(analysis.file, '.js');
         
         let testContent = `// Generated intelligent test for ${relativePath}

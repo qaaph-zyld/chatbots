@@ -25,11 +25,11 @@ class SentimentRepository {
         if (!text || text.trim() === '') return 'unknown';
         
         // Check for common non-Latin characters
-        if (/[\u3040-\u30ff\u3400-\u4dbf\u4e00-\u9fff\uf900-\ufaff\uff66-\uff9f]/.test(text)) {
+        if (/[\\u3040-\\u30ff\\u3400-\\u4dbf\\u4e00-\\u9fff\\uf900-\\ufaff\\uff66-\\uff9f]/.test(text)) {
           return 'ja'; // Japanese
-        } else if (/[\u0400-\u04FF]/.test(text)) {
+        } else if (/[\\u0400-\\u04FF]/.test(text)) {
           return 'ru'; // Russian
-        } else if (/[\u0600-\u06FF]/.test(text)) {
+        } else if (/[\\u0600-\\u06FF]/.test(text)) {
           return 'ar'; // Arabic
         } else {
           return 'en'; // Default to English

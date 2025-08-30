@@ -130,7 +130,7 @@ describe('Deployment Automation Tests', () => {
 
     test('should validate database connection string format', () => {
       const dbUrl = process.env.MONGODB_URI || 'mongodb://localhost:27017/shopbot-test';
-      expect(dbUrl).toMatch(/^mongodb:\/\/.+/);
+      expect(dbUrl).toMatch(/^mongodb:\\\\\\/\\\\\\/.+/);
     });
   });
 

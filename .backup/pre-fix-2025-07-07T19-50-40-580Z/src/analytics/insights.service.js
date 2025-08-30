@@ -4,7 +4,7 @@
  * Provides conversation insights and recommendations based on analytics data
  */
 
-require('@src/analytics\analytics.service');
+require('@src/analytics\\\analytics.service');
 require('@src/utils');
 
 /**

@@ -5,7 +5,7 @@
  * and metrics server for integration with Prometheus and Grafana.
  */
 
-require('@src/monitoring\index');
+require('@src/monitoring\\\index');
 
 /**
  * Run the test

@@ -8,7 +8,7 @@
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 // Configuration
 const config = {
@@ -317,7 +317,7 @@ The deployment pipeline has been successfully finalized and is ready for product
 
 ## Deployment Commands
 
-\`\`\`bash
+\\\\\\`\\\\\\`\\\\\\`bash
 # Deploy to staging
 npm run deploy:staging
 
@@ -332,7 +332,7 @@ npm run verify:production
 
 # Generate deployment report
 npm run generate-deployment-report
-\`\`\`
+\\\\\\`\\\\\\`\\\\\\`
 
 Generated on: ${new Date().toISOString()}
 `;

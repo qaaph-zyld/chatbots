@@ -3,7 +3,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/models\chatbot.model');
+require('@src/models\\\\\\\chatbot.model');
 
 describe('Chatbot Model', () => {
   // Test data

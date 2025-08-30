@@ -11,9 +11,9 @@ const axios = require('axios');
 const FormData = require('form-data');
 
 // Import voice components
-require('@src/utils\audio-processor');
-require('@src/utils\language-detector');
-require('@src/utils\model-manager');
+require('@src/utils\\\\\\\audio-processor');
+require('@src/utils\\\\\\\language-detector');
+require('@src/utils\\\\\\\model-manager');
 require('@src/services\voice-recognition.service');
 
 // Import performance optimizer

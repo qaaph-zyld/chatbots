@@ -5,7 +5,7 @@
  * to extract entities from text using open-source models.
  */
 
-require('@src/nlp\entity\entity.service');
+require('@src/nlp\\\entity\\\entity.service');
 require('@src/utils');
 
 // Sample texts for testing
@@ -23,12 +23,12 @@ const customEntityPatterns = {
     'ibuprofen',
     'aspirin',
     'acetaminophen',
-    /\d+mg/i
+    /\\\d+mg/i
   ],
   'PRODUCT': [
     'Model Y',
     'iPhone',
-    /Tesla \w+/
+    /Tesla \\\w+/
   ]
 };
 

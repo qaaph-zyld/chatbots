@@ -4,11 +4,11 @@
  * Handles external API requests related to messages
  */
 
-require('@src/models\message.model');
-require('@src/models\conversation.model');
-require('@src/models\chatbot.model');
-require('@src/utils\apiError');
-require('@src/services\chatbot.service');
+require('@src/models\\\\\\\message.model');
+require('@src/models\\\\\\\conversation.model');
+require('@src/models\\\\\\\chatbot.model');
+require('@src/utils\\\\\\\apiError');
+require('@src/services\\\\\\\chatbot.service');
 
 /**
  * Get messages in a conversation

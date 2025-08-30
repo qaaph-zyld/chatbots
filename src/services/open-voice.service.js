@@ -15,10 +15,10 @@ const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
 const { v4: uuidv4 } = require('uuid');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 require('@src/config');
-require('@src/services\input.service');
-require('@src/services\output.service');
+require('@src/services\\\\\\\input.service');
+require('@src/services\\\\\\\output.service');
 
 // Try to load optional dependencies - they'll be installed on demand if needed
 let deepspeech, vosk, coquiTTS, espeak;
@@ -138,7 +138,7 @@ class OpenVoiceService {
    */
   async ensureDependencies(type) {
     try {
-      require('@src/utils\model-manager');
+      require('@src/utils\\\\\\\model-manager');
       
       if (type === 'stt') {
         const engine = this.config.stt.engine;

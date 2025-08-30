@@ -5,7 +5,7 @@
  * for protecting resources and ensuring fair usage.
  */
 
-require('@src/monitoring\index');
+require('@src/monitoring\\\index');
 
 /**
  * Run the test

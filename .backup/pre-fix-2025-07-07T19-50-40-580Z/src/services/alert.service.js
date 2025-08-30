@@ -158,7 +158,7 @@ class AlertService {
               type: 'section',
               text: {
                 type: 'mrkdwn',
-                text: `*Details:*\n\`\`\`${JSON.stringify(alert.details, null, 2)}\`\`\``
+                text: `*Details:*\n\\`\\`\\`${JSON.stringify(alert.details, null, 2)}\\`\\`\\``
               }
             }
           ]

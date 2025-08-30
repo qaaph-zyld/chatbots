@@ -6,8 +6,8 @@
 
 const fs = require('fs').promises;
 const path = require('path');
-require('@src/modules\utils');
-require('@src/modules\utils\indexedDB');
+require('@src/modules\\\\\\\\\\utils');
+require('@src/modules\\\\\\\\\\utils\\\\\\\indexedDB');
 
 class LocalModelService {
   constructor() {
@@ -94,7 +94,7 @@ class LocalModelService {
           
           for (const file of files) {
             if (file.endsWith('.bin') || file.endsWith('.onnx')) {
-              const modelId = file.replace(/\.(bin|onnx)$/, '');
+              const modelId = file.replace(/\\\\\\.(bin|onnx)$/, '');
               const modelInfo = this.availableModels[type].find(m => m.id === modelId);
               
               if (modelInfo) {
@@ -483,7 +483,7 @@ class LocalModelService {
       loaded: true,
       tokenize: (text) => {
         // Simulate tokenization (simple split by space)
-        return text.split(/\s+/);
+        return text.split(/\\\\\\\s+/);
       },
       detokenize: (tokens) => {
         // Simulate detokenization (join with space)

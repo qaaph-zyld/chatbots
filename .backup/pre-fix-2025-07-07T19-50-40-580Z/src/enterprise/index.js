@@ -6,8 +6,8 @@
  * and data retention policies.
  */
 
-require('@src/enterprise\collaboration\team-collaboration.service');
-require('@src/enterprise\security');
+require('@src/enterprise\\\collaboration\team-collaboration.service');
+require('@src/enterprise\\\security');
 
 module.exports = {
   teamCollaborationService,

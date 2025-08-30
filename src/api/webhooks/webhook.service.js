@@ -3,9 +3,9 @@
  * Handles webhook delivery and management
  */
 const axios = require('axios');
-require('@src/api\webhooks\webhook.model');
+require('@src/api\\\\\\\webhooks\\\\\\\webhook.model');
 const crypto = require('crypto');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 const logger = createLogger('webhook-service');
 

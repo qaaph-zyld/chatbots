@@ -6,8 +6,8 @@
 
 require('@src/utils');
 require('@src/config');
-require('@src/bot\engines\botpress.engine');
-require('@src/bot\engines\huggingface.engine');
+require('@src/bot\\\engines\botpress.engine');
+require('@src/bot\\\engines\\\huggingface.engine');
 
 class ChatbotEngineFactory {
   constructor() {

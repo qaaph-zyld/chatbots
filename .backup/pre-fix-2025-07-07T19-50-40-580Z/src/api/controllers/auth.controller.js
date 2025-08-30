@@ -4,7 +4,7 @@
  * API endpoints for user authentication and management
  */
 
-require('@src/auth\auth.service');
+require('@src/auth\\\auth.service');
 require('@src/utils');
 
 /**

@@ -5,7 +5,7 @@
  */
 
 require('@src/data\base.repository');
-require('@src/models\analytics.model');
+require('@src/models\\\analytics.model');
 require('@src/utils');
 
 class AnalyticsRepository extends BaseRepository {

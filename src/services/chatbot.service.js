@@ -7,7 +7,7 @@
 require('@src/bot\nlp');
 require('@src/bot\templates');
 require('@src/integrations');
-require('@src/bot\engines');
+require('@src/bot\\\\\\\engines');
 require('@src/personality');
 require('@src/utils');
 require('@src/config');

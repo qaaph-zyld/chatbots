@@ -2,8 +2,8 @@
  * Chatbots Platform Web Widget
  * A lightweight, customizable widget for embedding chatbots on websites
  */
-import '@src/web-widget\src\styles\main.scss';
-import '@src/web-widget\src\ChatbotWidget';
+import '@src/web-widget\\\src\\\styles\\\main.scss';
+import '@src/web-widget\\\src\\\ChatbotWidget';
 
 // Export the ChatbotWidget class as the default export
 export default ChatbotWidget;

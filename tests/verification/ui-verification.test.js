@@ -41,7 +41,7 @@ test.describe('UI Verification Tests', () => {
     await page.click('a:text("Login")');
     
     // Verify we're on login page
-    await expect(page).toHaveURL(/.*\/login/);
+    await expect(page).toHaveURL(/.*\\\\\\/login/);
     await expect(page.locator('form')).toBeVisible();
     await expect(page.locator('button:text("Sign In")')).toBeVisible();
   });
@@ -57,7 +57,7 @@ test.describe('UI Verification Tests', () => {
     await page.click('button:text("Sign In")');
     
     // Verify successful login
-    await expect(page).toHaveURL(/.*\/dashboard/);
+    await expect(page).toHaveURL(/.*\\\\\\/dashboard/);
     await expect(page.locator('h1:text("Dashboard")')).toBeVisible();
   });
 
@@ -72,7 +72,7 @@ test.describe('UI Verification Tests', () => {
     await page.click('a:text("My Chatbots")');
     
     // Verify chatbot list is displayed
-    await expect(page).toHaveURL(/.*\/chatbots/);
+    await expect(page).toHaveURL(/.*\\\\\\/chatbots/);
     await expect(page.locator('h1:text("My Chatbots")')).toBeVisible();
     
     // Verify create button is present
@@ -110,7 +110,7 @@ test.describe('UI Verification Tests', () => {
     await page.click('a:text("Subscription")');
     
     // Verify subscription info is displayed
-    await expect(page).toHaveURL(/.*\/subscription/);
+    await expect(page).toHaveURL(/.*\\\\\\/subscription/);
     await expect(page.locator('h1:text("Subscription")')).toBeVisible();
     
     // Verify current plan is displayed
@@ -128,7 +128,7 @@ test.describe('UI Verification Tests', () => {
     await page.click('a:text("Analytics")');
     
     // Verify analytics dashboard is displayed
-    await expect(page).toHaveURL(/.*\/analytics/);
+    await expect(page).toHaveURL(/.*\\\\\\/analytics/);
     await expect(page.locator('h1:text("Analytics Dashboard")')).toBeVisible();
     
     // Verify charts are present

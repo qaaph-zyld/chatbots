@@ -4,7 +4,7 @@
  * Central service for managing chatbot instances and processing messages
  */
 
-require('@src/bot\engines');
+require('@src/bot\\\engines');
 require('@src/config');
 require('@src/analytics');
 require('@src/context');

@@ -25,19 +25,19 @@ class ResultAnalyzer {
       /ECONNREFUSED/i,
       /ETIMEDOUT/i,
       /ECONNRESET/i,
-      /network\s+error/i,
-      /certificate\s+has\s+expired/i,
-      /unable\s+to\s+resolve\s+host/i,
-      /proxy\s+connection\s+failed/i,
-      /socket\s+hang\s+up/i,
-      /TLS\s+handshake\s+timeout/i
+      /network\\\\\\\s+error/i,
+      /certificate\\\\\\\s+has\\\\\\\s+expired/i,
+      /unable\\\\\\\s+to\\\\\\\s+resolve\\\\\\\s+host/i,
+      /proxy\\\\\\\s+connection\\\\\\\s+failed/i,
+      /socket\\\\\\\s+hang\\\\\\\s+up/i,
+      /TLS\\\\\\\s+handshake\\\\\\\s+timeout/i
     ];
     
     this.corporateProxyPatterns = [
-      /proxy\s+authentication\s+required/i,
-      /407\s+proxy\s+authentication\s+required/i,
-      /blocked\s+by\s+network\s+policy/i,
-      /firewall\s+block/i
+      /proxy\\\\\\\s+authentication\\\\\\\s+required/i,
+      /407\\\\\\\s+proxy\\\\\\\s+authentication\\\\\\\s+required/i,
+      /blocked\\\\\\\s+by\\\\\\\s+network\\\\\\\s+policy/i,
+      /firewall\\\\\\\s+block/i
     ];
   }
   
@@ -103,10 +103,10 @@ class ResultAnalyzer {
     
     // If parsing failed, try to extract basic information from stdout
     const output = stripAnsi(testResult.stdout || '');
-    const failedMatch = output.match(/(\d+)\s+failed/i);
-    const passedMatch = output.match(/(\d+)\s+passed/i);
-    const skippedMatch = output.match(/(\d+)\s+skipped/i);
-    const totalMatch = output.match(/(\d+)\s+total/i);
+    const failedMatch = output.match(/(\\\\\\\d+)\\\\\\\s+failed/i);
+    const passedMatch = output.match(/(\\\\\\\d+)\\\\\\\s+passed/i);
+    const skippedMatch = output.match(/(\\\\\\\d+)\\\\\\\s+skipped/i);
+    const totalMatch = output.match(/(\\\\\\\d+)\\\\\\\s+total/i);
     
     return {
       totalTests: totalMatch ? parseInt(totalMatch[1], 10) : 0,
@@ -185,10 +185,10 @@ class ResultAnalyzer {
     
     // Try to find error messages using common patterns
     const errorPatterns = [
-      /Error:\s*(.*?)(?:\n|$)/i,
-      /AssertionError:\s*(.*?)(?:\n|$)/i,
-      /FAIL\s*(.*?)(?:\n|$)/i,
-      /failed:?\s*(.*?)(?:\n|$)/i
+      /Error:\\\\\\\s*(.*?)(?:\n|$)/i,
+      /AssertionError:\\\\\\\s*(.*?)(?:\n|$)/i,
+      /FAIL\\\\\\\s*(.*?)(?:\n|$)/i,
+      /failed:?\\\\\\\s*(.*?)(?:\n|$)/i
     ];
     
     // Split output into lines
@@ -241,11 +241,11 @@ class ResultAnalyzer {
     for (const test of failedTests) {
       const errorMessage = test.errorMessage || test.message || '';
       
-      if (/syntax\s+error|unexpected\s+token|cannot\s+read\s+property|is\s+not\s+defined|is\s+not\s+a\s+function/i.test(errorMessage)) {
+      if (/syntax\\\\\\\s+error|unexpected\\\\\\\s+token|cannot\\\\\\\s+read\\\\\\\s+property|is\\\\\\\s+not\\\\\\\s+defined|is\\\\\\\s+not\\\\\\\s+a\\\\\\\s+function/i.test(errorMessage)) {
         categories.syntaxErrors.push(test);
-      } else if (/assert|expect|should|to\s+be|to\s+equal|to\s+have|to\s+contain/i.test(errorMessage)) {
+      } else if (/assert|expect|should|to\\\\\\\s+be|to\\\\\\\s+equal|to\\\\\\\s+have|to\\\\\\\s+contain/i.test(errorMessage)) {
         categories.assertionFailures.push(test);
-      } else if (/timeout|timed\s+out|took\s+longer\s+than/i.test(errorMessage)) {
+      } else if (/timeout|timed\\\\\\\s+out|took\\\\\\\s+longer\\\\\\\s+than/i.test(errorMessage)) {
         categories.timeouts.push(test);
       } else if (this.isNetworkBlockedError({ message: errorMessage })) {
         categories.networkErrors.push(test);

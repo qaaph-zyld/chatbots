@@ -226,7 +226,7 @@ const configureSecurityMiddleware = (options = {}) => {
       const isSuspicious = (value) => {
         if (typeof value !== 'string') return false;
         
-        const sqlRegex = /('|"|;|--|\/\*|\*\/|=|drop|select|insert|update|delete|union|into|load_file|outfile)/i;
+        const sqlRegex = /('|"|;|--|\\/\\*|\\*\\/|=|drop|select|insert|update|delete|union|into|load_file|outfile)/i;
         return sqlRegex.test(value);
       };
       

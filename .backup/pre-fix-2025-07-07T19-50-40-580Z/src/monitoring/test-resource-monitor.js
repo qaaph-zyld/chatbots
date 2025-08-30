@@ -5,7 +5,7 @@
  * for tracking system resource usage and generating alerts.
  */
 
-require('@src/monitoring\index');
+require('@src/monitoring\\\index');
 
 /**
  * Run the test

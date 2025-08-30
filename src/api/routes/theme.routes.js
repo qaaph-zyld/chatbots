@@ -6,9 +6,9 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/api\controllers\theme.controller');
-require('@src/api\middlewares\auth.middleware');
-require('@src/api\middlewares\validation.middleware');
+require('@src/api\\\\\\\controllers\theme.controller');
+require('@src/api\\\\\\\middlewares\\\\\\\auth.middleware');
+require('@src/api\\\\\\\middlewares\validation.middleware');
 const Joi = require('joi');
 
 // Validation schemas

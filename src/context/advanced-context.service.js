@@ -11,7 +11,7 @@ const { v4: uuidv4 } = require('uuid');
 require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-require('@src/context\context.service');
+require('@src/context\\\\\\\context.service');
 
 // Define cross-conversation entity schema
 const CrossConversationEntitySchema = new mongoose.Schema({

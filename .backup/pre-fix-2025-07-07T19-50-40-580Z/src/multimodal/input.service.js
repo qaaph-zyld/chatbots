@@ -215,7 +215,7 @@ class ImageInputHandler extends InputHandler {
       let data = base64Data;
       
       if (base64Data.includes(';base64,')) {
-        const matches = base64Data.match(/^data:image\/([a-zA-Z0-9]+);base64,(.+)$/);
+        const matches = base64Data.match(/^data:image\\/([a-zA-Z0-9]+);base64,(.+)$/);
         if (matches && matches.length === 3) {
           format = matches[1];
           data = matches[2];
@@ -405,7 +405,7 @@ class AudioInputHandler extends InputHandler {
       let data = base64Data;
       
       if (base64Data.includes(';base64,')) {
-        const matches = base64Data.match(/^data:audio\/([a-zA-Z0-9]+);base64,(.+)$/);
+        const matches = base64Data.match(/^data:audio\\/([a-zA-Z0-9]+);base64,(.+)$/);
         if (matches && matches.length === 3) {
           format = matches[1];
           data = matches[2];
@@ -500,7 +500,7 @@ class LocationInputHandler extends InputHandler {
       
       if (typeof input.content === 'string') {
         // Assume it's a comma-separated "lat,lng" or an address
-        if (input.content.match(/^-?\d+(\.\d+)?,\s*-?\d+(\.\d+)?$/)) {
+        if (input.content.match(/^-?\\\d+(\\.\\\d+)?,\\\s*-?\\\d+(\\.\\\d+)?$/)) {
           // It's a "lat,lng" string
           const [lat, lng] = input.content.split(',').map(coord => parseFloat(coord.trim()));
           latitude = lat;

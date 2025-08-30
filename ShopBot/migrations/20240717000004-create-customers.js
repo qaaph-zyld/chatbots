@@ -21,7 +21,7 @@ module.exports = {
           index: true,
           trim: true,
           lowercase: true,
-          match: [/^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/, 'Please enter a valid email']
+          match: [/^[\\\\\\\w-\\\\\\.]+@([\\\\\\\w-]+\\\\\\.)+[\\\\\\\w-]{2,4}$/, 'Please enter a valid email']
         },
         name: { 
           type: String, 

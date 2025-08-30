@@ -6,9 +6,9 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/models\entity.model');
-require('@src/models\entity-relation.model');
-require('@src/models\entity-reference.model');
+require('@src/models\\\\\\\entity.model');
+require('@src/models\\\\\\\entity-relation.model');
+require('@src/models\\\\\\\entity-reference.model');
 require('@src/utils');
 const axios = require('axios');
 

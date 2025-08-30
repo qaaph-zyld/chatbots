@@ -5,7 +5,7 @@
  * for analyzing user behavior patterns and generating actionable insights.
  */
 
-require('@src/analytics\behavior\user-behavior-insights.service');
+require('@src/analytics\behavior\\user-behavior-insights.service');
 
 /**
  * Example data sources for user behavior analysis

@@ -92,10 +92,10 @@ function isValidColor(color) {
   // Simple validation for common color formats
   return (
     /^#([0-9A-F]{3}){1,2}$/i.test(color) || // Hex
-    /^rgb\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*\)$/i.test(color) || // RGB
-    /^rgba\(\s*\d+\s*,\s*\d+\s*,\s*\d+\s*,\s*[\d.]+\s*\)$/i.test(color) || // RGBA
-    /^hsl\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*\)$/i.test(color) || // HSL
-    /^hsla\(\s*\d+\s*,\s*\d+%\s*,\s*\d+%\s*,\s*[\d.]+\s*\)$/i.test(color) || // HSLA
+    /^rgb\\(\\\s*\\\d+\\\s*,\\\s*\\\d+\\\s*,\\\s*\\\d+\\\s*\\)$/i.test(color) || // RGB
+    /^rgba\\(\\\s*\\\d+\\\s*,\\\s*\\\d+\\\s*,\\\s*\\\d+\\\s*,\\\s*[\\\d.]+\\\s*\\)$/i.test(color) || // RGBA
+    /^hsl\\(\\\s*\\\d+\\\s*,\\\s*\\\d+%\\\s*,\\\s*\\\d+%\\\s*\\)$/i.test(color) || // HSL
+    /^hsla\\(\\\s*\\\d+\\\s*,\\\s*\\\d+%\\\s*,\\\s*\\\d+%\\\s*,\\\s*[\\\d.]+\\\s*\\)$/i.test(color) || // HSLA
     /^[a-z]+$/i.test(color) // Named color
   );
 }
@@ -121,7 +121,7 @@ function isValidUrl(url) {
  */
 function isValidProxyUrl(proxyUrl) {
   // Simple validation for host:port format
-  return /^.+:\d+$/.test(proxyUrl);
+  return /^.+:\\\d+$/.test(proxyUrl);
 }
 
 /**

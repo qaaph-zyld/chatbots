@@ -4,8 +4,8 @@
  * Handles external API requests related to chatbots
  */
 
-require('@src/models\chatbot.model');
-require('@src/utils\apiError');
+require('@src/models\\\chatbot.model');
+require('@src/utils\\\apiError');
 
 /**
  * Get all accessible chatbots

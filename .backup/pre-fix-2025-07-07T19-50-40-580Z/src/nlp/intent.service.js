@@ -5,7 +5,7 @@
  */
 
 require('@src/nlp\nlp.service');
-require('@src/nlp\entity.service');
+require('@src/nlp\\\entity.service');
 require('@src/utils');
 
 /**

@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', function() {
       // Email validation
       const emailField = joinForm.querySelector('input[type="email"]');
       if (emailField && emailField.value.trim()) {
-        const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        const emailPattern = /^[^\\\\\\\s@]+@[^\\\\\\\s@]+\\\\\\.[^\\\\\\\s@]+$/;
         if (!emailPattern.test(emailField.value)) {
           isValid = false;
           emailField.classList.add('error');

@@ -9,7 +9,7 @@
 require('dotenv').config();
 
 // Import required modules
-require('@src/bot\engines');
+require('@src/bot\\\engines');
 require('@src/utils');
 require('@src/config');
 

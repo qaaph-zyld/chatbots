@@ -6,7 +6,7 @@
  */
 
 require('@src/utils');
-require('@src/analytics\conversation\tracking.service');
+require('@src/analytics\\\conversation\tracking.service');
 const { v4: uuidv4 } = require('uuid');
 
 /**

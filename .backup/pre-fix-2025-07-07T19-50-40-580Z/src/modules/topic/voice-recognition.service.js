@@ -8,9 +8,9 @@
 const fs = require('fs');
 const path = require('path');
 const { spawn } = require('child_process');
-require('@src/modules\utils\logger');
-require('@src/modules\config\open-voice.config');
-require('@src/modules\utils\model-manager');
+require('@src/modules\\utils\\\logger');
+require('@src/modules\\\config\\\open-voice.config');
+require('@src/modules\\utils\\\model-manager');
 
 // Speaker recognition libraries
 let speechbrain;

@@ -12,11 +12,11 @@ class ProjectCleanupAutomation {
         this.config = {
             // Analysis patterns for different file types
             patterns: {
-                source: /\.(js|ts|jsx|tsx|py|java|cpp|c|h)$/,
-                config: /\.(json|yaml|yml|toml|ini|conf)$/,
-                documentation: /\.(md|txt|rst|adoc)$/,
-                tests: /\.(test|spec)\.(js|ts|jsx|tsx|py)$/,
-                build: /\.(dockerfile|makefile|gulpfile|webpack|rollup)$/i
+                source: /\\\\\\.(js|ts|jsx|tsx|py|java|cpp|c|h)$/,
+                config: /\\\\\\.(json|yaml|yml|toml|ini|conf)$/,
+                documentation: /\\\\\\.(md|txt|rst|adoc)$/,
+                tests: /\\\\\\.(test|spec)\\\\\\.(js|ts|jsx|tsx|py)$/,
+                build: /\\\\\\.(dockerfile|makefile|gulpfile|webpack|rollup)$/i
             },
             // Directories to analyze for cleanup
             analysisTargets: [
@@ -25,12 +25,12 @@ class ProjectCleanupAutomation {
             ],
             // Files/folders never to remove
             protectedPatterns: [
-                /package\.json$/,
-                /package-lock\.json$/,
-                /yarn\.lock$/,
-                /\.git/,
+                /package\\\\\\.json$/,
+                /package-lock\\\\\\.json$/,
+                /yarn\\\\\\.lock$/,
+                /\\\\\\.git/,
                 /node_modules/,
-                /\.env/,
+                /\\\\\\.env/,
                 /README/i
             ],
             // Minimum file age for deletion (days)
@@ -86,7 +86,7 @@ class ProjectCleanupAutomation {
                     this.config.protectedPatterns = userConfig.protectedPatterns.map(pattern => {
                         if (typeof pattern === 'string') {
                             // Convert glob-like patterns to RegExp
-                            return new RegExp(pattern.replace(/\*/g, '.*').replace(/\?/g, '.'));
+                            return new RegExp(pattern.replace(/\\\\\\*/g, '.*').replace(/\\\\\\?/g, '.'));
                         }
                         return pattern;
                     });
@@ -384,9 +384,9 @@ class ProjectCleanupAutomation {
 
                 // Extract imports (ES6, CommonJS, TypeScript)
                 const importPatterns = [
-                    /import\s+.*?\s+from\s+['"`]([^'"`]+)['"`]/g,
-                    /require\(['"`]([^'"`]+)['"`]\)/g,
-                    /import\(['"`]([^'"`]+)['"`]\)/g
+                    /import\\\\\\\s+.*?\\\\\\\s+from\\\\\\\s+['"`]([^'"`]+)['"`]/g,
+                    /require\\\\\\(['"`]([^'"`]+)['"`]\\\\\\)/g,
+                    /import\\\\\\(['"`]([^'"`]+)['"`]\\\\\\)/g
                 ];
 
                 importPatterns.forEach(pattern => {
@@ -398,9 +398,9 @@ class ProjectCleanupAutomation {
 
                 // Extract exports
                 const exportPatterns = [
-                    /export\s+.*?from\s+['"`]([^'"`]+)['"`]/g,
-                    /module\.exports\s*=/g,
-                    /exports\./g
+                    /export\\\\\\\s+.*?from\\\\\\\s+['"`]([^'"`]+)['"`]/g,
+                    /module\\\\\\.exports\\\\\\\s*=/g,
+                    /exports\\\\\\./g
                 ];
 
                 exportPatterns.forEach(pattern => {
@@ -443,10 +443,10 @@ class ProjectCleanupAutomation {
                 // Analyze which files are being tested
                 try {
                     const content = await fs.readFile(filePath, 'utf8');
-                    const importMatches = content.match(/from\s+['"`]([^'"`]+)['"`]/g) || [];
+                    const importMatches = content.match(/from\\\\\\\s+['"`]([^'"`]+)['"`]/g) || [];
                     
                     importMatches.forEach(match => {
-                        const importPath = match.replace(/from\s+['"`]([^'"`]+)['"`]/, '$1');
+                        const importPath = match.replace(/from\\\\\\\s+['"`]([^'"`]+)['"`]/, '$1');
                         if (!importPath.startsWith('.')) return;
                         
                         const resolvedPath = path.resolve(path.dirname(filePath), importPath);
@@ -559,7 +559,7 @@ class ProjectCleanupAutomation {
     calculateTestScore(filePath) {
         // Test files without corresponding source files might be obsolete
         if (this.config.patterns.tests.test(filePath)) {
-            const sourceFile = filePath.replace(/\.(test|spec)\./, '.');
+            const sourceFile = filePath.replace(/\\\\\\.(test|spec)\\\\\\./, '.');
             try {
                 require('fs').accessSync(sourceFile);
                 return 0; // Source file exists

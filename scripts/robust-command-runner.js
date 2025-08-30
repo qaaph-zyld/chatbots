@@ -30,7 +30,7 @@ function escapeShellArg(arg) {
     return arg;
   } else {
     // Unix escaping
-    return arg.replace(/(["`$\\!])/g, '\\$1');
+    return arg.replace(/(["`$\\\\\\\!])/g, '\\\\\\\$1');
   }
 }
 

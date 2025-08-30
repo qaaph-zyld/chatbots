@@ -248,7 +248,7 @@ class ContextManagementService {
       for (const entity of nlpData.entities) {
         const entityType = entity.type;
         const entityValue = entity.text;
-        const entityId = entity.id || entityValue.toLowerCase().replace(/\s+/g, '_');
+        const entityId = entity.id || entityValue.toLowerCase().replace(/\\\\\\\s+/g, '_');
         
         if (!context.entities[entityType]) {
           context.entities[entityType] = {};
@@ -338,10 +338,10 @@ class ContextManagementService {
       };
       
       // Check for pronouns
-      const words = message.toLowerCase().split(/\s+/);
+      const words = message.toLowerCase().split(/\\\\\\\s+/);
       
       for (const word of words) {
-        const cleanWord = word.replace(/[^\w]/g, '');
+        const cleanWord = word.replace(/[^\\\\\\\w]/g, '');
         
         if (pronouns[cleanWord]) {
           const pronoun = pronouns[cleanWord];

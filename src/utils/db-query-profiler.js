@@ -260,7 +260,7 @@ class DBQueryProfiler extends EventEmitter {
   _detectQueryType(query) {
     if (typeof query === 'string') {
       // SQL query
-      if (query.match(/^\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|TRUNCATE|BEGIN|COMMIT|ROLLBACK)/i)) {
+      if (query.match(/^\\\\\\\s*(SELECT|INSERT|UPDATE|DELETE|CREATE|ALTER|DROP|TRUNCATE|BEGIN|COMMIT|ROLLBACK)/i)) {
         return 'sql';
       }
     } else if (query && typeof query === 'object') {
@@ -284,9 +284,9 @@ class DBQueryProfiler extends EventEmitter {
   _detectCollection(query) {
     if (typeof query === 'string') {
       // SQL query
-      const fromMatch = query.match(/\s+FROM\s+[`"']?([a-zA-Z0-9_]+)[`"']?/i);
-      const intoMatch = query.match(/\s+INTO\s+[`"']?([a-zA-Z0-9_]+)[`"']?/i);
-      const updateMatch = query.match(/\s*UPDATE\s+[`"']?([a-zA-Z0-9_]+)[`"']?/i);
+      const fromMatch = query.match(/\\\\\\\s+FROM\\\\\\\s+[`"']?([a-zA-Z0-9_]+)[`"']?/i);
+      const intoMatch = query.match(/\\\\\\\s+INTO\\\\\\\s+[`"']?([a-zA-Z0-9_]+)[`"']?/i);
+      const updateMatch = query.match(/\\\\\\\s*UPDATE\\\\\\\s+[`"']?([a-zA-Z0-9_]+)[`"']?/i);
       
       return fromMatch?.[1] || intoMatch?.[1] || updateMatch?.[1] || null;
     } else if (query && typeof query === 'object') {
@@ -306,7 +306,7 @@ class DBQueryProfiler extends EventEmitter {
   _detectOperation(query) {
     if (typeof query === 'string') {
       // SQL query
-      const firstWord = query.trim().split(/\s+/)[0].toUpperCase();
+      const firstWord = query.trim().split(/\\\\\\\s+/)[0].toUpperCase();
       
       if (['SELECT', 'INSERT', 'UPDATE', 'DELETE', 'CREATE', 'ALTER', 'DROP', 'TRUNCATE'].includes(firstWord)) {
         return firstWord.toLowerCase();

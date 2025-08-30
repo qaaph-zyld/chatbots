@@ -65,7 +65,7 @@ class PerformanceBenchmarkService {
       }
 
       // Generate benchmark ID
-      const benchmarkId = `${name.toLowerCase().replace(/\s+/g, '-')}-${Date.now()}`;
+      const benchmarkId = `${name.toLowerCase().replace(/\\\s+/g, '-')}-${Date.now()}`;
 
       // Create benchmark object
       const benchmark = {

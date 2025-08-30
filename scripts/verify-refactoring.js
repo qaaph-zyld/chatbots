@@ -49,9 +49,9 @@ try {
   
   // Count delegation method patterns
   const delegationMethodPatterns = [
-    'testExecutor\\.[a-zA-Z]+',
-    'resultAnalyzer\\.[a-zA-Z]+',
-    'fixApplier\\.[a-zA-Z]+'
+    'testExecutor\\\\\\\.[a-zA-Z]+',
+    'resultAnalyzer\\\\\\\.[a-zA-Z]+',
+    'fixApplier\\\\\\\.[a-zA-Z]+'
   ];
   
   delegationMethodPatterns.forEach(pattern => {

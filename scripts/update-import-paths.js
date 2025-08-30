@@ -24,19 +24,19 @@ const VERBOSE = process.argv.includes('--verbose');
 // Path mapping for imports
 const PATH_MAPPINGS = [
   // Old path -> New path
-  { from: /from ['"]\.\.\/\.\.\/config\/([^'"]+)['"]/g, to: 'from "@src/core/config/$1"' },
-  { from: /from ['"]\.\.\/\.\.\/services\/([^'"]+)['"]/g, to: 'from "@modules/$1"' },
-  { from: /from ['"]\.\.\/\.\.\/models\/([^'"]+)['"]/g, to: 'from "@domain/$1"' },
-  { from: /from ['"]\.\.\/\.\.\/utils\/([^'"]+)['"]/g, to: 'from "@utils/$1"' },
-  { from: /from ['"]\.\.\/\.\.\/tests\/([^'"]+)['"]/g, to: 'from "@tests/$1"' },
-  { from: /from ['"]\.\.\/services\/([^'"]+)['"]/g, to: 'from "@modules/$1"' },
-  { from: /from ['"]\.\.\/models\/([^'"]+)['"]/g, to: 'from "@domain/$1"' },
-  { from: /from ['"]\.\.\/utils\/([^'"]+)['"]/g, to: 'from "@utils/$1"' },
-  { from: /from ['"]\.\.\/config\/([^'"]+)['"]/g, to: 'from "@core/config/$1"' },
-  { from: /from ['"]\.\/models\/([^'"]+)['"]/g, to: 'from "@domain/$1"' },
-  { from: /from ['"]\.\/services\/([^'"]+)['"]/g, to: 'from "@modules/$1"' },
-  { from: /from ['"]\.\/utils\/([^'"]+)['"]/g, to: 'from "@utils/$1"' },
-  { from: /from ['"]\.\/config\/([^'"]+)['"]/g, to: 'from "@core/config/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/\\\\\\.\\\\\\.\\\\\\/config\\\\\\/([^'"]+)['"]/g, to: 'from "@src/core/config/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/\\\\\\.\\\\\\.\\\\\\/services\\\\\\/([^'"]+)['"]/g, to: 'from "@modules/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/\\\\\\.\\\\\\.\\\\\\/models\\\\\\/([^'"]+)['"]/g, to: 'from "@domain/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/\\\\\\.\\\\\\.\\\\\\/utils\\\\\\/([^'"]+)['"]/g, to: 'from "@utils/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/\\\\\\.\\\\\\.\\\\\\/tests\\\\\\/([^'"]+)['"]/g, to: 'from "@tests/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/services\\\\\\/([^'"]+)['"]/g, to: 'from "@modules/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/models\\\\\\/([^'"]+)['"]/g, to: 'from "@domain/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/utils\\\\\\/([^'"]+)['"]/g, to: 'from "@utils/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\.\\\\\\/config\\\\\\/([^'"]+)['"]/g, to: 'from "@core/config/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\/models\\\\\\/([^'"]+)['"]/g, to: 'from "@domain/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\/services\\\\\\/([^'"]+)['"]/g, to: 'from "@modules/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\/utils\\\\\\/([^'"]+)['"]/g, to: 'from "@utils/$1"' },
+  { from: /from ['"]\\\\\\.\\\\\\/config\\\\\\/([^'"]+)['"]/g, to: 'from "@core/config/$1"' },
   // Add more mappings as needed
 ];
 
@@ -98,7 +98,7 @@ async function updateImports(filePath) {
 
     // Apply module-specific mappings
     Object.entries(MODULE_MAPPINGS).forEach(([moduleName, modulePath]) => {
-      const moduleRegex = new RegExp(`from ['"]\\.\\.\\/(services|modules)\\/${moduleName}\\/([^'"]+)['"]`, 'g');
+      const moduleRegex = new RegExp(`from ['"]\\\\\\\.\\\\\\\.\\\\\\\/(services|modules)\\\\\\\/${moduleName}\\\\\\\/([^'"]+)['"]`, 'g');
       const matches = content.match(moduleRegex);
       if (matches) {
         updatedContent = updatedContent.replace(moduleRegex, `from "${modulePath}/$2"`);

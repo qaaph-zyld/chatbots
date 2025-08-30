@@ -5,7 +5,7 @@
  */
 
 require('@src/utils');
-require('@src/utils\indexedDB');
+require('@src/utils\\\\\\\indexedDB');
 
 class OfflineSyncService {
   constructor() {

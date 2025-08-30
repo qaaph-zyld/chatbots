@@ -160,19 +160,19 @@ class CodeContextGenerator {
     // Common test file patterns and their replacements
     const patterns = [
       // Jest/React style: Component.test.js -> Component.js
-      { regex: /(.+)\.test\.(js|ts|jsx|tsx)$/, replacement: '$1.$2' },
+      { regex: /(.+)\\\\\\.test\\\\\\.(js|ts|jsx|tsx)$/, replacement: '$1.$2' },
       
       // Suffix style: file_test.js -> file.js
-      { regex: /(.+)_test\.(js|ts|jsx|tsx)$/, replacement: '$1.$2' },
+      { regex: /(.+)_test\\\\\\.(js|ts|jsx|tsx)$/, replacement: '$1.$2' },
       
       // Test directory style: test/file.js -> src/file.js
-      { regex: /test\/(.+\.(js|ts|jsx|tsx))$/, replacement: 'src/$1' },
+      { regex: /test\\\\\\/(.+\\\\\\.(js|ts|jsx|tsx))$/, replacement: 'src/$1' },
       
       // Tests directory style: tests/file.js -> src/file.js
-      { regex: /tests\/(.+\.(js|ts|jsx|tsx))$/, replacement: 'src/$1' },
+      { regex: /tests\\\\\\/(.+\\\\\\.(js|ts|jsx|tsx))$/, replacement: 'src/$1' },
       
       // __tests__ directory style: __tests__/file.js -> file.js
-      { regex: /__tests__\/(.+\.(js|ts|jsx|tsx))$/, replacement: '$1' }
+      { regex: /__tests__\\\\\\/(.+\\\\\\.(js|ts|jsx|tsx))$/, replacement: '$1' }
     ];
     
     // Try each pattern
@@ -205,10 +205,10 @@ class CodeContextGenerator {
     // Common stack trace patterns
     const patterns = [
       // Node.js style: at Function.module.exports.func (/path/to/file.js:123:45)
-      /at\s+.+\s+\((.+):(\d+):(\d+)\)/,
+      /at\\\\\\\s+.+\\\\\\\s+\\\\\\((.+):(\\\\\\\d+):(\\\\\\\d+)\\\\\\)/,
       
       // Simple style: at /path/to/file.js:123:45
-      /at\s+(.+):(\d+):(\d+)/
+      /at\\\\\\\s+(.+):(\\\\\\\d+):(\\\\\\\d+)/
     ];
     
     for (const line of stackLines) {
@@ -296,7 +296,7 @@ class CodeContextGenerator {
     const relatedFiles = [];
     
     // Match import statements: import X from 'path'
-    const importRegex = /import\s+.+\s+from\s+['"]([^'"]+)['"]/g;
+    const importRegex = /import\\\\\\\s+.+\\\\\\\s+from\\\\\\\s+['"]([^'"]+)['"]/g;
     let match;
     
     while ((match = importRegex.exec(fileContent)) !== null) {
@@ -304,7 +304,7 @@ class CodeContextGenerator {
     }
     
     // Match require statements: require('path')
-    const requireRegex = /require\s*\(\s*['"]([^'"]+)['"]\s*\)/g;
+    const requireRegex = /require\\\\\\\s*\\\\\\(\\\\\\\s*['"]([^'"]+)['"]\\\\\\\s*\\\\\\)/g;
     
     while ((match = requireRegex.exec(fileContent)) !== null) {
       relatedFiles.push(this.resolveRelativePath(match[1], sourceFile));

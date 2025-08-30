@@ -7,8 +7,8 @@
 const fs = require('fs').promises;
 const path = require('path');
 const { marked } = require('marked');
-require('@src/modules\utils');
-require('@src/modules\utils\indexedDB');
+require('@src/modules\\\\\\\\\\utils');
+require('@src/modules\\\\\\\\\\utils\\\\\\\indexedDB');
 
 class DocumentationService {
   constructor() {
@@ -303,12 +303,12 @@ class DocumentationService {
       
       for (const line of lines) {
         // Check for headings
-        const headingMatch = line.match(/^(#{1,6})\s+(.+)$/);
+        const headingMatch = line.match(/^(#{1,6})\\\\\\\s+(.+)$/);
         
         if (headingMatch) {
           const level = headingMatch[1].length;
           const text = headingMatch[2].trim();
-          const id = text.toLowerCase().replace(/[^\w]+/g, '-');
+          const id = text.toLowerCase().replace(/[^\\\\\\\w]+/g, '-');
           
           toc.push({
             level,

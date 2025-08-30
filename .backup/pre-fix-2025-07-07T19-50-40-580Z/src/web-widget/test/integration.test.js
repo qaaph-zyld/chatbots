@@ -3,8 +3,8 @@
  */
 
 import axios from 'axios';
-import '@src/web-widget\src\ChatbotWidget';
-import '@src/web-widget\src\utils\ApiClient';
+import '@src/web-widget\\\src\\\ChatbotWidget';
+import '@src/web-widget\\\src\\utils\\\ApiClient';
 
 // Mock axios
 jest.mock('axios');

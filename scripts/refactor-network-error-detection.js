@@ -25,7 +25,7 @@ console.log(`Reading ${targetFile}`);
 const fileContent = fs.readFileSync(targetFile, 'utf8');
 
 // Find the isNetworkBlockedError method
-const methodRegex = /\/\*\*\s*\n\s*\*\s*Detects if an error is related to network or corporate proxy blocks[\s\S]*?isNetworkBlockedError\s*\(\s*errorObj\s*\)\s*\{[\s\S]*?(?=\n\s*\/\*\*|\n\s*\}$)/;
+const methodRegex = /\\\\\\/\\\\\\*\\\\\\*\\\\\\\s*\n\\\\\\\s*\\\\\\*\\\\\\\s*Detects if an error is related to network or corporate proxy blocks[\\\\\\\s\\\\\\\S]*?isNetworkBlockedError\\\\\\\s*\\\\\\(\\\\\\\s*errorObj\\\\\\\s*\\\\\\)\\\\\\\s*\\\\\\{[\\\\\\\s\\\\\\\S]*?(?=\n\\\\\\\s*\\\\\\/\\\\\\*\\\\\\*|\n\\\\\\\s*\\\\\\}$)/;
 const match = fileContent.match(methodRegex);
 
 if (!match) {
@@ -84,7 +84,7 @@ console.log('Updating changelog');
 const timestamp = new Date().toISOString().replace('T', ' ').substring(0, 19);
 const changelogEntry = `
 ## ${timestamp}
-- Refactored \`isNetworkBlockedError\` method in \`TestAutomationRunner\` to delegate to \`ResultAnalyzer\`
+- Refactored \\\\\\`isNetworkBlockedError\\\\\\` method in \\\\\\`TestAutomationRunner\\\\\\` to delegate to \\\\\\`ResultAnalyzer\\\\\\`
 - Added fallback to original implementation if delegation fails
 `;
 

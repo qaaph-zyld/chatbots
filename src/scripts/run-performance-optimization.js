@@ -9,8 +9,8 @@
 
 const fs = require('fs');
 const path = require('path');
-require('@src/utils\performance-optimizer');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\performance-optimizer');
+require('@src/utils\\\\\\\logger');
 
 // Parse command line arguments
 const args = process.argv.slice(2);
@@ -27,7 +27,7 @@ if (!fs.existsSync(reportsDir)) {
 }
 
 // Generate timestamp for report filename
-const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\..+/, '');
+const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\\\\\\..+/, '');
 const reportPath = path.join(reportsDir, `performance-report-${timestamp}.json`);
 
 /**

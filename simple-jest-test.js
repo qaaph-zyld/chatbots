@@ -19,7 +19,7 @@ const isWindows = process.platform === 'win32';
 const jestExecutable = isWindows ? 'jest.cmd' : 'jest';
 const jestPath = path.join(process.cwd(), 'node_modules', '.bin', jestExecutable);
 const outputDir = path.join(process.cwd(), 'test-results');
-const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '-');
+const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\\\\\\./g, '-');
 const stdoutFile = path.join(outputDir, `jest-stdout-${timestamp}.txt`);
 const stderrFile = path.join(outputDir, `jest-stderr-${timestamp}.txt`);
 

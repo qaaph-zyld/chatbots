@@ -227,8 +227,8 @@ function tokenizeText(text) {
   // Simple tokenization by splitting on whitespace and removing punctuation
   return text
     .toLowerCase()
-    .replace(/[^\w\s]/g, '')
-    .split(/\s+/)
+    .replace(/[^\\\w\\\s]/g, '')
+    .split(/\\\s+/)
     .filter(Boolean);
 }
 
@@ -285,19 +285,19 @@ function extractEntities(text) {
   };
   
   // Extract emails
-  const emailRegex = /[\w.-]+@[\w.-]+\.\w+/g;
+  const emailRegex = /[\\\w.-]+@[\\\w.-]+\\.\\\w+/g;
   entities.emails = text.match(emailRegex) || [];
   
   // Extract URLs
-  const urlRegex = /https?:\/\/[^\s]+/g;
+  const urlRegex = /https?:\\/\\/[^\\\s]+/g;
   entities.urls = text.match(urlRegex) || [];
   
   // Extract dates (simple format)
-  const dateRegex = /\d{1,2}\/\d{1,2}\/\d{2,4}/g;
+  const dateRegex = /\\\d{1,2}\\/\\\d{1,2}\\/\\\d{2,4}/g;
   entities.dates = text.match(dateRegex) || [];
   
   // Extract numbers
-  const numberRegex = /\b\d+(?:\.\d+)?\b/g;
+  const numberRegex = /\b\\\d+(?:\\.\\\d+)?\b/g;
   entities.numbers = text.match(numberRegex) || [];
   
   return entities;

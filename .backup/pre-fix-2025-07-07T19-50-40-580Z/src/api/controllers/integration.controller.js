@@ -4,7 +4,7 @@
  * Handles all integration-related operations and API endpoints
  */
 
-require('@src/integrations\integration.service');
+require('@src/integrations\\\integration.service');
 require('@src/utils');
 
 /**

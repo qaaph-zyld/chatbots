@@ -4,7 +4,7 @@
  */
 
 const webpack = require('webpack');
-require('@src/web-widget\webpack.config');
+require('@src/web-widget\\\webpack.config');
 const fs = require('fs');
 const path = require('path');
 
@@ -30,7 +30,7 @@ webpack(prodConfig, (err, stats) => {
   }));
   
   // Create a package.json for the dist folder
-  require('@src/web-widget\package.json');
+  require('@src/web-widget\\\package.json');
   const distPackageJson = {
     name: packageJson.name,
     version: packageJson.version,

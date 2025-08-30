@@ -28,7 +28,7 @@ fs.writeFileSync(logFile, `Using Jest path: ${jestPath}\n`, { flag: 'a' });
 console.log(`Using Jest path: ${jestPath}`);
 
 // Create output files
-const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\./g, '-');
+const timestamp = new Date().toISOString().replace(/:/g, '-').replace(/\\\\\\./g, '-');
 const stdoutFile = path.join(outputDir, `direct-jest-stdout-${timestamp}.txt`);
 const stderrFile = path.join(outputDir, `direct-jest-stderr-${timestamp}.txt`);
 

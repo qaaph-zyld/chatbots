@@ -4,10 +4,10 @@
  * Handles CRUD operations for training datasets and training sessions
  */
 
-require('@src/modules\database\schemas\training.schema');
-require('@src/modules\database\schemas\chatbot.schema');
-require('@src/modules\utils');
-require('@src/modules\utils\errors');
+require('@src/modules\\\database\\\schemas\training.schema');
+require('@src/modules\\\database\\\schemas\\\chatbot.schema');
+require('@src/modules\\utils');
+require('@src/modules\\utils\\\errors');
 
 /**
  * Create a new training dataset
@@ -308,7 +308,7 @@ exports.trainChatbotWithDataset = async (datasetId) => {
     
     try {
       // Get chatbot service
-      require('@src/modules\bot\core');
+      require('@src/modules\bot\\\core');
       
       // Get chatbot instance
       const chatbotInstance = chatbotService.getChatbot(trainingDataset.chatbotId.toString());

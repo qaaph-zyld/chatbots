@@ -332,7 +332,7 @@ messageSchema.statics.getIntentDistribution = function(storeId, startDate, endDa
 
 // Virtual for word count
 messageSchema.virtual('wordCount').get(function() {
-  return this.content.split(/\s+/).length;
+  return this.content.split(/\\\\\\\s+/).length;
 });
 
 // Virtual for character count

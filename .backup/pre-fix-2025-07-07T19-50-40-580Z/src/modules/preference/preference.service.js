@@ -5,8 +5,8 @@
  * Refactored to use the repository pattern
  */
 
-require('@src/modules\data');
-require('@src/modules\utils');
+require('@src/modules\\\data');
+require('@src/modules\\utils');
 
 /**
  * Get user preferences

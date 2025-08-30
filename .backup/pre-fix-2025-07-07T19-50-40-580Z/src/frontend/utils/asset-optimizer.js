@@ -707,13 +707,13 @@ class AssetOptimizer {
   _basicMinifyCSS(css) {
     return css
       // Remove comments
-      .replace(/\/\*[\s\S]*?\*\//g, '')
+      .replace(/\\/\\*[\\\s\\\S]*?\\*\\//g, '')
       // Remove whitespace
-      .replace(/\s+/g, ' ')
-      .replace(/\s*({|}|;|,|:)\s*/g, '$1')
-      .replace(/\s*>\s*/g, '>')
-      .replace(/\s*\+\s*/g, '+')
-      .replace(/\s*~\s*/g, '~')
+      .replace(/\\\s+/g, ' ')
+      .replace(/\\\s*({|}|;|,|:)\\\s*/g, '$1')
+      .replace(/\\\s*>\\\s*/g, '>')
+      .replace(/\\\s*\\+\\\s*/g, '+')
+      .replace(/\\\s*~\\\s*/g, '~')
       .trim();
   }
 

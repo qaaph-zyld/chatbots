@@ -6,8 +6,8 @@
  */
 
 const { v4: uuidv4 } = require('uuid');
-require('@src/modules\data');
-require('@src/modules\utils');
+require('@src/modules\\\data');
+require('@src/modules\\utils');
 
 class ConversationService {
   /**

@@ -10,7 +10,7 @@ const customerSchema = new mongoose.Schema({
     lowercase: true,
     validate: {
       validator: function(v) {
-        return /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+        return /^[\\\\\\\w-\\\\\\.]+@([\\\\\\\w-]+\\\\\\.)+[\\\\\\\w-]{2,4}$/.test(v);
       },
       message: 'Please enter a valid email'
     }
@@ -33,7 +33,7 @@ const customerSchema = new mongoose.Schema({
     trim: true,
     validate: {
       validator: function(v) {
-        return !v || /^[\+]?[1-9][\d]{0,15}$/.test(v.replace(/[\s\-\(\)]/g, ''));
+        return !v || /^[\\\\\\+]?[1-9][\\\\\\\d]{0,15}$/.test(v.replace(/[\\\\\\\s\\\\\\-\\\\\\(\\\\\\)]/g, ''));
       },
       message: 'Please enter a valid phone number'
     }

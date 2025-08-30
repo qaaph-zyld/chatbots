@@ -5,8 +5,8 @@
  */
 
 require('@src/utils');
-require('@src/context\context.service');
-require('@src/context\entity.service');
+require('@src/context\\\context.service');
+require('@src/context\\\entity.service');
 
 /**
  * Reference Service class

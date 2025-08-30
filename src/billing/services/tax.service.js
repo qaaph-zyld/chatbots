@@ -375,21 +375,21 @@ class TaxService {
       // Simple validation for common tax ID formats
       switch (country) {
         case 'US': // US EIN
-          return /^\d{2}-\d{7}$/.test(taxId);
+          return /^\\\\\\\d{2}-\\\\\\\d{7}$/.test(taxId);
         case 'CA': // Canada BN
-          return /^\d{9}$/.test(taxId);
+          return /^\\\\\\\d{9}$/.test(taxId);
         case 'GB': // UK VAT
-          return /^GB\d{9}$/.test(taxId) || /^GB\d{12}$/.test(taxId);
+          return /^GB\\\\\\\d{9}$/.test(taxId) || /^GB\\\\\\\d{12}$/.test(taxId);
         case 'AU': // Australia ABN
-          return /^\d{11}$/.test(taxId);
+          return /^\\\\\\\d{11}$/.test(taxId);
         case 'EU': // EU VAT
           const euVatRegex = {
-            'AT': /^ATU\d{8}$/,
-            'BE': /^BE0\d{9}$/,
-            'DE': /^DE\d{9}$/,
-            'FR': /^FR[A-Z0-9]{2}\d{9}$/,
-            'IT': /^IT\d{11}$/,
-            'ES': /^ES[A-Z0-9]\d{7}[A-Z0-9]$/
+            'AT': /^ATU\\\\\\\d{8}$/,
+            'BE': /^BE0\\\\\\\d{9}$/,
+            'DE': /^DE\\\\\\\d{9}$/,
+            'FR': /^FR[A-Z0-9]{2}\\\\\\\d{9}$/,
+            'IT': /^IT\\\\\\\d{11}$/,
+            'ES': /^ES[A-Z0-9]\\\\\\\d{7}[A-Z0-9]$/
           };
           const countryCode = taxId.substring(0, 2);
           return euVatRegex[countryCode] ? euVatRegex[countryCode].test(taxId) : false;

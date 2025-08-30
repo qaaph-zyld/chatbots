@@ -1,0 +1,10 @@
+{
+  "command": "node -e console.log(process.version)",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:40:46.948Z",
+  "currentTime": "2025-08-30T20:40:47.029Z",
+  "duration": 81,
+  "status": "success",
+  "exitCode": null,
+  "pid": 5840
+}

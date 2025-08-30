@@ -1,0 +1,10 @@
+{
+  "command": "echo Save history test",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:11:27.147Z",
+  "currentTime": "2025-08-30T20:11:27.167Z",
+  "duration": 20,
+  "status": "success",
+  "exitCode": null,
+  "pid": 1876
+}

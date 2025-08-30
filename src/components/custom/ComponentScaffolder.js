@@ -6,7 +6,7 @@
 
 const fs = require('fs');
 const path = require('path');
-require('@src/components\custom\ComponentRegistry');
+require('@src/components\\\\\\\custom\\\\\\\ComponentRegistry');
 
 class ComponentScaffolder {
   /**
@@ -112,7 +112,7 @@ class ComponentScaffolder {
 
 const React = require('react');
 require('@src/ComponentInterface');
-require('@src/components\custom\component.jsx');
+require('@src/components\\\\\\\custom\\\\\\\component.jsx');
 
 // Define component metadata
 const metadata = {
@@ -207,11 +207,11 @@ ${options.description}
 
 ## Usage
 
-\`\`\`jsx
+\\\\\\`\\\\\\`\\\\\\`jsx
 <${options.name} title="My Title">
   Content goes here
 </${options.name}>
-\`\`\`
+\\\\\\`\\\\\\`\\\\\\`
 
 ## Props
 
@@ -224,9 +224,9 @@ ${options.description}
 
 You can customize this component by editing the following files:
 
-- \`component.jsx\`: The React component implementation
-- \`styles.css\`: The component styles
-- \`index.js\`: The component metadata and exports
+- \\\\\\`component.jsx\\\\\\`: The React component implementation
+- \\\\\\`styles.css\\\\\\`: The component styles
+- \\\\\\`index.js\\\\\\`: The component metadata and exports
 
 ## Author
 
@@ -292,7 +292,7 @@ ${options.author}
   kebabCase(str) {
     return str
       .replace(/([a-z])([A-Z])/g, '$1-$2')
-      .replace(/[\s_]+/g, '-')
+      .replace(/[\\\\\\\s_]+/g, '-')
       .toLowerCase();
   }
   

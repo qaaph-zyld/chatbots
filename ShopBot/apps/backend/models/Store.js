@@ -37,7 +37,7 @@ const storeSchema = new mongoose.Schema({
     type: String,
     validate: {
       validator: function(v) {
-        return !v || /^https?:\/\/.+/.test(v);
+        return !v || /^https?:\\\\\\/\\\\\\/.+/.test(v);
       },
       message: 'Webhook URL must be a valid HTTP/HTTPS URL'
     }

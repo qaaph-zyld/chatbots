@@ -5,8 +5,8 @@
  */
 
 require('dotenv').config();
-require('@src/config\environment');
-require('@src/config\mongodb');
+require('@src/config\\\environment');
+require('@src/config\\\mongodb');
 
 const config = {
   // MongoDB configuration

@@ -341,7 +341,7 @@ class VishakasStoreTest {
         };
         
         // Try to extract title from HTML
-        const titleMatch = htmlContent.match(/<title>(.*?)<\/title>/i);
+        const titleMatch = htmlContent.match(/<title>(.*?)<\\\\\\/title>/i);
         if (titleMatch) {
             info.name = titleMatch[1].replace(' – ShopBot Test Store', '').trim();
         }

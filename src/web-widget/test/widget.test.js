@@ -2,9 +2,9 @@
  * Tests for the Chatbots Platform Web Widget
  */
 
-import '@src/web-widget\src\ChatbotWidget';
-import '@src/web-widget\src\utils\ApiClient';
-import '@src/web-widget\src\ui\WidgetUI';
+import '@src/web-widget\\\\\\\src\\\\\\\ChatbotWidget';
+import '@src/web-widget\\\\\\\src\\\\\\\\\\utils\\\\\\\ApiClient';
+import '@src/web-widget\\\\\\\src\\\\\\\\\\ui\\\\\\\WidgetUI';
 
 // Mock dependencies
 jest.mock('../src/utils/ApiClient');

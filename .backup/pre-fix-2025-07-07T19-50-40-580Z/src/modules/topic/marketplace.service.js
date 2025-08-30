@@ -8,7 +8,7 @@ const axios = require('axios');
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
-require('@src/modules\topic\component.service');
+require('@src/modules\topic\\\component.service');
 
 class MarketplaceService {
   constructor() {

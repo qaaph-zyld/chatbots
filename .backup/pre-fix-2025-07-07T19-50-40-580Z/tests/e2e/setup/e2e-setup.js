@@ -9,7 +9,7 @@
 require('../../../src/core/module-alias');
 
 // Import mongoose and test setup utilities
-require('@tests/unit\setup\mongoose-test-setup');
+require('@tests/unit\\\setup\\\mongoose-test-setup');
 const mongoose = require('mongoose');
 const { setup: setupServer } = require('@core/server');
 const { chromium } = require('playwright');

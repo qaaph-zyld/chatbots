@@ -120,7 +120,7 @@ describe('CommandExecutor Integration Tests', () => {
     
     expect(result).toBeDefined();
     expect(result.code).toBe(0);
-    expect(result.stdout).toMatch(/\d+\.\d+\.\d+/); // npm version format
+    expect(result.stdout).toMatch(/\\\\\\\d+\\\\\\.\\\\\\\d+\\\\\\.\\\\\\\d+/); // npm version format
   });
   
   test('should handle platform-specific commands', async () => {

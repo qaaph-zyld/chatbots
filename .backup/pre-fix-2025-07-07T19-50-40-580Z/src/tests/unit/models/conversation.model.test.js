@@ -3,7 +3,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/models\conversation.model');
+require('@src/models\\\conversation.model');
 
 describe('Conversation Model', () => {
   // Test data

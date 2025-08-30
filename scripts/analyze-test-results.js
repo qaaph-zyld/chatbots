@@ -443,7 +443,7 @@ function generateMarkdownReport(analysis) {
         ? pattern.message.substring(0, 100) + '...' 
         : pattern.message;
       
-      markdown += `| ${pattern.type} | ${pattern.count} | ${message.replace(/\|/g, '\\|')} |\n`;
+      markdown += `| ${pattern.type} | ${pattern.count} | ${message.replace(/\\\\\\|/g, '\\\\\\\|')} |\n`;
     });
     
     markdown += `\n`;

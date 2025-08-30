@@ -8,8 +8,8 @@
 
 require('@src/monitoring\resource-monitor.service');
 require('@src/monitoring\rate-limiter.service');
-require('@src/monitoring\prometheus-exporter.service');
-require('@src/monitoring\metrics-server');
+require('@src/monitoring\\\prometheus-exporter.service');
+require('@src/monitoring\\\metrics-server');
 
 module.exports = {
   resourceMonitorService,

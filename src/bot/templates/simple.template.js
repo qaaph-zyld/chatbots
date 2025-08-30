@@ -110,7 +110,7 @@ class SimpleTemplate extends BaseTemplate {
    */
   processTemplateVariables(template, context) {
     // Replace variables in the format {{variable}} with values from context
-    return template.replace(/\{\{([^}]+)\}\}/g, (match, variable) => {
+    return template.replace(/\\\\\\{\\\\\\{([^}]+)\\\\\\}\\\\\\}/g, (match, variable) => {
       const path = variable.trim().split('.');
       let value = context;
       

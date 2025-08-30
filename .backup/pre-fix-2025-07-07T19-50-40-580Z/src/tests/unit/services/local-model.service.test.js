@@ -4,7 +4,7 @@
 
 const path = require('path');
 const fs = require('fs').promises;
-require('@src/services\local-model.service');
+require('@src/services\\\local-model.service');
 require('@src/utils');
 
 // Mock dependencies

@@ -28,7 +28,7 @@ const conversationSchema = new mongoose.Schema({
     index: true,
     validate: {
       validator: function(v) {
-        return !v || /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/.test(v);
+        return !v || /^[\\\\\\\w-\\\\\\.]+@([\\\\\\\w-]+\\\\\\.)+[\\\\\\\w-]{2,4}$/.test(v);
       },
       message: 'Please enter a valid email'
     }

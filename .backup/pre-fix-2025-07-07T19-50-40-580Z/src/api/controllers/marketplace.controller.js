@@ -4,7 +4,7 @@
  * Controller for managing the component marketplace
  */
 
-require('@src/services\marketplace.service');
+require('@src/services\\\marketplace.service');
 
 /**
  * Get all marketplace components

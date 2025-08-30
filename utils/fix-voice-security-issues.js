@@ -181,14 +181,14 @@ function fixCommandInjection(content, issue) {
     // Fix by using parameter arrays instead of string concatenation
     if (vulnerableLine.includes('+') || vulnerableLine.includes('${')) {
       // Extract the command and arguments
-      const match = vulnerableLine.match(/(?:exec|execSync|spawn|spawnSync)\s*\(\s*(['"`])(.*?)\1/);
+      const match = vulnerableLine.match(/(?:exec|execSync|spawn|spawnSync)\\\\\\\s*\\\\\\(\\\\\\\s*(['"`])(.*?)\\\\\1/);
       
       if (match) {
         const command = match[2];
         
         // Create a safer version using array of arguments
         let fixedLine = vulnerableLine.replace(
-          /(?:exec|execSync|spawn|spawnSync)\s*\(\s*(['"`])(.*?)\1\s*\+\s*(.*)/,
+          /(?:exec|execSync|spawn|spawnSync)\\\\\\\s*\\\\\\(\\\\\\\s*(['"`])(.*?)\\\\\1\\\\\\\s*\\\\\\+\\\\\\\s*(.*)/,
           (match, quote, cmd, args) => {
             return match.replace(`${quote}${cmd}${quote} + ${args}`, `'${cmd}', [${args}]`);
           }
@@ -223,14 +223,14 @@ function fixPathTraversal(content, issue) {
     
     // Add path normalization and validation
     if (!vulnerableLine.includes('path.normalize(') && 
-        !vulnerableLine.includes('.replace(/\\.\\./g, \'\')')) {
+        !vulnerableLine.includes('.replace(/\\\\\\\.\\\\\\\./g, \'\')')) {
       
       // Add path validation logic
       const pathValidationCode = `
   // Validate path to prevent path traversal
   const validatePath = (inputPath, basePath) => {
-    const normalizedPath = path.normalize(inputPath).replace(/\\\\/g, '/');
-    const normalizedBasePath = path.normalize(basePath).replace(/\\\\/g, '/');
+    const normalizedPath = path.normalize(inputPath).replace(/\\\\\\\\\/g, '/');
+    const normalizedBasePath = path.normalize(basePath).replace(/\\\\\\\\\/g, '/');
     
     if (!normalizedPath.startsWith(normalizedBasePath)) {
       throw new Error('Invalid path: Path traversal attempt detected');
@@ -242,7 +242,7 @@ function fixPathTraversal(content, issue) {
       // Add the validation code if it doesn't exist
       if (!content.includes('validatePath')) {
         // Find the imports section to add after
-        const importSection = content.match(/(?:const|let|var)[\s\S]*?require.*?;/g);
+        const importSection = content.match(/(?:const|let|var)[\\\\\\\s\\\\\\\S]*?require.*?;/g);
         if (importSection && importSection.length > 0) {
           const lastImport = importSection[importSection.length - 1];
           const insertPosition = content.indexOf(lastImport) + lastImport.length;
@@ -283,7 +283,7 @@ function fixUnsafeFileOperations(content, issue) {
       }
       
       // Add try-catch around the vulnerable line
-      const indentation = vulnerableLine.match(/^\s*/)[0];
+      const indentation = vulnerableLine.match(/^\\\\\\\s*/)[0];
       lines[issue.line - 1] = `${indentation}try {
 ${vulnerableLine}
 ${indentation}} catch (error) {
@@ -306,8 +306,8 @@ function fixHardcodedSecrets(content, issue) {
   
   // Check for hardcoded secrets patterns
   const secretPatterns = [
-    /(['"`])(?:api|secret|key|token|password|auth).*?\1\s*[=:]\s*(['"`])(?!process\.env)[^'"`]+\2/i,
-    /const\s+(?:api|secret|key|token|password|auth).*?=\s*(['"`])(?!process\.env)[^'"`]+\1/i
+    /(['"`])(?:api|secret|key|token|password|auth).*?\\\\\1\\\\\\\s*[=:]\\\\\\\s*(['"`])(?!process\\\\\\.env)[^'"`]+\\\\\2/i,
+    /const\\\\\\\s+(?:api|secret|key|token|password|auth).*?=\\\\\\\s*(['"`])(?!process\\\\\\.env)[^'"`]+\\\\\1/i
   ];
   
   for (const pattern of secretPatterns) {
@@ -315,8 +315,8 @@ function fixHardcodedSecrets(content, issue) {
       // Replace with environment variable
       const match = vulnerableLine.match(pattern);
       if (match) {
-        const variableName = vulnerableLine.match(/(?:const|let|var)\s+(\w+)/)?.[1] || 
-                            vulnerableLine.match(/['"`](\w+)['"`]\s*[=:]/)?.[1];
+        const variableName = vulnerableLine.match(/(?:const|let|var)\\\\\\\s+(\\\\\\\w+)/)?.[1] || 
+                            vulnerableLine.match(/['"`](\\\\\\\w+)['"`]\\\\\\\s*[=:]/)?.[1];
         
         if (variableName) {
           const envVarName = variableName.toUpperCase();
@@ -349,7 +349,7 @@ function fixInsecureRandom(content, issue) {
   if (vulnerableLine.includes('Math.random()')) {
     // Add crypto import if not present
     if (!content.includes('crypto')) {
-      const importMatch = content.match(/(?:const|let|var)[\s\S]*?require.*?;/g);
+      const importMatch = content.match(/(?:const|let|var)[\\\\\\\s\\\\\\\S]*?require.*?;/g);
       if (importMatch && importMatch.length > 0) {
         const lastImport = importMatch[importMatch.length - 1];
         const insertPosition = content.indexOf(lastImport) + lastImport.length;
@@ -360,11 +360,11 @@ function fixInsecureRandom(content, issue) {
     // Replace Math.random with crypto.randomBytes
     if (vulnerableLine.includes('Math.random() *')) {
       // For generating random numbers in a range
-      const match = vulnerableLine.match(/Math\.random\(\)\s*\*\s*(\d+)/);
+      const match = vulnerableLine.match(/Math\\\\\\.random\\\\\\(\\\\\\)\\\\\\\s*\\\\\\*\\\\\\\s*(\\\\\\\d+)/);
       if (match) {
         const max = match[1];
         const fixedLine = vulnerableLine.replace(
-          /Math\.random\(\)\s*\*\s*(\d+)/,
+          /Math\\\\\\.random\\\\\\(\\\\\\)\\\\\\\s*\\\\\\*\\\\\\\s*(\\\\\\\d+)/,
           `crypto.randomInt(${max})`
         );
         lines[issue.line - 1] = fixedLine;
@@ -372,7 +372,7 @@ function fixInsecureRandom(content, issue) {
     } else {
       // For generating random values
       const fixedLine = vulnerableLine.replace(
-        /Math\.random\(\)/,
+        /Math\\\\\\.random\\\\\\(\\\\\\)/,
         'crypto.randomBytes(8).readUInt32LE(0) / 0xFFFFFFFF'
       );
       lines[issue.line - 1] = fixedLine;
@@ -399,12 +399,12 @@ function fixBufferOverflow(content, issue) {
         !lines[issue.line - 2]?.includes('if (')) {
       
       // Add bounds checking before the vulnerable line
-      const indentation = vulnerableLine.match(/^\s*/)[0];
-      const bufferMatch = vulnerableLine.match(/(\w+)\.(?:write|read)/);
+      const indentation = vulnerableLine.match(/^\\\\\\\s*/)[0];
+      const bufferMatch = vulnerableLine.match(/(\\\\\\\w+)\\\\\\.(?:write|read)/);
       
       if (bufferMatch) {
         const bufferName = bufferMatch[1];
-        const operationMatch = vulnerableLine.match(/\.(\w+)\(/);
+        const operationMatch = vulnerableLine.match(/\\\\\\.(\\\\\\\w+)\\\\\\(/);
         const operation = operationMatch ? operationMatch[1] : 'operation';
         
         lines[issue.line - 1] = `${indentation}// Ensure buffer operation is within bounds
@@ -437,7 +437,7 @@ function fixPrivacyIssue(content, issue) {
     
     // Replace with privacy-preserving logging
     const fixedLine = vulnerableLine.replace(
-      /console\.log\(\s*(['"`])(.*?)\1\s*,\s*(.*)\)/,
+      /console\\\\\\.log\\\\\\(\\\\\\\s*(['"`])(.*?)\\\\\1\\\\\\\s*,\\\\\\\s*(.*)\\\\\\)/,
       (match, quote, message, data) => {
         return `console.log(${quote}${message}${quote}, '[REDACTED]') // SECURITY: Avoid logging sensitive data`;
       }
@@ -471,10 +471,10 @@ function fixModelValidation(content, issue) {
       // Add model validation function if not present
       if (!content.includes('validateModel')) {
         // Find a good place to add the validation function
-        const functionSection = content.match(/function\s+\w+\s*\([^)]*\)\s*{/g);
+        const functionSection = content.match(/function\\\\\\\s+\\\\\\\w+\\\\\\\s*\\\\\\([^)]*\\\\\\)\\\\\\\s*{/g);
         if (functionSection && functionSection.length > 0) {
           const lastFunction = functionSection[functionSection.length - 1];
-          const functionEndMatch = content.substring(content.indexOf(lastFunction)).match(/}\s*$/m);
+          const functionEndMatch = content.substring(content.indexOf(lastFunction)).match(/}\\\\\\\s*$/m);
           
           if (functionEndMatch) {
             const insertPosition = content.indexOf(lastFunction) + 
@@ -489,20 +489,20 @@ function fixModelValidation(content, issue) {
  */
 function validateModel(modelPath) {
   if (!fs.existsSync(modelPath)) {
-    throw new Error(\`Model not found: \${modelPath}\`);
+    throw new Error(\\\\\\`Model not found: \\\\\\${modelPath}\\\\\\`);
   }
   
   // Check file size
   const stats = fs.statSync(modelPath);
   if (stats.size < 1000) { // Minimum expected size
-    throw new Error(\`Model file too small, may be corrupted: \${modelPath}\`);
+    throw new Error(\\\\\\`Model file too small, may be corrupted: \\\\\\${modelPath}\\\\\\`);
   }
   
   // Check file extension
   const ext = path.extname(modelPath).toLowerCase();
   const validExtensions = ['.pb', '.tflite', '.onnx', '.bin', '.model'];
   if (!validExtensions.includes(ext)) {
-    throw new Error(\`Invalid model file extension: \${ext}\`);
+    throw new Error(\\\\\\`Invalid model file extension: \\\\\\${ext}\\\\\\`);
   }
   
   // Additional validation could include checksum verification

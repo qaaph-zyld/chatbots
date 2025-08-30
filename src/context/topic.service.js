@@ -6,7 +6,7 @@
 
 const mongoose = require('mongoose');
 require('@src/utils');
-require('@src/context\context.service');
+require('@src/context\\\\\\\context.service');
 
 // Define topic schema
 const TopicSchema = new mongoose.Schema({

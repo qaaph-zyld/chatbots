@@ -122,7 +122,7 @@ class StorageService {
     
     // Find the file in the category directory
     const files = await fs.readdir(categoryDir);
-    const filePattern = new RegExp(`^${fileId}\\.[^.]+$`);
+    const filePattern = new RegExp(`^${fileId}\\\.[^.]+$`);
     const matchingFile = files.find(file => filePattern.test(file));
     
     if (!matchingFile) {
@@ -162,7 +162,7 @@ class StorageService {
     
     // Find the file in the category directory
     const files = await fs.readdir(categoryDir);
-    const filePattern = new RegExp(`^${fileId}\\.[^.]+$`);
+    const filePattern = new RegExp(`^${fileId}\\\.[^.]+$`);
     const matchingFile = files.find(file => filePattern.test(file));
     
     if (!matchingFile) {

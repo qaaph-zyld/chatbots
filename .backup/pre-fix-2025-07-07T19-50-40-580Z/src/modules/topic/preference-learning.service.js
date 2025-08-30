@@ -6,8 +6,8 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/modules\models\preference.model');
-require('@src/modules\utils');
+require('@src/modules\\\models\\\preference.model');
+require('@src/modules\\utils');
 const axios = require('axios');
 
 // Configure axios with proxy

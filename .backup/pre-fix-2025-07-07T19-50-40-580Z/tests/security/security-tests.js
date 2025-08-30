@@ -104,7 +104,7 @@ async function testVulnerabilities() {
   const redirectPayloads = [
     'https://evil.com',
     '//evil.com',
-    '/\\evil.com',
+    '/\\\\evil.com',
     'javascript:alert(document.domain)'
   ];
   

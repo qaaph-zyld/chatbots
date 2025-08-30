@@ -7,7 +7,7 @@ const sinon = require('sinon');
 const { v4: uuidv4 } = require('uuid');
 
 // Mock dependencies
-require('@src/storage\local-storage.service');
+require('@src/storage\\\\\\\local-storage.service');
 const fs = require('fs').promises;
 const path = require('path');
 

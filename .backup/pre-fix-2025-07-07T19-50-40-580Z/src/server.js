@@ -5,7 +5,7 @@
 require('@src/app');
 require('@src/utils');
 require('@src/config');
-require('@src/scaling\cluster');
+require('@src/scaling\\\cluster');
 
 // Get port from config or use default
 const PORT = config.port || 3000;

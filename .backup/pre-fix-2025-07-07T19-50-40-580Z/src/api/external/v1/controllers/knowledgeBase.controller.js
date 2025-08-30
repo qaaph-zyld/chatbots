@@ -4,10 +4,10 @@
  * Handles external API requests related to knowledge bases
  */
 
-require('@src/models\knowledgeBase.model');
-require('@src/models\chatbot.model');
-require('@src/utils\apiError');
-require('@src/services\knowledgeBase.service');
+require('@src/models\\\knowledgeBase.model');
+require('@src/models\\\chatbot.model');
+require('@src/utils\\\apiError');
+require('@src/services\\\knowledgeBase.service');
 
 /**
  * Search the knowledge base

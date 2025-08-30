@@ -12,15 +12,15 @@ const path = require('path');
 const { promisify } = require('util');
 const exec = promisify(require('child_process').exec);
 const mongoose = require('mongoose');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 require('@src/config');
 
 // Models
-require('@src/models\user.model');
-require('@src/models\chatbot.model');
-require('@src/models\knowledge-base.model');
-require('@src/models\personality.model');
-require('@src/models\plugin.model');
+require('@src/models\\\\\\\\\\user.model');
+require('@src/models\\\\\\\chatbot.model');
+require('@src/models\\\\\\\knowledge-base.model');
+require('@src/models\\\\\\\personality.model');
+require('@src/models\\\\\\\plugin.model');
 require('@src/models\training-dataset.model');
 
 // Parse command line arguments
@@ -434,13 +434,13 @@ async function setupUatServer() {
 
 require('dotenv').config({ path: './config/uat.env' });
 require('@src/app');
-require('@src/utils\logger');
+require('@src/utils\\\\\\\logger');
 
 const port = process.env.PORT || 3001;
 
 // Start the server
 const server = app.listen(port, () => {
-  logger.info(\`UAT server running on port \${port}\`);
+  logger.info(\\\\\\`UAT server running on port \\\\\\${port}\\\\\\`);
 });
 
 // Handle graceful shutdown

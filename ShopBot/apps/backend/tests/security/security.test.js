@@ -71,9 +71,9 @@ const sanitizeInput = (req, res, next) => {
       for (let key in obj) {
         if (typeof obj[key] === 'string') {
           obj[key] = obj[key]
-            .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '')
+            .replace(/<script\b[^<]*(?:(?!<\\\\\\/script>)<[^<]*)*<\\\\\\/script>/gi, '')
             .replace(/javascript:/gi, '')
-            .replace(/on\w+\s*=/gi, '');
+            .replace(/on\\\\\\\w+\\\\\\\s*=/gi, '');
         } else if (typeof obj[key] === 'object' && obj[key] !== null) {
           sanitize(obj[key]);
         }
@@ -132,13 +132,13 @@ app.post('/api/auth/login', async (req, res) => {
   }
 
   // Email format validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\\\\\\\s@]+@[^\\\\\\\s@]+\\\\\\.[^\\\\\\\s@]+$/;
   if (!emailRegex.test(email)) {
     return res.status(400).json({ error: 'Invalid email format' });
   }
 
   // Password strength validation
-  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\\\\d@$!%*?&]{8,}$/;
   if (!passwordRegex.test(password)) {
     return res.status(400).json({ 
       error: 'Password must be at least 8 characters with uppercase, lowercase, number, and special character' 
@@ -246,8 +246,8 @@ app.post('/api/search', authenticateToken, (req, res) => {
   // Simulate SQL injection detection
   const sqlInjectionPatterns = [
     /(\b(SELECT|INSERT|UPDATE|DELETE|DROP|CREATE|ALTER|EXEC|UNION)\b)/i,
-    /(\b(OR|AND)\s+\d+\s*=\s*\d+)/i,
-    /(';|'--|\*|%)/i
+    /(\b(OR|AND)\\\\\\\s+\\\\\\\d+\\\\\\\s*=\\\\\\\s*\\\\\\\d+)/i,
+    /(';|'--|\\\\\\*|%)/i
   ];
 
   const containsSqlInjection = sqlInjectionPatterns.some(pattern => pattern.test(query));

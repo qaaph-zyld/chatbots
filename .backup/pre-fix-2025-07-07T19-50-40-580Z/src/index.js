@@ -14,7 +14,7 @@ require('@src/config');
 require('@src/api\routes');
 require('@src/middleware');
 require('@src/utils');
-require('@src/services\chatbot.service');
+require('@src/services\\\chatbot.service');
 
 // Initialize express app
 const app = express();

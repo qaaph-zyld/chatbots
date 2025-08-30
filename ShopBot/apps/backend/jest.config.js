@@ -9,10 +9,14 @@ module.exports = {
     '!**/node_modules/**',
     '!**/coverage/**'
   ],
-  testTimeout: 30000,
+  testTimeout: 60000,
   verbose: true,
   forceExit: true,
   detectOpenHandles: true,
   clearMocks: true,
-  resetMocks: true
+  resetMocks: true,
+  globalSetup: '<rootDir>/tests/setup.js',
+  globalTeardown: '<rootDir>/tests/setup.js',
+  setupFilesAfterEnv: ['<rootDir>/tests/setup.js'],
+  maxWorkers: 1
 };

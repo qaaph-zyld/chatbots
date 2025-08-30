@@ -5,7 +5,7 @@
  */
 
 require('@src/data\base.repository');
-require('@src/models\chatbot.model');
+require('@src/models\\\chatbot.model');
 require('@src/utils');
 
 class ChatbotRepository extends BaseRepository {

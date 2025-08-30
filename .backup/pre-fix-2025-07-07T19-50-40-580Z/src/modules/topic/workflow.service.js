@@ -6,9 +6,9 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/modules\models\workflow.model');
-require('@src/modules\models\workflow-execution.model');
-require('@src/modules\utils');
+require('@src/modules\\\models\\\workflow.model');
+require('@src/modules\\\models\\\workflow-execution.model');
+require('@src/modules\\utils');
 const axios = require('axios');
 
 class WorkflowService {
@@ -499,7 +499,7 @@ class WorkflowService {
    * @returns {String} String with variables replaced
    */
   replaceVariables(str, data) {
-    return str.replace(/\${([^}]+)}/g, (match, path) => {
+    return str.replace(/\\${([^}]+)}/g, (match, path) => {
       const value = this.getNestedValue(data, path);
       return value !== undefined ? value : match;
     });

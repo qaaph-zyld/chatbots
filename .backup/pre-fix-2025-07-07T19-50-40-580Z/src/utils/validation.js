@@ -4,7 +4,7 @@
  * Provides validation functions for various data types
  */
 
-require('@src/utils\logger');
+require('@src/utils\\\logger');
 
 /**
  * Validate an email address
@@ -17,7 +17,7 @@ function isValidEmail(email) {
   }
   
   // Basic email validation regex
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const emailRegex = /^[^\\\s@]+@[^\\\s@]+\\.[^\\\s@]+$/;
   return emailRegex.test(email);
 }
 

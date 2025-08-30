@@ -33,7 +33,7 @@ describe('Multi-File Dependency Tests', () => {
           return x + y;
         },
         format: function(value) {
-          return \`Result: \${value}\`;
+          return \\`Result: \\${value}\\`;
         }
       };
     `);

@@ -64,15 +64,15 @@ const securityHeaders = () => {
 const cacheControl = () => {
   return (req, res, next) => {
     // Static assets can be cached longer
-    if (req.path.match(/\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
+    if (req.path.match(/\\.(js|css|png|jpg|jpeg|gif|ico|svg|woff|woff2|ttf|eot)$/)) {
       res.set('Cache-Control', 'public, max-age=86400'); // 24 hours
     } 
     // API responses that rarely change
-    else if (req.path.match(/^\/api\/v1\/(settings|chatbot-templates)/)) {
+    else if (req.path.match(/^\\/api\\/v1\\/(settings|chatbot-templates)/)) {
       res.set('Cache-Control', 'public, max-age=3600'); // 1 hour
     }
     // Dynamic API responses
-    else if (req.path.match(/^\/api\/v1\//)) {
+    else if (req.path.match(/^\\/api\\/v1\\//)) {
       res.set('Cache-Control', 'private, max-age=0, no-cache');
     }
     // Default for other routes
@@ -98,7 +98,7 @@ const trackResponseTime = () => {
     }
     
     // Collect metrics for monitoring
-    if (req.path.match(/^\/api\/v1\//)) {
+    if (req.path.match(/^\\/api\\/v1\\//)) {
       const endpoint = req.path.split('?')[0];
       const method = req.method;
       

@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 require('@src/utils');
 const axios = require('axios');
 const HttpsProxyAgent = require('https-proxy-agent');
-require('@src/personality\personality.schema');
+require('@src/personality\\\\\\\personality.schema');
 
 /**
  * Personality Service class
@@ -339,13 +339,13 @@ class PersonalityService {
     // Apply greeting pattern if message starts with a greeting
     if (/^(hi|hello|hey|greetings)/i.test(message) && languagePatterns.greetings && languagePatterns.greetings.length > 0) {
       const randomGreeting = languagePatterns.greetings[Math.floor(Math.random() * languagePatterns.greetings.length)];
-      message = message.replace(/^(hi|hello|hey|greetings)[,!]?\s/i, randomGreeting + ' ');
+      message = message.replace(/^(hi|hello|hey|greetings)[,!]?\\\\\\\s/i, randomGreeting + ' ');
     }
     
     // Apply farewell pattern if message ends with a farewell
-    if (/(goodbye|bye|farewell|see you|talk to you later)\.?$/i.test(message) && languagePatterns.farewells && languagePatterns.farewells.length > 0) {
+    if (/(goodbye|bye|farewell|see you|talk to you later)\\\\\\.?$/i.test(message) && languagePatterns.farewells && languagePatterns.farewells.length > 0) {
       const randomFarewell = languagePatterns.farewells[Math.floor(Math.random() * languagePatterns.farewells.length)];
-      message = message.replace(/(goodbye|bye|farewell|see you|talk to you later)\.?$/i, randomFarewell);
+      message = message.replace(/(goodbye|bye|farewell|see you|talk to you later)\\\\\\.?$/i, randomFarewell);
     }
     
     return message;

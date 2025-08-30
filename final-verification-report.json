@@ -1,0 +1,164 @@
+{
+  "summary": {
+    "timestamp": "2025-08-30T21:32:02.930Z",
+    "totalRuns": 5,
+    "completedRuns": 5,
+    "statistics": {
+      "totalRuns": 5,
+      "successfulRuns": 0,
+      "failedRuns": 5,
+      "successRate": 0,
+      "coverage": {
+        "min": 0,
+        "max": 0,
+        "avg": 0,
+        "median": 0
+      },
+      "passRate": {
+        "min": 0,
+        "max": 0,
+        "avg": 0,
+        "median": 0
+      },
+      "duration": {
+        "min": 61,
+        "max": 107,
+        "avg": 78.4,
+        "median": 75
+      }
+    },
+    "finalResult": {
+      "runNumber": 5,
+      "timestamp": "2025-08-30T21:32:02.926Z",
+      "success": false,
+      "duration": 61,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "exitCode": 1
+    },
+    "targetsAchieved": false,
+    "overallAssessment": "CRITICAL: Test infrastructure unstable"
+  },
+  "runs": [
+    {
+      "runNumber": 1,
+      "timestamp": "2025-08-30T21:31:22.568Z",
+      "success": false,
+      "duration": 107,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "exitCode": 1
+    },
+    {
+      "runNumber": 2,
+      "timestamp": "2025-08-30T21:31:32.660Z",
+      "success": false,
+      "duration": 70,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "exitCode": 1
+    },
+    {
+      "runNumber": 3,
+      "timestamp": "2025-08-30T21:31:42.753Z",
+      "success": false,
+      "duration": 75,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "exitCode": 1
+    },
+    {
+      "runNumber": 4,
+      "timestamp": "2025-08-30T21:31:52.851Z",
+      "success": false,
+      "duration": 79,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "exitCode": 1
+    },
+    {
+      "runNumber": 5,
+      "timestamp": "2025-08-30T21:32:02.926Z",
+      "success": false,
+      "duration": 61,
+      "coverage": {
+        "statements": 0,
+        "branches": 0,
+        "functions": 0,
+        "lines": 0
+      },
+      "testResults": {
+        "total": 0,
+        "passed": 0,
+        "failed": 0,
+        "passRate": 0
+      },
+      "exitCode": 1
+    }
+  ],
+  "recommendations": [
+    "Increase test coverage from 0% to 80%",
+    "Generate more unit tests for uncovered functions",
+    "Add integration tests for complex workflows",
+    "Improve test pass rate from 0% to 99%",
+    "Fix failing tests and improve test reliability",
+    "Implement proper mocking for external dependencies",
+    "Improve test execution stability",
+    "Fix timeout and infrastructure issues"
+  ],
+  "nextSteps": [
+    "Priority 1: Stabilize test execution environment",
+    "Priority 2: Fix critical infrastructure issues",
+    "Priority 3: Implement comprehensive error handling"
+  ]
+}

@@ -6,8 +6,8 @@ const request = require('supertest');
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 require('@src/app');
-require('@src/models\user.model');
-require('@src/tests\utils\test-helpers');
+require('@src/models\\user.model');
+require('@src/tests\\utils\test-helpers');
 
 describe('Authentication API', () => {
   let testUser;

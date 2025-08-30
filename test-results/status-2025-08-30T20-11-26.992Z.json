@@ -1,0 +1,10 @@
+{
+  "command": "node -e console.log(\"About to exit with code 2\"); process.exit(2);",
+  "cwd": "C:\\Users\\cc\\Documents\\Project\\Chatbot\\chatbots",
+  "startTime": "2025-08-30T20:11:26.998Z",
+  "currentTime": "2025-08-30T20:11:27.064Z",
+  "duration": 66,
+  "status": "failed",
+  "exitCode": null,
+  "pid": 3268
+}

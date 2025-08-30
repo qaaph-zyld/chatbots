@@ -8,7 +8,7 @@ const fs = require('fs').promises;
 const path = require('path');
 require('@src/utils');
 require('@src/services\translation.service');
-require('@src/services\knowledge-base.service');
+require('@src/services\\\knowledge-base.service');
 
 class MultilingualKnowledgeBaseService {
   constructor() {

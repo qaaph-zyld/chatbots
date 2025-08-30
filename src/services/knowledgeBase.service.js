@@ -4,10 +4,10 @@
  * Handles CRUD operations for knowledge bases and knowledge items
  */
 
-require('@src/database\schemas\knowledgeBase.schema');
-require('@src/database\schemas\chatbot.schema');
+require('@src/database\\\\\\\schemas\\\\\\\knowledgeBase.schema');
+require('@src/database\\\\\\\schemas\\\\\\\chatbot.schema');
 require('@src/utils');
-require('@src/utils\errors');
+require('@src/utils\\\\\\\errors');
 
 /**
  * Create a new knowledge base

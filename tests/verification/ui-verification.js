@@ -115,7 +115,7 @@ test.describe('UI Verification Tests', () => {
     await page.locator('button:has-text("Create Chatbot")').click();
     
     // Check that we're on the create chatbot page
-    await expect(page).toHaveURL(/.*chatbots\/create/);
+    await expect(page).toHaveURL(/.*chatbots\\\\\\/create/);
     
     // Fill in the chatbot form
     const chatbotName = `UI Test Bot ${Date.now()}`;
@@ -127,7 +127,7 @@ test.describe('UI Verification Tests', () => {
     await page.locator('button[type="submit"]').click();
     
     // Check that we're redirected to the chatbot details page
-    await expect(page).toHaveURL(/.*chatbots\/[\w-]+/);
+    await expect(page).toHaveURL(/.*chatbots\\\\\\/[\\\\\\\w-]+/);
     
     // Check that the chatbot name is displayed
     await expect(page.locator('h1')).toContainText(chatbotName);
@@ -159,7 +159,7 @@ test.describe('UI Verification Tests', () => {
     await page.locator('button[type="submit"]').click();
     
     // Check that we're redirected to the chatbot details page
-    await expect(page).toHaveURL(/.*chatbots\/[\w-]+/);
+    await expect(page).toHaveURL(/.*chatbots\\\\\\/[\\\\\\\w-]+/);
     
     // Check that the updated description is displayed
     await expect(page.locator('.chatbot-description')).toContainText('Updated during UI verification testing');

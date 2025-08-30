@@ -11,8 +11,8 @@ const axios = require('axios');
 const AdmZip = require('adm-zip');
 const { createHash } = require('crypto');
 const { spawn } = require('child_process');
-require('@src/utils\logger');
-require('@src/config\open-voice.config');
+require('@src/utils\\\\\\\logger');
+require('@src/config\\\\\\\open-voice.config');
 
 class ModelManager {
   constructor() {
@@ -212,7 +212,7 @@ class ModelManager {
         return fs.existsSync(modelPath);
       } else if (model.type === 'zip') {
         // For zip files, check if the directory exists
-        const dirPath = modelPath.replace(/\.zip$/, '');
+        const dirPath = modelPath.replace(/\\\\\\.zip$/, '');
         return fs.existsSync(dirPath);
       }
       
@@ -420,7 +420,7 @@ class ModelManager {
       if (model.type === 'file') {
         fs.unlinkSync(modelPath);
       } else if (model.type === 'zip') {
-        const dirPath = modelPath.replace(/\.zip$/, '');
+        const dirPath = modelPath.replace(/\\\\\\.zip$/, '');
         this.deleteDirectory(dirPath);
       }
       

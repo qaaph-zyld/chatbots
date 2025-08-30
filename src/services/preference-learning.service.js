@@ -6,7 +6,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/models\preference.model');
+require('@src/models\\\\\\\preference.model');
 require('@src/utils');
 const axios = require('axios');
 

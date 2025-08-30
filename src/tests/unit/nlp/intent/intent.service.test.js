@@ -72,7 +72,7 @@ jest.mock('fs', () => {
 });
 
 // Import the service after mocks
-require('@src/nlp\intent\intent.service');
+require('@src/nlp\\\\\\\intent\\\\\\\intent.service');
 const tf = require('@tensorflow/tfjs-node');
 require('@src/utils');
 require('@src/storage');

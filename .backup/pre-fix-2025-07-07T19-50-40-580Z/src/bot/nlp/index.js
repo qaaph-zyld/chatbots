@@ -4,8 +4,8 @@
  * Manages NLP processors and provides a unified interface
  */
 
-require('@src/bot\nlp\processors\huggingface.processor');
-require('@src/bot\nlp\processors\basic.processor');
+require('@src/bot\nlp\\\processors\\\huggingface.processor');
+require('@src/bot\nlp\\\processors\basic.processor');
 
 // Map of processor types to their implementations
 const processorTypes = {

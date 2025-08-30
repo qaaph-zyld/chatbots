@@ -11,10 +11,10 @@
 
 const axios = require('axios');
 const mongoose = require('mongoose');
-require('@src/modules\models\template.model');
+require('@src/modules\\\models\template.model');
 require('@src/modules\topic\template.service');
-require('@src/modules\utils\logger');
-require('@src/modules\utils\errors');
+require('@src/modules\\utils\\\logger');
+require('@src/modules\\utils\\\errors');
 
 class AdvancedTemplateService {
   constructor() {
@@ -599,7 +599,7 @@ class AdvancedTemplateService {
    * @returns {String} Processed string
    */
   _replaceVariables(str, variables) {
-    return str.replace(/\{\{([^}]+)\}\}/g, (match, varName) => {
+    return str.replace(/\\{\\{([^}]+)\\}\\}/g, (match, varName) => {
       const trimmedVarName = varName.trim();
       
       // Check for conditional syntax: {{varName ? trueValue : falseValue}}
@@ -640,7 +640,7 @@ class AdvancedTemplateService {
    */
   _generateVariablesSchema(configuration) {
     const schema = {};
-    const variableRegex = /\{\{([^}?:]+)(?:\?[^}]*)?}}/g;
+    const variableRegex = /\\{\\{([^}?:]+)(?:\\?[^}]*)?}}/g;
     
     // Helper to scan an object for variables
     const scanForVariables = (obj) => {

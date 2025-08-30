@@ -6,7 +6,7 @@
  */
 
 // Use mock utilities for testing
-require('@src/utils\mock-utils');
+require('@src/utils\\\\\\\mock-utils');
 const crypto = require('crypto');
 
 /**
@@ -719,7 +719,7 @@ class AuthenticationService {
       throw new Error('Password must contain at least one special character');
     }
 
-    if (this.options.passwordPolicyRequireNumbers && !/\d/.test(password)) {
+    if (this.options.passwordPolicyRequireNumbers && !/\\\\\\\d/.test(password)) {
       throw new Error('Password must contain at least one number');
     }
 

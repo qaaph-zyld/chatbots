@@ -4,7 +4,7 @@
  * Handles API requests for model management
  */
 
-require('@src/services\local-model.service');
+require('@src/services\\\local-model.service');
 require('@src/utils');
 
 /**

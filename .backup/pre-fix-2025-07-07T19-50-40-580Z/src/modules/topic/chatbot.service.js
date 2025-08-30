@@ -6,11 +6,11 @@
 
 require('@src/modules\bot\nlp');
 require('@src/modules\bot\templates');
-require('@src/modules\integrations');
-require('@src/modules\bot\engines');
-require('@src/modules\personality');
-require('@src/modules\utils');
-require('@src/modules\config');
+require('@src/modules\\\integrations');
+require('@src/modules\bot\\\engines');
+require('@src/modules\\\personality');
+require('@src/modules\\utils');
+require('@src/modules\\\config');
 
 class ChatbotService {
   constructor() {
