@@ -1,14 +1,19 @@
 # Environment variables
 .env
+.env.*
+!.env.example
 .env.local
 .env.*.local
 
 # Node.js
 node_modules/
-npm-debug.log
-yarn-debug.log
-yarn-error.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
 package-lock.json
+yarn.lock
+.pnp*
+.pnp.js
 
 # Python
 __pycache__/
@@ -35,6 +40,10 @@ wheels/
 *.egg-info/
 .installed.cfg
 *.egg
+pip-log.txt
+pip-delete-this-directory.txt
+*.pyc
+__pycache__/
 
 # IDE files
 .idea/
@@ -42,26 +51,78 @@ wheels/
 *.swp
 *.swo
 .DS_Store
+*.sublime-*
+*.code-workspace
+*.sublime-workspace
 
 # Logs
 logs/
 *.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
 
 # Build artifacts
 build/
 dist/
 out/
+.next/
+.nuxt/
+.serverless/
+.serverless_nextjs/
+.turbo/
+.cache/
+.eslintcache
+.stylelintcache
 
 # Testing
 coverage/
-.coverage
+.nyc_output/
+.nyc_output*/
+coverage*/
+.coveragerc
 htmlcov/
 .pytest_cache/
+.vercel
+.vscode-test/
+test-results/
+test-output/
+*.test-output.txt
+*.test-results.json
 
-# Miscellaneous
-.cache/
-temp/
-tmp/
+# Debug logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
 
 # Local Netlify folder
 .netlify
+
+# Temporary files
+temp/
+tmp/
+*.tmp
+*.bak
+*.backup
+*.swp
+*.swo
+*~
+
+# System files
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
