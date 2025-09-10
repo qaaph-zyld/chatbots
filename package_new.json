@@ -1,0 +1,86 @@
+{
+  "name": "customizable-chatbots",
+  "version": "0.1.0",
+  "description": "A modern, flexible platform for creating and deploying customizable chatbots with advanced AI capabilities",
+  "main": "src_new/api/app.js",
+  "_moduleAliases": {
+    "@src": "src_new",
+    "@core": "src_new/core",
+    "@features": "src_new/features",
+    "@infrastructure": "src_new/infrastructure",
+    "@api": "src_new/api",
+    "@config": "config_new"
+  },
+  "scripts": {
+    "start": "node src_new/api/app.js",
+    "dev": "nodemon src_new/api/app.js",
+    "test": "jest",
+    "test:unit": "jest --testPathPattern=tests_new/unit",
+    "test:integration": "jest --testPathPattern=tests_new/integration",
+    "test:e2e": "jest --testPathPattern=tests_new/e2e",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "lint": "eslint src_new/",
+    "lint:fix": "eslint src_new/ --fix",
+    "format": "prettier --write 'src_new/**/*.{js,jsx}'",
+    "build": "node scripts/build.js",
+    "migrate": "node scripts/migrate.js",
+    "start:production": "NODE_ENV=production node src_new/api/app.js",
+    "security-audit": "npm audit && node scripts/security-audit.js",
+    "pre-release-check": "npm run lint && npm run test && npm run security-audit"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Pavleee23/chatbots.git"
+  },
+  "keywords": [
+    "chatbot",
+    "ai",
+    "nlp",
+    "conversational-ai",
+    "customizable"
+  ],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Pavleee23/chatbots/issues"
+  },
+  "homepage": "https://github.com/Pavleee23/chatbots#readme",
+  "dependencies": {
+    "express": "^4.18.0",
+    "cors": "^2.8.5",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "jsonwebtoken": "^9.0.2",
+    "bcryptjs": "^2.4.3",
+    "mongoose": "^7.0.0",
+    "redis": "^4.6.0",
+    "winston": "^3.8.0",
+    "dotenv": "^16.0.0",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0",
+    "supertest": "^6.3.0",
+    "eslint": "^8.0.0",
+    "prettier": "^2.8.0",
+    "nodemon": "^2.0.0",
+    "jest-environment-node": "^29.0.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "testMatch": [
+      "**/tests_new/**/*.test.js"
+    ],
+    "collectCoverageFrom": [
+      "src_new/**/*.js",
+      "!src_new/**/*.test.js"
+    ],
+    "coverageDirectory": "coverage",
+    "coverageReporters": ["text", "lcov", "html"]
+  },
+  "engines": {
+    "node": ">=16.0.0",
+    "npm": ">=8.0.0"
+  }
+}

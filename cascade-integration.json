@@ -1,0 +1,65 @@
+{
+  "terminal_cascade_config": {
+    "timeout_protection": {
+      "enabled": true,
+      "global_timeout": 300,
+      "command_specific_timeouts": {
+        "npm install": 180,
+        "yarn install": 180,
+        "pip install": 120,
+        "docker build": 600,
+        "git clone": 60,
+        "npm run build": 300,
+        "webpack": 240,
+        "tsc": 120,
+        "jest": 60,
+        "pytest": 90
+      },
+      "retry_logic": {
+        "max_retries": 3,
+        "retry_delay": 5,
+        "progressive_timeout": true
+      }
+    },
+    "process_management": {
+      "auto_cleanup": true,
+      "zombie_detection": true,
+      "resource_monitoring": true,
+      "hanging_process_threshold": 300
+    },
+    "execution_patterns": {
+      "pre_execution_health_check": true,
+      "post_execution_cleanup": true,
+      "command_logging": "/tmp/cascade_execution.log",
+      "error_recovery": true
+    },
+    "ai_integration": {
+      "context_aware_timeouts": true,
+      "failure_reporting": true,
+      "auto_skip_on_failure": true,
+      "max_consecutive_failures": 3
+    }
+  },
+  "implementation_steps": [
+    {
+      "step": 1,
+      "action": "source_timeout_system",
+      "command": "source /path/to/terminal-timeout-system.sh"
+    },
+    {
+      "step": 2,
+      "action": "modify_cascade_config",
+      "details": "Update terminal cascade to use ai_code_execute wrapper"
+    },
+    {
+      "step": 3,
+      "action": "enable_monitoring",
+      "command": "setup_process_monitor"
+    },
+    {
+      "step": 4,
+      "action": "test_integration",
+      "command": "ai_code_execute 'echo test' 'general'"
+    }
+  ]
+}

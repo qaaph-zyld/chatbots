@@ -10,7 +10,8 @@
     "@api": "src/api",
     "@data": "src/data",
     "@domain": "src/domain",
-    "@utils": "src/utils"
+    "@utils": "src/utils",
+    "@tests": "src/tests"
   },
   "scripts": {
     "start": "node src/index.js",
@@ -33,7 +34,7 @@
     "test:deployment": "jest --config configs/jest/jest.deployment.config.js",
     "test:performance": "node src/tests/performance/run-performance-tests.js",
     "test:load": "artillery run src/tests/performance/load/load-test.yml",
-    "test:security": "npm audit && node scripts/security-tests.js",
+    "test:security": "npm audit && node scripts/security-tests.js && playwright test tests/security/security-scan.test.js",
     "test:uat": "node src/scripts/run-uat-tests.js",
     "test:uat:chrome": "node src/scripts/run-uat-tests.js --browser=chromium",
     "test:uat:firefox": "node src/scripts/run-uat-tests.js --browser=firefox",
@@ -43,9 +44,13 @@
     "test:smoke:production": "playwright test --config=playwright.production.config.js --grep=@smoke",
     "test:e2e:staging": "playwright test --config=playwright.staging.config.js",
     "test:all": "node scripts/test-coverage-runner.js",
+    "test:accessibility": "playwright test tests/accessibility/a11y.test.js && pa11y-ci",
+    "test:performance:load": "artillery run tests/performance/load-test.yml",
+    "test:performance:stress": "artillery run tests/performance/stress-test.yml",
+    "test:performance:spike": "artillery run tests/performance/spike-test.yml",
+    "test:performance:soak": "artillery run tests/performance/soak-test.yml",
     "test:gap-analysis": "node scripts/test-gap-analyzer.js",
     "test:ui": "playwright test --config=playwright.config.js",
-    "test:accessibility": "pa11y-ci",
     "lint": "eslint .",
     "format": "prettier --write 'src/**/*.{js,jsx}'",
     "bug-sweep": "node src/scripts/run-bug-sweep.js",
@@ -107,6 +112,7 @@
     "uuid": "^9.0.1"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
     "@babel/core": "^7.27.4",
     "@babel/parser": "^7.28.3",
     "@babel/plugin-transform-runtime": "^7.27.3",

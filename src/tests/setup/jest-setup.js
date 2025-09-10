@@ -4,13 +4,14 @@
  * Setup file for Jest tests
  */
 
-require('@src/tests\\\\\\\setup\\\\\\\mongoose-test-setup');
-require('@src/tests\\\\\\\setup\\\\\\\mongoose-model-helper');
+require('@tests/setup/mongoose-test-setup');
+require('@tests/setup/mongoose-model-helper');
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 
 // Mock configuration to prevent undefined errors
+jest.mock('@tests/config', () => {
 jest.mock('../../config', () => {
   return require('./test-config');
 });

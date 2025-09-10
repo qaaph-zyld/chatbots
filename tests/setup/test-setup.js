@@ -1,7 +1,7 @@
 // Enhanced test setup
 // Mock server temporarily disabled due to path-to-regexp compatibility issues
 // const { server } = require('./mock-server');
-require('../../src/tests/setup/jest-setup');
+require('@tests/setup/jest-setup');
 
 // Global test configuration
 jest.setTimeout(30000); // 30 second timeout

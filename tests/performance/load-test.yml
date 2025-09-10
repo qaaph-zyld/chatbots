@@ -1,0 +1,71 @@
+config:
+  target: "http://localhost:3000"
+  phases:
+    - duration: 60
+      arrivalRate: 10
+      name: Warm up
+    - duration: 300
+      arrivalRate: 20
+      rampTo: 100
+      name: Ramp up load
+    - duration: 600
+      arrivalRate: 100
+      name: Sustained load
+    - duration: 120
+      arrivalRate: 100
+      rampTo: 20
+      name: Ramp down
+  defaults:
+    headers:
+      Content-Type: application/json
+
+scenarios:
+  - name: "Main page load"
+    flow:
+      - get:
+          url: "/"
+          capture:
+            json: "$.token"
+            as: "token"
+
+  - name: "User authentication"
+    flow:
+      - post:
+          url: "/api/auth/login"
+          json:
+            email: "{{ $randomEmail() }}"
+            password: "Test@1234"
+          capture:
+            json: "$.token"
+            as: "authToken"
+
+  - name: "Chat interaction"
+    flow:
+      - post:
+          url: "/api/chat"
+          headers:
+            Authorization: "Bearer {{ token }}"
+          json:
+            message: "Hello, how are you?"
+
+  - name: "Payment processing"
+    weight: 0.3  # 30% of traffic
+    flow:
+      - post:
+          url: "/api/payments/process"
+          headers:
+            Authorization: "Bearer {{ token }}"
+          json:
+            amount: 9.99
+            token: "tok_visa"
+
+  - name: "API health check"
+    weight: 0.1  # 10% of traffic
+    flow:
+      - get:
+          url: "/health"
+          capture:
+            json: "$.status"
+            as: "status"
+          match:
+            - status: "ok"
