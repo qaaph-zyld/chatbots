@@ -45,6 +45,7 @@
     "test:e2e:staging": "playwright test --config=playwright.staging.config.js",
     "test:all": "node scripts/test-coverage-runner.js",
     "test:accessibility": "playwright test tests/accessibility/a11y.test.js && pa11y-ci",
+    "test:context": "node scripts/test-context.js",
     "test:performance:load": "artillery run tests/performance/load-test.yml",
     "test:performance:stress": "artillery run tests/performance/stress-test.yml",
     "test:performance:spike": "artillery run tests/performance/spike-test.yml",
@@ -100,6 +101,7 @@
     "axios": "^1.10.0",
     "bcrypt": "^6.0.0",
     "bcryptjs": "^2.4.3",
+    "chokidar": "^4.0.3",
     "express-rate-limit": "^7.5.0",
     "jsonwebtoken": "^9.0.2",
     "marked": "^15.0.12",
@@ -109,6 +111,7 @@
     "sqlite": "^5.1.1",
     "sqlite3": "^5.1.6",
     "strip-ansi": "^6.0.1",
+    "tiktoken": "^1.0.22",
     "uuid": "^9.0.1"
   },
   "devDependencies": {
