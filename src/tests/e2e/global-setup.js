@@ -6,7 +6,7 @@
 
 require('dotenv').config();
 const { spawn } = require('child_process');
-require('@src/utils');
+const { logger } = require('../../utils');
 
 // Server process
 let serverProcess;

@@ -4,8 +4,8 @@
  * Setup file for Jest tests
  */
 
-require('@src/tests\\\\\\\setup\\\\\\\mongoose-test-setup');
-require('@src/tests\\\\\\\setup\\\\\\\mongoose-model-helper');
+const { clearModels, connectTestDB, disconnectTestDB, clearDatabase } = require('./mongoose-test-setup');
+const { safeCompileModel } = require('./mongoose-model-helper');
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
@@ -19,7 +19,7 @@ jest.mock('../../config', () => {
 beforeAll(async () => {
   clearModels();
   // Create test directories for storage
-  require('@src/tests\\\\\\\setup\test-config');
+  const testConfig = require('./test-config');
   const dirs = [
     testConfig.storage.baseDir,
     testConfig.storage.tempDir,

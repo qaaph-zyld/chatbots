@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/utils');
+const { logger } = require('../../utils');
 
 /**
  * Safely compile a model only if it doesn't already exist

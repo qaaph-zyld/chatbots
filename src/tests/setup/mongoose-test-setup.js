@@ -5,7 +5,7 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/utils');
+const { logger } = require('../../utils');
 
 /**
  * Clear all Mongoose models to prevent "Cannot overwrite model" errors

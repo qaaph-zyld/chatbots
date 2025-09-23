@@ -207,7 +207,7 @@ class ComprehensiveFolderMapper:
         if batch:
             yield batch
     
-    def _process_item_batch(self, batch: List[Tuple[Path, str, int]):
+    def _process_item_batch(self, batch: List[Tuple[Path, str, int]]):
         """Process a batch of items with parallel processing."""
         with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = {

@@ -1,0 +1,43 @@
+{
+  "ignore_dirs": [
+    ".git",
+    "node_modules", 
+    "__pycache__",
+    "dist",
+    "build",
+    "coverage",
+    ".pytest_cache",
+    "venv",
+    "env",
+    "logs",
+    "tmp"
+  ],
+  "ignore_extensions": [
+    ".pyc",
+    ".pyo", 
+    ".pyd",
+    ".so",
+    ".dll",
+    ".exe",
+    ".log",
+    ".tmp",
+    ".cache"
+  ],
+  "ignore_files": [
+    ".DS_Store",
+    "Thumbs.db",
+    ".gitignore",
+    "package-lock.json",
+    "yarn.lock"
+  ],
+  "max_file_size": 10485760,
+  "include_hidden": false,
+  "deep_analysis": true,
+  "semantic_search": {
+    "chunk_size": 1000,
+    "chunk_overlap": 200,
+    "include_extensions": [".js", ".jsx", ".ts", ".tsx", ".py", ".md", ".json", ".yml", ".yaml"],
+    "embedding_model": "text-embedding-ada-002",
+    "max_results": 10
+  }
+}

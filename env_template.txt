@@ -1,0 +1,11 @@
+# Environment Variables for Workspace Mapper
+# Copy this file to .env and fill in your values
+
+# OpenAI API Key for semantic search (required for AI features)
+OPENAI_API_KEY=your_openai_api_key_here
+
+# Optional: Custom embedding model
+# EMBEDDING_MODEL=text-embedding-ada-002
+
+# Optional: Logging level
+# LOG_LEVEL=INFO
