@@ -119,6 +119,7 @@
     "adm-zip": "^0.5.16",
     "artillery": "^2.0.0",
     "aws-sdk": "^2.1520.0",
+    "axios-mock-adapter": "^2.1.0",
     "babel-loader": "^10.0.0",
     "body-parser": "^2.2.0",
     "chai": "^5.2.0",
