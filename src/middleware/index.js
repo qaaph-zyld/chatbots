@@ -4,9 +4,9 @@
  * Exports all middleware modules
  */
 
-require('@src/middleware\\\\\\\error.middleware');
-require('@src/middleware\\\\\\\logger.middleware');
-require('@src/middleware\\\\\\\auth.middleware');
+const { errorMiddleware, notFoundMiddleware } = require('./error.middleware');
+const { requestLogger } = require('./logger.middleware');
+const { apiKeyAuth, checkRole } = require('./auth.middleware');
 
 module.exports = {
   errorMiddleware,

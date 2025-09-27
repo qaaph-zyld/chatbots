@@ -5,7 +5,7 @@
  */
 
 // Get current log level from config or default to INFO
-const config = require('@src/config');
+const config = require('../config');
 
 // Define log levels
 const LOG_LEVELS = {

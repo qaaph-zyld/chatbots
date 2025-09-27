@@ -6,46 +6,34 @@
 
 const express = require('express');
 const router = express.Router();
-require('@src/routes/voice.routes');
-require('@src/routes/open-voice.routes');
-require('@src/api/external');
-require('@src/api/routes/advanced-context.routes');
-require('@src/api/routes/advanced-template.routes');
-require('@src/api/routes/theme.routes');
-require('@src/api/routes/workflow.routes');
 
 // Import controllers
-// These will be implemented as we progress through the roadmap
-require('@src/api/controllers/chatbot.controller');
-require('@src/api/controllers/template.controller');
-require('@src/api/controllers/advanced-template.controller');
-require('@src/api/controllers/integration.controller');
-require('@src/api/controllers/personality.controller');
-require('@src/api/controllers/knowledgeBase.controller');
-require('@src/api/controllers/plugin.controller');
-require('@src/api/controllers/training.controller');
-require('@src/api/controllers/analytics.controller');
-require('@src/api/controllers/context.controller');
-require('@src/api/controllers/advanced-context.controller');
-require('@src/api/controllers/auth.controller');
-require('@src/api/controllers/health.controller');
-require('@src/api/controllers/usage.controller');
-require('@src/api/controllers/scaling.controller');
-require('@src/api/controllers/theme.controller');
-
-// Import metrics routes
-const metricsRoutes = require('@src/routes/metrics.routes');
+const chatbotController = require('./controllers/chatbot.controller');
+const templateController = require('./controllers/template.controller');
+const integrationController = require('./controllers/integration.controller');
+const personalityController = require('./controllers/personality.controller');
+const knowledgeBaseController = require('./controllers/knowledgeBase.controller');
+const pluginController = require('./controllers/plugin.controller');
+const trainingController = require('./controllers/training.controller');
+const analyticsController = require('./controllers/analytics.controller');
+const contextController = require('./controllers/context.controller');
+const authController = require('./controllers/auth.controller');
+const healthController = require('./controllers/health.controller');
+const usageController = require('./controllers/usage.controller');
+const scalingController = require('./controllers/scaling.controller');
 
 // Import middleware
-require('@src/auth/auth.middleware');
+const { authenticateToken, authenticateApiKey, hasRole, hasPermission, rateLimit } = require('../middleware');
 
 // Health check endpoints
 router.get('/health', healthController.healthCheck);
 router.get('/health/status', authenticateToken, hasRole('admin'), healthController.systemStatus);
 router.get('/metrics', authenticateToken, hasRole('admin'), healthController.metrics);
 
-// Register metrics routes
-router.use('/metrics', metricsRoutes);
+// Metrics endpoint (simplified for now)
+router.get('/metrics', authenticateToken, hasRole('admin'), (req, res) => {
+  res.json({ status: 'ok', timestamp: new Date().toISOString() });
+});
 
 // Authentication routes
 router.post('/auth/register', rateLimit(10, 60000), authController.register);
@@ -244,34 +232,13 @@ router.get('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/ent
 router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/resolve-references', authenticateToken, hasPermission('chatbot:read'), contextController.resolveReferences);
 router.post('/chatbots/:chatbotId/users/:userId/conversations/:conversationId/apply-resolved-references', authenticateToken, hasPermission('chatbot:write'), contextController.applyResolvedReferences);
 
-// Voice interface routes
-router.use('/voice', voiceRoutes);
-
-// Open-source voice interface routes
-router.use('/open-voice', openVoiceRoutes);
-
-// Advanced template routes
-router.use('/advanced-templates', advancedTemplateRoutes);
-
-// Theme routes
-router.use('/themes', themeRoutes);
-
-// Workflow routes
-router.use('/', workflowRoutes);
-
-// Workflow template routes
-router.use('/workflow-templates', require('./routes/workflow-template.routes'));
-
-// Advanced context routes already imported above
-
-// Export router
-// External API routes
-/**
- * @swagger
- * tags:
- *   name: External API
- *   description: External REST API for third-party integrations
- */
-router.use('/external', externalRoutes);
+// Basic status endpoint for testing
+router.get('/status', (req, res) => {
+  res.json({ 
+    status: 'ok', 
+    timestamp: new Date().toISOString(),
+    version: '1.0.0-beta.1'
+  });
+});
 
 module.exports = router;

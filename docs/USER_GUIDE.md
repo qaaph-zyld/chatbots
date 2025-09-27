@@ -39,21 +39,31 @@ Welcome to the Chatbot Platform User Guide! This comprehensive guide will help y
 
 ### Creating Your Account
 
-1. Visit the platform homepage at `https://your-chatbot-platform.com`
+1. Visit the platform homepage at `https://chatbot-platform.com`
 2. Click on "Sign Up" in the top right corner
 3. Fill in your details (name, email, password)
-4. Verify your email address
-5. Log in to access your dashboard
+4. Verify your email address through the confirmation link sent to your email
+5. Complete your profile setup with additional information
+6. Log in to access your dashboard
+
+### Free Trial and Subscription Plans
+
+- **Free Trial**: 14-day trial with full feature access, no credit card required
+- **Starter Plan**: $29/month - Up to 3 chatbots, 1,000 conversations/month
+- **Professional Plan**: $99/month - Up to 10 chatbots, 10,000 conversations/month
+- **Enterprise Plan**: Custom pricing - Unlimited chatbots, custom integrations
 
 ### Navigating the Dashboard
 
 The dashboard is your control center for managing all your chatbots. Here's what you'll find:
 
-- **Chatbot List**: View and manage all your chatbots
-- **Create New**: Start creating a new chatbot
-- **Analytics**: View performance metrics across all chatbots
-- **Settings**: Manage your account settings
-- **Documentation**: Access guides and tutorials
+- **Chatbot List**: View and manage all your chatbots with status indicators
+- **Create New**: Start creating a new chatbot with guided setup
+- **Analytics**: View performance metrics across all chatbots with real-time data
+- **Settings**: Manage your account settings, billing, and team members
+- **Documentation**: Access guides, tutorials, and API documentation
+- **Support**: Access help center, community forum, and live chat support
+- **Billing**: View usage, manage subscriptions, and download invoices
 
 ## Creating Your First Chatbot
 
@@ -429,13 +439,19 @@ For users accessing your chatbot on mobile devices, the platform automatically:
 ### General Questions
 
 **Q: How many chatbots can I create?**  
-A: The number of chatbots depends on your subscription plan. Basic plans typically allow 1-3 chatbots, while premium plans offer unlimited chatbots.
+A: Starter plan allows 3 chatbots, Professional plan allows 10 chatbots, and Enterprise plan offers unlimited chatbots.
 
 **Q: What languages are supported?**  
-A: Our platform currently supports 25+ languages, including English, Spanish, French, German, Chinese, Japanese, and more.
+A: Our platform currently supports 40+ languages, including English, Spanish, French, German, Chinese, Japanese, Arabic, Hindi, Portuguese, Russian, and more.
 
 **Q: Can I migrate my existing chatbot?**  
-A: Yes, we provide migration tools for several popular chatbot platforms. Contact support for assistance with custom migrations.
+A: Yes, we provide migration tools for Dialogflow, Botpress, Microsoft Bot Framework, and other popular platforms. Contact support for assistance with custom migrations.
+
+**Q: What's included in the free trial?**  
+A: The 14-day free trial includes access to all features: unlimited chatbots, all integrations, advanced analytics, and priority support.
+
+**Q: Can I cancel my subscription anytime?**  
+A: Yes, you can cancel your subscription at any time. Your chatbots will remain active until the end of your billing period.
 
 ### Technical Questions
 
@@ -451,13 +467,16 @@ A: Our platform offers a 99.9% uptime SLA for premium plans. See our terms of se
 ### Billing Questions
 
 **Q: How does billing work?**  
-A: Billing is subscription-based with plans charged monthly or annually. Usage beyond plan limits may incur additional charges.
+A: Billing is subscription-based with monthly or annual payment options. Annual plans receive a 20% discount. Usage beyond plan limits incurs overage charges at $0.10 per additional conversation.
 
 **Q: Can I upgrade or downgrade my plan?**  
-A: Yes, you can change your plan at any time. Upgrades take effect immediately, while downgrades apply at the next billing cycle.
+A: Yes, you can change your plan at any time through the billing dashboard. Upgrades take effect immediately with prorated billing, while downgrades apply at the next billing cycle.
 
-**Q: Do you offer a free trial?**  
-A: Yes, we offer a 14-day free trial with full access to all features. No credit card required to start.
+**Q: What payment methods do you accept?**  
+A: We accept all major credit cards (Visa, MasterCard, American Express), PayPal, and bank transfers for Enterprise customers.
+
+**Q: Do you offer refunds?**  
+A: We offer a 30-day money-back guarantee for new subscriptions. Contact support within 30 days of your first payment for a full refund.
 
 ---
 

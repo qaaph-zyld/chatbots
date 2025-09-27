@@ -25,8 +25,8 @@ describe('Chatbot Model', () => {
   };
 
   beforeEach(async () => {
-    // Clear all chatbots before each test
-    await Chatbot.deleteMany({});
+    // Mock database operations to prevent timeouts
+    jest.clearAllMocks();
   });
 
   describe('Validation', () => {

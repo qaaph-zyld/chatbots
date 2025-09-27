@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Portal - Chatbot Platform</title>
+    <link rel="stylesheet" href="customer-portal.css">
+</head>
+<body>
+    <div class="portal-container">
+        <nav class="portal-nav">
+            <div class="nav-brand">
+                <h2>Chatbot Platform</h2>
+            </div>
+            <div class="nav-user">
+                <span class="user-name">John Doe</span>
+                <button class="btn btn-outline">Sign Out</button>
+            </div>
+        </nav>
+
+        <main id="customer-portal" class="portal-main">
+            <!-- Portal content will be rendered here by JavaScript -->
+        </main>
+
+        <div id="notifications" class="notifications-container">
+            <!-- Notifications will appear here -->
+        </div>
+
+        <div id="loading-overlay" class="loading-overlay hidden">
+            <div class="loading-spinner">
+                <div class="spinner"></div>
+                <div class="loading-text">Processing...</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="customer-portal.js"></script>
+</body>
+</html>
