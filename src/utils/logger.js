@@ -15,7 +15,7 @@ const LOG_LEVELS = {
 // Get current log level from config or default to INFO
 let currentLevel = LOG_LEVELS.INFO;
 try {
-  const config = require('@src/config');
+  const config = require('../config');
   currentLevel = config.logging?.level 
     ? LOG_LEVELS[config.logging.level.toUpperCase()] 
     : LOG_LEVELS.INFO;

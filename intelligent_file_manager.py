@@ -1430,7 +1430,7 @@ Examples:
                 return 1
         
         # Print summary
-       if args.analyze:
+        if args.analyze:
            print("\n" + "="*60)
            print("ANALYSIS SUMMARY")
            print("="*60)

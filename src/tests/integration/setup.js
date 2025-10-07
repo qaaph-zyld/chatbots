@@ -6,7 +6,7 @@
 
 const mongoose = require('mongoose');
 const { MongoMemoryServer } = require('mongodb-memory-server');
-require('@src/utils');
+const { logger } = require('../../utils');
 
 // Disable logging during tests
 logger.silent = true;

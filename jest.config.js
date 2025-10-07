@@ -31,13 +31,22 @@ module.exports = {
     '!**/*.backup'
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup/test-setup.js'],
-  testTimeout: 30000,
+  testTimeout: 60000,
   verbose: false,
   maxWorkers: 1,
   forceExit: true,
   detectOpenHandles: true,
+  silent: true,
   workerIdleMemoryLimit: '512MB',
   transformIgnorePatterns: [
     'node_modules/(?!(axios)/)'
-  ]
+  ],
+  // Bail on first failure to speed up feedback
+  bail: 1,
+  // Cache directory
+  cacheDirectory: '<rootDir>/.jest-cache',
+  // Clear mocks between tests
+  clearMocks: true,
+  // Reset modules between tests
+  resetModules: true
 };

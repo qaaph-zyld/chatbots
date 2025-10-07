@@ -4,9 +4,9 @@
  * Handles all chatbot-related operations and API endpoints
  */
 
-const chatbotService = require('@src/services/chatbot.service');
-const { logger } = require('@src/utils');
-const { ValidationError } = require('@src/utils/errors');
+const chatbotService = require('../../services/chatbot.service');
+const { logger } = require('../../utils');
+const { ValidationError } = require('../../utils/errors');
 
 /**
  * Get all chatbots

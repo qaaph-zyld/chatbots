@@ -4,7 +4,7 @@
  * This file contains setup code that runs once before all integration tests
  */
 
-require('@src/utils');
+const { logger } = require('../../utils');
 
 module.exports = async () => {
   // Disable logging during tests

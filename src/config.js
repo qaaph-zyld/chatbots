@@ -4,8 +4,12 @@
  * Central configuration for the chatbot platform
  */
 
-// Import voice configuration
-const voiceConfig = require('@src/config/open-voice.config');
+// Voice configuration (simplified for MVP)
+const voiceConfig = {
+  enabled: false,
+  sampleRate: 16000,
+  channels: 1
+};
 
 module.exports = {
   // Server configuration

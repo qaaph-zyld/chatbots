@@ -21,12 +21,14 @@ This document provides comprehensive documentation for the Chatbots Platform API
 The Chatbots Platform API allows developers to programmatically interact with the platform, enabling the creation, management, and integration of chatbots into various applications and services.
 
 **Base URL:**
-- Development: `http://localhost:3000/api`
-- Production: `https://api.chatbots-platform.example.com/api`
+- Development: `http://localhost:3000/api/v1`
+- Staging: `https://api-staging.chatbot-platform.com/api/v1`
+- Production: `https://api.chatbot-platform.com/api/v1`
 
 **Interactive Documentation:**
-- Swagger UI: `/api/docs`
-- OpenAPI Specification: `/api/docs.json`
+- Swagger UI: `/api/v1/docs`
+- OpenAPI Specification: `/api/v1/docs.json`
+- Postman Collection: Available in dashboard under "API" section
 
 ## Authentication
 
@@ -83,10 +85,25 @@ Content-Type: application/json
 
 For service-to-service communication, the API supports API key authentication.
 
+**Generate an API Key:**
+1. Go to your dashboard
+2. Navigate to "Settings" > "API Keys"
+3. Click "Generate New Key"
+4. Set permissions and expiration
+5. Copy the key (it won't be shown again)
+
+**Use the API Key:**
 ```http
-GET /api/chatbots
+GET /api/v1/chatbots
 X-API-KEY: your_api_key
+Content-Type: application/json
 ```
+
+**API Key Permissions:**
+- `chatbots:read` - View chatbot information
+- `chatbots:write` - Create and modify chatbots
+- `conversations:read` - Access conversation data
+- `analytics:read` - View analytics data
 
 ## API Versioning
 

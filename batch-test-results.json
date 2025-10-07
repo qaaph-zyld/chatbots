@@ -1,0 +1,10 @@
+{
+  "passed": [],
+  "failed": [
+    "tests/emergency/simple.test.js",
+    "tests/basic.test.js",
+    "tests/src/index.test.js",
+    "tests/webpack.config.test.js"
+  ],
+  "errors": []
+}

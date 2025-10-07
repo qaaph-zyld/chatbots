@@ -4,14 +4,16 @@
  * Exports all utility modules
  */
 
-const logger = require('@src/utils/logger');
-const validation = require('@src/utils/validation');
-const errors = require('@src/utils/errors');
-const mongoConnectionHelper = require('@src/utils/mongo-connection-helper');
+const logger = require('./logger');
+const validation = require('./validation');
+const errors = require('./errors');
+const mongoConnectionHelper = require('./mongo-connection-helper');
+const edgeCaseHandler = require('./edge-case-handler');
 
 module.exports = {
   logger,
   validation,
   errors,
-  mongoConnectionHelper
+  mongoConnectionHelper,
+  edgeCaseHandler
 };

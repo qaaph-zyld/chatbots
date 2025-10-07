@@ -7,26 +7,12 @@ let isConnected = false;
 // Setup test database with better error handling
 const setupTestDB = async () => {
   try {
-    // Only create if not already created
-    if (!mongoServer) {
-      mongoServer = await MongoMemoryServer.create({
-        instance: {
-          port: 0, // Use random available port
-          dbName: 'shopbot-test',
-        },
-        binary: {
-          version: '6.0.0', // Use stable version
-        },
-      });
-    }
-    
-    const mongoUri = mongoServer.getUri();
+    // Skip MongoDB Memory Server setup - use real MongoDB connection for tests
+    const mongoUri = process.env.MONGODB_URI || 'mongodb+srv://qaaphzyld:zD1ZFt8Sf2BirMLV@cluster0.3lj0bmo.mongodb.net/shopbot-test?retryWrites=true&w=majority';
     
     // Only connect if not already connected
     if (!isConnected) {
       await mongoose.connect(mongoUri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
         serverSelectionTimeoutMS: 10000,
         socketTimeoutMS: 45000,
       });
@@ -44,29 +30,14 @@ const setupTestDB = async () => {
 const teardownTestDB = async () => {
   try {
     if (isConnected && mongoose.connection.readyState === 1) {
-      await mongoose.connection.dropDatabase();
+      // Clear test data but don't drop the database
+      await clearDatabase();
       await mongoose.connection.close();
       isConnected = false;
-    }
-    
-    if (mongoServer) {
-      // Use force stop to avoid permission issues on Windows
-      await mongoServer.stop({ doCleanup: false, force: true });
-      mongoServer = null;
     }
   } catch (error) {
     // Log but don't throw - cleanup errors shouldn't fail tests
     console.warn('Warning during test cleanup:', error.message);
-    
-    // Force cleanup
-    if (mongoServer) {
-      try {
-        await mongoServer.stop({ doCleanup: false, force: true });
-      } catch (forceError) {
-        console.warn('Force cleanup also failed:', forceError.message);
-      }
-      mongoServer = null;
-    }
     isConnected = false;
   }
 };
@@ -113,10 +84,11 @@ const globalTeardown = async () => {
   }
 };
 
-module.exports = {
-  setupTestDB,
-  teardownTestDB,
-  clearDatabase,
-  globalSetup,
-  globalTeardown
-};
+// Export as default for Jest globalSetup/globalTeardown
+module.exports = globalSetup;
+module.exports.globalTeardown = globalTeardown;
+
+// Named exports for use in individual tests
+module.exports.setupTestDB = setupTestDB;
+module.exports.teardownTestDB = teardownTestDB;
+module.exports.clearDatabase = clearDatabase;

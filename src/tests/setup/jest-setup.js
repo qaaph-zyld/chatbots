@@ -4,13 +4,13 @@
  * Setup file for Jest tests
  */
 
-// Use the correct path alias
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
 
 // Import test setup utilities
 const { connectTestDB, disconnectTestDB, clearDatabase } = require('./mongoose-test-setup');
+const { safeCompileModel } = require('./mongoose-model-helper');
 require('@tests/setup/mongoose-model-helper');
 
 // Mock configuration to prevent undefined errors
@@ -38,8 +38,6 @@ function clearModels() {
 }
 
 // Expose clearModels globally
-global.clearModels = clearModels;
-
 // Ensure mongoose models are cleared before tests
 beforeAll(async () => {
   clearModels();
