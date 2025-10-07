@@ -4,22 +4,47 @@
  * Setup file for Jest tests
  */
 
-require('@src/tests\\\\\\\setup\\\\\\\mongoose-test-setup');
-require('@src/tests\\\\\\\setup\\\\\\\mongoose-model-helper');
+// Use the correct path alias
 const mongoose = require('mongoose');
 const path = require('path');
 const fs = require('fs');
+
+// Import test setup utilities
+const { connectTestDB, disconnectTestDB, clearDatabase } = require('./mongoose-test-setup');
+require('@tests/setup/mongoose-model-helper');
 
 // Mock configuration to prevent undefined errors
 jest.mock('../../config', () => {
   return require('./test-config');
 });
 
+// Define clearModels function
+function clearModels() {
+  try {
+    // Clear mongoose models for tests
+    if (mongoose && mongoose.models) {
+      Object.keys(mongoose.models).forEach(key => {
+        delete mongoose.models[key];
+      });
+    }
+    if (mongoose && mongoose.modelSchemas) {
+      Object.keys(mongoose.modelSchemas).forEach(key => {
+        delete mongoose.modelSchemas[key];
+      });
+    }
+  } catch (error) {
+    console.warn('Error clearing models:', error.message);
+  }
+}
+
+// Expose clearModels globally
+global.clearModels = clearModels;
+
 // Ensure mongoose models are cleared before tests
 beforeAll(async () => {
   clearModels();
   // Create test directories for storage
-  require('@src/tests\\\\\\\setup\test-config');
+  const testConfig = require('@src/tests/setup/test-config');
   const dirs = [
     testConfig.storage.baseDir,
     testConfig.storage.tempDir,
@@ -142,6 +167,64 @@ global.testUtils = {
     return mockModel;
   }
 };
+
+// Define safeCompileModel function before exposing it
+function safeCompileModel(modelName, schema, options = {}) {
+  try {
+    // Mock implementation for tests
+    const mockModel = {
+      find: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn().mockResolvedValue(null),
+      findById: jest.fn().mockResolvedValue(null),
+      create: jest.fn().mockImplementation((data) => {
+        const instance = { ...data, _id: new mongoose.Types.ObjectId().toString() };
+        return Promise.resolve(instance);
+      }),
+      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
+      deleteOne: jest.fn().mockResolvedValue({ deletedCount: 1 }),
+      countDocuments: jest.fn().mockResolvedValue(0)
+    };
+    
+    // Add save method to instances
+    mockModel.create = jest.fn().mockImplementation((data) => {
+      const instance = { 
+        ...data, 
+        _id: new mongoose.Types.ObjectId().toString(),
+        save: jest.fn().mockResolvedValue(instance)
+      };
+      return Promise.resolve(instance);
+    });
+    
+    return mockModel;
+  } catch (error) {
+    console.warn(`Failed to compile model ${modelName}:`, error.message);
+    // Return a basic mock model
+    const mockModel = {
+      find: jest.fn().mockResolvedValue([]),
+      findOne: jest.fn().mockResolvedValue(null),
+      findById: jest.fn().mockResolvedValue(null),
+      create: jest.fn().mockImplementation((data) => {
+        const instance = { ...data, _id: new mongoose.Types.ObjectId().toString() };
+        return Promise.resolve(instance);
+      }),
+      updateOne: jest.fn().mockResolvedValue({ modifiedCount: 1 }),
+      deleteOne: jest.fn().mockResolvedValue({ deletedCount: 1 }),
+      countDocuments: jest.fn().mockResolvedValue(0)
+    };
+    
+    mockModel.create = jest.fn().mockImplementation((data) => {
+      const instance = { 
+        ...data, 
+        _id: new mongoose.Types.ObjectId().toString(),
+        save: jest.fn().mockResolvedValue(instance)
+      };
+      instance._id = new mongoose.Types.ObjectId().toString();
+      return Promise.resolve(instance);
+    });
+    
+    return mockModel;
+  }
+}
 
 // Expose helper functions globally for tests
 global.safeCompileModel = safeCompileModel;

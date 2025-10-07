@@ -47,7 +47,7 @@ describe('weaviate.config - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\config\weaviate.config.js
-const path = require('path');
+
 
 describe('weaviate.config - Generated Tests', () => {
   let module;

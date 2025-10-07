@@ -77,7 +77,7 @@ describe('cluster - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scaling\cluster.js
-const path = require('path');
+
 
 describe('cluster - Generated Tests', () => {
   let module;

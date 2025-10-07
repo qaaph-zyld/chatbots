@@ -473,7 +473,7 @@ describe('content-preloader - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\content-preloader.js
-const path = require('path');
+
 
 describe('content-preloader - Generated Tests', () => {
   let module;

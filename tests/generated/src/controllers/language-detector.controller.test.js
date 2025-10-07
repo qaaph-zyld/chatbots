@@ -121,7 +121,7 @@ describe('language-detector.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\controllers\language-detector.controller.js
-const path = require('path');
+
 
 describe('language-detector.controller - Generated Tests', () => {
   let module;

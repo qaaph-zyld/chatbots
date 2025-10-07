@@ -67,7 +67,7 @@ describe('marketplace.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\marketplace.service.js
-const path = require('path');
+
 
 describe('marketplace.service - Generated Tests', () => {
   let module;

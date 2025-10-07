@@ -255,7 +255,7 @@ describe('connection-pool - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\database\connection-pool.js
-const path = require('path');
+
 
 describe('connection-pool - Generated Tests', () => {
   let module;

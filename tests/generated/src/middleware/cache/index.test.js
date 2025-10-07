@@ -145,7 +145,7 @@ describe('index - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\cache\index.js
-const path = require('path');
+
 
 describe('index - Generated Tests', () => {
   let module;

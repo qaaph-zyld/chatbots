@@ -75,7 +75,7 @@ describe('base.template - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\bot\templates\base.template.js
-const path = require('path');
+
 
 describe('base.template - Generated Tests', () => {
   let module;

@@ -12,12 +12,19 @@ services:
     ports:
       - "3000:3000"
     environment:
-      - NODE_ENV=development
-      - MONGODB_URI=mongodb://mongodb:27017/chatbots_dev
+      - NODE_ENV=production
+      - PORT=3000
+      - MONGODB_URI=mongodb://mongodb:27017/shopbot_prod
       - REDIS_HOST=redis
       - REDIS_PORT=6379
-      - JWT_SECRET=dev_jwt_secret_key_change_in_production
-      - REFRESH_TOKEN_SECRET=dev_refresh_token_secret_key_change_in_production
+      - JWT_SECRET=${JWT_SECRET}
+      - REFRESH_TOKEN_SECRET=${REFRESH_TOKEN_SECRET}
+      - STRIPE_SECRET_KEY=${STRIPE_SECRET_KEY}
+      - STRIPE_WEBHOOK_SECRET=${STRIPE_WEBHOOK_SECRET}
+      - SHOPIFY_API_KEY=${SHOPIFY_API_KEY}
+      - SHOPIFY_API_SECRET=${SHOPIFY_API_SECRET}
+      - WOOCOMMERCE_CONSUMER_KEY=${WOOCOMMERCE_CONSUMER_KEY}
+      - WOOCOMMERCE_CONSUMER_SECRET=${WOOCOMMERCE_CONSUMER_SECRET}
     volumes:
       - ./logs:/usr/src/app/logs
       - ./uploads:/usr/src/app/uploads

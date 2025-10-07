@@ -115,7 +115,7 @@ describe('offline-sync.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\offline-sync.service.js
-const path = require('path');
+
 
 describe('offline-sync.service - Generated Tests', () => {
   let module;

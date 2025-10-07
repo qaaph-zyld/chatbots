@@ -57,7 +57,7 @@ describe('pricing.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\models\pricing.model.js
-const path = require('path');
+
 
 describe('pricing.model - Generated Tests', () => {
   let module;

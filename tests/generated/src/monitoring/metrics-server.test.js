@@ -279,7 +279,7 @@ describe('metrics-server - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\metrics-server.js
-const path = require('path');
+
 
 describe('metrics-server - Generated Tests', () => {
   let module;

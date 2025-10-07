@@ -105,7 +105,7 @@ describe('payment-attempt.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\models\payment-attempt.model.js
-const path = require('path');
+
 
 describe('payment-attempt.model - Generated Tests', () => {
   let module;

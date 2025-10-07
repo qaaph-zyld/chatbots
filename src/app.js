@@ -10,7 +10,7 @@ const cors = require('cors');
 const helmet = require('helmet');
 const morgan = require('morgan');
 const http = require('http');
-const { connectDB } = require('@data/connection');
+const { connectDB } = require('./database/connection');
 const apiRoutes = require('@api/routes');
 const swaggerRoutes = require('@api/swagger');
 const { trainingRoutes } = require('@modules/training');
@@ -21,7 +21,9 @@ const integrationManager = require('@modules/integrations/integration.manager');
 const usageMonitoringService = require('@modules/monitoring/usage.service');
 const scalingService = require('@modules/scaling/scaling.service');
 const { trackRequest } = require('@modules/scaling/scaling.middleware');
-const config = require('@core/config');
+const config = require('../config');
+// Prometheus metrics controller (unauthenticated)
+const { metrics: prometheusMetrics } = require('./api/controllers/health.controller');
 
 // Create Express app
 const app = express();
@@ -42,6 +44,8 @@ const { applyRateLimiting } = require('@middleware/rate-limit');
 applyRateLimiting(app, { useRedis: config.useRedisRateLimit });
 
 // API routes
+// Expose Prometheus metrics without auth for internal scraping
+app.get('/api/metrics', prometheusMetrics);
 app.use('/api', apiRoutes);
 
 // Training routes

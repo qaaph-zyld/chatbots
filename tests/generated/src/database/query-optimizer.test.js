@@ -67,7 +67,7 @@ describe('query-optimizer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\database\query-optimizer.js
-const path = require('path');
+
 
 describe('query-optimizer - Generated Tests', () => {
   let module;

@@ -187,7 +187,7 @@ describe('job-queue - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\jobs\job-queue.js
-const path = require('path');
+
 
 describe('job-queue - Generated Tests', () => {
   let module;

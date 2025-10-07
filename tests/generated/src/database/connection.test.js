@@ -81,7 +81,7 @@ describe('connection - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\database\connection.js
-const path = require('path');
+
 
 describe('connection - Generated Tests', () => {
   let module;

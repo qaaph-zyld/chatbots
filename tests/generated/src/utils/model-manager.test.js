@@ -183,7 +183,7 @@ describe('model-manager - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\model-manager.js
-const path = require('path');
+
 
 describe('model-manager - Generated Tests', () => {
   let module;

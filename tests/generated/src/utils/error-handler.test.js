@@ -207,7 +207,7 @@ describe('error-handler - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\error-handler.js
-const path = require('path');
+
 
 describe('error-handler - Generated Tests', () => {
   let module;

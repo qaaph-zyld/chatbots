@@ -183,7 +183,7 @@ describe('test-ab-testing-simple - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\testing\test-ab-testing-simple.js
-const path = require('path');
+
 
 describe('test-ab-testing-simple - Generated Tests', () => {
   let module;

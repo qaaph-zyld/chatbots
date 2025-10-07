@@ -207,7 +207,7 @@ describe('slack.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\integrations\slack.service.js
-const path = require('path');
+
 
 describe('slack.service - Generated Tests', () => {
   let module;

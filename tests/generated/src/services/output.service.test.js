@@ -47,7 +47,7 @@ describe('output.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\output.service.js
-const path = require('path');
+
 
 describe('output.service - Generated Tests', () => {
   let module;

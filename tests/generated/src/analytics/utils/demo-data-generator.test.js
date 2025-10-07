@@ -189,7 +189,7 @@ describe('demo-data-generator - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\utils\demo-data-generator.js
-const path = require('path');
+
 
 describe('demo-data-generator - Generated Tests', () => {
   let module;

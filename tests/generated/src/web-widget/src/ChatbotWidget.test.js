@@ -211,7 +211,7 @@ describe('ChatbotWidget - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\web-widget\src\ChatbotWidget.js
-const path = require('path');
+
 
 describe('ChatbotWidget - Generated Tests', () => {
   let module;

@@ -485,7 +485,7 @@ describe('mongodb-abstraction-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\mongodb-abstraction-test.js
-const path = require('path');
+
 
 describe('mongodb-abstraction-test - Generated Tests', () => {
   let module;

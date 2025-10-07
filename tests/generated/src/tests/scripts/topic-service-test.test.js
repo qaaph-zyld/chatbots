@@ -917,7 +917,7 @@ describe('topic-service-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\topic-service-test.js
-const path = require('path');
+
 
 describe('topic-service-test - Generated Tests', () => {
   let module;

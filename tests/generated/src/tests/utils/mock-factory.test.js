@@ -57,7 +57,7 @@ describe('mock-factory - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\utils\mock-factory.js
-const path = require('path');
+
 
 describe('mock-factory - Generated Tests', () => {
   let module;

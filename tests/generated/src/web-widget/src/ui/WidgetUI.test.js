@@ -159,7 +159,7 @@ describe('WidgetUI - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\web-widget\src\ui\WidgetUI.js
-const path = require('path');
+
 
 describe('WidgetUI - Generated Tests', () => {
   let module;

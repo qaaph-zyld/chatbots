@@ -149,7 +149,7 @@ describe('data-layer-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\data-layer-test.js
-const path = require('path');
+
 
 describe('data-layer-test - Generated Tests', () => {
   let module;

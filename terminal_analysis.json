@@ -1,0 +1,33 @@
+{
+  "metadata": {
+    "version": "2.0.0",
+    "generated": "2025-08-31T09:21:49.021651",
+    "processing_time": 0.107462
+  },
+  "summary": {
+    "total_lines": 52587,
+    "test_failures": [],
+    "processing_time": null,
+    "files_analyzed": []
+  },
+  "errors": {
+    "by_type": {},
+    "by_message": {},
+    "by_file": {},
+    "by_category": {
+      "Logger": 0,
+      "Module": 0,
+      "Syntax": 0,
+      "Import": 0,
+      "Circular": 0,
+      "Other": 0
+    }
+  },
+  "dependencies": {
+    "setup_files": [],
+    "circular_deps": [],
+    "missing_modules": []
+  },
+  "recommendations": [],
+  "auto_fix_results": []
+}

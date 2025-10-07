@@ -145,7 +145,7 @@ describe('apiError - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\apiError.js
-const path = require('path');
+
 
 describe('apiError - Generated Tests', () => {
   let module;

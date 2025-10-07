@@ -75,7 +75,7 @@ describe('base.channel - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\integrations\base.channel.js
-const path = require('path');
+
 
 describe('base.channel - Generated Tests', () => {
   let module;

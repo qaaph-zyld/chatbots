@@ -81,7 +81,7 @@ describe('cache-efficiency - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\monitoring\cache-efficiency.js
-const path = require('path');
+
 
 describe('cache-efficiency - Generated Tests', () => {
   let module;

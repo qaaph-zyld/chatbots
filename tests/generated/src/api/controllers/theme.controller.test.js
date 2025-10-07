@@ -345,7 +345,7 @@ describe('theme.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\theme.controller.js
-const path = require('path');
+
 
 describe('theme.controller - Generated Tests', () => {
   let module;

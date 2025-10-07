@@ -173,7 +173,7 @@ describe('mongoose-test-setup - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\setup\mongoose-test-setup.js
-const path = require('path');
+
 
 describe('mongoose-test-setup - Generated Tests', () => {
   let module;

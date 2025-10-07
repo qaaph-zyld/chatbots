@@ -339,7 +339,7 @@ describe('knowledge-base - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\knowledge\knowledge-base.js
-const path = require('path');
+
 
 describe('knowledge-base - Generated Tests', () => {
   let module;

@@ -95,7 +95,7 @@ describe('vector-db.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\vector-db.service.js
-const path = require('path');
+
 
 describe('vector-db.service - Generated Tests', () => {
   let module;

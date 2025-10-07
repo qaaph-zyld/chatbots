@@ -187,7 +187,7 @@ describe('scaling.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scaling\scaling.service.js
-const path = require('path');
+
 
 describe('scaling.service - Generated Tests', () => {
   let module;

@@ -125,7 +125,7 @@ describe('template.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\models\template.model.js
-const path = require('path');
+
 
 describe('template.model - Generated Tests', () => {
   let module;

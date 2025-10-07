@@ -67,7 +67,7 @@ describe('huggingface.engine - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\bot\engines\huggingface.engine.js
-const path = require('path');
+
 
 describe('huggingface.engine - Generated Tests', () => {
   let module;

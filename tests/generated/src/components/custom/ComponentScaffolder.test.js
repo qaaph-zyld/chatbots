@@ -57,7 +57,7 @@ describe('ComponentScaffolder - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\components\custom\ComponentScaffolder.js
-const path = require('path');
+
 
 describe('ComponentScaffolder - Generated Tests', () => {
   let module;

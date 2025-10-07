@@ -169,7 +169,7 @@ describe('simple-topic-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\simple-topic-test.js
-const path = require('path');
+
 
 describe('simple-topic-test - Generated Tests', () => {
   let module;

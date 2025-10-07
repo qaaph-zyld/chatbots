@@ -139,7 +139,7 @@ describe('report-generator.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\reporting\report-generator.service.js
-const path = require('path');
+
 
 describe('report-generator.service - Generated Tests', () => {
   let module;

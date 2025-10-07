@@ -179,7 +179,7 @@ describe('query-analyzer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\database\query-analyzer.js
-const path = require('path');
+
 
 describe('query-analyzer - Generated Tests', () => {
   let module;

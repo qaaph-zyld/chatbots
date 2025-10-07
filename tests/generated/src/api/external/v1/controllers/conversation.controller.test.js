@@ -165,7 +165,7 @@ describe('conversation.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\external\v1\controllers\conversation.controller.js
-const path = require('path');
+
 
 describe('conversation.controller - Generated Tests', () => {
   let module;

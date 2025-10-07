@@ -121,7 +121,7 @@ describe('run-bug-sweep - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scripts\run-bug-sweep.js
-const path = require('path');
+
 
 describe('run-bug-sweep - Generated Tests', () => {
   let module;

@@ -209,7 +209,7 @@ describe('feature-access.middleware - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\feature-access.middleware.js
-const path = require('path');
+
 
 describe('feature-access.middleware - Generated Tests', () => {
   let module;

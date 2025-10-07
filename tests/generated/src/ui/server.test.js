@@ -81,7 +81,7 @@ describe('server - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\ui\server.js
-const path = require('path');
+
 
 describe('server - Generated Tests', () => {
   let module;

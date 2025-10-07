@@ -345,7 +345,7 @@ describe('personality.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\personality.controller.js
-const path = require('path');
+
 
 describe('personality.controller - Generated Tests', () => {
   let module;

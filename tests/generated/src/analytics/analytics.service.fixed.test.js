@@ -619,7 +619,7 @@ describe('analytics.service.fixed - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\analytics.service.fixed.js
-const path = require('path');
+
 
 describe('analytics.service.fixed - Generated Tests', () => {
   let module;

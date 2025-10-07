@@ -1,0 +1,26 @@
+{
+  "name": "shopbot-mvp",
+  "version": "1.0.0",
+  "description": "ShopBot MVP - Simplified e-commerce chatbot",
+  "main": "src/mvp/server.js",
+  "scripts": {
+    "start": "node src/mvp/server.js",
+    "test": "jest --config=jest.minimal.config.js",
+    "test:watch": "jest --config=jest.minimal.config.js --watch",
+    "test:coverage": "jest --config=jest.minimal.config.js --coverage"
+  },
+  "keywords": [
+    "chatbot",
+    "e-commerce",
+    "mvp",
+    "shopping"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}

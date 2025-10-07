@@ -247,7 +247,7 @@ describe('spacy.engine - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\nlp\engines\spacy.engine.js
-const path = require('path');
+
 
 describe('spacy.engine - Generated Tests', () => {
   let module;

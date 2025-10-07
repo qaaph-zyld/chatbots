@@ -57,7 +57,7 @@ describe('cache - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\cache.js
-const path = require('path');
+
 
 describe('cache - Generated Tests', () => {
   let module;

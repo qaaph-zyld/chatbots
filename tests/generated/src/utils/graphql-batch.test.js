@@ -193,7 +193,7 @@ describe('graphql-batch - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\graphql-batch.js
-const path = require('path');
+
 
 describe('graphql-batch - Generated Tests', () => {
   let module;

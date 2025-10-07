@@ -67,7 +67,7 @@ describe('entity.repository - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\data\entity.repository.js
-const path = require('path');
+
 
 describe('entity.repository - Generated Tests', () => {
   let module;

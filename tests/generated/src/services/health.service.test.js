@@ -91,7 +91,7 @@ describe('health.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\health.service.js
-const path = require('path');
+
 
 describe('health.service - Generated Tests', () => {
   let module;

@@ -125,7 +125,7 @@ describe('run-performance-optimization - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scripts\run-performance-optimization.js
-const path = require('path');
+
 
 describe('run-performance-optimization - Generated Tests', () => {
   let module;

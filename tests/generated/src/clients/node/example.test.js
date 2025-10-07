@@ -125,7 +125,7 @@ describe('example - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\clients\node\example.js
-const path = require('path');
+
 
 describe('example - Generated Tests', () => {
   let module;

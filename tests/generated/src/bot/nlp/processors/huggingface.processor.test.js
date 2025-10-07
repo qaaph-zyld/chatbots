@@ -67,7 +67,7 @@ describe('huggingface.processor - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\bot\nlp\processors\huggingface.processor.js
-const path = require('path');
+
 
 describe('huggingface.processor - Generated Tests', () => {
   let module;

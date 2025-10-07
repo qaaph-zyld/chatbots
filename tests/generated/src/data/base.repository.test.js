@@ -173,7 +173,7 @@ describe('base.repository - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\data\base.repository.js
-const path = require('path');
+
 
 describe('base.repository - Generated Tests', () => {
   let module;

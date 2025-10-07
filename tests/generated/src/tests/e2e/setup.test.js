@@ -81,7 +81,7 @@ describe('setup - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\e2e\setup.js
-const path = require('path');
+
 
 describe('setup - Generated Tests', () => {
   let module;

@@ -57,7 +57,7 @@ describe('error-tracker - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\frontend\utils\error-tracker.js
-const path = require('path');
+
 
 describe('error-tracker - Generated Tests', () => {
   let module;

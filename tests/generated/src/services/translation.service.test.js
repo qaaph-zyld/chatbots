@@ -67,7 +67,7 @@ describe('translation.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\translation.service.js
-const path = require('path');
+
 
 describe('translation.service - Generated Tests', () => {
   let module;

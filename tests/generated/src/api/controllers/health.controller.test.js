@@ -213,7 +213,7 @@ describe('health.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\health.controller.js
-const path = require('path');
+
 
 describe('health.controller - Generated Tests', () => {
   let module;

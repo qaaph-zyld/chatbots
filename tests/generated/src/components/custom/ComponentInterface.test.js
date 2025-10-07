@@ -47,7 +47,7 @@ describe('ComponentInterface - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\components\custom\ComponentInterface.js
-const path = require('path');
+
 
 describe('ComponentInterface - Generated Tests', () => {
   let module;

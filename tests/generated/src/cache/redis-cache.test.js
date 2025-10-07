@@ -255,7 +255,7 @@ describe('redis-cache - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\cache\redis-cache.js
-const path = require('path');
+
 
 describe('redis-cache - Generated Tests', () => {
   let module;

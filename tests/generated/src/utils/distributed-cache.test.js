@@ -285,7 +285,7 @@ describe('distributed-cache - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\distributed-cache.js
-const path = require('path');
+
 
 describe('distributed-cache - Generated Tests', () => {
   let module;

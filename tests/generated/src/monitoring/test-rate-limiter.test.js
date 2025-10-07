@@ -101,7 +101,7 @@ describe('test-rate-limiter - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\test-rate-limiter.js
-const path = require('path');
+
 
 describe('test-rate-limiter - Generated Tests', () => {
   let module;

@@ -57,7 +57,7 @@ describe('payment-retry-scheduler - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\jobs\payment-retry-scheduler.js
-const path = require('path');
+
 
 describe('payment-retry-scheduler - Generated Tests', () => {
   let module;

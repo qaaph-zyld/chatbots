@@ -453,7 +453,7 @@ describe('plugin.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\plugin.controller.js
-const path = require('path');
+
 
 describe('plugin.controller - Generated Tests', () => {
   let module;

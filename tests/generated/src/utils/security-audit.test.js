@@ -163,7 +163,7 @@ describe('security-audit - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\security-audit.js
-const path = require('path');
+
 
 describe('security-audit - Generated Tests', () => {
   let module;

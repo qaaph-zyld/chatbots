@@ -139,7 +139,7 @@ describe('topic.repository - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\data\topic.repository.js
-const path = require('path');
+
 
 describe('topic.repository - Generated Tests', () => {
   let module;

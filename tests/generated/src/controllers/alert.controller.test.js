@@ -115,7 +115,7 @@ describe('alert.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\controllers\alert.controller.js
-const path = require('path');
+
 
 describe('alert.controller - Generated Tests', () => {
   let module;

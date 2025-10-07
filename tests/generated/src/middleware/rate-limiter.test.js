@@ -77,7 +77,7 @@ describe('rate-limiter - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\rate-limiter.js
-const path = require('path');
+
 
 describe('rate-limiter - Generated Tests', () => {
   let module;

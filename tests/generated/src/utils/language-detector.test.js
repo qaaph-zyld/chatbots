@@ -111,7 +111,7 @@ describe('language-detector - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\language-detector.js
-const path = require('path');
+
 
 describe('language-detector - Generated Tests', () => {
   let module;

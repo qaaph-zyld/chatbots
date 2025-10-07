@@ -233,7 +233,7 @@ describe('performance - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\performance.js
-const path = require('path');
+
 
 describe('performance - Generated Tests', () => {
   let module;

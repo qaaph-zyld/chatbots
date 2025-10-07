@@ -67,7 +67,7 @@ describe('output.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\nlp\multimodal\output\output.service.js
-const path = require('path');
+
 
 describe('output.service - Generated Tests', () => {
   let module;

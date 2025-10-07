@@ -341,7 +341,7 @@ describe('preference-service-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\preference-service-test.js
-const path = require('path');
+
 
 describe('preference-service-test - Generated Tests', () => {
   let module;

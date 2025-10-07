@@ -67,7 +67,7 @@ describe('rbac.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\enterprise\security\rbac.service.js
-const path = require('path');
+
 
 describe('rbac.service - Generated Tests', () => {
   let module;

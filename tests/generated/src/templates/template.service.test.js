@@ -91,7 +91,7 @@ describe('template.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\templates\template.service.js
-const path = require('path');
+
 
 describe('template.service - Generated Tests', () => {
   let module;

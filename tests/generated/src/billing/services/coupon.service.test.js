@@ -67,7 +67,7 @@ describe('coupon.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\services\coupon.service.js
-const path = require('path');
+
 
 describe('coupon.service - Generated Tests', () => {
   let module;

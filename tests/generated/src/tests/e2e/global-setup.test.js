@@ -129,7 +129,7 @@ describe('global-setup - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\e2e\global-setup.js
-const path = require('path');
+
 
 describe('global-setup - Generated Tests', () => {
   let module;

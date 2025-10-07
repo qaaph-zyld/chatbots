@@ -237,7 +237,7 @@ describe('chatbot-repository-demo - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\chatbot-repository-demo.js
-const path = require('path');
+
 
 describe('chatbot-repository-demo - Generated Tests', () => {
   let module;

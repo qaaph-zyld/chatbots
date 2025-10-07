@@ -179,7 +179,7 @@ describe('ApiClient - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\web-widget\src\utils\ApiClient.js
-const path = require('path');
+
 
 describe('ApiClient - Generated Tests', () => {
   let module;

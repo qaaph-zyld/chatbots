@@ -1,0 +1,30 @@
+[
+  {
+    "email": "test@example.com",
+    "name": "Test User",
+    "passwordHash": "b18c59d23a38e4f62fa4191dcbca26482d41ddd8c4cd985438ee3f14ef2cf9d2c4b46209546d28482531441dd9b6fe00e0701a315eb455b051b452c22478c3dc",
+    "passwordSalt": "dffb5c7ea989ce8ef916d083365c01de",
+    "role": "customer",
+    "isActive": true,
+    "preferences": {
+      "newsletter": false,
+      "notifications": true
+    },
+    "profile": {
+      "firstName": "Test",
+      "lastName": "User",
+      "phone": "",
+      "address": {
+        "street": "",
+        "city": "",
+        "state": "",
+        "zipCode": "",
+        "country": "US"
+      }
+    },
+    "id": "1759854752493_y7abvdegt",
+    "createdAt": "2025-10-07T16:32:32.493Z",
+    "updatedAt": "2025-10-07T16:32:32.512Z",
+    "lastLoginAt": "2025-10-07T16:32:32.511Z"
+  }
+]

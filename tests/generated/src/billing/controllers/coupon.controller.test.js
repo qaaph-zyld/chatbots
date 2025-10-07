@@ -385,7 +385,7 @@ describe('coupon.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\controllers\coupon.controller.js
-const path = require('path');
+
 
 describe('coupon.controller - Generated Tests', () => {
   let module;

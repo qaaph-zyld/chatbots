@@ -193,7 +193,7 @@ describe('run-uat-tests - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scripts\run-uat-tests.js
-const path = require('path');
+
 
 describe('run-uat-tests - Generated Tests', () => {
   let module;

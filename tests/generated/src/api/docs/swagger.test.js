@@ -57,7 +57,7 @@ describe('swagger - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\docs\swagger.js
-const path = require('path');
+
 
 describe('swagger - Generated Tests', () => {
   let module;

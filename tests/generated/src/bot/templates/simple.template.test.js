@@ -67,7 +67,7 @@ describe('simple.template - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\bot\templates\simple.template.js
-const path = require('path');
+
 
 describe('simple.template - Generated Tests', () => {
   let module;

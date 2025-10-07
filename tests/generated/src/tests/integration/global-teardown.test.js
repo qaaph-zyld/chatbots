@@ -57,7 +57,7 @@ describe('global-teardown - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\integration\global-teardown.js
-const path = require('path');
+
 
 describe('global-teardown - Generated Tests', () => {
   let module;

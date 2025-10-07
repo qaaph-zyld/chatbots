@@ -139,7 +139,7 @@ describe('entity.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\nlp\entity.service.js
-const path = require('path');
+
 
 describe('entity.service - Generated Tests', () => {
   let module;

@@ -169,7 +169,7 @@ describe('test-resource-monitor - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\test-resource-monitor.js
-const path = require('path');
+
 
 describe('test-resource-monitor - Generated Tests', () => {
   let module;

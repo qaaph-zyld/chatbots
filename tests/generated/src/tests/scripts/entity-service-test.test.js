@@ -689,7 +689,7 @@ describe('entity-service-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\entity-service-test.js
-const path = require('path');
+
 
 describe('entity-service-test - Generated Tests', () => {
   let module;

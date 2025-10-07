@@ -67,7 +67,7 @@ describe('core - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\bot\core.js
-const path = require('path');
+
 
 describe('core - Generated Tests', () => {
   let module;

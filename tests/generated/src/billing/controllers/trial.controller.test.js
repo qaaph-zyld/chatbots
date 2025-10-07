@@ -169,7 +169,7 @@ describe('trial.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\controllers\trial.controller.js
-const path = require('path');
+
 
 describe('trial.controller - Generated Tests', () => {
   let module;

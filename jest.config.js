@@ -3,9 +3,23 @@ module.exports = {
   roots: ['<rootDir>/src', '<rootDir>/tests'],
   testMatch: [
     '<rootDir>/tests/**/*.test.js',
-    '<rootDir>/src/**/*.test.js',
-    '!<rootDir>/tests/generated/**/*.test.js'
+    '<rootDir>/src/**/*.test.js'
   ],
+  testPathIgnorePatterns: [
+    '<rootDir>/node_modules/',
+    '<rootDir>/tests/generated/'
+  ],
+  moduleNameMapper: {
+    '^@src/(.*)$': '<rootDir>/src/$1',
+    '^@tests/(.*)$': '<rootDir>/tests/$1',
+    '^@utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@setup/(.*)$': '<rootDir>/tests/setup/$1',
+    '^@core/(.*)$': '<rootDir>/src/core/$1',
+    '^@modules/(.*)$': '<rootDir>/src/modules/$1',
+    '^@api/(.*)$': '<rootDir>/src/api/$1',
+    '^@data/(.*)$': '<rootDir>/src/data/$1',
+    '^@domain/(.*)$': '<rootDir>/src/domain/$1'
+  },
   collectCoverage: true,
   coverageDirectory: 'coverage',
   coverageReporters: ['text', 'lcov', 'html', 'json'],
@@ -18,11 +32,11 @@ module.exports = {
   ],
   setupFilesAfterEnv: ['<rootDir>/tests/setup/test-setup.js'],
   testTimeout: 30000,
-  verbose: true,
+  verbose: false,
   maxWorkers: 1,
   forceExit: true,
   detectOpenHandles: true,
-  // Mock network requests by default
+  workerIdleMemoryLimit: '512MB',
   transformIgnorePatterns: [
     'node_modules/(?!(axios)/)'
   ]

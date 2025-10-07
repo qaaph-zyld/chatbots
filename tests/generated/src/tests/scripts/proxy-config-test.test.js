@@ -101,7 +101,7 @@ describe('proxy-config-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\proxy-config-test.js
-const path = require('path');
+
 
 describe('proxy-config-test - Generated Tests', () => {
   let module;

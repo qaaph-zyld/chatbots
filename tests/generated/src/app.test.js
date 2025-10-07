@@ -81,7 +81,7 @@ describe('app - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\app.js
-const path = require('path');
+
 
 describe('app - Generated Tests', () => {
   let module;

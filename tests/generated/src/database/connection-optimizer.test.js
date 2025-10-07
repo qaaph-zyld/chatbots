@@ -105,7 +105,7 @@ describe('connection-optimizer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\database\connection-optimizer.js
-const path = require('path');
+
 
 describe('connection-optimizer - Generated Tests', () => {
   let module;

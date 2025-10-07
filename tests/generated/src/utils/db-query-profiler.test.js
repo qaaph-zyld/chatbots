@@ -207,7 +207,7 @@ describe('db-query-profiler - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\db-query-profiler.js
-const path = require('path');
+
 
 describe('db-query-profiler - Generated Tests', () => {
   let module;

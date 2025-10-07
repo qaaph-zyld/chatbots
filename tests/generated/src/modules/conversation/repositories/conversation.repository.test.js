@@ -47,7 +47,7 @@ describe('conversation.repository - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\conversation\repositories\conversation.repository.js
-const path = require('path');
+
 
 describe('conversation.repository - Generated Tests', () => {
   let module;

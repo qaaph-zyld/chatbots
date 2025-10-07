@@ -105,7 +105,7 @@ describe('setup-uat-environment - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scripts\setup-uat-environment.js
-const path = require('path');
+
 
 describe('setup-uat-environment - Generated Tests', () => {
   let module;

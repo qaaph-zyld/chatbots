@@ -91,7 +91,7 @@ describe('asset-optimizer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\frontend\utils\asset-optimizer.js
-const path = require('path');
+
 
 describe('asset-optimizer - Generated Tests', () => {
   let module;

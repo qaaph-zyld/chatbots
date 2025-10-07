@@ -293,7 +293,7 @@ describe('test-user-behavior-insights - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\behavior\test-user-behavior-insights.js
-const path = require('path');
+
 
 describe('test-user-behavior-insights - Generated Tests', () => {
   let module;

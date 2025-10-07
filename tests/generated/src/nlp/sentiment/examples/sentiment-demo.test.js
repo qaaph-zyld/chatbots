@@ -125,7 +125,7 @@ describe('sentiment-demo - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\nlp\sentiment\examples\sentiment-demo.js
-const path = require('path');
+
 
 describe('sentiment-demo - Generated Tests', () => {
   let module;

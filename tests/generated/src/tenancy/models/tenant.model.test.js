@@ -105,7 +105,7 @@ describe('tenant.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tenancy\models\tenant.model.js
-const path = require('path');
+
 
 describe('tenant.model - Generated Tests', () => {
   let module;

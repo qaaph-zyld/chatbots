@@ -101,7 +101,7 @@ describe('mongodb-connection-test - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\mongodb-connection-test.js
-const path = require('path');
+
 
 describe('mongodb-connection-test - Generated Tests', () => {
   let module;

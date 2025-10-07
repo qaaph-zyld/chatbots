@@ -105,7 +105,7 @@ describe('integration.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\domain\integration.model.js
-const path = require('path');
+
 
 describe('integration.model - Generated Tests', () => {
   let module;

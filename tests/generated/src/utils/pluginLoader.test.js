@@ -121,7 +121,7 @@ describe('pluginLoader - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\pluginLoader.js
-const path = require('path');
+
 
 describe('pluginLoader - Generated Tests', () => {
   let module;

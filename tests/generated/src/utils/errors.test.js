@@ -169,7 +169,7 @@ describe('errors - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\errors.js
-const path = require('path');
+
 
 describe('errors - Generated Tests', () => {
   let module;

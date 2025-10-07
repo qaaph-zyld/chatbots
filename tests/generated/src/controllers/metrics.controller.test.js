@@ -385,7 +385,7 @@ describe('metrics.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\controllers\metrics.controller.js
-const path = require('path');
+
 
 describe('metrics.controller - Generated Tests', () => {
   let module;

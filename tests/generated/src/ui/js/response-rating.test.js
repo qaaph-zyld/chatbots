@@ -115,7 +115,7 @@ describe('response-rating - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\ui\js\response-rating.js
-const path = require('path');
+
 
 describe('response-rating - Generated Tests', () => {
   let module;

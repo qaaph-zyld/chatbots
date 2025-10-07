@@ -91,7 +91,7 @@ describe('local-model.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\local-model.service.js
-const path = require('path');
+
 
 describe('local-model.service - Generated Tests', () => {
   let module;

@@ -237,7 +237,7 @@ describe('useComponent - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\client\hooks\useComponent.js
-const path = require('path');
+
 
 describe('useComponent - Generated Tests', () => {
   let module;

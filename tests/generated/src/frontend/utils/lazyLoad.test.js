@@ -129,7 +129,7 @@ describe('lazyLoad - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\frontend\utils\lazyLoad.js
-const path = require('path');
+
 
 describe('lazyLoad - Generated Tests', () => {
   let module;

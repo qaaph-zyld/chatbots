@@ -279,7 +279,7 @@ describe('cache-warmer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\cache-warmer.js
-const path = require('path');
+
 
 describe('cache-warmer - Generated Tests', () => {
   let module;

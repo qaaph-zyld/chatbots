@@ -67,7 +67,7 @@ describe('trial.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\services\trial.service.js
-const path = require('path');
+
 
 describe('trial.service - Generated Tests', () => {
   let module;

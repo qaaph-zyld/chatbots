@@ -237,7 +237,7 @@ describe('translation.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\translation.controller.js
-const path = require('path');
+
 
 describe('translation.controller - Generated Tests', () => {
   let module;

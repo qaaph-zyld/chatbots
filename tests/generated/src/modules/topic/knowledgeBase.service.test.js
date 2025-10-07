@@ -453,7 +453,7 @@ describe('knowledgeBase.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\knowledgeBase.service.js
-const path = require('path');
+
 
 describe('knowledgeBase.service - Generated Tests', () => {
   let module;

@@ -2,13 +2,17 @@
  * Server Entry Point
  */
 
-require('@src/app');
+// Register module aliases as early as possible
+require('./core/module-alias');
+
+// Core imports
+const { app, server } = require('@src/app');
 require('@src/utils');
-require('@src/config');
-require('@src/scaling\\\\\\\cluster');
+const config = require('../config');
+const clusterManager = require('@src/scaling/cluster');
 
 // Get port from config or use default
-const PORT = config.port || 3000;
+const PORT = (config && config.server && config.server.port) || process.env.PORT || 3000;
 
 // Start server with clustering
 const startServer = async () => {

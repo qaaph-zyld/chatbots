@@ -801,7 +801,7 @@ describe('indexedDB - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\indexedDB.js
-const path = require('path');
+
 
 describe('indexedDB - Generated Tests', () => {
   let module;

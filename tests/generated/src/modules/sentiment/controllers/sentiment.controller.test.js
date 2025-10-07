@@ -67,7 +67,7 @@ describe('sentiment.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\sentiment\controllers\sentiment.controller.js
-const path = require('path');
+
 
 describe('sentiment.controller - Generated Tests', () => {
   let module;

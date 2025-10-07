@@ -409,7 +409,7 @@ describe('integration.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\integration.controller.js
-const path = require('path');
+
 
 describe('integration.controller - Generated Tests', () => {
   let module;

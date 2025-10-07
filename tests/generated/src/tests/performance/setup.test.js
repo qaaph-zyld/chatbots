@@ -105,7 +105,7 @@ describe('setup - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\performance\setup.js
-const path = require('path');
+
 
 describe('setup - Generated Tests', () => {
   let module;

@@ -3,6 +3,15 @@
 // const { server } = require('./mock-server');
 require('../../src/tests/setup/jest-setup');
 
+// Global test setup
+global.console = {
+  ...console,
+  // Uncomment to ignore specific console methods in tests
+  // log: jest.fn(),
+  // warn: jest.fn(),
+  // error: jest.fn(),
+};
+
 // Global test configuration
 jest.setTimeout(30000); // 30 second timeout
 

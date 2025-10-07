@@ -173,7 +173,7 @@ describe('test-helpers - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\utils\test-helpers.js
-const path = require('path');
+
 
 describe('test-helpers - Generated Tests', () => {
   let module;

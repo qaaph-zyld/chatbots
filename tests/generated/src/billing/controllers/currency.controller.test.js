@@ -213,7 +213,7 @@ describe('currency.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\controllers\currency.controller.js
-const path = require('path');
+
 
 describe('currency.controller - Generated Tests', () => {
   let module;

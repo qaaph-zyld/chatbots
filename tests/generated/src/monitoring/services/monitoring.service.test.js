@@ -67,7 +67,7 @@ describe('monitoring.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\services\monitoring.service.js
-const path = require('path');
+
 
 describe('monitoring.service - Generated Tests', () => {
   let module;

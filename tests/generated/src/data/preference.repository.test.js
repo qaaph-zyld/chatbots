@@ -67,7 +67,7 @@ describe('preference.repository - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\data\preference.repository.js
-const path = require('path');
+
 
 describe('preference.repository - Generated Tests', () => {
   let module;

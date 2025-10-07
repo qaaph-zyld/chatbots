@@ -121,7 +121,7 @@ describe('build - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\web-widget\build.js
-const path = require('path');
+
 
 describe('build - Generated Tests', () => {
   let module;

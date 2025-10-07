@@ -67,7 +67,7 @@ describe('analytics-dashboard.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\frontend\services\analytics-dashboard.service.js
-const path = require('path');
+
 
 describe('analytics-dashboard.service - Generated Tests', () => {
   let module;

@@ -461,7 +461,7 @@ describe('test-performance-benchmark - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\benchmarking\test-performance-benchmark.js
-const path = require('path');
+
 
 describe('test-performance-benchmark - Generated Tests', () => {
   let module;

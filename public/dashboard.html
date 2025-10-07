@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopBot Dashboard</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8fafc;
+            color: #334155;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #64748b;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card h2 {
+            color: #1e293b;
+            margin-bottom: 16px;
+            font-size: 18px;
+        }
+
+        .stat {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .stat:last-child {
+            margin-bottom: 0;
+        }
+
+        .stat-label {
+            color: #64748b;
+        }
+
+        .stat-value {
+            font-weight: 600;
+            color: #1e293b;
+        }
+
+        .plan-card {
+            border: 2px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .plan-card.active {
+            border-color: #3b82f6;
+            background: #f8faff;
+        }
+
+        .plan-card:hover {
+            border-color: #3b82f6;
+        }
+
+        .plan-name {
+            font-size: 20px;
+            font-weight: 700;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+
+        .plan-price {
+            font-size: 32px;
+            font-weight: 700;
+            color: #3b82f6;
+            margin-bottom: 16px;
+        }
+
+        .plan-price span {
+            font-size: 16px;
+            color: #64748b;
+        }
+
+        .plan-features {
+            list-style: none;
+            margin-bottom: 24px;
+        }
+
+        .plan-features li {
+            padding: 8px 0;
+            color: #64748b;
+        }
+
+        .plan-features li:before {
+            content: "✓";
+            color: #10b981;
+            font-weight: bold;
+            margin-right: 8px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            text-decoration: none;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-secondary {
+            background: #f1f5f9;
+            color: #475569;
+        }
+
+        .btn-secondary:hover {
+            background: #e2e8f0;
+        }
+
+        .btn-danger {
+            background: #ef4444;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #dc2626;
+        }
+
+        .usage-bar {
+            width: 100%;
+            height: 8px;
+            background: #e2e8f0;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 8px;
+        }
+
+        .usage-fill {
+            height: 100%;
+            background: #3b82f6;
+            transition: width 0.3s ease;
+        }
+
+        .alert {
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+        }
+
+        .alert-warning {
+            background: #fef3c7;
+            color: #92400e;
+            border: 1px solid #fbbf24;
+        }
+
+        .alert-success {
+            background: #d1fae5;
+            color: #065f46;
+            border: 1px solid #10b981;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            color: #64748b;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 16px;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>ShopBot Dashboard</h1>
+            <p>Manage your subscription and monitor your chatbot performance</p>
+        </div>
+
+        <div id="loading" class="loading">
+            <p>Loading your dashboard...</p>
+        </div>
+
+        <div id="dashboard" class="hidden">
+            <!-- Current Plan Section -->
+            <div class="card">
+                <h2>Current Plan</h2>
+                <div id="current-plan">
+                    <!-- Plan details will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Usage Statistics -->
+            <div class="grid">
+                <div class="card">
+                    <h2>Usage This Month</h2>
+                    <div class="stat">
+                        <span class="stat-label">Conversations</span>
+                        <span class="stat-value" id="conversations-used">0</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Remaining</span>
+                        <span class="stat-value" id="conversations-remaining">0</span>
+                    </div>
+                    <div class="usage-bar">
+                        <div class="usage-fill" id="usage-fill" style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h2>Performance</h2>
+                    <div class="stat">
+                        <span class="stat-label">Response Time</span>
+                        <span class="stat-value">0.8s</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Success Rate</span>
+                        <span class="stat-value">99.2%</span>
+                    </div>
+                    <div class="stat">
+                        <span class="stat-label">Customer Satisfaction</span>
+                        <span class="stat-value">4.8/5</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Subscription Plans -->
+            <div class="card">
+                <h2>Upgrade Your Plan</h2>
+                <div class="grid" id="subscription-plans">
+                    <!-- Plans will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Account Actions -->
+            <div class="card">
+                <h2>Account Actions</h2>
+                <div style="display: flex; gap: 16px; flex-wrap: wrap;">
+                    <button class="btn btn-secondary" onclick="downloadInvoices()">Download Invoices</button>
+                    <button class="btn btn-secondary" onclick="updatePaymentMethod()">Update Payment Method</button>
+                    <button class="btn btn-danger" onclick="cancelSubscription()">Cancel Subscription</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Stripe
+        const stripe = Stripe('pk_test_your_publishable_key_here'); // Replace with your actual publishable key
+
+        // Mock customer ID - in a real app, this would come from authentication
+        const customerId = 'cus_mock_customer_id';
+
+        // Load dashboard data
+        async function loadDashboard() {
+            try {
+                // Load subscription plans
+                const plansResponse = await fetch('/api/billing/plans');
+                const plansData = await plansResponse.json();
+                
+                if (plansData.success) {
+                    renderSubscriptionPlans(plansData.data);
+                }
+
+                // Load current subscription status
+                const statusResponse = await fetch(`/api/billing/status/${customerId}`);
+                const statusData = await statusResponse.json();
+                
+                if (statusData.success) {
+                    renderCurrentPlan(statusData);
+                    renderUsageStats(statusData);
+                }
+
+                // Hide loading, show dashboard
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('dashboard').classList.remove('hidden');
+            } catch (error) {
+                console.error('Error loading dashboard:', error);
+                document.getElementById('loading').innerHTML = '<p>Error loading dashboard. Please refresh the page.</p>';
+            }
+        }
+
+        function renderSubscriptionPlans(plans) {
+            const container = document.getElementById('subscription-plans');
+            container.innerHTML = '';
+
+            Object.values(plans).forEach(plan => {
+                const planCard = document.createElement('div');
+                planCard.className = 'plan-card card';
+                
+                const features = plan.features.map(feature => `<li>${feature}</li>`).join('');
+                const price = (plan.price / 100).toFixed(2);
+                
+                planCard.innerHTML = `
+                    <div class="plan-name">${plan.name}</div>
+                    <div class="plan-price">$${price}<span>/month</span></div>
+                    <ul class="plan-features">${features}</ul>
+                    <button class="btn btn-primary" onclick="subscribeToPlan('${plan.id}')">
+                        Choose ${plan.name}
+                    </button>
+                `;
+                
+                container.appendChild(planCard);
+            });
+        }
+
+        function renderCurrentPlan(statusData) {
+            const container = document.getElementById('current-plan');
+            
+            if (!statusData.hasSubscription) {
+                container.innerHTML = `
+                    <div class="alert alert-warning">
+                        You don't have an active subscription. Choose a plan below to get started.
+                    </div>
+                `;
+                return;
+            }
+
+            const plan = statusData.plan;
+            const price = (plan.price / 100).toFixed(2);
+            const endDate = new Date(statusData.currentPeriodEnd * 1000).toLocaleDateString();
+            
+            container.innerHTML = `
+                <div class="stat">
+                    <span class="stat-label">Plan</span>
+                    <span class="stat-value">${plan.name}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Price</span>
+                    <span class="stat-value">$${price}/month</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Next Billing</span>
+                    <span class="stat-value">${endDate}</span>
+                </div>
+                <div class="stat">
+                    <span class="stat-label">Status</span>
+                    <span class="stat-value" style="color: #10b981;">${statusData.status}</span>
+                </div>
+            `;
+        }
+
+        function renderUsageStats(statusData) {
+            if (!statusData.hasSubscription) return;
+
+            const plan = statusData.plan;
+            const used = Math.floor(Math.random() * plan.conversationLimit); // Mock usage
+            const remaining = plan.conversationLimit === -1 ? 'Unlimited' : plan.conversationLimit - used;
+            const percentage = plan.conversationLimit === -1 ? 0 : (used / plan.conversationLimit) * 100;
+
+            document.getElementById('conversations-used').textContent = used;
+            document.getElementById('conversations-remaining').textContent = remaining;
+            document.getElementById('usage-fill').style.width = `${percentage}%`;
+        }
+
+        async function subscribeToPlan(planId) {
+            try {
+                const response = await fetch('/api/billing/subscribe', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        planId: planId,
+                        customerData: {
+                            email: 'customer@example.com',
+                            name: 'John Doe',
+                            userId: 'user_123'
+                        }
+                    })
+                });
+
+                const data = await response.json();
+                
+                if (data.success) {
+                    // Redirect to Stripe Checkout or handle payment
+                    const { error } = await stripe.confirmCardPayment(data.data.clientSecret);
+                    
+                    if (error) {
+                        alert('Payment failed: ' + error.message);
+                    } else {
+                        alert('Subscription created successfully!');
+                        loadDashboard(); // Reload dashboard
+                    }
+                } else {
+                    alert('Error creating subscription: ' + data.error);
+                }
+            } catch (error) {
+                console.error('Error subscribing to plan:', error);
+                alert('Error creating subscription. Please try again.');
+            }
+        }
+
+        function cancelSubscription() {
+            if (confirm('Are you sure you want to cancel your subscription? You will continue to have access until the end of your current billing period.')) {
+                // Implementation for cancellation
+                alert('Subscription cancellation feature coming soon!');
+            }
+        }
+
+        function downloadInvoices() {
+            alert('Invoice download feature coming soon!');
+        }
+
+        function updatePaymentMethod() {
+            alert('Payment method update feature coming soon!');
+        }
+
+        // Load dashboard on page load
+        document.addEventListener('DOMContentLoaded', loadDashboard);
+    </script>
+</body>
+</html>

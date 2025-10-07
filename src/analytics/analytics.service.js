@@ -285,7 +285,6 @@ class AnalyticsService {
       }
       
       logger.debug(`Message tracked for chatbot ${messageData.chatbotId}`);
-    }
     } catch (error) {
       logger.error('Error tracking message for analytics:', error.message);
     }

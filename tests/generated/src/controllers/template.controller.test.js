@@ -589,7 +589,7 @@ describe('template.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\controllers\template.controller.js
-const path = require('path');
+
 
 describe('template.controller - Generated Tests', () => {
   let module;

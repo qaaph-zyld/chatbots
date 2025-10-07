@@ -187,7 +187,7 @@ describe('topic-detection.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\topic-detection.service.js
-const path = require('path');
+
 
 describe('topic-detection.service - Generated Tests', () => {
   let module;

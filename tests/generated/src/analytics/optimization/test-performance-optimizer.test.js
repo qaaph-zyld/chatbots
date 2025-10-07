@@ -317,7 +317,7 @@ describe('test-performance-optimizer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\optimization\test-performance-optimizer.js
-const path = require('path');
+
 
 describe('test-performance-optimizer - Generated Tests', () => {
   let module;

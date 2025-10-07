@@ -1,0 +1,15 @@
+[
+  {
+    "userId": "1759854752493_y7abvdegt",
+    "token": "1f7d393f916d863817449a0f714d582c4111a6fbef40840c4bf7c572df322abd",
+    "email": "test@example.com",
+    "name": "Test User",
+    "role": "customer",
+    "loginAt": "2025-10-07T16:32:32.509Z",
+    "lastActivity": "2025-10-07T16:32:32.514Z",
+    "isActive": true,
+    "id": "1759854752509_n5mk0mxiw",
+    "createdAt": "2025-10-07T16:32:32.509Z",
+    "updatedAt": "2025-10-07T16:32:32.514Z"
+  }
+]

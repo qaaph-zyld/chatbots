@@ -199,7 +199,7 @@ describe('alert.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\alert.service.js
-const path = require('path');
+
 
 describe('alert.service - Generated Tests', () => {
   let module;

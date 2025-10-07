@@ -105,7 +105,7 @@ describe('cache-monitor - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\cache\cache-monitor.js
-const path = require('path');
+
 
 describe('cache-monitor - Generated Tests', () => {
   let module;

@@ -101,7 +101,7 @@ describe('test-prometheus-integration - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\test-prometheus-integration.js
-const path = require('path');
+
 
 describe('test-prometheus-integration - Generated Tests', () => {
   let module;

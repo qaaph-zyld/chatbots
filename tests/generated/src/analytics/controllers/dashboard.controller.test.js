@@ -153,7 +153,7 @@ describe('dashboard.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\controllers\dashboard.controller.js
-const path = require('path');
+
 
 describe('dashboard.controller - Generated Tests', () => {
   let module;

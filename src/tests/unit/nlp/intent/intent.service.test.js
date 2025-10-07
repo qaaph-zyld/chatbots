@@ -21,7 +21,7 @@ jest.mock('@tensorflow/tfjs-node', () => ({
   dispose: jest.fn()
 }), { virtual: true });
 
-jest.mock('../../utils', () => ({
+jest.mock('../../../../utils', () => ({
   logger: {
     debug: jest.fn(),
     info: jest.fn(),

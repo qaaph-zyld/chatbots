@@ -67,7 +67,7 @@ describe('prometheus-exporter.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\prometheus-exporter.service.js
-const path = require('path');
+
 
 describe('prometheus-exporter.service - Generated Tests', () => {
   let module;

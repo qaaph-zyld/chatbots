@@ -91,7 +91,7 @@ describe('cdn-integration - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\cdn-integration.js
-const path = require('path');
+
 
 describe('cdn-integration - Generated Tests', () => {
   let module;

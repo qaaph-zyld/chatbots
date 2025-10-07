@@ -101,7 +101,7 @@ describe('test-security-features - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\enterprise\security\test-security-features.js
-const path = require('path');
+
 
 describe('test-security-features - Generated Tests', () => {
   let module;

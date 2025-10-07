@@ -501,7 +501,7 @@ describe('tenant-service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\tenant\tenant-service.js
-const path = require('path');
+
 
 describe('tenant-service - Generated Tests', () => {
   let module;

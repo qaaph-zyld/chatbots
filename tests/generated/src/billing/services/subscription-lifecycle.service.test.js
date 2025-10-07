@@ -297,7 +297,7 @@ describe('subscription-lifecycle.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\services\subscription-lifecycle.service.js
-const path = require('path');
+
 
 describe('subscription-lifecycle.service - Generated Tests', () => {
   let module;

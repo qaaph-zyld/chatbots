@@ -1,0 +1,16 @@
+[
+  {
+    "sessionId": "test-session",
+    "items": [],
+    "total": 9.99,
+    "itemCount": 0,
+    "currency": "USD",
+    "status": "active",
+    "id": "1759854752446_8snqkqd7y",
+    "createdAt": "2025-10-07T16:32:32.447Z",
+    "updatedAt": "2025-10-07T16:33:01.623Z",
+    "subtotal": 0,
+    "tax": 0,
+    "shipping": 9.99
+  }
+]

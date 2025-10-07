@@ -331,7 +331,7 @@ describe('chat-interface - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\ui\js\chat-interface.js
-const path = require('path');
+
 
 describe('chat-interface - Generated Tests', () => {
   let module;

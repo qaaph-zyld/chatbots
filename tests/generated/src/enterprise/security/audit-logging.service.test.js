@@ -91,7 +91,7 @@ describe('audit-logging.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\enterprise\security\audit-logging.service.js
-const path = require('path');
+
 
 describe('audit-logging.service - Generated Tests', () => {
   let module;

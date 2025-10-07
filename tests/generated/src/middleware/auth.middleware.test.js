@@ -77,7 +77,7 @@ describe('auth.middleware - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\auth.middleware.js
-const path = require('path');
+
 
 describe('auth.middleware - Generated Tests', () => {
   let module;

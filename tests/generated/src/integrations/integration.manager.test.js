@@ -67,7 +67,7 @@ describe('integration.manager - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\integrations\integration.manager.js
-const path = require('path');
+
 
 describe('integration.manager - Generated Tests', () => {
   let module;

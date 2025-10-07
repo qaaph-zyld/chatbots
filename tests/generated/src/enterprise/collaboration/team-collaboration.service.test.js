@@ -91,7 +91,7 @@ describe('team-collaboration.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\enterprise\collaboration\team-collaboration.service.js
-const path = require('path');
+
 
 describe('team-collaboration.service - Generated Tests', () => {
   let module;

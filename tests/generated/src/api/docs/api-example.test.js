@@ -257,7 +257,7 @@ describe('api-example - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\docs\api-example.js
-const path = require('path');
+
 
 describe('api-example - Generated Tests', () => {
   let module;

@@ -139,7 +139,7 @@ describe('index - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\integrations\index.js
-const path = require('path');
+
 
 describe('index - Generated Tests', () => {
   let module;

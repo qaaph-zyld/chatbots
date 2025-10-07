@@ -323,7 +323,7 @@ describe('load-tester - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\testing\load-tester.js
-const path = require('path');
+
 
 describe('load-tester - Generated Tests', () => {
   let module;

@@ -129,7 +129,7 @@ describe('pwa-enabler - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\pwa-enabler.js
-const path = require('path');
+
 
 describe('pwa-enabler - Generated Tests', () => {
   let module;

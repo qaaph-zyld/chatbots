@@ -67,7 +67,7 @@ describe('memory-monitor - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\memory-monitor.js
-const path = require('path');
+
 
 describe('memory-monitor - Generated Tests', () => {
   let module;

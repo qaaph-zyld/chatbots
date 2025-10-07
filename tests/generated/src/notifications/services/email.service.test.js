@@ -249,7 +249,7 @@ describe('email.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\notifications\services\email.service.js
-const path = require('path');
+
 
 describe('email.service - Generated Tests', () => {
   let module;

@@ -321,7 +321,7 @@ describe('advanced-template.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\advanced-template.controller.js
-const path = require('path');
+
 
 describe('advanced-template.controller - Generated Tests', () => {
   let module;

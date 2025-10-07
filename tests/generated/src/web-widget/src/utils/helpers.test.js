@@ -57,7 +57,7 @@ describe('helpers - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\web-widget\src\utils\helpers.js
-const path = require('path');
+
 
 describe('helpers - Generated Tests', () => {
   let module;

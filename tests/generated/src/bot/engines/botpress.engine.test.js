@@ -67,7 +67,7 @@ describe('botpress.engine - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\bot\engines\botpress.engine.js
-const path = require('path');
+
 
 describe('botpress.engine - Generated Tests', () => {
   let module;

@@ -67,7 +67,7 @@ describe('data-protection.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\enterprise\security\data-protection.service.js
-const path = require('path');
+
 
 describe('data-protection.service - Generated Tests', () => {
   let module;

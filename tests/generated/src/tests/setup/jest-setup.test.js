@@ -317,7 +317,7 @@ describe('jest-setup - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\setup\jest-setup.js
-const path = require('path');
+
 
 describe('jest-setup - Generated Tests', () => {
   let module;

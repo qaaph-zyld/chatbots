@@ -165,7 +165,7 @@ describe('analytics-event.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\analytics\models\analytics-event.model.js
-const path = require('path');
+
 
 describe('analytics-event.model - Generated Tests', () => {
   let module;

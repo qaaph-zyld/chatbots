@@ -121,7 +121,7 @@ describe('run-security-audit - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\scripts\run-security-audit.js
-const path = require('path');
+
 
 describe('run-security-audit - Generated Tests', () => {
   let module;

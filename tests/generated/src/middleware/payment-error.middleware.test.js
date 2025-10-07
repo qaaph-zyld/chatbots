@@ -57,7 +57,7 @@ describe('payment-error.middleware - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\payment-error.middleware.js
-const path = require('path');
+
 
 describe('payment-error.middleware - Generated Tests', () => {
   let module;

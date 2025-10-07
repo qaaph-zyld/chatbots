@@ -149,7 +149,7 @@ describe('main - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\public\js\main.js
-const path = require('path');
+
 
 describe('main - Generated Tests', () => {
   let module;

@@ -237,7 +237,7 @@ describe('test-multimodal - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\nlp\multimodal\test-multimodal.js
-const path = require('path');
+
 
 describe('test-multimodal - Generated Tests', () => {
   let module;

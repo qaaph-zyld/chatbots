@@ -24,7 +24,7 @@ scrape_configs:
 
   # Scrape Chatbots API metrics
   - job_name: "chatbots-api"
-    metrics_path: /api/v1/metrics
+    metrics_path: /api/metrics
     scrape_interval: 10s
     static_configs:
       - targets: ["app:3000"]

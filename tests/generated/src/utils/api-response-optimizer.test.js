@@ -241,7 +241,7 @@ describe('api-response-optimizer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\api-response-optimizer.js
-const path = require('path');
+
 
 describe('api-response-optimizer - Generated Tests', () => {
   let module;

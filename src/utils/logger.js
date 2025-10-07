@@ -4,9 +4,6 @@
  * Provides consistent logging functionality throughout the application
  */
 
-// Get current log level from config or default to INFO
-const config = require('@src/config');
-
 // Define log levels
 const LOG_LEVELS = {
   ERROR: 0,
@@ -15,9 +12,17 @@ const LOG_LEVELS = {
   DEBUG: 3
 };
 
-const currentLevel = config.logging?.level 
-  ? LOG_LEVELS[config.logging.level.toUpperCase()] 
-  : LOG_LEVELS.INFO;
+// Get current log level from config or default to INFO
+let currentLevel = LOG_LEVELS.INFO;
+try {
+  const config = require('@src/config');
+  currentLevel = config.logging?.level 
+    ? LOG_LEVELS[config.logging.level.toUpperCase()] 
+    : LOG_LEVELS.INFO;
+} catch (error) {
+  // Fallback for test environment or missing config
+  currentLevel = process.env.NODE_ENV === 'test' ? LOG_LEVELS.ERROR : LOG_LEVELS.INFO;
+}
 
 /**
  * Format a log message

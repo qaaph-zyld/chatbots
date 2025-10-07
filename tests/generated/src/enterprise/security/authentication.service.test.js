@@ -67,7 +67,7 @@ describe('authentication.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\enterprise\security\authentication.service.js
-const path = require('path');
+
 
 describe('authentication.service - Generated Tests', () => {
   let module;

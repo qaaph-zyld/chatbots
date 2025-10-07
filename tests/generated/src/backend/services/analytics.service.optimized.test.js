@@ -67,7 +67,7 @@ describe('analytics.service.optimized - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\backend\services\analytics.service.optimized.js
-const path = require('path');
+
 
 describe('analytics.service.optimized - Generated Tests', () => {
   let module;

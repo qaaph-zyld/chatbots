@@ -67,7 +67,7 @@ describe('theme.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\theme.service.js
-const path = require('path');
+
 
 describe('theme.service - Generated Tests', () => {
   let module;

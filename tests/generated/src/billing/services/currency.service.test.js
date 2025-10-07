@@ -67,7 +67,7 @@ describe('currency.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\services\currency.service.js
-const path = require('path');
+
 
 describe('currency.service - Generated Tests', () => {
   let module;

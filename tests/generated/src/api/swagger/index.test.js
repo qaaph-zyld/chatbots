@@ -57,7 +57,7 @@ describe('index - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\swagger\index.js
-const path = require('path');
+
 
 describe('index - Generated Tests', () => {
   let module;

@@ -67,7 +67,7 @@ describe('tenant-activity.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\tenant-activity.service.js
-const path = require('path');
+
 
 describe('tenant-activity.service - Generated Tests', () => {
   let module;

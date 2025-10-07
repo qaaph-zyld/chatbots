@@ -257,7 +257,7 @@ describe('multilingual-kb.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\multilingual-kb.controller.js
-const path = require('path');
+
 
 describe('multilingual-kb.controller - Generated Tests', () => {
   let module;

@@ -57,7 +57,7 @@ describe('redis-client - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\core\redis-client.js
-const path = require('path');
+
 
 describe('redis-client - Generated Tests', () => {
   let module;

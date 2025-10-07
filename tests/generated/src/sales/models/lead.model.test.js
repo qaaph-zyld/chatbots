@@ -129,7 +129,7 @@ describe('lead.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\sales\models\lead.model.js
-const path = require('path');
+
 
 describe('lead.model - Generated Tests', () => {
   let module;

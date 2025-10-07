@@ -77,7 +77,7 @@ describe('test-topic-repo - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\test-topic-repo.js
-const path = require('path');
+
 
 describe('test-topic-repo - Generated Tests', () => {
   let module;

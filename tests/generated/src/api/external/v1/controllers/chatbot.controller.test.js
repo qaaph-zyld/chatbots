@@ -101,7 +101,7 @@ describe('chatbot.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\external\v1\controllers\chatbot.controller.js
-const path = require('path');
+
 
 describe('chatbot.controller - Generated Tests', () => {
   let module;

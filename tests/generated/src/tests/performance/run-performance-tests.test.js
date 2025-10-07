@@ -281,7 +281,7 @@ describe('run-performance-tests - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\performance\run-performance-tests.js
-const path = require('path');
+
 
 describe('run-performance-tests - Generated Tests', () => {
   let module;

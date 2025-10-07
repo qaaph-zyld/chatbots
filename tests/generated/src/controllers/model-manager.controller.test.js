@@ -281,7 +281,7 @@ describe('model-manager.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\controllers\model-manager.controller.js
-const path = require('path');
+
 
 describe('model-manager.controller - Generated Tests', () => {
   let module;

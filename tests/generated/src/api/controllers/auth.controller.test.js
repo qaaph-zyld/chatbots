@@ -565,7 +565,7 @@ describe('auth.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\auth.controller.js
-const path = require('path');
+
 
 describe('auth.controller - Generated Tests', () => {
   let module;

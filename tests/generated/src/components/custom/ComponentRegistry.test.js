@@ -159,7 +159,7 @@ describe('ComponentRegistry - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\components\custom\ComponentRegistry.js
-const path = require('path');
+
 
 describe('ComponentRegistry - Generated Tests', () => {
   let module;

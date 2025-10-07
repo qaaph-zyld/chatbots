@@ -155,7 +155,7 @@ describe('advanced-template.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\advanced-template.service.js
-const path = require('path');
+
 
 describe('advanced-template.service - Generated Tests', () => {
   let module;

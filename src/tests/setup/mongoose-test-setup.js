@@ -5,7 +5,21 @@
  */
 
 const mongoose = require('mongoose');
-require('@src/utils');
+
+// Mock logger for tests to avoid circular dependencies
+jest.mock('@src/utils', () => ({
+  logger: {
+    info: jest.fn(),
+    warn: jest.fn(),
+    error: jest.fn(),
+    debug: jest.fn()
+  },
+  validation: {},
+  errors: {},
+  mongoConnectionHelper: {}
+}));
+
+const { logger } = require('@src/utils');
 
 /**
  * Clear all Mongoose models to prevent "Cannot overwrite model" errors

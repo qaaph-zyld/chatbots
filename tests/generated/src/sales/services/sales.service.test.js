@@ -139,7 +139,7 @@ describe('sales.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\sales\services\sales.service.js
-const path = require('path');
+
 
 describe('sales.service - Generated Tests', () => {
   let module;

@@ -283,7 +283,7 @@ describe('frontend-performance-monitor - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\frontend-performance-monitor.js
-const path = require('path');
+
 
 describe('frontend-performance-monitor - Generated Tests', () => {
   let module;

@@ -121,7 +121,7 @@ describe('default-worker - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\default-worker.js
-const path = require('path');
+
 
 describe('default-worker - Generated Tests', () => {
   let module;

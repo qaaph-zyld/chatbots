@@ -535,7 +535,7 @@ describe('performance-dashboard - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\monitoring\performance-dashboard.js
-const path = require('path');
+
 
 describe('performance-dashboard - Generated Tests', () => {
   let module;

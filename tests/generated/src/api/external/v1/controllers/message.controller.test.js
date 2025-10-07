@@ -121,7 +121,7 @@ describe('message.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\external\v1\controllers\message.controller.js
-const path = require('path');
+
 
 describe('message.controller - Generated Tests', () => {
   let module;

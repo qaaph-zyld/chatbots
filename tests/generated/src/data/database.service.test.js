@@ -139,7 +139,7 @@ describe('database.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\data\database.service.js
-const path = require('path');
+
 
 describe('database.service - Generated Tests', () => {
   let module;

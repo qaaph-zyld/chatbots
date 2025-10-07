@@ -347,7 +347,7 @@ describe('worker-pool - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\worker-pool.js
-const path = require('path');
+
 
 describe('worker-pool - Generated Tests', () => {
   let module;

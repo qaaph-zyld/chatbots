@@ -125,7 +125,7 @@ describe('scaling.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\scaling.controller.js
-const path = require('path');
+
 
 describe('scaling.controller - Generated Tests', () => {
   let module;

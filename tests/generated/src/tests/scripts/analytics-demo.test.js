@@ -173,7 +173,7 @@ describe('analytics-demo - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\scripts\analytics-demo.js
-const path = require('path');
+
 
 describe('analytics-demo - Generated Tests', () => {
   let module;

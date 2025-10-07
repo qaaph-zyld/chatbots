@@ -617,7 +617,7 @@ describe('plugin.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\plugin.service.js
-const path = require('path');
+
 
 describe('plugin.service - Generated Tests', () => {
   let module;

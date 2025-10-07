@@ -57,7 +57,7 @@ describe('conversation.model - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\domain\conversation.model.js
-const path = require('path');
+
 
 describe('conversation.model - Generated Tests', () => {
   let module;

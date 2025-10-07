@@ -67,7 +67,7 @@ describe('subscription.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\billing\services\subscription.service.js
-const path = require('path');
+
 
 describe('subscription.service - Generated Tests', () => {
   let module;

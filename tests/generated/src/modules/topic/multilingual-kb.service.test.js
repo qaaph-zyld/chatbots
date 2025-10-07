@@ -67,7 +67,7 @@ describe('multilingual-kb.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\topic\multilingual-kb.service.js
-const path = require('path');
+
 
 describe('multilingual-kb.service - Generated Tests', () => {
   let module;

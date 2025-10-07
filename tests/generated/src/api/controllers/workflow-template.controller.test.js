@@ -105,7 +105,7 @@ describe('workflow-template.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\api\controllers\workflow-template.controller.js
-const path = require('path');
+
 
 describe('workflow-template.controller - Generated Tests', () => {
   let module;

@@ -121,7 +121,7 @@ describe('request-timeout - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\middleware\request-timeout.js
-const path = require('path');
+
 
 describe('request-timeout - Generated Tests', () => {
   let module;

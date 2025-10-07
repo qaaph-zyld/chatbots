@@ -437,7 +437,7 @@ describe('knowledge-base.controller - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\controllers\knowledge-base.controller.js
-const path = require('path');
+
 
 describe('knowledge-base.controller - Generated Tests', () => {
   let module;

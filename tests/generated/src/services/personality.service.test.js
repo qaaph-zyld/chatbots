@@ -67,7 +67,7 @@ describe('personality.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\services\personality.service.js
-const path = require('path');
+
 
 describe('personality.service - Generated Tests', () => {
   let module;

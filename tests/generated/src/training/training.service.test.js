@@ -111,7 +111,7 @@ describe('training.service - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\training\training.service.js
-const path = require('path');
+
 
 describe('training.service - Generated Tests', () => {
   let module;

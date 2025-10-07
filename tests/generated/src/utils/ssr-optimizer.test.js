@@ -213,7 +213,7 @@ describe('ssr-optimizer - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\utils\ssr-optimizer.js
-const path = require('path');
+
 
 describe('ssr-optimizer - Generated Tests', () => {
   let module;

@@ -57,7 +57,7 @@ describe('context-index-mock - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\tests\mocks\context-index-mock.js
-const path = require('path');
+
 
 describe('context-index-mock - Generated Tests', () => {
   let module;

@@ -67,7 +67,7 @@ describe('sentiment.repository - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\modules\sentiment\repositories\sentiment.repository.js
-const path = require('path');
+
 
 describe('sentiment.repository - Generated Tests', () => {
   let module;

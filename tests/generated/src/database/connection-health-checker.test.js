@@ -351,7 +351,7 @@ describe('connection-health-checker - Generated Tests', () => {
 });
 
 // Generated comprehensive tests for src\database\connection-health-checker.js
-const path = require('path');
+
 
 describe('connection-health-checker - Generated Tests', () => {
   let module;
